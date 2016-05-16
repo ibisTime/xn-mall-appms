@@ -1,0 +1,108 @@
+<#assign controller="Index"/>
+<#include 'layout/config.html'/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="renderer" content="webkit" />
+    <title>生意家</title>
+    <link rel="shortcut icon" href="${staticUrl}/images/favicon.ico" type="image/x-icon" />
+    <meta name="keywords" content="生意家">
+    <meta name="description" content="生意家">
+    <link rel="stylesheet" type="text/css"
+          href="${staticUrl}/css/mainIndex.css<#if jsVersion>?v=${jsVersion}</#if>" />
+    <!--[if lte IE 8]>
+    <style>
+        .logo {
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="${staticUrl}/images/index_logo.png", sizingMethod="scale");
+        }
+        .item1 {
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="${staticUrl}/images/focus_01.jpg", sizingMethod="scale");
+        }
+        .item2 {
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="${staticUrl}/images/focus_02.jpg", sizingMethod="scale");
+        }
+        .item3 {
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="${staticUrl}/images/focus_03.jpg", sizingMethod="scale");
+        }
+    </style>
+    <![endif]-->
+</head>
+<body>
+<div class="main">
+    <div class="header">
+        <div class="nav">
+            <div class="logo"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="content">
+            <div class="wrap">
+                <div class="mid">
+                    <div class="main-entry">
+                        <a href="${basePath}/user/signin.htm" class="seller-login"><span class="title">登录</span><s></s></a>
+                        <a href="${basePath}/user/signup.htm" class="personal-login"><span class="title">注册</span><s></s></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="back">
+            <div class="items">
+                <div class="item item1"
+                     style="display: block;background-image:url(${staticUrl}/images/focus_01.jpg)"></div>
+                <div class="item item2"
+                     style="background-image:url(${staticUrl}/images/focus_02.jpg)"></div>
+                <div class="item item3"
+                     style="background-image:url(${staticUrl}/images/focus_03.jpg)"></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="web_footer">
+            <!-- <div class="web_footer_cont">
+                <div class="w_footer_c_m">
+                    <ul class="w_footer_contact cfl">
+                        <li class="ft_1 cfl">
+                            <i class="f_icon"></i>
+                            <div class="f_main">
+                                <p class="f_lx">服务热线：（9:30-18:00）</p>
+                                <h3 class="f_ph">400-0008-139</h3>
+                            </div>
+                        </li>
+                        <li class="ft_2 cfl">
+                            <i class="f_icon"></i>
+                            <div class="f_main">
+                                <p class="f_lx">官方交流QQ群：</p>
+                                <h3 class="f_ph">170348251</h3>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul class="w_footer_quick cfl">
+                        <li class="ft_1"><a href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&amp;key=XzkzODA3MjExOV8yNjE0NDVfNDAwMDAwODEzOV8yXw" target="_blank">在线客服</a></li>
+                        <li class="ft_2">
+                            <a href="">关注微信</a>
+                            <div class="quick_wx"><img src="${staticUrl}/images/web_wx_tips.png"></div>
+                        </li>
+                        <li class="ft_3"><a href="http://weibo.com/p/1006065569365794/home?from=page_100606&mod=TAB#place" target="_blank">官方微博</a></li>
+                    </ul>
+
+                    <a id='___szfw_logo___' class="ommo_logo" href='https://credit.szfw.org/CX20150723010833280120.html' target='_blank'><img src='http://icon.szfw.org/cert.png' border='0' /></a>
+                    <script type='text/javascript'>(function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();</script>
+                </div>
+            </div> -->
+            <div class="web_footer_note">
+                <span class="prl6">生意家+</span><span>｜</span><span class="prl6">浙江生意家供应链管理有限公司</span><span class="prl6">版权所有</span><span>｜</span><span class="prl6">浙ICP备 15007990 号</span>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<#include 'layout/js.html'/>
+</body>
+</html>
+
+

@@ -1,0 +1,31 @@
+<#assign name="操盘手介绍"/>
+<#assign controller="Operator"/>
+<#include 'layout/layout.html'/>
+<#macro topCss>
+    <link rel="stylesheet" type="text/css" href="${staticUrl}/css/bootstrap.css?v=${jsVersion}" />
+    <link rel="stylesheet" type="text/css" href="${staticUrl}/css/detail.css?v=${jsVersion}" />
+</#macro>
+<#macro content>
+<div class="stretch">
+	<div id="container">
+	    <div class="container" id="content">
+			<div class="ui-panel" style="padding: 20px;">
+				<div class="row oper-info">
+				  <div class="col-md-4">
+				  	<div class="row"><div class="col-md-12">操盘手：<h2 id="oper-name"></h2><i style="padding-left: 10px;">等级：<h4 class="" id="oper-level"></h4></i></div></div>
+				  	<div class="row" style="margin-top:10px;"><div class="col-md-12"><i class="fa fa-mobile fa-2x fa-fw"></i><span id="oper-mobile"></span></div></div>
+				  	<div class="row doManPhotoWrap"><div class="col-md-12"><img id="oper-avatar" style="height:150px;width:150px;"/></div></div>
+				  </div>
+				  <div class="col-md-4" style="line-height: 16;">累计总收益：<h1 id="oper-profit" class="orange"></h1></div>
+				  <div class="col-md-4" style="line-height: 8;">
+				  	<div class="row"><div class="col-md-12">累计操盘数：<h2 id="oper-count"></h2></div></div>
+				  	<div class="row"><div class="col-md-12">累计操盘金额：<h2 id="oper-amount"></h2></div></div>
+				  </div>
+				</div>
+				<div class="detailTitleThird">操盘手介绍</div>
+				<div class="oper-desc" id="oper-desc"></div>
+			</div>
+	    </div>
+    </div>
+</div>
+</#macro>

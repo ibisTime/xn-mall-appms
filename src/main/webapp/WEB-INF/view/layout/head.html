@@ -1,0 +1,20 @@
+<#if !type??>
+    <div class="mod-nav">
+    <div class="div1050">
+        <div class="fl">
+            <span class="telephone">客服电话：400-800-0689</span>
+        </div>
+        <div id="usertopbar"></div>
+    </div>
+</div>
+</#if>
+<div class="mod-head">
+    <div class="div1050">
+        <#if !type>
+            <ul class="list-tit" id="head-menu" style="display: <#if !noHeadList>block<#else>none</#if>">
+               
+            </ul>
+        </#if>
+        <div class="logo"><a id="logo-a" href="${basePath}/user/home.htm"><img src="${staticUrl}/images/pic/logo.png"></a>|&nbsp;企业服务平台</div>
+    </div>
+</div>

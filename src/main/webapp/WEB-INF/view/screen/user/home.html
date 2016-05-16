@@ -1,0 +1,37 @@
+<#assign name="企业首页"/>
+<#assign controller="Home"/>
+<#assign noHeadList="true"/>
+<#include 'layout/layout.html'/>
+<#macro topCss>
+    <link rel="stylesheet" type="text/css" href="${staticUrl}/css/bootstrap.css?v=${jsVersion}" />
+</#macro>
+<#macro content>
+<div class="top">
+	<div id="container">
+    <div class="warp" id="content" style="display: none;">
+
+        <div class="mod-information clearfix">
+        	<a href="${basePath}/user/me.htm" target="_blank">
+            <div class="personal-infor fl btn">
+                <img src="${staticUrl}/images/person.png" class="fl person">
+                <div class="" style="line-height:26px;text-align: left;">
+                    <span id="hello-user" style="margin-left: 10px;"></span><br>
+                    <span style="color:#585a62;margin-left: 10px;">上次登录时间：<span id="lastlogintime"></span><span class="vm-time"></span></span>
+                </div>
+            </div>
+            </a>
+            <a href="${basePath}/account/flow.htm" target="_blank">
+            <div class="balance fr btn">
+                <p class="fl vm-money">本金总额<span class="font12">(元)</span>&nbsp;&nbsp;&nbsp;<span class="orange font24" id="amount"></span></p>
+                <div class="fl total-money">
+                    <p>累计投资<span class="font12">(元)</span>&nbsp;&nbsp;&nbsp;<span class="orange font24" id="totalRepayPrincipal"></span></p>
+                    <p>累计收益<span class="font12">(元)</span>&nbsp;&nbsp;&nbsp;<span class="font24" id="totalRepayProfit"></span></p>
+                </div>
+            </div>
+            </a>
+        </div>
+
+    </div>
+    </div>
+</div>
+</#macro>
