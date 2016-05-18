@@ -1,0 +1,24 @@
+<#assign title="首页"/>
+<#assign controller="Index"/>
+<#include 'layout/layout.html'/>
+<#macro content>
+	<div class="container" id="container">
+		<div id="index_imgs" class="index_imgs">
+			<div class="imgs_cont bd">
+				<ul class="img-ul">
+					<a href="${basePath}/detail/mall_list.htm?type=1"><li><img src="${staticUrl}/images/index1.png"></li></a>
+					<a href="${basePath}/detail/mall_list.htm?type=3"><li><img src="${staticUrl}/images/index2.png"></li></a>
+				</ul>
+			</div>
+			<div class="btn-prev">&lt;</div>
+			<div class="btn-next">&gt;</div>
+			<div class="hd"><ul></ul></div>
+		</div>
+		<div class="img-show">
+			<div class="inblock"><a><img src="${staticUrl}/images/index_foot1.png"/></a></div>
+			<div class="inblock"><a><img src="${staticUrl}/images/index_foot2.png"/></a></div>
+			<div class="inblock"><a><img src="${staticUrl}/images/index_foot3.png"/></a></div>
+			<div class="inblock"><a><img src="${staticUrl}/images/index_foot4.png"/></a></div>
+		</div>
+	</div>
+</#macro>

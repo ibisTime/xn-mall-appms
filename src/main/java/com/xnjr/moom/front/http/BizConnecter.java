@@ -24,11 +24,7 @@ public class BizConnecter {
 
     public static final String SMS_URL = ConfigProperties.Config.SMS_URL;
 
-    public static final String BIZFRAME_URL = ConfigProperties.Config.BIZFRAME_URL;
-
-    public static final String ACCOUNT_URL = ConfigProperties.Config.ACCOUNT_URL;
-
-    public static final String MOOM_URL = ConfigProperties.Config.MOOM_URL;
+    public static final String MALL_URL = ConfigProperties.Config.MALL_URL;
 
     public static <T> T getBizData(String code, String json, Class<T> clazz) {
         String data = getBizData(code, json);
@@ -62,18 +58,8 @@ public class BizConnecter {
 
     private static String getPostUrl(String code) {
         String postUrl = null;
-        if (code.startsWith("799")) {
-            postUrl = SMS_URL;
-        } else if (code.startsWith("801")) {
-            postUrl = ACCOUNT_URL;
-        } else if (code.startsWith("802")) {
-            postUrl = ACCOUNT_URL;
-        } else if (code.startsWith("fd") || code.startsWith("lh")
-                || code.startsWith("bk") || code.startsWith("yw") 
-                || code.startsWith("gs")) {
-            postUrl = MOOM_URL;
-        } else if (code.startsWith("707")) {
-            postUrl = BIZFRAME_URL;
+        if (code.startsWith("601") || code.startsWith("602")) {
+            postUrl = MALL_URL;
         }
         return postUrl;
     }

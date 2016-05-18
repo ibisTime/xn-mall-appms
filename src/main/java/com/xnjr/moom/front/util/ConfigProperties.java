@@ -22,11 +22,7 @@ public class ConfigProperties {
 
         public static String SMS_URL = props.getProperty("SMS_URL");
 
-        public static String BIZFRAME_URL = props.getProperty("BIZFRAME_URL");
-
-        public static String ACCOUNT_URL = props.getProperty("ACCOUNT_URL");
-
-        public static String MOOM_URL = props.getProperty("MOOM_URL");
+        public static String MALL_URL = props.getProperty("MALL_URL");
 
         // #****** picture server config ******
         public static String URL_PREFIX = props.getProperty("URL_PREFIX");
