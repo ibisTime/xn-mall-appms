@@ -12,12 +12,8 @@ import com.xnjr.moom.front.ao.IBankCardAO;
 import com.xnjr.moom.front.ao.ISmsAO;
 import com.xnjr.moom.front.ao.IUserAO;
 import com.xnjr.moom.front.enums.ETermType;
-import com.xnjr.moom.front.localToken.OrderNoGenerater;
-import com.xnjr.moom.front.localToken.TokenDO;
-import com.xnjr.moom.front.localToken.User;
 import com.xnjr.moom.front.localToken.UserDAO;
-import com.xnjr.moom.front.res.XNfd0001Res;
-import com.xnjr.moom.front.res.XNfd0002Res;
+import com.xnjr.moom.front.res.XN805043Res;
 import com.xnjr.moom.front.session.ISessionProvider;
 import com.xnjr.moom.front.session.SessionUser;
 
@@ -42,35 +38,33 @@ public class MemberController extends BaseController {
     // ****主流程start************
     @RequestMapping(value = "/mobile/check", method = RequestMethod.POST)
     @ResponseBody
-    public boolean checkMobileExist(@RequestParam("loginName") String mobile) {
-        userAO.checkMobileExit(mobile);
-        return true;
+    public Object checkMobileExist(@RequestParam("loginName") String mobile) {
+        return userAO.checkMobileExit(mobile);
     }
 
     @RequestMapping(value = "/regist", method = RequestMethod.POST)
     @ResponseBody
-    public XNfd0001Res doRegister(
+    public Object doRegister(
             @RequestParam("loginName") String mobile,
             @RequestParam("loginPwd") String loginPwd,
-            @RequestParam("loginCaptcha") String loginCaptcha,
+            @RequestParam("smsCaptcha") String smsCaptcha,
             @RequestParam(value = "userReferee", required = false) String userReferee) {
-        XNfd0001Res user = userAO.doRegister(mobile, loginPwd, getRemoteHost(),
-            userReferee, loginCaptcha);
-        return user;
+    	return userAO.doRegister(mobile, loginPwd, userReferee, smsCaptcha);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Object doLogin(@RequestParam("terminalType") String terminalType,
+    public Object doLogin(
             @RequestParam("loginName") String loginName,
-            @RequestParam("loginPwd") String loginPwd) {
-        XNfd0002Res res = userAO.doLogin(loginName, loginPwd, getRemoteHost());
+            @RequestParam("loginPwd") String loginPwd,
+            @RequestParam("terminalType") String terminalType) {
+    	XN805043Res res = userAO.doLogin(loginName, loginPwd);
         if (ETermType.WEB.getCode().equals(terminalType)) {
             SessionUser sessionUser = new SessionUser();
             sessionUser.setUserId(res.getUserId());
             // 创建session
-            sessionProvider.setUserDetail(sessionUser);
-        } else if (ETermType.APP.getCode().equals(terminalType)) {
+            setSessionUser(sessionUser);
+        }/* else if (ETermType.APP.getCode().equals(terminalType)) {
             TokenDO tokenDO = new TokenDO();
             String userId = res.getUserId();
 
@@ -91,7 +85,7 @@ public class MemberController extends BaseController {
             // return tokenDO给app客户端
 
             return tokenDO;
-        }
+        }*/
         return true;
     }
 
@@ -101,8 +95,8 @@ public class MemberController extends BaseController {
             @RequestParam(value = "userId", required = false) String userId) {
         return userAO.doGetUser(getSessionUserId(userId));
     }
-
-    @RequestMapping(value = "/identify", method = RequestMethod.POST)
+    
+    /*@RequestMapping(value = "/identify", method = RequestMethod.POST)
     @ResponseBody
     public boolean doIdentify(@RequestParam("idNo") String idNO,
             @RequestParam("realName") String realName,
@@ -110,26 +104,63 @@ public class MemberController extends BaseController {
         userAO.doIdentify(getSessionUserId(userId), realName, "1", idNO);
         return true;
     }
-
-    @RequestMapping(value = "/rich", method = RequestMethod.POST)
+*/
+    @RequestMapping(value = "/add/address", method = RequestMethod.POST)
     @ResponseBody
-    public boolean doRich(@RequestParam("idNo") String idNO,
-            @RequestParam("realName") String realName,
-            @RequestParam("tradePwd") String tradePwd,
-            @RequestParam("tradeCaptcha") String tradeCaptcha,
+    public Object addAddress(@RequestParam("addressee") String addressee,
+            @RequestParam("mobile") String mobile,
+            @RequestParam("province") String province,
+            @RequestParam("city") String city,
+            @RequestParam("district") String district,
+            @RequestParam("detailAddress") String detailAddress,
+            @RequestParam("isDefault") String isDefault,
             @RequestParam(value = "userId", required = false) String userId) {
-        userAO.doIdentifySetTradePwd(getSessionUserId(userId), realName, "1",
-            idNO, tradePwd, tradeCaptcha);
-        return true;
+    	return userAO.addAddress(getSessionUserId(userId), addressee, mobile, province,
+    			city, district, detailAddress, isDefault);
     }
-
-    @RequestMapping(value = "/log", method = RequestMethod.GET)
+    
+    @RequestMapping(value = "/delete/address", method = RequestMethod.POST)
     @ResponseBody
-    public Object doGetLog(
-            @RequestParam(value = "userId", required = false) String userId) {
-        return userAO.doGetLog(getSessionUserId(userId));
+    public Object deleteAddress(
+            @RequestParam(value = "code") String code) {
+    	return userAO.deleteAddress(code);
     }
-
+    
+    @RequestMapping(value = "/edit/address", method = RequestMethod.POST)
+    @ResponseBody
+    public Object editAddress(@RequestParam("code") String code,
+    		@RequestParam("addressee") String addressee,
+            @RequestParam("mobile") String mobile,
+            @RequestParam("province") String province,
+            @RequestParam("city") String city,
+            @RequestParam("district") String district,
+            @RequestParam("detailAddress") String detailAddress,
+            @RequestParam("isDefault") String isDefault,
+            @RequestParam(value = "userId", required = false) String userId) {
+    	return userAO.editAddress(code, getSessionUserId(userId), addressee, mobile, 
+    			province, city, district, detailAddress, isDefault);
+    }
+    
+    @RequestMapping(value = "/edit/setDefaultAddress", method = RequestMethod.POST)
+    @ResponseBody
+    public Object setDefaultAddress(@RequestParam("code") String code,
+    		@RequestParam(value = "userId", required = false) String userId){
+    	return userAO.setDefaultAddress(code, getSessionUserId(userId));
+    }
+    
+    @RequestMapping(value = "/queryAddresses", method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryAddresses(@RequestParam(value = "code", required = false) String code,
+    		@RequestParam(value = "userId", required = false) String userId,
+    		@RequestParam(value = "isDefault", required = false) String isDefault){
+    	return userAO.queryAddresses(code, getSessionUserId(userId), isDefault);
+    }
+    @RequestMapping(value = "/queryAddress", method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryAddress(@RequestParam("code") String code){
+    	return userAO.queryAddress(code);
+    }
+    
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ResponseBody
     public boolean logout() {
@@ -220,8 +251,8 @@ public class MemberController extends BaseController {
     @ResponseBody
     public boolean doFindLoginPwd(@RequestParam("mobile") String mobile,
             @RequestParam("smsCaptcha") String smsCaptcha,
-            @RequestParam("newPwd") String newPwd) {
-        userAO.doFindLoginPwd(mobile, newPwd, smsCaptcha);
+            @RequestParam("newLoginPwd") String newLoginPwd) {
+        userAO.doFindLoginPwd(mobile, newLoginPwd, smsCaptcha);
         return true;
     }
 

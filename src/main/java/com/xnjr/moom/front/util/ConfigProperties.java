@@ -23,6 +23,10 @@ public class ConfigProperties {
         public static String SMS_URL = props.getProperty("SMS_URL");
 
         public static String MALL_URL = props.getProperty("MALL_URL");
+        
+        public static String USER_URL = props.getProperty("USER_URL");
+        
+        public static String IDENTIFY_URL = props.getProperty("IDENTIFY_URL");
 
         // #****** picture server config ******
         public static String URL_PREFIX = props.getProperty("URL_PREFIX");

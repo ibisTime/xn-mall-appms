@@ -7,28 +7,34 @@ import com.xnjr.moom.front.ao.IUserAO;
 import com.xnjr.moom.front.exception.BizException;
 import com.xnjr.moom.front.http.BizConnecter;
 import com.xnjr.moom.front.http.JsonUtils;
+import com.xnjr.moom.front.req.XN602800Req;
+import com.xnjr.moom.front.req.XN602801Req;
+import com.xnjr.moom.front.req.XN602802Req;
+import com.xnjr.moom.front.req.XN602803Req;
+import com.xnjr.moom.front.req.XN602804Req;
+import com.xnjr.moom.front.req.XN602805Req;
 import com.xnjr.moom.front.req.XN801209Req;
 import com.xnjr.moom.front.req.XN801212Req;
-import com.xnjr.moom.front.req.XNfd0000Req;
-import com.xnjr.moom.front.req.XNfd0001Req;
-import com.xnjr.moom.front.req.XNfd0002Req;
+import com.xnjr.moom.front.req.XN805040Req;
+import com.xnjr.moom.front.req.XN805041Req;
+import com.xnjr.moom.front.req.XN805043Req;
+import com.xnjr.moom.front.req.XN805048Req;
+import com.xnjr.moom.front.req.XN805049Req;
 import com.xnjr.moom.front.req.XNfd0003Req;
 import com.xnjr.moom.front.req.XNfd0004Req;
 import com.xnjr.moom.front.req.XNfd0005Req;
-import com.xnjr.moom.front.req.XNfd0006Req;
-import com.xnjr.moom.front.req.XNfd0007Req;
+import com.xnjr.moom.front.req.XN805047Req;
 import com.xnjr.moom.front.req.XNfd0008Req;
-import com.xnjr.moom.front.res.XN801208Res;
 import com.xnjr.moom.front.res.XN801209Res;
 import com.xnjr.moom.front.res.XN801211Res;
 import com.xnjr.moom.front.res.XN801212Res;
 import com.xnjr.moom.front.res.XN801215Res;
-import com.xnjr.moom.front.res.XNfd0001Res;
-import com.xnjr.moom.front.res.XNfd0002Res;
+import com.xnjr.moom.front.res.XN805041Res;
+import com.xnjr.moom.front.res.XN805043Res;
 import com.xnjr.moom.front.res.XNfd0003Res;
 import com.xnjr.moom.front.res.XNfd0005Res;
 import com.xnjr.moom.front.res.XNfd0006Res;
-import com.xnjr.moom.front.res.XNfd0009Res;
+import com.xnjr.moom.front.res.XN805056Res;
 import com.xnjr.moom.front.util.PwdUtil;
 
 /** 
@@ -40,30 +46,28 @@ import com.xnjr.moom.front.util.PwdUtil;
 public class UserAOImpl implements IUserAO {
 
     @Override
-    public XNfd0001Res doRegister(String mobile, String loginPwd,
-            String registerIp, String userReferee, String smsCaptcha) {
+    public XN805041Res doRegister(String mobile, String loginPwd,
+    		String userReferee, String smsCaptcha) {
         if (StringUtils.isBlank(mobile)) {
             throw new BizException("A010001", "手机号码不能为空");
         }
         if (StringUtils.isBlank(loginPwd)) {
             throw new BizException("A010001", "登陆密码不能为空");
         }
-        if (StringUtils.isBlank(registerIp)) {
-            throw new BizException("A010001", "注册IP不能为空");
-        }
         if (StringUtils.isBlank(smsCaptcha)) {
             throw new BizException("A010001", "验证码不能为空");
         }
-        XNfd0001Req req = new XNfd0001Req();
+        if( StringUtils.isBlank(userReferee) ){
+        	userReferee = "";
+        }
+        XN805041Req req = new XN805041Req();
         req.setMobile(mobile);
         req.setSmsCaptcha(smsCaptcha);
         req.setLoginPwd(loginPwd);
         req.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
-        req.setRegisterIp(registerIp);
         req.setUserReferee(userReferee);
-        return BizConnecter.getBizData("fd0001", JsonUtils.object2Json(req),
-            XNfd0001Res.class);
-
+        return BizConnecter.getBizData("805041", JsonUtils.object2Json(req),
+            XN805041Res.class);
     }
 
     @Override
@@ -111,31 +115,27 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public XNfd0002Res doLogin(String loginName, String loginPwd, String loginIp) {
+    public XN805043Res doLogin(String loginName, String loginPwd) {
         if (StringUtils.isBlank(loginName)) {
             throw new BizException("A010001", "登陆名不能为空");
         }
         if (StringUtils.isBlank(loginPwd)) {
             throw new BizException("A010001", "登陆密码不能为空");
         }
-        if (StringUtils.isBlank(loginIp)) {
-            throw new BizException("A010001", "登陆IP不能为空");
-        }
-        XNfd0002Req req = new XNfd0002Req();
+        XN805043Req req = new XN805043Req();
         req.setLoginName(loginName);
         req.setLoginPwd(loginPwd);
-        req.setLoginIp(loginIp);
-        return BizConnecter.getBizData("fd0002", JsonUtils.object2Json(req),
-            XNfd0002Res.class);
+        return BizConnecter.getBizData("805043", JsonUtils.object2Json(req),
+        		XN805043Res.class);
     }
 
     @Override
-    public XNfd0009Res doGetUser(String userId) {
+    public XN805056Res doGetUser(String userId) {
         if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "用户编号不能为空");
         }
-        return BizConnecter.getBizData("fd0009",
-            JsonUtils.string2Json("userId", userId), XNfd0009Res.class);
+        return BizConnecter.getBizData("805056",
+            JsonUtils.string2Json("userId", userId), XN805056Res.class);
     }
 
     @Override
@@ -150,13 +150,13 @@ public class UserAOImpl implements IUserAO {
         if (StringUtils.isBlank(newLoginPwd)) {
             throw new BizException("A010001", "新登录密码不能为空");
         }
-        XNfd0007Req req = new XNfd0007Req();
+        XN805048Req req = new XN805048Req();
         req.setMobile(mobile);
         req.setSmsCaptcha(smsCaptcha);
         req.setNewLoginPwd(newLoginPwd);
-        req.setNewLoginPwdStrength(PwdUtil.calculateSecurityLevel(newLoginPwd));
-        BizConnecter.getBizData("fd0007", JsonUtils.object2Json(req),
-            XN801208Res.class);
+        req.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(newLoginPwd));
+        BizConnecter.getBizData("805048", JsonUtils.object2Json(req),
+            Object.class);
     }
 
     @Override
@@ -171,12 +171,13 @@ public class UserAOImpl implements IUserAO {
         if (StringUtils.isBlank(newLoginPwd)) {
             throw new BizException("A010001", "新登录密码不能为空");
         }
-        XN801209Req req = new XN801209Req();
+        XN805049Req req = new XN805049Req();
         req.setUserId(userId);
         req.setOldLoginPwd(oldLoginPwd);
         req.setNewLoginPwd(newLoginPwd);
-        BizConnecter.getBizData("801209", JsonUtils.object2Json(req),
-            XN801209Res.class);
+        req.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(newLoginPwd));
+        BizConnecter.getBizData("805049", JsonUtils.object2Json(req),
+            Object.class);
     }
 
     @Override
@@ -216,19 +217,19 @@ public class UserAOImpl implements IUserAO {
     @Override
     public void doChangeMoblie(String userId, String newMobile,
             String smsCaptcha, String tradePwd) {
-        XNfd0006Req req = new XNfd0006Req();
+        XN805047Req req = new XN805047Req();
         req.setUserId(userId);
         req.setNewMobile(newMobile);
         req.setSmsCaptcha(smsCaptcha);
         req.setTradePwd(tradePwd);
-        BizConnecter.getBizData("fd0006", JsonUtils.object2Json(req),
+        BizConnecter.getBizData("805047", JsonUtils.object2Json(req),
             XNfd0006Res.class);
     }
 
     @Override
     public boolean doIdentityCheck(String userId) {
         boolean flag = true;
-        XNfd0009Res user = this.doGetUser(userId);
+        XN805056Res user = this.doGetUser(userId);
         if (StringUtils.isBlank(user.getIdKind())
                 || StringUtils.isBlank(user.getIdNo())) {
             flag = false;
@@ -246,13 +247,14 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public void checkMobileExit(String mobile) {
+    //检查手机号是否存在
+    public Object checkMobileExit(String mobile) {
         if (StringUtils.isBlank(mobile)) {
             throw new BizException("A010001", "手机号不能为空");
         }
-        XNfd0000Req req = new XNfd0000Req();
+        XN805040Req req = new XN805040Req();
         req.setMobile(mobile);
-        BizConnecter.getBizData("fd0000", JsonUtils.object2Json(req),
+        return BizConnecter.getBizData("805040", JsonUtils.object2Json(req),
             XN801215Res.class);
     }
 
@@ -278,5 +280,122 @@ public class UserAOImpl implements IUserAO {
     public Object doKyc(String userId) {
         return BizConnecter.getBizData("fd2900",
             JsonUtils.string2Json("userId", userId), Object.class);
+    }
+    
+    public Object addAddress(String userId, String addressee, String mobile, 
+    		String province, String city, String district, String detailAddress, String isDefault){
+    	if (StringUtils.isBlank(userId)) {
+            throw new BizException("A010001", "userId不能为空");
+        }
+        if (StringUtils.isBlank(addressee)) {
+            throw new BizException("A010001", "收件人不能为空");
+        }
+        if (StringUtils.isBlank(mobile)) {
+            throw new BizException("A010001", "手机号不能为空");
+        }
+        if (StringUtils.isBlank(province)) {
+            throw new BizException("A010001", "省份不能为空");
+        }
+        if (StringUtils.isBlank(city)) {
+            throw new BizException("A010001", "城市不能为空");
+        }
+        if (StringUtils.isBlank(district)) {
+            throw new BizException("A010001", "区县不能为空");
+        }
+        if (StringUtils.isBlank(detailAddress)) {
+        	throw new BizException("A010001", "详细地址不能为空");
+        }
+        if (StringUtils.isBlank(isDefault)) {
+        	throw new BizException("A010001", "是否默认不能为空");
+        }
+    	XN602800Req req = new XN602800Req();
+    	req.setAddressee(addressee);
+    	req.setCity(city);
+    	req.setDetailAddress(detailAddress);
+    	req.setDistrict(district);
+    	req.setIsDefault(isDefault);
+    	req.setMobile(mobile);
+    	req.setProvince(province);
+    	req.setUserId(userId);
+    	return BizConnecter.getBizData("602800", JsonUtils.object2Json(req), Object.class);
+    }
+    public Object deleteAddress(String code){
+    	XN602801Req req = new XN602801Req();
+    	req.setCode(code);
+    	if (StringUtils.isBlank(code)) {
+            throw new BizException("A010001", "收件编号不能为空");
+        }
+    	return BizConnecter.getBizData("602801", JsonUtils.object2Json(req), Object.class);
+    }
+    public Object editAddress(String code, String userId, String addressee, String mobile, 
+    		String province, String city, String district, String detailAddress, String isDefault){
+    	if (StringUtils.isBlank(userId)) {
+            throw new BizException("A010001", "userId不能为空");
+        }
+        if (StringUtils.isBlank(addressee)) {
+            throw new BizException("A010001", "收件人不能为空");
+        }
+        if (StringUtils.isBlank(mobile)) {
+            throw new BizException("A010001", "手机号不能为空");
+        }
+        if (StringUtils.isBlank(province)) {
+            throw new BizException("A010001", "省份不能为空");
+        }
+        if (StringUtils.isBlank(city)) {
+            throw new BizException("A010001", "城市不能为空");
+        }
+        if (StringUtils.isBlank(district)) {
+            throw new BizException("A010001", "区县不能为空");
+        }
+        if (StringUtils.isBlank(detailAddress)) {
+        	throw new BizException("A010001", "详细地址不能为空");
+        }
+        if (StringUtils.isBlank(isDefault)) {
+        	throw new BizException("A010001", "是否默认不能为空");
+        }
+        if (StringUtils.isBlank(code)) {
+        	throw new BizException("A010001", "收件编号不能为空");
+        }
+    	XN602802Req req = new XN602802Req();
+    	req.setCode(code);
+    	req.setAddressee(addressee);
+    	req.setCity(city);
+    	req.setDetailAddress(detailAddress);
+    	req.setDistrict(district);
+    	req.setIsDefault(isDefault);
+    	req.setMobile(mobile);
+    	req.setProvince(province);
+    	req.setUserId(userId);
+    	return BizConnecter.getBizData("602802", JsonUtils.object2Json(req), Object.class);
+    }
+    public Object setDefaultAddress(String code, String userId){
+    	XN602803Req req = new XN602803Req();
+    	if (StringUtils.isBlank(code)) {
+        	throw new BizException("A010001", "收件编号不能为空");
+        }
+    	if (StringUtils.isBlank(userId)) {
+            throw new BizException("A010001", "userId不能为空");
+        }
+    	req.setCode(code);
+    	req.setUserId(userId);
+    	return BizConnecter.getBizData("602803", JsonUtils.object2Json(req), Object.class);
+    }
+    public Object queryAddresses(String code, String userId, String isDefault){
+    	XN602804Req req = new XN602804Req();
+    	if (StringUtils.isBlank(userId)) {
+            throw new BizException("A010001", "userId不能为空");
+        }
+    	req.setCode(code);
+    	req.setUserId(userId);
+    	req.setIsDefault(isDefault);
+    	return BizConnecter.getBizData("602804", JsonUtils.object2Json(req), Object.class);
+    }
+    public Object queryAddress(String code){
+    	XN602805Req req = new XN602805Req();
+    	if (StringUtils.isBlank(code)) {
+            throw new BizException("A010001", "userId不能为空");
+        }
+    	req.setCode(code);
+    	return BizConnecter.getBizData("602805", JsonUtils.object2Json(req), Object.class);
     }
 }

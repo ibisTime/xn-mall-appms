@@ -8,9 +8,9 @@
  */
 package com.xnjr.moom.front.ao;
 
-import com.xnjr.moom.front.res.XNfd0001Res;
-import com.xnjr.moom.front.res.XNfd0002Res;
-import com.xnjr.moom.front.res.XNfd0009Res;
+import com.xnjr.moom.front.res.XN805041Res;
+import com.xnjr.moom.front.res.XN805043Res;
+import com.xnjr.moom.front.res.XN805056Res;
 
 /** 
  * @author: miyb 
@@ -24,7 +24,7 @@ public interface IUserAO {
      * @create: 2016年1月21日 下午1:30:49 myb858
      * @history:
      */
-    public void checkMobileExit(String mobile);
+    public Object checkMobileExit(String mobile);
 
     /**
      * 用户注册
@@ -37,8 +37,8 @@ public interface IUserAO {
      * @create: 2015年9月19日 上午11:24:33 myb858
      * @history:
      */
-    public XNfd0001Res doRegister(String mobile, String loginPwd,
-            String registerIp, String userReferee, String smsCaptcha);
+    public XN805041Res doRegister(String mobile, String loginPwd,
+    		String userReferee, String smsCaptcha);
 
     /**
      * 身份认证
@@ -72,7 +72,7 @@ public interface IUserAO {
      * @history:
      */
 
-    public XNfd0002Res doLogin(String loginName, String loginPwd, String loginIp);
+    public XN805043Res doLogin(String loginName, String loginPwd);
 
     /**
      * 查询用户的详细信息
@@ -80,7 +80,7 @@ public interface IUserAO {
      * @create: 2014-12-10 下午7:37:18 miyb
      * @history:
      */
-    public XNfd0009Res doGetUser(String userId);
+    public XN805056Res doGetUser(String userId);
 
     /**
      * 找回登录密码
@@ -182,4 +182,65 @@ public interface IUserAO {
      * @history:
      */
     Object doKyc(String userId);
+    
+    /**
+     * 添加收件地址
+     * @param userId
+     * @param addressee
+     * @param mobile
+     * @param province
+     * @param city
+     * @param district
+     * @param detailAddress
+     * @param isDefault
+     * @return
+     */
+    public Object addAddress(String userId, String addressee, String mobile, 
+    		String province, String city, String district, String detailAddress, String isDefault);
+    
+    /**
+     * 删除收件地址
+     * @param code
+     * @return
+     */
+    public Object deleteAddress(String code);
+    
+    /**
+     * 修改收件地址
+     * @param code
+     * @param userId
+     * @param addressee
+     * @param mobile
+     * @param province
+     * @param city
+     * @param district
+     * @param detailAddress
+     * @param isDefault
+     * @return
+     */
+    public Object editAddress(String code, String userId, String addressee, String mobile, 
+    		String province, String city, String district, String detailAddress, String isDefault);
+    
+    /**
+     * 设置收件地址默认地址
+     * @param code
+     * @param userId
+     * @return
+     */
+    public Object setDefaultAddress(String code, String userId);
+    
+    /**
+     * 列表查询收件地址
+     * @param code
+     * @param userId
+     * @param isDefault
+     * @return
+     */
+    public Object queryAddresses(String code, String userId, String isDefault);
+    /**
+     * 详情查询收件地址
+     * @param code
+     * @return
+     */
+    public Object queryAddress(String code);
 }

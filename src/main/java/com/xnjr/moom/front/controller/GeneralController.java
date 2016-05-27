@@ -22,8 +22,7 @@ import com.xnjr.moom.front.ao.IGeneralAO;
 import com.xnjr.moom.front.ao.ISmsAO;
 import com.xnjr.moom.front.ao.IUserAO;
 import com.xnjr.moom.front.enums.ESmsBizType;
-import com.xnjr.moom.front.res.XN801400Res;
-import com.xnjr.moom.front.res.XNfd0009Res;
+import com.xnjr.moom.front.res.XN805056Res;
 
 /** 
  * @author: miyb 
@@ -50,7 +49,7 @@ public class GeneralController extends BaseController {
     @RequestMapping(value = "/smscaptcha/send", method = RequestMethod.POST)
     @ResponseBody
     public boolean sendSmsCaptcha(@RequestParam("bizType") String bizType) {
-    	XNfd0009Res user = userAO.doGetUser(this.getSessionUser().getUserId());
+    	XN805056Res user = userAO.doGetUser(this.getSessionUser().getUserId());
         sendPhoneCode(bizType, user.getMobile());
         return true;
     }

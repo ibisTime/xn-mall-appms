@@ -15,15 +15,18 @@ public class CommodityController extends BaseController {
 	@Autowired
 	ICommodityAO commodityAO;
 	
+	//列表查询产品
     @RequestMapping(value = "/queryProduces", method = RequestMethod.GET)
     @ResponseBody
-	public Object queryProduces(@RequestParam(value = "type", required = false) String type,
+	public Object queryProduces(
+			@RequestParam(value = "type", required = false) String type,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "updater", required = false) String updater,
             @RequestParam(value = "status", required = false) String status){
     	return commodityAO.queryProduces(type, name, updater, status);
 	}
     
+    //详情查询产品
     @RequestMapping(value = "/queryProduce", method = RequestMethod.GET)
     @ResponseBody
 	public Object queryProduce( 
@@ -31,4 +34,22 @@ public class CommodityController extends BaseController {
     	
     	return commodityAO.queryProduce(code);
 	}
+    
+    //查询列表型号
+    @RequestMapping(value = "/queryListModel", method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryListModel(
+    		@RequestParam(value = "code", required = false) String code,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "productCode", required = false) String productCode){
+    	return commodityAO.queryListModel(code, name, status, productCode);
+    }
+    //详情查询型号
+    @RequestMapping(value = "/queryModel", method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryModel(
+    		@RequestParam("code") String code){
+    	return commodityAO.queryModel(code);
+    }
 }

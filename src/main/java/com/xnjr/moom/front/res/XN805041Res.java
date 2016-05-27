@@ -1,14 +1,14 @@
 package com.xnjr.moom.front.res;
 
-public class XNfd0001Res {
+public class XN805041Res {
 
     // 用户编号
     private String userId;
 
-    public XNfd0001Res() {
+    public XN805041Res() {
     }
 
-    public XNfd0001Res(String userId) {
+    public XN805041Res(String userId) {
         this.userId = userId;
     }
 

@@ -1,0 +1,250 @@
+<#assign title="提交订单"/>
+<#assign controller="SubmitOrder"/>
+<#include 'layout/layout.html'/>
+<#macro content>
+<div class="container browser-webkit account-address" id="container"
+	style="background-color: #FAFAFA; width: 100%; padding-top: 40px; padding-bottom: 40px;">
+	<div class="user-info-body">
+		<div class="user-content no-lr-margin">
+			<div class="cont-title">
+				<h2>收货信息</h2>
+			</div>
+			<div class="cont-body" style="background-color: #fff;">
+				<div class="so-list-item cb-list-item h-auto no-lr-margin">
+					<ul class="inline-div d-order-ul" id="orderAddressUl" style="height: 162px;overflow: hidden;position: relative;">
+						<!-- <li class="pad24 on">
+							<i></i>
+							<ul class="li-block">
+								<li class="pd-btm10">吴联请<span class="pd-l5">(默认地址)</span></li>
+								<li class="pd-btm10">12312311231</li>
+								<li>浙江省&nbsp;杭州市&nbsp;余杭区<br>梦想小镇天使村5号楼3楼雄牛科技</li>
+							</ul>
+						</li>
+						<li class="pad24">
+							<i></i>
+							<ul class="li-block">
+								<li class="pd-btm10">吴联请</li>
+								<li class="pd-btm10">12312311231</li>
+								<li>浙江省&nbsp;杭州市&nbsp;余杭区<br>梦想小镇天使村5号楼3楼雄牛科技</li>
+							</ul>
+						</li>
+						<li class="pad24">
+							<i></i>
+							<ul class="li-block">
+								<li class="pd-btm10">吴联请</li>
+								<li class="pd-btm10">12312311231</li>
+								<li>浙江省&nbsp;杭州市&nbsp;余杭区<br>梦想小镇天使村5号楼3楼雄牛科技</li>
+							</ul>
+						</li>
+						<li class="pad24">
+							<i></i>
+							<ul class="li-block">
+								<li class="pd-btm10">吴联请</li>
+								<li class="pd-btm10">12312311231</li>
+								<li>浙江省&nbsp;杭州市&nbsp;余杭区<br>梦想小镇天使村5号楼3楼雄牛科技</li>
+							</ul>
+						</li>
+						<li class="pad24 new-address" id="newAddress">
+							<span class="block-sp"></span>
+							<p>使用新地址</p>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="user-content no-lr-margin margin-t50">
+			<div class="cont-title">
+				<h2>发票类型</h2>
+			</div>
+			<div class="sbt-or cont-body browser-webkit" style="padding: 20px 0;font-size: 13px;background-color: #fff;">
+				<div>
+					<span>发票类型：</span>
+					<div class="so-list-item cb-list-item h-auto no-lr-margin address-form">
+						<div class="module-form-row form-item-select">
+							<div class="module-form-item-wrapper no-icon small-item select-item city-wrapper module-small-error-wrapper">
+								<select name="city_code" class="city js-form-city js-verify" id="receipt" style="width: 120px;">
+									<option value="0">无</option>
+									<option value="1">个人</option>
+									<option value="2">公司</option>
+								</select>
+								<div class="form-item-select-after"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="margin-t7 margin-b12">
+					<span>发票抬头：</span>
+					<div class="module-form-row fn-clear" style="display: inline-block;">
+						<div class="module-form-item-wrapper no-icon small-item small-item-location">
+							<i>发票抬头</i>
+							<input type="text" id="receiptTitle" class="js-verify" value="">
+							<div class="verify-error"></div>
+						</div>
+					</div>
+				</div>
+				<div><span>发票内容： 购买商品明细 </span></div>
+			</div>
+		</div>
+		<div class="user-content no-lr-margin  margin-t50">
+			<div class="cont-title">
+				<h2>购物清单</h2>
+			</div>
+			<div class="cont-body" style="background-color: #fff;">
+				<div class="cb-nav">
+					<span class="d-order-name">商品名称</span>
+					<span class="d-order-unit">单价</span>
+					<span class="d-order-count">数量</span>
+					<span class="d-order-amount">小计</span>
+				</div>
+				<div class="cb-list-item h-auto no-lr-margin">
+					<ul class="inline-div block-li d-order-ul" id="orderUl">
+						<li class="pad24">
+							<div class="d-order-img"><img src="${staticUrl}/images/1.png"/></div>
+							<div class="d-order-item-info">
+								<ul>
+									<li class="d-order-name-li">胶囊咖啡机</li>
+									<li class="d-order-unit">￥600.00</li>
+									<li class="d-order-count"><input type="number" id="count" style="width:70px;" value=""></li>
+									<li class="d-order-amount">￥6000.00</li>
+								</ul>
+								<div><span>商品型号：<span>LZP-5000</span></div>
+							</div>
+						</li>
+					</ul>
+					<div class="d-order-total so-order-total">商品总计：￥<span id="totalAmount">6000.00</span><span class="button" id="sbtn">提交订单</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <div class="iframe_dialog register_dialog" style="z-index: 100;" data-dojo-attach-point="iframe_dialog">
+<div class="login_mask hide"></div>
+<div class="so_confirm" style="display: none;">
+	<div class="confirm_title">
+		<h2>确认信息</h2>
+	</div>
+	<div class="confirm_body">
+		<div class="cb-info">
+			<div class="cb-info-l"></div>
+			<div class="cb-info-r">
+				<span>
+					收货信息：<br>
+					吴联请，15698742369<br>
+					浙江省&nbsp;杭州市&nbsp;余杭区&nbsp;梦想小镇天使村5号楼雄牛科技
+				</span>
+			</div>
+		</div>
+		<div class="cb-info">
+			<div class="cb-info-l info-icon"></div>
+			<div class="cb-info-r">
+				<span>
+					发票信息：<br>
+					电子发票：个人<br>
+				</span>
+			</div>
+		</div>
+		<div class="cb-btn">
+			<span class="button cancel-btn">取消</span>
+			<span class="button float-r">确认</span>
+		</div>
+	</div>
+</div>
+</div> -->
+<!-- 
+<div class="iframe_dialog register_dialog" style="z-index: 100;" data-dojo-attach-point="iframe_dialog">
+<div class="login_mask hide"></div>
+<div class="module-dialog fn-clear module-dialog-address module-dialog-show" style="z-index: 10000;opacity:1;">
+	<div class="dialog-panel" style="position: absolute;top: 0;bottom: 0;margin: auto;left: 0;right: 0;">
+		<div class="topbar">
+			<div class="dialog-tit fn-clear">
+				<h4 class="js-dialog-title">管理收货地址</h4>
+			</div> 
+			<span class="dialog-close png"></span>
+		</div> 
+		<div class="dialog-con js-dialog-container margin-r8">
+			<div class="animate-layer">
+				<div class="dialog-inner js-address-add" style="padding: 20px 0;">
+					<div class="save-address-box" style="padding: 58px 0 0;">
+						<div class="address-form fn-clear">
+							<div class="fn-clear">
+								<div class="module-form-row form-item">
+									<div class="module-form-item-wrapper no-icon small-item">
+										<i>收货人姓名</i>
+										<input type="text" name="accept_name" class="js-verify" value="">
+										<div class="verify-error"></div>
+									</div>
+								</div>
+								<div class="module-form-row form-item">
+									<div class="module-form-item-wrapper no-icon small-item small-item-mobile">
+										<i>手机号</i>
+										<input type="text" name="mobile" class="js-verify" value="">
+										<div class="verify-error"></div>
+									</div>
+								</div>
+							</div>
+							<div class="fn-clear">
+								<div class="module-form-row form-item">
+									<div class="module-form-item-wrapper no-icon small-item small-item-telephone-area">
+										<i>区号(可选)</i>
+										<input type="text" name="area_code" class="js-verify js-address-area-code" value="">
+										<div class="verify-error"></div>
+									</div>
+								</div>
+								<div class="module-form-row form-item">
+									<div class="module-form-item-wrapper no-icon small-item small-item-telephone">
+										<i>固定电话(可选)</i>
+										<input type="text" name="telephone" class="js-verify js-address-telephone" value="">
+										<div class="verify-error"></div>
+									</div>
+								</div>
+							</div>
+							<div class="fn-clear">
+								<div class="module-form-row form-item-select">
+									<div class="module-form-item-wrapper no-icon small-item select-item province-wrapper" style="box-shadow: 0 -2px 3px rgba(0,0,0,.06) inset;background: -webkit-linear-gradient(top,#fdfdfd,#f1f1f1);background: -moz-linear-gradient(top,#fdfdfd,#f1f1f1);background: -ms-linear-gradient(top,#fdfdfd,#f1f1f1);background: -o-linear-gradient(top,#fdfdfd,#f1f1f1);background: linear-gradient(top,#fdfdfd,#f1f1f1);">
+										<select name="province_code" class="province js-form-province js-verify">
+											<option value="0">请选择省份</option>
+										</select>
+										<div class="form-item-select-after"></div>
+									</div>
+								</div> 
+								<div class="module-form-row form-item-select"> 
+									<div class="module-form-item-wrapper no-icon small-item select-item city-wrapper" style="width:142px;box-shadow: 0 -2px 3px rgba(0,0,0,.06) inset;background: -webkit-linear-gradient(top,#fdfdfd,#f1f1f1);background: -moz-linear-gradient(top,#fdfdfd,#f1f1f1);background: -ms-linear-gradient(top,#fdfdfd,#f1f1f1);background: -o-linear-gradient(top,#fdfdfd,#f1f1f1);background: linear-gradient(top,#fdfdfd,#f1f1f1);"> 
+										<select name="city_code" class="city js-form-city js-verify"> 
+											<option value="0">请选择城市</option>
+										</select>
+										<div class="form-item-select-after"></div>
+									</div>
+								</div>
+								<div class="module-form-row form-item-select">
+									<div class="module-form-item-wrapper no-icon small-item select-item district-wrapper" style="width:122px;box-shadow: 0 -2px 3px rgba(0,0,0,.06) inset;background: -webkit-linear-gradient(top,#fdfdfd,#f1f1f1);background: -moz-linear-gradient(top,#fdfdfd,#f1f1f1);background: -ms-linear-gradient(top,#fdfdfd,#f1f1f1);background: -o-linear-gradient(top,#fdfdfd,#f1f1f1);background: linear-gradient(top,#fdfdfd,#f1f1f1);">
+										<select name="district_code" class="district js-form-district js-verify">
+											<option value="0">请选择区县</option>
+											<option value="999999">其他</option>
+										</select>
+										<div class="form-item-select-after"></div>
+									</div>
+								</div>
+							</div>
+							<div class="module-form-row fn-clear">
+								<div class="module-form-item-wrapper no-icon small-item small-item-location">
+									<i>街道编号/名称，楼宇名称</i>
+									<input type="text" name="street" class="js-verify" value="">
+									<div class="verify-error"></div>
+								</div>
+							</div>
+							<div class="module-form-row fn-clear">
+								<input type="checkbox" name="default" style="vertical-align: middle;" value="1">设为默认地址 
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fn-clear so-btns">
+			<div style="float:right;"><span class="button" style="background-color: #EFA636;">保存</span></div>
+			<div><span class="button" style="background-color: #F8F8F8;color: #e0444d;display:inline-block;">取消</span></div>
+		</div>
+	</div>
+</div>
+</div> -->
+</#macro>

@@ -25,6 +25,8 @@ public class BizConnecter {
     public static final String SMS_URL = ConfigProperties.Config.SMS_URL;
 
     public static final String MALL_URL = ConfigProperties.Config.MALL_URL;
+    
+    public static final String USER_URL = ConfigProperties.Config.USER_URL;
 
     public static <T> T getBizData(String code, String json, Class<T> clazz) {
         String data = getBizData(code, json);
@@ -60,6 +62,10 @@ public class BizConnecter {
         String postUrl = null;
         if (code.startsWith("601") || code.startsWith("602")) {
             postUrl = MALL_URL;
+        }else if(code.startsWith("805")){
+        	postUrl = USER_URL;
+        }else if(code.startsWith("79900")){
+        	postUrl = SMS_URL;
         }
         return postUrl;
     }

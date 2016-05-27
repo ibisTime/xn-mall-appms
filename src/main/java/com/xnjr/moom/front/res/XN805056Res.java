@@ -2,7 +2,7 @@ package com.xnjr.moom.front.res;
 
 import java.util.Date;
 
-public class XNfd0009Res {
+public class XN805056Res {
     // userId
     private String userId;
 

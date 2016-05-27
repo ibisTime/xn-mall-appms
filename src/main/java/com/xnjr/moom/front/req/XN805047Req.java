@@ -1,6 +1,6 @@
 package com.xnjr.moom.front.req;
 
-public class XNfd0006Req {
+public class XN805047Req {
 
     // 用户编号（必填）
     private String userId;

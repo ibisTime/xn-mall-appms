@@ -29,24 +29,26 @@ public class BaseController {
      * @return
      */
     protected SessionUser getSessionUser() {
-        SessionUser user = (SessionUser) UserDetailHolder.getUserDetail();
+        SessionUser user = (SessionUser) sessionProvider.getUserDetail();
         return user;
     }
 
     protected SessionUser getSessionUser(String userId) {
         SessionUser user = null;
         if (StringUtils.isBlank(userId)) {
-            user = (SessionUser) UserDetailHolder.getUserDetail();
+            user = getSessionUser();
         } else {
             user = new SessionUser();
             user.setUserId(userId);
         }
         return user;
     }
-
+    protected void setSessionUser(SessionUser user) {
+    	sessionProvider.setUserDetail(user);
+    }
     protected String getSessionUserId(String userId) {
         if (StringUtils.isBlank(userId)) {
-            SessionUser user = (SessionUser) UserDetailHolder.getUserDetail();
+            SessionUser user = getSessionUser();
             userId = user.getUserId();
         }
         return userId;

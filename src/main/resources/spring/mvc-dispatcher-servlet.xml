@@ -98,7 +98,7 @@
 		<property name="defaultErrorView" value="error/error" />
 		<property name="exceptionMappings">
 			<props>
-				<prop key="SessionTimeoutException">redirect:/user/signin.htm</prop>				
+				<prop key="SessionTimeoutException">redirect:/user/login.htm</prop>				
 			</props>
 		</property>
 		<property name="statusCodes">
@@ -133,7 +133,7 @@
 		<bean class="com.xnjr.moom.front.base.ContextInterceptor"/>
 		
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-			<!-- //改变语言时所用的参数名称 -->
+			<!-- 改变语言时所用的参数名称 -->
 			<property name="paramName" value="lang" />
 		</bean>
 		<mvc:interceptor>
@@ -144,35 +144,27 @@
 			<mvc:mapping path="/project/**" />
 			<mvc:mapping path="/subject/**" />
 			<mvc:mapping path="/business/**" />
+			<mvc:mapping path="/operators/**" />
 			<mvc:mapping path="/operator/**" />
 			
-			<mvc:exclude-mapping path="/account/instant/pay/callback" />
-			<mvc:exclude-mapping path="/user/signin.htm" />
-			<mvc:exclude-mapping path="/user/register.htm" />
-			<!--注册相关 start  -->
-			<mvc:exclude-mapping path="/user/signup.htm"/>
+			<mvc:exclude-mapping path="/operator/buy.htm"/>
+			
+			<!-- 注册相关 start  -->
 			<mvc:exclude-mapping path="/gene/register/send" />
 			<mvc:exclude-mapping path="/user/mobile/check" />
 		 	<mvc:exclude-mapping path="/user/regist" />
-		 	<mvc:exclude-mapping path="/user/signup_success.htm" />
-		 	<!--注册相关 end  -->
-		 	<!--登录登出相关 start  -->
-		 	<mvc:exclude-mapping path="/main/index.htm"/>
+		 	<!-- 注册相关 end 
+		 	登录登出相关 start  -->
 		 	<mvc:exclude-mapping path="/user/login"/>
 		 	<mvc:exclude-mapping path="/user/logout"/>
-		 	<!--登录登出相关 end  -->
-		 	<!--找回登录密码相关 start  -->
-		 	<mvc:exclude-mapping path="/user/pwdloss.htm"/>
-		 	<mvc:exclude-mapping path="/user/pwd_r.htm"/>
-		 	<mvc:exclude-mapping path="/user/find_psd*.htm" />
+		 	<!-- 登录登出相关 end 
+		 	找回登录密码相关 start  -->
+		 	<mvc:exclude-mapping path="/user/loginpwd/find"/>
 		 	<mvc:exclude-mapping path="/gene/findloginpwd/send" />
 		 	<mvc:exclude-mapping path="/user/loginpwd/find"/>
-		 	<mvc:exclude-mapping path="/user/forget_password.htm"/>
-		 	<!--找回登录密码相关 end  -->
-		 	<mvc:exclude-mapping path="/system/version.htm" />
-		 	<mvc:exclude-mapping path="/index*" />
-		 	
-		 	
+		 	<mvc:exclude-mapping path="/user/login.htm"/>
+		 	<mvc:exclude-mapping path="/user/findPwd.htm"/>
+		 <!-- 	找回登录密码相关 end  -->
 			<ref bean="sessionInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
