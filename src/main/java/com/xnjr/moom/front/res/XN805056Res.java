@@ -3,20 +3,19 @@ package com.xnjr.moom.front.res;
 import java.util.Date;
 
 public class XN805056Res {
+	
+
     // userId
     private String userId;
 
     // 手机号
     private String mobile;
 
-    // 登陆密码
-    // private String loginPwd;
-
     // 登陆密码强度
     private String loginPwdStrength;
 
-    // 身份[身份位（一位）+等级（三位，999级高于1级）：1001表示1级借资人；2010表示10级又借资人又金主；3100表示纯金主；9001表示1级平台人员]
-    private String userKind;
+    // 身份
+    private String kind;
 
     // 推荐人
     private String userReferee;
@@ -29,9 +28,166 @@ public class XN805056Res {
 
     // 真实姓名
     private String realName;
+	
+    private String loginName;
+    
+    private String remark;
+    
+    public String getUserId() {
+		return userId;
+	}
 
-    // 安全密码
-    // private String tradePwd;
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getLoginPwdStrength() {
+		return loginPwdStrength;
+	}
+
+	public void setLoginPwdStrength(String loginPwdStrength) {
+		this.loginPwdStrength = loginPwdStrength;
+	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+	public String getUserReferee() {
+		return userReferee;
+	}
+
+	public void setUserReferee(String userReferee) {
+		this.userReferee = userReferee;
+	}
+
+	public String getIdKind() {
+		return idKind;
+	}
+
+	public void setIdKind(String idKind) {
+		this.idKind = idKind;
+	}
+
+	public String getIdNo() {
+		return idNo;
+	}
+
+	public void setIdNo(String idNo) {
+		this.idNo = idNo;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getUpdateDatetime() {
+		return updateDatetime;
+	}
+
+	public void setUpdateDatetime(String updateDatetime) {
+		this.updateDatetime = updateDatetime;
+	}
+
+	public String getUpdater() {
+		return updater;
+	}
+
+	public void setUpdater(String updater) {
+		this.updater = updater;
+	}
+
+	public String getTradePwdStrength() {
+		return tradePwdStrength;
+	}
+
+	public void setTradePwdStrength(String tradePwdStrength) {
+		this.tradePwdStrength = tradePwdStrength;
+	}
+
+	public Date getCreateDatetime() {
+		return createDatetime;
+	}
+
+	public void setCreateDatetime(Date createDatetime) {
+		this.createDatetime = createDatetime;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getServeList() {
+		return serveList;
+	}
+
+	public void setServeList(String serveList) {
+		this.serveList = serveList;
+	}
+
+	public String getQuoteList() {
+		return quoteList;
+	}
+
+	public void setQuoteList(String quoteList) {
+		this.quoteList = quoteList;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public String getIndividualCode() {
+		return individualCode;
+	}
+
+	public void setIndividualCode(String individualCode) {
+		this.individualCode = individualCode;
+	}
+
+	private String updateDatetime;
+    
+    private String updater;
 
     // 安全密码强度
     private String tradePwdStrength;
@@ -53,125 +209,5 @@ public class XN805056Res {
     
     // 个体户
     private String individualCode;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getLoginPwdStrength() {
-        return loginPwdStrength;
-    }
-
-    public void setLoginPwdStrength(String loginPwdStrength) {
-        this.loginPwdStrength = loginPwdStrength;
-    }
-
-    public String getUserKind() {
-        return userKind;
-    }
-
-    public void setUserKind(String userKind) {
-        this.userKind = userKind;
-    }
-
-    public String getUserReferee() {
-        return userReferee;
-    }
-
-    public void setUserReferee(String userReferee) {
-        this.userReferee = userReferee;
-    }
-
-    public String getIdKind() {
-        return idKind;
-    }
-
-    public void setIdKind(String idKind) {
-        this.idKind = idKind;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public String getTradePwdStrength() {
-        return tradePwdStrength;
-    }
-
-    public void setTradePwdStrength(String tradePwdStrength) {
-        this.tradePwdStrength = tradePwdStrength;
-    }
-
-    public Date getCreateDatetime() {
-        return createDatetime;
-    }
-
-    public void setCreateDatetime(Date createDatetime) {
-        this.createDatetime = createDatetime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getServeList() {
-        return serveList;
-    }
-
-    public void setServeList(String serveList) {
-        this.serveList = serveList;
-    }
-
-    public String getQuoteList() {
-        return quoteList;
-    }
-
-    public void setQuoteList(String quoteList) {
-        this.quoteList = quoteList;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-	public String getIndividualCode() {
-		return individualCode;
-	}
-
-	public void setIndividualCode(String individualCode) {
-		this.individualCode = individualCode;
-	}
 
 }

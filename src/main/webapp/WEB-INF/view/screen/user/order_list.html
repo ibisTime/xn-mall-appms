@@ -14,6 +14,7 @@
 					<li class="current"><a href="./order_list.htm">我的订单</a></li>
 					<li><a href="./user_info.htm">账户资料</a></li>
 					<li><a href="./user_address.htm">收货地址</a></li>
+					<li><a href='./after_service.htm'>售后服务</a></li>
 				</ul>
 			</div>
 		</div>
@@ -21,17 +22,10 @@
 			<div class="cont-title">
 				<h2>我的订单</h2>
 				<div class="gray-btn-menu sort-status-menu" style="position: relative;"><!-- gray-btn-menu-on -->
-					<span class="label" id="order_status" style="width: 64px;">
+					<span class="label" id="order_status" style="width: 90px;">
 						<i class="arrow"></i><span>全部状态</span>
 					</span>
-					<ul class="menu-list hide-ul" id="status_ul">
-						<li class="selected" status="0"><a>全部状态</a></li>
-						<li class="" status="1"><a>待支付</a></li>
-						<li class="" status="3"><a>待发货</a></li>
-						<li class="" status="4"><a>待收货</a></li>
-						<li class="" status="5"><a>已收货</a></li>
-						<li class="" status="2"><a>已取消</a></li>
-					</ul>
+					<ul class="menu-list hide-ul" id="status_ul"></ul>
 				</div>
 			</div>
 			<div class="cont-body">
@@ -40,24 +34,40 @@
 					<!-- <li>
 						<div class="cb-nav">
 							<span class="order-date">2016-05-21</span>
-							<span class="order-no">订单号：<span>11111255488</span></span>
+							<span class="order-no" style="width: 240px;">订单号：<span>11111255488</span></span>
 							<span class="order-unit">单价</span>
 							<span class="order-count">数量</span>
 							<span class="order-amount">应付总额</span>
 							<span class="order-detail">查看详情</span>
 						</div>
-						<div class="cb-list-item pad24">
+						<div class="cb-list-item ol-list-item">
+							<ul style="display:inline-block;">
+								<li class="order-img"><img src="${staticUrl}/images/1.png"/></li>
+								<li class="order-name"><span>胶囊咖啡机</span></li>
+								<li class="order-unit">￥123.00</li>
+								<li class="order-count">20</li>
+							</ul>
 							<ul>
 								<li class="order-img"><img src="${staticUrl}/images/1.png"/></li>
 								<li class="order-name"><span>胶囊咖啡机</span></li>
 								<li class="order-unit">￥123.00</li>
-								<li class="order-count bd-right">20</li>
-								<li class="order-amount">￥24600.00</li>
-								<li class="order-detail no-pay"><span class="button">现在付款</span></li>
+								<li class="order-count">20</li>
 							</ul>
+							<ul>
+								<li class="order-img"><img src="${staticUrl}/images/1.png"/></li>
+								<li class="order-name"><span>胶囊咖啡机</span></li>
+								<li class="order-unit">￥123.00</li>
+								<li class="order-count">20</li>
+							</ul>
+							<div>
+								<ul>
+									<li class="order-amount">￥24600.00</li>
+									<li class="order-detail no-pay"><span class="button">现在付款</span></li>
+								</ul>
+							</div>
 						</div>
-					</li>
-					<li>
+					</li> -->
+					<!-- <li>
 						<div class="cb-nav">
 							<span class="order-date">2016-05-21</span>
 							<span class="order-no">订单号：<span>11111255488</span></span>

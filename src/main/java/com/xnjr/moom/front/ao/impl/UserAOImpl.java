@@ -18,8 +18,10 @@ import com.xnjr.moom.front.req.XN801212Req;
 import com.xnjr.moom.front.req.XN805040Req;
 import com.xnjr.moom.front.req.XN805041Req;
 import com.xnjr.moom.front.req.XN805043Req;
+import com.xnjr.moom.front.req.XN805045Req;
 import com.xnjr.moom.front.req.XN805048Req;
 import com.xnjr.moom.front.req.XN805049Req;
+import com.xnjr.moom.front.req.XN805051Req;
 import com.xnjr.moom.front.req.XNfd0003Req;
 import com.xnjr.moom.front.req.XNfd0004Req;
 import com.xnjr.moom.front.req.XNfd0005Req;
@@ -100,18 +102,18 @@ public class UserAOImpl implements IUserAO {
             throw new BizException("A010001", "用户编号不能为空");
         }
         if (StringUtils.isBlank(tradePwd)) {
-            throw new BizException("A010001", "安全密码不能为空");
+            throw new BizException("A010001", "交易密码不能为空");
         }
         if (StringUtils.isBlank(smsCaptcha)) {
             throw new BizException("A010001", "验证码不能为空");
         }
-        XNfd0005Req req = new XNfd0005Req();
+        XN805045Req req = new XN805045Req();
         req.setUserId(userId);
         req.setTradePwd(tradePwd);
         req.setTradePwdStrength(PwdUtil.calculateSecurityLevel(tradePwd));
         req.setSmsCaptcha(smsCaptcha);
-        BizConnecter.getBizData("fd0005", JsonUtils.object2Json(req),
-            XNfd0005Res.class);
+        BizConnecter.getBizData("805045", JsonUtils.object2Json(req),
+            Object.class);
     }
 
     @Override
@@ -130,6 +132,7 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
+    //XN805056Res
     public XN805056Res doGetUser(String userId) {
         if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "用户编号不能为空");
@@ -163,7 +166,7 @@ public class UserAOImpl implements IUserAO {
     public void doResetLoginPwd(String userId, String oldLoginPwd,
             String newLoginPwd) {
         if (StringUtils.isBlank(userId)) {
-            throw new BizException("A010001", "userId不能为空");
+            throw new BizException("A010001", "用户编号不能为空");
         }
         if (StringUtils.isBlank(oldLoginPwd)) {
             throw new BizException("A010001", "原登录密码不能为空");
@@ -198,7 +201,7 @@ public class UserAOImpl implements IUserAO {
     public void doResetTradePwd(String userId, String oldTradePwd,
             String newTradePwd) {
         if (StringUtils.isBlank(userId)) {
-            throw new BizException("A010001", "userId不能为空");
+            throw new BizException("A010001", "用户编号不能为空");
         }
         if (StringUtils.isBlank(oldTradePwd)) {
             throw new BizException("A010001", "原交易密码不能为空");
@@ -206,12 +209,13 @@ public class UserAOImpl implements IUserAO {
         if (StringUtils.isBlank(newTradePwd)) {
             throw new BizException("A010001", "新交易密码不能为空");
         }
-        XN801212Req req = new XN801212Req();
+        XN805051Req req = new XN805051Req();
         req.setUserId(userId);
         req.setOldTradePwd(oldTradePwd);
         req.setNewTradePwd(newTradePwd);
-        BizConnecter.getBizData("801212", JsonUtils.object2Json(req),
-            XN801212Res.class);
+        req.setTradePwdStrength(PwdUtil.calculateSecurityLevel(newTradePwd));
+        BizConnecter.getBizData("805051", JsonUtils.object2Json(req),
+            Object.class);
     }
 
     @Override
@@ -223,7 +227,7 @@ public class UserAOImpl implements IUserAO {
         req.setSmsCaptcha(smsCaptcha);
         req.setTradePwd(tradePwd);
         BizConnecter.getBizData("805047", JsonUtils.object2Json(req),
-            XNfd0006Res.class);
+            Object.class);
     }
 
     @Override
@@ -285,7 +289,7 @@ public class UserAOImpl implements IUserAO {
     public Object addAddress(String userId, String addressee, String mobile, 
     		String province, String city, String district, String detailAddress, String isDefault){
     	if (StringUtils.isBlank(userId)) {
-            throw new BizException("A010001", "userId不能为空");
+            throw new BizException("A010001", "用户编号不能为空");
         }
         if (StringUtils.isBlank(addressee)) {
             throw new BizException("A010001", "收件人不能为空");
@@ -330,7 +334,7 @@ public class UserAOImpl implements IUserAO {
     public Object editAddress(String code, String userId, String addressee, String mobile, 
     		String province, String city, String district, String detailAddress, String isDefault){
     	if (StringUtils.isBlank(userId)) {
-            throw new BizException("A010001", "userId不能为空");
+            throw new BizException("A010001", "用户编号不能为空");
         }
         if (StringUtils.isBlank(addressee)) {
             throw new BizException("A010001", "收件人不能为空");
@@ -374,7 +378,7 @@ public class UserAOImpl implements IUserAO {
         	throw new BizException("A010001", "收件编号不能为空");
         }
     	if (StringUtils.isBlank(userId)) {
-            throw new BizException("A010001", "userId不能为空");
+            throw new BizException("A010001", "用户编号不能为空");
         }
     	req.setCode(code);
     	req.setUserId(userId);
@@ -383,7 +387,7 @@ public class UserAOImpl implements IUserAO {
     public Object queryAddresses(String code, String userId, String isDefault){
     	XN602804Req req = new XN602804Req();
     	if (StringUtils.isBlank(userId)) {
-            throw new BizException("A010001", "userId不能为空");
+            throw new BizException("A010001", "用户编号不能为空");
         }
     	req.setCode(code);
     	req.setUserId(userId);
@@ -393,7 +397,7 @@ public class UserAOImpl implements IUserAO {
     public Object queryAddress(String code){
     	XN602805Req req = new XN602805Req();
     	if (StringUtils.isBlank(code)) {
-            throw new BizException("A010001", "userId不能为空");
+            throw new BizException("A010001", "用户编号不能为空");
         }
     	req.setCode(code);
     	return BizConnecter.getBizData("602805", JsonUtils.object2Json(req), Object.class);

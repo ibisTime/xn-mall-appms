@@ -15,8 +15,8 @@ package com.xnjr.moom.front.enums;
  */
 public enum ESmsBizType {
     REGISTER("805041", "注册"), FINDLOGINPWD("805048", "找回登陆密码"), RESETLOGINPWD("3",
-            "重置登陆密码"), SETTRADEPWD("4", "设置交易密码"), FINDTRADEPWD("5", "找回交易密码"), RESETTRADEPWD(
-            "6", "重置交易密码"), CHANGEMOBILE("7", "修改手机号码");
+            "重置登陆密码"), SETTRADEPWD("805045", "设置交易密码"), FINDTRADEPWD("5", "找回交易密码"), RESETTRADEPWD(
+            "6", "重置交易密码"), CHANGEMOBILE("805047", "修改手机号码");
 
     ESmsBizType(String code, String value) {
         this.code = code;

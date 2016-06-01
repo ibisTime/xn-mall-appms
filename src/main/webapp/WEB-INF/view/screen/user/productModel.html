@@ -1,0 +1,27 @@
+<#assign title="产品型号"/>
+<#assign controller="ProductModel"/>
+<#include 'layout/layout.html'/>
+<#macro content>
+	<div class="container product-model" id="container" style="padding: 70px 0;">
+		<div class="product-model-search">
+			<span>产品名称</span><input id="productName" type="text"/>
+			<span class="model-name-span">型号名称</span><input id="modelName" type="text"/>
+			<span class="button" id="pmSearch">查询</span>
+		</div>
+		<div>
+			<table id="pm-table">
+				<thead><tr><th>商品信息</th><th>所属产品</th><th style="width: 100px;">单价</th><th style="width:115px;">操作</th></tr></thead>
+				<tbody>
+					<tr><td colspan="4"><i class='loading-icon' style="height: 442px;"></i></td></tr>
+					<!-- <tr>
+						<td class="pm-img"><img src="${staticUrl}/images/reg-img01.jpg"/>型号名称</td>
+						<td>产品名称</td>
+						<td>600.00</td>
+						<td><span class="button">我要批发</span></td>
+					</tr> -->
+				</tbody>
+			</table>
+		</div>
+		<div id="pagination_div"></div>
+	</div>
+</#macro>

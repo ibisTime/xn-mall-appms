@@ -68,7 +68,7 @@ public class CaptchaController {
         boolean flag = imageCaptchaService.validateResponseForID(sessionId,
             captcha);
         if (!flag) { // 验证码正确
-            throw new BizException("83099901", "验证码不正确");
+            throw new BizException("83099901", "图片验证码不正确");
         }
         return true;
     }

@@ -45,6 +45,24 @@ public class CommodityController extends BaseController {
             @RequestParam(value = "productCode", required = false) String productCode){
     	return commodityAO.queryListModel(code, name, status, productCode);
     }
+    
+
+    //查询列表型号
+    @RequestMapping(value = "/queryPageModel", method = RequestMethod.POST)
+    @ResponseBody
+    public Object queryPageModel(
+    		@RequestParam(value = "code", required = false) String code,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "productCode", required = false) String productCode,
+            @RequestParam("start") String start,
+            @RequestParam("limit") String limit,
+            @RequestParam(value = "orderColumn", required = false) String orderColumn,
+            @RequestParam(value = "orderDir", required = false) String orderDir,
+            @RequestParam(value = "productName", required = false) String productName){
+    	return commodityAO.queryPageModel(code, name, status, productCode, start, limit, orderColumn, orderDir, productName);
+    }
+    
     //详情查询型号
     @RequestMapping(value = "/queryModel", method = RequestMethod.GET)
     @ResponseBody

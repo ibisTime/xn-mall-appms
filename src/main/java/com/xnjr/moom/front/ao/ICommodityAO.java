@@ -32,4 +32,18 @@ public interface ICommodityAO {
 	 * @return
 	 */
 	public Object queryModel(String code);
+	/**
+	 * 分页查询型号
+	 * @param code
+	 * @param name
+	 * @param status
+	 * @param productCode
+	 * @param start
+	 * @param limit
+	 * @param orderColumn
+	 * @param orderDir
+	 * @return
+	 */
+	public Object queryPageModel(String code, String name, String status, String productCode,
+			String start, String limit, String orderColumn, String orderDir, String productName);
 }
