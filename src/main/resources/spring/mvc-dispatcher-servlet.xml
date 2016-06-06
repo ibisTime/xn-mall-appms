@@ -140,7 +140,7 @@
 			<mvc:mapping path="/gene/smscaptcha/send" />
 			<mvc:mapping path="/user/**" />
 			<mvc:mapping path="/company/**" />
-			<mvc:mapping path="/account/**" />
+			<!-- <mvc:mapping path="/account/**" /> -->
 			<mvc:mapping path="/project/**" />
 			<mvc:mapping path="/subject/**" />
 			<mvc:mapping path="/business/**" />

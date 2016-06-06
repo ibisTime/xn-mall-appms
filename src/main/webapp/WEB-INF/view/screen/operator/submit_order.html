@@ -42,6 +42,7 @@
 							<div class="verify-error"></div>
 						</div>
 					</div>
+					<span style="color: rgb(245, 32, 32);font-size: 12px;margin-left: 10px;">字数少于32位</span>
 				</div>
 				<div><span>发票内容： 购买商品明细 </span></div>
 			</div>
@@ -73,7 +74,15 @@
 							</div>
 						</li> -->
 					</ul>
-					<div class="d-order-total so-order-total">商品总计：￥<span id="totalAmount"></span><span class="button" id="sbtn">提交订单</span></div>
+					<div class="d-order-total so-order-total">
+						<div style="float:left;padding-left: 24px"><span>备注：</span>
+						<div class="module-form-row fn-clear" style="display: inline-block;">
+							<div style="width:336px;" class="module-form-item-wrapper no-icon small-item small-item-location">
+								<i>备注</i>
+								<input style="width:309px" type="text" id="so-bz" class="js-verify" value="">
+								<div class="verify-error"></div>
+							</div>
+						</div></div>商品总计：￥<span id="totalAmount"></span><span class="button" id="sbtn">提交订单</span></div>
 				</div>
 			</div>
 		</div>

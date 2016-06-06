@@ -38,7 +38,7 @@ public interface IUserAO {
      * @history:
      */
     public XN805041Res doRegister(String mobile, String loginPwd,
-    		String userReferee, String smsCaptcha);
+            String userReferee, String smsCaptcha);
 
     /**
      * 身份认证
@@ -182,7 +182,7 @@ public interface IUserAO {
      * @history:
      */
     Object doKyc(String userId);
-    
+
     /**
      * 添加收件地址
      * @param userId
@@ -195,16 +195,17 @@ public interface IUserAO {
      * @param isDefault
      * @return
      */
-    public Object addAddress(String userId, String addressee, String mobile, 
-    		String province, String city, String district, String detailAddress, String isDefault);
-    
+    public Object addAddress(String userId, String addressee, String mobile,
+            String province, String city, String district,
+            String detailAddress, String isDefault);
+
     /**
      * 删除收件地址
      * @param code
      * @return
      */
     public Object deleteAddress(String code);
-    
+
     /**
      * 修改收件地址
      * @param code
@@ -218,9 +219,10 @@ public interface IUserAO {
      * @param isDefault
      * @return
      */
-    public Object editAddress(String code, String userId, String addressee, String mobile, 
-    		String province, String city, String district, String detailAddress, String isDefault);
-    
+    public Object editAddress(String code, String userId, String addressee,
+            String mobile, String province, String city, String district,
+            String detailAddress, String isDefault);
+
     /**
      * 设置收件地址默认地址
      * @param code
@@ -228,7 +230,7 @@ public interface IUserAO {
      * @return
      */
     public Object setDefaultAddress(String code, String userId);
-    
+
     /**
      * 列表查询收件地址
      * @param code
@@ -237,6 +239,7 @@ public interface IUserAO {
      * @return
      */
     public Object queryAddresses(String code, String userId, String isDefault);
+
     /**
      * 详情查询收件地址
      * @param code

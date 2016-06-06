@@ -18,12 +18,12 @@ import com.xnjr.moom.front.exception.BizException;
 import com.xnjr.moom.front.http.BizConnecter;
 import com.xnjr.moom.front.http.JsonUtils;
 import com.xnjr.moom.front.req.XN802005Req;
+import com.xnjr.moom.front.req.XN802010Req;
+import com.xnjr.moom.front.req.XN802020Req;
 import com.xnjr.moom.front.req.XN803900Req;
-import com.xnjr.moom.front.req.XNfd0031Req;
 import com.xnjr.moom.front.req.XNfd0032Req;
 import com.xnjr.moom.front.req.XNfd0050Req;
 import com.xnjr.moom.front.res.Page;
-import com.xnjr.moom.front.res.XN803900Res;
 
 /** 
  * @author: miyb 
@@ -43,25 +43,61 @@ public class AccountAOImpl implements IAccountAO {
 
     @SuppressWarnings("rawtypes")
     @Override
-    public Page queryAccountDetail(String userId, String bizType,
-            String dateStart, String dateEnd, String start, String limit,
-            String orderColumn, String orderDir) {
+    public Page queryAccountDetail(String userId, String accountNumber,
+            String ajNo, String status, String start, String limit,
+            String bizType, String refNo, String workDate, String checkUser,
+            String dateStart, String dateEnd) {
+        if (StringUtils.isBlank(accountNumber)) {
+            throw new BizException("A010001", "账号不能为空");
+        }
         if (StringUtils.isBlank(start)) {
             throw new BizException("A010001", "页数不能为空");
         }
         if (StringUtils.isBlank(limit)) {
             throw new BizException("A010001", "限制条数不能为空");
         }
-        XNfd0031Req req = new XNfd0031Req();
-        req.setUserId(userId);
+        if (StringUtils.isBlank(userId)) {
+            throw new BizException("A010001", "用户编号不能为空");
+        }
+        XN802020Req req = new XN802020Req();
+        req.setAccountNumber(accountNumber);
+        req.setAjNo(ajNo);
         req.setBizType(bizType);
-        req.setDateStart(dateStart);
+        req.setCheckUser(checkUser);
         req.setDateEnd(dateEnd);
-        req.setStart(start);
+        req.setDateStart(dateStart);
         req.setLimit(limit);
-        req.setOrderColumn(orderColumn);
-        req.setOrderDir(orderDir);
-        return BizConnecter.getBizData("fd0031", JsonUtils.object2Json(req),
+        req.setRefNo(refNo);
+        req.setStart(start);
+        req.setStatus(status);
+        req.setWorkDate(workDate);
+        req.setUserId(userId);
+        return BizConnecter.getBizData("XN802020", JsonUtils.object2Json(req),
+            Page.class);
+    }
+
+    public Page getAccountPageInfos(String userId, String accountNumber,
+            String status, String realName, String dateStart, String dateEnd,
+            String start, String limit) {
+        if (StringUtils.isBlank(start)) {
+            throw new BizException("A010001", "页数不能为空");
+        }
+        if (StringUtils.isBlank(limit)) {
+            throw new BizException("A010001", "限制条数不能为空");
+        }
+        if (StringUtils.isBlank(userId)) {
+            throw new BizException("A010001", "用户编号不能为空");
+        }
+        XN802010Req req = new XN802010Req();
+        req.setAccountNumber(accountNumber);
+        req.setDateEnd(dateEnd);
+        req.setDateStart(dateStart);
+        req.setLimit(limit);
+        req.setRealName(realName);
+        req.setStart(start);
+        req.setStatus(status);
+        req.setUserId(userId);
+        return BizConnecter.getBizData("802010", JsonUtils.object2Json(req),
             Page.class);
     }
 
@@ -110,8 +146,8 @@ public class AccountAOImpl implements IAccountAO {
     public Object getSumPP(String userId) {
         XN803900Req req = new XN803900Req();
         req.setUserId(userId);
-        return BizConnecter.getBizData("yw4900", JsonUtils.string2Json("userId", userId),
-            Object.class);
+        return BizConnecter.getBizData("yw4900",
+            JsonUtils.string2Json("userId", userId), Object.class);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.xnjr.moom.front.ao;
 import java.util.List;
 
 import com.xnjr.moom.front.res.Page;
-import com.xnjr.moom.front.res.XN803900Res;
 
 /** 
  * @author: miyb 
@@ -24,21 +23,41 @@ public interface IAccountAO {
     /**
      * 查询资金明细
      * @param userId
+     * @param accountNumber
      * @param ajNo
+     * @param status
+     * @param start
+     * @param limit
      * @param bizType
+     * @param refNo
+     * @param workDate
+     * @param checkUser
      * @param dateStart
      * @param dateEnd
-     * @param orderColumn
-     * @param orderDir
+     * @return 
+     * @history:
+     */
+    Page queryAccountDetail(String userId, String accountNumber, String ajNo,
+            String status, String start, String limit, String bizType,
+            String refNo, String workDate, String checkUser, String dateStart,
+            String dateEnd);
+
+    /**
+     * 分页查询账户列表
+     * @param userId
+     * @param accountNumber
+     * @param status
+     * @param realName
+     * @param dateStart
+     * @param dateEnd
      * @param start
      * @param limit
      * @return 
-     * @create: 2015-5-17 上午10:35:55 xieyj
      * @history:
      */
-    Page queryAccountDetail(String userId, String bizType, String dateStart,
-            String dateEnd, String start, String limit, String orderColumn,
-            String orderDir);
+    Page getAccountPageInfos(String userId, String accountNumber,
+            String status, String realName, String dateStart, String dateEnd,
+            String start, String limit);
 
     /*
      * 查询冻结明细

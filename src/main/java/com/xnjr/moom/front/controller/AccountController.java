@@ -13,7 +13,6 @@ import com.xnjr.moom.front.ao.IAccountAO;
 import com.xnjr.moom.front.ao.IUserAO;
 import com.xnjr.moom.front.enums.EBoolean;
 import com.xnjr.moom.front.res.Page;
-import com.xnjr.moom.front.res.XN803900Res;
 
 /** 
  * @author: miyb 
@@ -39,21 +38,42 @@ public class AccountController extends BaseController {
 
     // *********查询账户资产 end****
 
+    // 分页查询账户资料
+    @RequestMapping(value = "infos/page", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getAccountPageInfos(
+            @RequestParam(value = "userId", required = false) String userId,
+            @RequestParam(value = "accountNumber", required = false) String accountNumber,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "realName", required = false) String realName,
+            @RequestParam(value = "dateStart", required = false) String dateStart,
+            @RequestParam(value = "dateEnd", required = false) String dateEnd,
+            @RequestParam("start") String start,
+            @RequestParam("limit") String limit) {
+        return accountAO.getAccountPageInfos(getSessionUserId(userId),
+            accountNumber, status, realName, dateStart, dateEnd, start, limit);
+    }
+
     // *********查询资金明细start****
     @SuppressWarnings("rawtypes")
     @RequestMapping(value = "/detail/page", method = RequestMethod.GET)
     @ResponseBody
     public Page queryAccountDetail(
             @RequestParam(value = "userId", required = false) String userId,
-            @RequestParam(value = "bizType", required = false) String bizType,
-            @RequestParam(value = "dateStart", required = false) String dateStart,
-            @RequestParam(value = "dateEnd", required = false) String dateEnd,
+            @RequestParam(value = "accountNumber", required = false) String accountNumber,
+            @RequestParam(value = "ajNo", required = false) String ajNo,
+            @RequestParam(value = "status", required = false) String status,
             @RequestParam("start") String start,
             @RequestParam("limit") String limit,
-            @RequestParam(value = "orderColumn", required = false) String orderColumn,
-            @RequestParam(value = "orderDir", required = false) String orderDir) {
-        return accountAO.queryAccountDetail(getSessionUserId(userId), bizType,
-            dateStart, dateEnd, start, limit, orderColumn, orderDir);
+            @RequestParam(value = "bizType", required = false) String bizType,
+            @RequestParam(value = "refNo", required = false) String refNo,
+            @RequestParam(value = "workDate", required = false) String workDate,
+            @RequestParam(value = "checkUser", required = false) String checkUser,
+            @RequestParam(value = "dateStart", required = false) String dateStart,
+            @RequestParam(value = "dateEnd", required = false) String dateEnd) {
+        return accountAO.queryAccountDetail(getSessionUserId(userId),
+            accountNumber, ajNo, status, start, limit, bizType, refNo,
+            workDate, checkUser, dateStart, dateEnd);
     }
 
     // *********查询资金明细end****
@@ -109,7 +129,7 @@ public class AccountController extends BaseController {
     @RequestMapping(value = "/sumpp", method = RequestMethod.GET)
     @ResponseBody
     public Object getSumPP(
-    		@RequestParam(value = "userId", required = false) String userId) {
+            @RequestParam(value = "userId", required = false) String userId) {
         return accountAO.getSumPP(getSessionUserId(userId));
     }
 
