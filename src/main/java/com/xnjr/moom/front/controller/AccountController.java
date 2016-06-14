@@ -58,22 +58,17 @@ public class AccountController extends BaseController {
     @SuppressWarnings("rawtypes")
     @RequestMapping(value = "/detail/page", method = RequestMethod.GET)
     @ResponseBody
-    public Page queryAccountDetail(
+    public Object queryAccountDetail(
             @RequestParam(value = "userId", required = false) String userId,
             @RequestParam(value = "accountNumber", required = false) String accountNumber,
             @RequestParam(value = "ajNo", required = false) String ajNo,
-            @RequestParam(value = "status", required = false) String status,
             @RequestParam("start") String start,
             @RequestParam("limit") String limit,
             @RequestParam(value = "bizType", required = false) String bizType,
-            @RequestParam(value = "refNo", required = false) String refNo,
-            @RequestParam(value = "workDate", required = false) String workDate,
-            @RequestParam(value = "checkUser", required = false) String checkUser,
             @RequestParam(value = "dateStart", required = false) String dateStart,
             @RequestParam(value = "dateEnd", required = false) String dateEnd) {
         return accountAO.queryAccountDetail(getSessionUserId(userId),
-            accountNumber, ajNo, status, start, limit, bizType, refNo,
-            workDate, checkUser, dateStart, dateEnd);
+            accountNumber, ajNo, start, limit, bizType, dateStart, dateEnd);
     }
 
     // *********查询资金明细end****
@@ -114,6 +109,18 @@ public class AccountController extends BaseController {
     }
 
     // *********查询充值取现end****
+
+    @SuppressWarnings("rawtypes")
+    @RequestMapping(value = "/doWithdraw", method = RequestMethod.POST)
+    @ResponseBody
+    public Object withdraw(@RequestParam("accountNumber") String accountNumber,
+            @RequestParam("amount") String amount,
+            @RequestParam("toType") String toType,
+            @RequestParam("toCode") String toCode,
+            @RequestParam("tradePwd") String tradePwd) {
+        return accountAO.withdraw(accountNumber, amount, toType, toCode,
+            tradePwd);
+    }
 
     // *********获取银行列表 start****
 

@@ -98,7 +98,7 @@
 		<property name="defaultErrorView" value="error/error" />
 		<property name="exceptionMappings">
 			<props>
-				<prop key="SessionTimeoutException">redirect:/user/login.htm</prop>				
+				<prop key="SessionTimeoutException">redirect:/home/index.htm</prop>				
 			</props>
 		</property>
 		<property name="statusCodes">
@@ -140,7 +140,7 @@
 			<mvc:mapping path="/gene/smscaptcha/send" />
 			<mvc:mapping path="/user/**" />
 			<mvc:mapping path="/company/**" />
-			<!-- <mvc:mapping path="/account/**" /> -->
+			<mvc:mapping path="/account/**" />
 			<mvc:mapping path="/project/**" />
 			<mvc:mapping path="/subject/**" />
 			<mvc:mapping path="/business/**" />

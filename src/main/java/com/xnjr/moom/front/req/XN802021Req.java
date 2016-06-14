@@ -1,6 +1,6 @@
 package com.xnjr.moom.front.req;
 
-public class XN802020Req {
+public class XN802021Req {
     // 账户编号
     private String userId;
 
@@ -10,20 +10,8 @@ public class XN802020Req {
     // 明细编号
     private String ajNo;
 
-    // 状态
-    private String status;
-
     // 业务类型 10=虚拟币兑换, 11=充值, -11=取现, 12=转入, -12=转出, 19=蓝补, -19=红冲
     private String bizType;
-
-    // 关联号
-    private String refNo;
-
-    // 对账日
-    private String workDate;
-
-    // 对账人
-    private String checkUser;
 
     // 起始时间
     private String dateStart;
@@ -61,44 +49,12 @@ public class XN802020Req {
         this.ajNo = ajNo;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getBizType() {
         return bizType;
     }
 
     public void setBizType(String bizType) {
         this.bizType = bizType;
-    }
-
-    public String getRefNo() {
-        return refNo;
-    }
-
-    public void setRefNo(String refNo) {
-        this.refNo = refNo;
-    }
-
-    public String getWorkDate() {
-        return workDate;
-    }
-
-    public void setWorkDate(String workDate) {
-        this.workDate = workDate;
-    }
-
-    public String getCheckUser() {
-        return checkUser;
-    }
-
-    public void setCheckUser(String checkUser) {
-        this.checkUser = checkUser;
     }
 
     public String getDateStart() {
@@ -132,4 +88,5 @@ public class XN802020Req {
     public void setLimit(String limit) {
         this.limit = limit;
     }
+
 }

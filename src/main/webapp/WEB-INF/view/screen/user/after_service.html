@@ -5,20 +5,7 @@
 <div class="container browser-webkit account-address" id="container"
 	style="background-color: #FAFAFA; width: 100%; padding-top: 20px; padding-bottom: 20px;">
 	<div class="user-info-body">
-		<div class="user-sidebar">
-			<div class="avatar">
-				<img src="${staticUrl}/images/04481549.png" />
-			</div>
-			<div class="box-inner">
-				<ul class="account-nav">
-					<li><a href="./order_list.htm">我的订单</a></li>
-					<li><a href="./user_info.htm">账户资料</a></li>
-					<li><a href='./user_address.htm'>收货地址</a></li>
-					<li class="current"><a href='./after_service.htm'>售后服务</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="user-content"  id="as-fw" style="overflow: hidden;">
+		<div class="user-content ml0"  id="as-fw" style="overflow: hidden;">
 			<div class="cont-title">
 				<h2>售后服务</h2>
 				<span class="ct-span as_wxd"><a id="asWxd">我的维修单</a></span>
@@ -40,7 +27,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="user-content" id="as-bx" style="overflow: hidden;display: none;">
+		<div class="user-content ml0" id="as-bx" style="overflow: hidden;display: none;">
 			<div class="cont-title">
 				<h2>我要报修</h2>
 			</div>
@@ -50,7 +37,7 @@
 						<tr><th>货品编号：</th><td id="goodsCode"></td></tr>
 						<tr><th>所属型号：</th><td id="modelName"></td></tr>
 						<tr><th>所属产品：</th><td id="productName"></td></tr>
-						<tr><th>报修人：</th><td><input id="applyUser" type="text"/></td></tr>
+						<tr><th>报&nbsp;&nbsp;修&nbsp;&nbsp;人：</th><td><input id="applyUser" type="text"/></td></tr>
 						<tr><th>联系方式：</th><td><input id="contact" type="text"/></td></tr>
 						<tr><th>问题描述：</th><td><textarea id="applyReason" rows="8" cols="50"></textarea></td></tr>
 						<tr><th><span class="button as-back" id="backBtn">返回</span></th><td><span style="margin-left: 270px;" class="button as-commit" id="commitBtn">提交</span></td></tr>
@@ -58,7 +45,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="user-content"  id="as-wxd" style="overflow: hidden;display:none;">
+		<div class="user-content ml0"  id="as-wxd" style="overflow: hidden;display:none;">
 			<div class="cont-title">
 				<h2>我的维修单</h2>
 			</div>
@@ -81,7 +68,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="pagination_div" style="margin-left:210px;"></div>
+		<div id="pagination_div"></div>
 	</div>
 </div>
 </#macro>

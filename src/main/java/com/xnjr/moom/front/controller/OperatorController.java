@@ -193,4 +193,40 @@ public class OperatorController extends BaseController {
             goodsCode, applyUser, status, updater, start, limit, orderColumn,
             orderDir);
     }
+
+    // 分页查询受款账号
+    @RequestMapping(value = "page/accountNumber", method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryPageAccountNumber(
+            @RequestParam(value = "companyCode", required = false) String companyCode,
+            @RequestParam(value = "subbranch", required = false) String subbranch,
+            @RequestParam(value = "cardNo", required = false) String cardNo,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam("start") String start,
+            @RequestParam("limit") String limit,
+            @RequestParam(value = "orderColumn", required = false) String orderColumn,
+            @RequestParam(value = "orderDir", required = false) String orderDir) {
+        return operatorAO.queryPageAccountNumber(companyCode, subbranch,
+            cardNo, status, start, limit, orderColumn, orderDir);
+    }
+
+    // 分页查询受款账号
+    @RequestMapping(value = "list/accountNumber", method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryAccountNumberList(
+            @RequestParam(value = "companyCode", required = false) String companyCode,
+            @RequestParam(value = "subbranch", required = false) String subbranch,
+            @RequestParam(value = "cardNo", required = false) String cardNo,
+            @RequestParam(value = "status", required = false) String status) {
+        return operatorAO.queryAccountNumberList(companyCode, subbranch,
+            cardNo, status);
+    }
+
+    // 详情查询受款账号
+    @RequestMapping(value = "queryAccountNumber", method = RequestMethod.GET)
+    @ResponseBody
+    public Object queryAccountNumber(
+            @RequestParam(value = "code", required = false) String code) {
+        return operatorAO.queryAccountNumber(code);
+    }
 }

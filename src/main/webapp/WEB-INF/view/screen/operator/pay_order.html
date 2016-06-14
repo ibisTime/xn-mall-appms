@@ -6,7 +6,7 @@
 	style="background-color: #FAFAFA; width: 100%; padding-top: 40px; padding-bottom: 40px;">
 	<div class="user-info-body">
 		<div id="alipayImg"></div>
-		<div class="user-content no-lr-margin">
+		<div id="po-top" class="user-content no-lr-margin" style="display: none;">
 			<div class="cont-title">
 				<h2>支付订单</h2>
 			</div>
@@ -25,6 +25,33 @@
 				</div>
 			</div>
 		</div>
+		<div id="po-pfs-top" class="user-content no-lr-margin" style="display: none;">
+			<div class="cont-title">
+				<h2>我的订单</h2>
+			</div>
+			<div class="cont-body" style="background-color: #fff;">
+				<div class="cb-list-item h-auto no-lr-margin">
+					<p class="po-pfs-dd" style="line-height: 150px; text-align: center;">
+						<i></i>
+						<span style="line-height: 1.2em;display: inline-block;vertical-align: middle;font-size: 20px;margin-left: 71px;">
+							恭喜您，订单提交成功<br>
+							<span style="font-size: 14px;">客服会在24小时之内与您联系！</span>
+						</span>
+					</p>
+				</div>
+				<div class="cb-nav">
+					<span>汇款账户信息</span>
+				</div>
+				<div class="cb-list-item h-auto no-lr-margin">
+					<ul id="bInfo" class="btm-d po-func qds-po-ul" id="pay_order_img">
+						<li><span>户名：</span><span id="uName" style="padding-left: 34px;"></span></li>
+						<li><span>开户银行：</span><span id="oName" style='padding-left: 4px;'></span></li>
+						<li><span>账号：</span><span id="cName" style="padding-left: 34px;"></span></li>
+					</ul>
+					<div class="d-order-total so-order-total" style="font-size:14px;"><div style="float:left;padding-left:24px;">订单编号：<span id="pfs-code"></span></div><span>待付款</span></div>
+				</div>
+			</div>
+		</div>
 		<div class="user-content no-lr-margin  margin-t50">
 			<div class="cont-title">
 				<h2>购物清单</h2>
@@ -39,18 +66,6 @@
 				<div class="cb-list-item h-auto no-lr-margin">
 					<ul class="inline-div block-li d-order-ul" id="po-ul">
 						<i class='loading-icon'></i>
-						<!-- <li class="pad24">
-							<div class="d-order-img"><img src="${staticUrl}/images/1.png"/></div>
-							<div class="d-order-item-info">
-								<ul>
-									<li class="d-order-name-li">胶囊咖啡机</li>
-									<li class="d-order-unit">￥600.00</li>
-									<li class="d-order-count">10</li>
-									<li class="d-order-amount">￥6000.00</li>
-								</ul>
-								<div><span>商品型号：<span>LZP-5000</span></div>
-							</div>
-						</li> -->
 					</ul>
 					<div class="d-order-total" id="po-total"></div>
 				</div>
@@ -58,10 +73,15 @@
 					<span>收货信息</span>
 				</div>
 				<div class="cb-list-item d-order-info no-border">
-					<ul id="po-address">
-						<!-- <li class="block-li">姓名：<span>吴联请</span></li>
-						<li class="block-li">联系电话：<span>12345678963</span></li>
-						<li class="block-li">详细地址：<span>浙江省杭州市余杭区梦想小镇天使村5幢3楼</span></li> -->
+					<ul id="po-address"></ul>
+				</div>
+				<div class="cb-nav">
+					<span class="order-date">发票信息</span>
+				</div>
+				<div class="cb-list-item d-order-info">
+					<ul>
+						<li class="block-li">发票类型：<span id="od-rtype"></span></li>
+						<li class="block-li">发票抬头：<span id="od-rtitle"></span></li>
 					</ul>
 				</div>
 			</div>

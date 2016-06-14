@@ -6,6 +6,7 @@ import java.util.Properties;
 
 public class ConfigProperties {
     private static Properties props;
+
     static {
         props = new Properties();
         try {
@@ -23,10 +24,12 @@ public class ConfigProperties {
         public static String SMS_URL = props.getProperty("SMS_URL");
 
         public static String MALL_URL = props.getProperty("MALL_URL");
-        
+
         public static String USER_URL = props.getProperty("USER_URL");
-        
+
         public static String IDENTIFY_URL = props.getProperty("IDENTIFY_URL");
+
+        public static String ACCOUNT_URL = props.getProperty("ACCOUNT_URL");
 
         // #****** picture server config ******
         public static String URL_PREFIX = props.getProperty("URL_PREFIX");
@@ -42,6 +45,5 @@ public class ConfigProperties {
         public static String PRE_DIR = props.getProperty("PRE_DIR");
 
         public static String FILE_PRE_DIR = props.getProperty("FILE_PRE_DIR");
-
     }
 }

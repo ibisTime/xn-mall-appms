@@ -25,21 +25,16 @@ public interface IAccountAO {
      * @param userId
      * @param accountNumber
      * @param ajNo
-     * @param status
      * @param start
      * @param limit
      * @param bizType
-     * @param refNo
-     * @param workDate
-     * @param checkUser
      * @param dateStart
      * @param dateEnd
      * @return 
      * @history:
      */
-    Page queryAccountDetail(String userId, String accountNumber, String ajNo,
-            String status, String start, String limit, String bizType,
-            String refNo, String workDate, String checkUser, String dateStart,
+    Object queryAccountDetail(String userId, String accountNumber, String ajNo,
+            String start, String limit, String bizType, String dateStart,
             String dateEnd);
 
     /**
@@ -85,5 +80,18 @@ public interface IAccountAO {
 
     // 获取用户累计本金和累计收益
     Object getSumPP(String userId);
+
+    /**
+     * 线下取现
+     * @param accountNumber
+     * @param amount
+     * @param toType
+     * @param toCode
+     * @param tradePwd
+     * @return 
+     * @history:
+     */
+    public Object withdraw(String accountNumber, String amount, String toType,
+            String toCode, String tradePwd);
 
 }

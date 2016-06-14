@@ -19,7 +19,8 @@ import com.xnjr.moom.front.http.BizConnecter;
 import com.xnjr.moom.front.http.JsonUtils;
 import com.xnjr.moom.front.req.XN802005Req;
 import com.xnjr.moom.front.req.XN802010Req;
-import com.xnjr.moom.front.req.XN802020Req;
+import com.xnjr.moom.front.req.XN802021Req;
+import com.xnjr.moom.front.req.XN802211Req;
 import com.xnjr.moom.front.req.XN803900Req;
 import com.xnjr.moom.front.req.XNfd0032Req;
 import com.xnjr.moom.front.req.XNfd0050Req;
@@ -43,9 +44,8 @@ public class AccountAOImpl implements IAccountAO {
 
     @SuppressWarnings("rawtypes")
     @Override
-    public Page queryAccountDetail(String userId, String accountNumber,
-            String ajNo, String status, String start, String limit,
-            String bizType, String refNo, String workDate, String checkUser,
+    public Object queryAccountDetail(String userId, String accountNumber,
+            String ajNo, String start, String limit, String bizType,
             String dateStart, String dateEnd) {
         if (StringUtils.isBlank(accountNumber)) {
             throw new BizException("A010001", "账号不能为空");
@@ -59,21 +59,17 @@ public class AccountAOImpl implements IAccountAO {
         if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "用户编号不能为空");
         }
-        XN802020Req req = new XN802020Req();
+        XN802021Req req = new XN802021Req();
         req.setAccountNumber(accountNumber);
         req.setAjNo(ajNo);
         req.setBizType(bizType);
-        req.setCheckUser(checkUser);
         req.setDateEnd(dateEnd);
         req.setDateStart(dateStart);
         req.setLimit(limit);
-        req.setRefNo(refNo);
         req.setStart(start);
-        req.setStatus(status);
-        req.setWorkDate(workDate);
         req.setUserId(userId);
-        return BizConnecter.getBizData("XN802020", JsonUtils.object2Json(req),
-            Page.class);
+        return BizConnecter.getBizData("802021", JsonUtils.object2Json(req),
+            Object.class);
     }
 
     public Page getAccountPageInfos(String userId, String accountNumber,
@@ -165,6 +161,33 @@ public class AccountAOImpl implements IAccountAO {
         req.setOrderDir(orderDir);
         return BizConnecter.getBizData("fd0050", JsonUtils.object2Json(req),
             Page.class);
+    }
+
+    public Object withdraw(String accountNumber, String amount, String toType,
+            String toCode, String tradePwd) {
+        if (StringUtils.isBlank(accountNumber)) {
+            throw new BizException("A010001", "账号不能为空");
+        }
+        if (StringUtils.isBlank(amount)) {
+            throw new BizException("A010001", "取现金额不能为空");
+        }
+        if (StringUtils.isBlank(toCode)) {
+            throw new BizException("A010001", "去方编号不能为空");
+        }
+        if (StringUtils.isBlank(tradePwd)) {
+            throw new BizException("A010001", "交易密码不能为空");
+        }
+        if (StringUtils.isBlank(toType)) {
+            throw new BizException("A010001", "去方类型不能为空");
+        }
+        XN802211Req req = new XN802211Req();
+        req.setAccountNumber(accountNumber);
+        req.setAmount(amount);
+        req.setToCode(toCode);
+        req.setToType(toType);
+        req.setTradePwd(tradePwd);
+        return BizConnecter.getBizData("802211", JsonUtils.object2Json(req),
+            Object.class);
     }
 
 }

@@ -8,11 +8,7 @@
 		<div class="user-content no-lr-margin">
 			<div class="cont-title" style="padding-right:24px;">
 				<h2>订单编号：<span id="od-id"></span></h2>
-				<div class="cont-title-menu-item no-pointer" id="od-title">
-					<!-- <span class="button cancel-btn">取消订单</span>
-					<span class="button">现在支付</span>
-					<span>已完成</span> -->
-				</div>
+				<div class="cont-title-menu-item no-pointer" id="od-title"></div>
 			</div>
 			<div class="cont-body" style="background-color: #fff;">
 				<div class="cb-nav">
@@ -24,18 +20,6 @@
 				<div class="cb-list-item h-auto no-lr-margin">
 					<ul class="inline-div block-li d-order-ul" id="od-ul">
 						<i class="loading-icon"></i>
-						<!-- <li class="pad24">
-							<div class="d-order-img"><img src="${staticUrl}/images/1.png"/></div>
-							<div class="d-order-item-info">
-								<ul>
-									<li class="d-order-name-li">胶囊咖啡机</li>
-									<li class="d-order-unit">￥600.00</li>
-									<li class="d-order-count">10</li>
-									<li class="d-order-amount">￥6000.00</li>
-								</ul>
-								<div><span>商品型号：<span>LZP-5000</span></div>
-							</div>
-						</li> -->
 					</ul>
 					<div class="d-order-total" id="od-total"></div>
 				</div>
@@ -44,16 +28,13 @@
 				</div>
 				<div class="cb-list-item d-order-info no-border">
 					<ul id="od-address">
-						<!-- <li class="block-li">姓名：<span>吴联请</span></li>
-						<li class="block-li">联系电话：<span>12345678963</span></li>
-						<li class="block-li">详细地址：<span>浙江省杭州市余杭区梦想小镇天使村5幢3楼</span></li> -->
 						<i class="loading-icon" style="height: 124px;position: absolute;top: 0;left: 50%;margin-left: -16px;"></i>
 					</ul>
 				</div>
 				<div class="cb-nav">
 					<span class="order-date">发票信息</span>
 				</div>
-				<div class="cb-list-item d-order-info">
+				<div class="cb-list-item d-order-info" style="border-bottom:none;">
 					<ul>
 						<li class="block-li">发票类型：<span id="od-rtype"></span></li>
 						<li class="block-li">发票抬头：<span id="od-rtitle"></span></li>
@@ -62,7 +43,7 @@
 				<div id="logisticsTitle" class="cb-nav" style="display:none;">
 					<span class="order-date">物流信息</span>
 				</div>
-				<div id="logisticsInfo" class="cb-list-item d-order-info" style="display:none;">
+				<div id="logisticsInfo" class="cb-list-item d-order-info" style="display:none;border-bottom:none;">
 					<ul>
 						<li class="block-li">物流公司：<span id="logisticsComp"></span></li>
 						<li class="block-li">物流单号：<span id="logisticsNO"></span></li>
@@ -70,6 +51,16 @@
 						<li class="block-li">发货人：<span id="deliverer"></span></li>
 					</ul>
 				</div>
+				<div class="cb-nav" style="display:none;" id="b-info-t">
+					<span>汇款账户信息</span>
+                </div>
+                <div style="display:none;border-bottom:none;" id="b-info-b" class="cb-list-item h-auto no-lr-margin">
+	                <ul id="bInfo" class="btm-d po-func qds-po-ul" style="padding: 20px 0;">
+		                <li><span>户名：</span><span id="uName" style="padding-left: 34px;"></span></li>
+		                <li><span>开户银行：</span><span id="oName" style='padding-left: 4px;'></span></li>
+		                <li><span>账号：</span><span id="cName" style="padding-left: 34px;"></span></li>
+	                </ul>
+                </div>
 			</div>
 		</div>
 	</div>

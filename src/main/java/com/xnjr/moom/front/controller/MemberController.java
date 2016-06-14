@@ -19,6 +19,7 @@ import com.xnjr.moom.front.enums.ETermType;
 import com.xnjr.moom.front.exception.BizException;
 import com.xnjr.moom.front.localToken.UserDAO;
 import com.xnjr.moom.front.res.XN805043Res;
+import com.xnjr.moom.front.res.XN805056Res;
 import com.xnjr.moom.front.session.ISessionProvider;
 import com.xnjr.moom.front.session.SessionUser;
 
@@ -96,7 +97,7 @@ public class MemberController extends BaseController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
-    public Object doGetUser(
+    public XN805056Res doGetUser(
             @RequestParam(value = "userId", required = false) String userId) {
         return userAO.doGetUser(getSessionUserId(userId));
     }

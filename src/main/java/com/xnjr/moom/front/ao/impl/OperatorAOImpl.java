@@ -25,6 +25,9 @@ import com.xnjr.moom.front.req.XN602027Req;
 import com.xnjr.moom.front.req.XN602061Req;
 import com.xnjr.moom.front.req.XN602080Req;
 import com.xnjr.moom.front.req.XN602081Req;
+import com.xnjr.moom.front.req.XN602403Req;
+import com.xnjr.moom.front.req.XN602404Req;
+import com.xnjr.moom.front.req.XN602405Req;
 
 @Service
 public class OperatorAOImpl implements IOperatorAO {
@@ -348,6 +351,46 @@ public class OperatorAOImpl implements IOperatorAO {
         req.setOrderDir(orderDir);
         req.setStart(start);
         return BizConnecter.getBizData("602081", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    public Object queryPageAccountNumber(String companyCode, String subbranch,
+            String cardNo, String status, String start, String limit,
+            String orderColumn, String orderDir) {
+        if (StringUtils.isBlank(start)) {
+            throw new BizException("A010001", "开始页不能为空");
+        }
+        if (StringUtils.isBlank(limit)) {
+            throw new BizException("A010001", "每页个数不能为空");
+        }
+        XN602403Req req = new XN602403Req();
+        req.setCardNo(cardNo);
+        req.setCompanyCode(companyCode);
+        req.setSubbranch(subbranch);
+        req.setLimit(limit);
+        req.setStatus(status);
+        req.setOrderColumn(orderColumn);
+        req.setOrderDir(orderDir);
+        req.setStart(start);
+        return BizConnecter.getBizData("602403", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    public Object queryAccountNumberList(String companyCode, String subbranch,
+            String cardNo, String status) {
+        XN602404Req req = new XN602404Req();
+        req.setCardNo(cardNo);
+        req.setCompanyCode(companyCode);
+        req.setSubbranch(subbranch);
+        req.setStatus(status);
+        return BizConnecter.getBizData("602404", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    public Object queryAccountNumber(String code) {
+        XN602405Req req = new XN602405Req();
+        req.setCode(code);
+        return BizConnecter.getBizData("602405", JsonUtils.object2Json(req),
             Object.class);
     }
 }

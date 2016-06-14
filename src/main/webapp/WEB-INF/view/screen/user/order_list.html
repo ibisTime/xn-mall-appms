@@ -5,7 +5,7 @@
 <div class="container browser-webkit account-address" id="container"
 	style="background-color: #FAFAFA; width: 100%; padding-top: 20px; padding-bottom: 20px;">
 	<div class="user-info-body">
-		<div class="user-sidebar">
+		<div class="user-sidebar" style="display: none;">
 			<div class="avatar">
 				<img src="${staticUrl}/images/04481549.png" />
 			</div>
@@ -14,15 +14,14 @@
 					<li class="current"><a href="./order_list.htm">我的订单</a></li>
 					<li><a href="./user_info.htm">账户资料</a></li>
 					<li><a href="./user_address.htm">收货地址</a></li>
-					<li><a href='./after_service.htm'>售后服务</a></li>
 				</ul>
 			</div>
 		</div>
-		<div class="user-content" style="box-shadow: none;">
+		<div class="user-content" style="box-shadow: none;margin-left:0;">
 			<div class="cont-title">
 				<h2>我的订单</h2>
 				<div class="gray-btn-menu sort-status-menu" style="position: relative;"><!-- gray-btn-menu-on -->
-					<span class="label" id="order_status" style="width: 90px;">
+					<span class="label" id="order_status" style="width: 70px;">
 						<i class="arrow"></i><span>全部状态</span>
 					</span>
 					<ul class="menu-list hide-ul" id="status_ul"></ul>
