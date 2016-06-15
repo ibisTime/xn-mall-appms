@@ -116,7 +116,7 @@ public interface IUserAO {
      * @history:
      */
     public void doFindTradePwd(String userId, String newTradePwd,
-            String smsCaptcha, String idKind, String idNo);
+            String smsCaptcha);
 
     /**
      * 重置交易密码

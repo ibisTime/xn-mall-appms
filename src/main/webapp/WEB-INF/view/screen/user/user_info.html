@@ -8,7 +8,7 @@
 			<div class="avatar"><img src="${staticUrl}/images/04481549.png"/></div>
 			<div class="box-inner">
 				<ul class="account-nav">
-					<li style="display: none;"><a href='./order_list.htm'>我的订单</a></li>
+					<#if user.kind != "f2"><li><a href='./order_list.htm'>我的订单</a></li></#if>
 					<li class="current"><a href='./user_info.htm'>账户资料</a></li>
 					<li><a href='./user_address.htm'>收货地址</a></li>
 				</ul>
@@ -32,7 +32,7 @@
 				</div>
 				<div id="tradePwdDiv">
 					<div class="line-left-cont"><span>交易密码<br><span class="llc-tip">互联网账号存在被盗风险，建议您定期更改密码以保护账户安全</span></span><i class="mt_21"></i></div>
-					<div class="line-right-cont">
+					<div class="line-right-cont" id="tradePwdOp">
 						<a class="r-edit" target="_blank"></a>
 					</div>
 				</div>

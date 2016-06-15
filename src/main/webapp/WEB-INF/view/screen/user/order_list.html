@@ -5,7 +5,8 @@
 <div class="container browser-webkit account-address" id="container"
 	style="background-color: #FAFAFA; width: 100%; padding-top: 20px; padding-bottom: 20px;">
 	<div class="user-info-body">
-		<div class="user-sidebar" style="display: none;">
+		<#if user.kind != "f2">
+		<div class="user-sidebar">
 			<div class="avatar">
 				<img src="${staticUrl}/images/04481549.png" />
 			</div>
@@ -17,7 +18,8 @@
 				</ul>
 			</div>
 		</div>
-		<div class="user-content" style="box-shadow: none;margin-left:0;">
+		</#if>
+		<div class="user-content" style="box-shadow: none;<#if user.kind == "f2">margin-left:0;<#else>margin-left:230px;</#if>">
 			<div class="cont-title">
 				<h2>我的订单</h2>
 				<div class="gray-btn-menu sort-status-menu" style="position: relative;"><!-- gray-btn-menu-on -->

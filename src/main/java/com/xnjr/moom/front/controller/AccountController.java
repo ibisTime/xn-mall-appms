@@ -117,9 +117,10 @@ public class AccountController extends BaseController {
             @RequestParam("amount") String amount,
             @RequestParam("toType") String toType,
             @RequestParam("toCode") String toCode,
+            @RequestParam("toBelong") String toBelong,
             @RequestParam("tradePwd") String tradePwd) {
         return accountAO.withdraw(accountNumber, amount, toType, toCode,
-            tradePwd);
+            toBelong, tradePwd);
     }
 
     // *********获取银行列表 start****

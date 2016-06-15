@@ -164,7 +164,7 @@ public class AccountAOImpl implements IAccountAO {
     }
 
     public Object withdraw(String accountNumber, String amount, String toType,
-            String toCode, String tradePwd) {
+            String toCode, String toBelong, String tradePwd) {
         if (StringUtils.isBlank(accountNumber)) {
             throw new BizException("A010001", "账号不能为空");
         }
@@ -180,12 +180,16 @@ public class AccountAOImpl implements IAccountAO {
         if (StringUtils.isBlank(toType)) {
             throw new BizException("A010001", "去方类型不能为空");
         }
+        if (StringUtils.isBlank(toBelong)) {
+            throw new BizException("A010001", "开户支行不能为空");
+        }
         XN802211Req req = new XN802211Req();
         req.setAccountNumber(accountNumber);
         req.setAmount(amount);
         req.setToCode(toCode);
         req.setToType(toType);
         req.setTradePwd(tradePwd);
+        req.setToBelong(toBelong);
         return BizConnecter.getBizData("802211", JsonUtils.object2Json(req),
             Object.class);
     }

@@ -1,16 +1,31 @@
 package com.xnjr.moom.front.req;
 
 public class XN802211Req {
-
+    // 账户标号
     private String accountNumber;
 
+    // 取现金额
     private String amount;
 
+    // 取现方式
     private String toType;
 
+    // 取现编号
     private String toCode;
 
+    // 交易密码
     private String tradePwd;
+
+    // 开户支行
+    private String toBelong;
+
+    public String getToBelong() {
+        return toBelong;
+    }
+
+    public void setToBelong(String toBelong) {
+        this.toBelong = toBelong;
+    }
 
     public String getAccountNumber() {
         return accountNumber;

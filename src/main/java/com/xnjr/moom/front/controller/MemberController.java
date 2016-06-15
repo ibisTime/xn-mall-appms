@@ -76,9 +76,11 @@ public class MemberController extends BaseController {
             @RequestParam("loginPwd") String loginPwd,
             @RequestParam("terminalType") String terminalType) {
         XN805043Res res = userAO.doLogin(loginName, loginPwd);
+        XN805056Res res1 = userAO.doGetUser(res.getUserId());
         if (ETermType.WEB.getCode().equals(terminalType)) {
             SessionUser sessionUser = new SessionUser();
             sessionUser.setUserId(res.getUserId());
+            sessionUser.setKind(res1.getKind());
             // 创建session
             setSessionUser(sessionUser);
         }/*
@@ -281,10 +283,9 @@ public class MemberController extends BaseController {
     public boolean doFindTradePwd(
             @RequestParam("newTradePwd") String newTradePwd,
             @RequestParam("smsCaptcha") String smsCaptcha,
-            @RequestParam("idNo") String idNo,
             @RequestParam(value = "userId", required = false) String userId) {
-        userAO.doFindTradePwd(getSessionUserId(userId), newTradePwd,
-            smsCaptcha, "1", idNo);
+        userAO
+            .doFindTradePwd(getSessionUserId(userId), newTradePwd, smsCaptcha);
         return true;
     }
 

@@ -11,7 +11,7 @@
 			</div>
 			<div class="box-inner">
 				<ul class="account-nav">
-					<li style="display: none;"><a href="./order_list.htm">我的订单</a></li>
+					<#if user.kind != "f2"><li><a href="./order_list.htm">我的订单</a></li></#if>
 					<li><a href="./user_info.htm">账户资料</a></li>
 					<li class="current"><a href='./user_address.htm'>收货地址</a></li>
 				</ul>
@@ -45,6 +45,7 @@
 									<i>收货人姓名</i>
 									<input type="text" id="accept_name" name="accept_name" class="js-verify" value="">
 									<div class="verify-error" style="opacity: 1;">不能为空</div>
+									<div class="verify-error" style="opacity: 1;">长度不能超过64位</div>
 								</div>
 							</div>
 							<div class="module-form-row form-item">
@@ -62,6 +63,7 @@
 									<i>省份</i>
 									<input type="text" name="provinceCode" id="provinceCode" class="js-verify" value="" style="width: 122px;">
 									<div class="verify-error" style="opacity: 1;">不能为空</div>
+									<div class="verify-error" style="opacity: 1;">长度不能超过20位</div>
 								</div>
 							</div>
 							<div class="module-form-row form-item">
@@ -69,6 +71,7 @@
 									<i>城市</i>
 									<input type="text" name="cityCode" id="cityCode" class="js-verify" value="" style="width: 122px;">
 									<div class="verify-error" style="opacity: 1;">不能为空</div>
+									<div class="verify-error" style="opacity: 1;">长度不能超过20位</div>
 								</div>
 							</div>
 							<div class="module-form-row form-item">
@@ -76,6 +79,7 @@
 									<i>区/县</i>
 									<input type="text" name="districtCode" id="districtCode" class="js-verify" value="" style="width: 122px;">
 									<div class="verify-error" style="opacity: 1;">不能为空</div>
+									<div class="verify-error" style="opacity: 1;">长度不能超过20位</div>
 								</div>
 							</div>
 						</div>
@@ -84,6 +88,7 @@
 								<i>街道编号/名称，楼宇名称</i>
 								<input type="text" name="street" class="js-verify" id="street" value="">
 								<div class="verify-error" style="opacity: 1;">不能为空</div>
+								<div class="verify-error" style="opacity: 1;">长度不能超过128位</div>
 							</div>
 						</div>
 						<div class="module-form-row fn-clear" style="line-height: 1.8em;">

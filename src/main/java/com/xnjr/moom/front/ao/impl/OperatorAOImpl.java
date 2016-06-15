@@ -95,7 +95,7 @@ public class OperatorAOImpl implements IOperatorAO {
         }
         XN602023Req req = new XN602023Req();
         req.setCode(code);
-        req.setApplyNote(applyNote);
+        req.setApproveNote(applyNote);
         req.setUserId(userId);
         return BizConnecter.getBizData("602023", JsonUtils.object2Json(req),
             Object.class);
@@ -363,6 +363,7 @@ public class OperatorAOImpl implements IOperatorAO {
         if (StringUtils.isBlank(limit)) {
             throw new BizException("A010001", "每页个数不能为空");
         }
+        status = "1";
         XN602403Req req = new XN602403Req();
         req.setCardNo(cardNo);
         req.setCompanyCode(companyCode);

@@ -18,6 +18,16 @@ public class SessionUser extends AUserDetail {
 
     private String accountNumber;
 
+    private String kind;
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
     public SessionUser() {
     }
 

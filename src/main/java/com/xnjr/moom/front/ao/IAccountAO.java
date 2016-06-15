@@ -92,6 +92,6 @@ public interface IAccountAO {
      * @history:
      */
     public Object withdraw(String accountNumber, String amount, String toType,
-            String toCode, String tradePwd);
+            String toCode, String toBelong, String tradePwd);
 
 }

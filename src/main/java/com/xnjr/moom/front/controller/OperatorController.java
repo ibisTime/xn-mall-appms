@@ -210,7 +210,7 @@ public class OperatorController extends BaseController {
             cardNo, status, start, limit, orderColumn, orderDir);
     }
 
-    // 分页查询受款账号
+    // 列表查询受款账号
     @RequestMapping(value = "list/accountNumber", method = RequestMethod.GET)
     @ResponseBody
     public Object queryAccountNumberList(
