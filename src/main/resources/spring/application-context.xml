@@ -26,6 +26,10 @@
 	
 	<bean id="applicationProperties" class="com.xnjr.moom.front.base.ApplicationProperties" />
 	
+	<!-- 404页面 -->
+	<mvc:view-controller path="/404" view-name="error/404"/>
+	<!-- 500页面 -->
+	<mvc:view-controller path="/500" view-name="error/500"/>
 	
 	<!-- 验证码配置 start -->
 	<bean id="fastHashMapCaptchaStore" class="com.octo.captcha.service.captchastore.FastHashMapCaptchaStore"/>

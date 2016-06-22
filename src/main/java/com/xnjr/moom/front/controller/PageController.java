@@ -70,10 +70,10 @@ public class PageController {
     public String page(HttpServletRequest request) {
         SessionUser user = (SessionUser) sessionProvider
             .getAttribute(SESSION_KEY_USER);
-        if (null == user) {
-            return "redirect:home/index.htm";
-        }
-        return (JudgeIsMoblie(request) ? "m/project/l" : "user/home");
+        // if (null == user) {
+        return "redirect:home/index.htm";
+        // }
+        // return (JudgeIsMoblie(request) ? "m/project/l" : "user/home");
     }
 
     @RequestMapping(value = "/{module}.htm", method = RequestMethod.GET)

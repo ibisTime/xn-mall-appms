@@ -2,12 +2,12 @@
 <#assign controller="Index"/>
 <#include 'layout/layout.html'/>
 <#macro content>
-	<div class="container" id="container">
+	<div class="container" id="container" style="width:100%;padding-bottom: 30px;">
 		<div id="index_imgs" class="index_imgs">
-			<div class="imgs_cont bd">
+			<div class="imgs_cont bd" style="width:100%;">
 				<ul class="img-ul">
-					<a href="${basePath}/detail/mall_list.htm?type=1"><li><img src="${staticUrl}/images/index1.png"></li></a>
-					<a href="${basePath}/detail/mall_list.htm?type=3"><li><img src="${staticUrl}/images/index2.png"></li></a>
+					<a href="${basePath}/detail/mall_list.htm?type=3"><li style="left:0;width: 100%;"><img src="${staticUrl}/images/11.jpg"></li></a>
+					<a href="${basePath}/detail/mall_list.htm?type=3"><li style="left:0;width: 100%;"><img src="${staticUrl}/images/12.png"></li></a>
 				</ul>
 			</div>
 			<div class="index_prev"><div class="btn-prev"></div></div>
@@ -15,10 +15,10 @@
 			<div class="hd"><ul></ul></div>
 		</div>
 		<div class="img-show">
-			<div class="inblock"><a class="p-relative d-inblock"><img src="${staticUrl}/images/index_foot1.png"/><span class="p-absolute img-show-span">核心科技</span></a></div>
-			<div class="inblock"><a class="p-relative d-inblock"><img src="${staticUrl}/images/index_foot2.png"/><span class="p-absolute img-show-span">产品展示</span></a></div>
-			<div class="inblock"><a class="p-relative d-inblock"><img src="${staticUrl}/images/index_foot3.png"/><span class="p-absolute img-show-span">配件展示</span></a></div>
-			<div class="inblock"><a class="p-relative d-inblock"><img src="${staticUrl}/images/index_foot4.png"/><span class="p-absolute img-show-span">公司文化</span></a></div>
+			<div class="inblock"><a href="${basePath}/detail/mall_list.htm?type=3" class="p-relative d-inblock"><img src="${staticUrl}/images/21.png"/></a></div>
+			<div class="inblock"><a href="${basePath}/detail/mall_list.htm?type=1" class="p-relative d-inblock"><img src="${staticUrl}/images/22.png"/></a></div>
+			<div class="inblock"><a class="p-relative d-inblock"><img src="${staticUrl}/images/23.png"/></a></div>
+			<div class="inblock"><a class="p-relative d-inblock"><img src="${staticUrl}/images/24.png"/></a></div>
 		</div>
 		<div id="dsd"></div>
 	</div>

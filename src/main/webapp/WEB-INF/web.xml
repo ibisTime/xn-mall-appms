@@ -48,10 +48,10 @@
 	</filter-mapping>
 	<error-page>
 	  <error-code>404</error-code>
-	  <location>/WEB-INF/view/screen/error/404.html</location>
+	  <location>/404</location>
 	</error-page>
 	<error-page>
 	  <error-code>500</error-code>
-	  <location>/WEB-INF/view/screen/error/500.html</location>
+	  <location>/500</location>
 	</error-page>
 </web-app>
