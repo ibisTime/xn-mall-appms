@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="import" href="../head.html?__inline">
+    <title>登录</title>
+</head>
+<body class="bg_f5">
+    <div class="m20">
+        <div class="mt10 bg_fff login_input">
+            <div class="wp100 b_e6_b p_r">
+                <div class="l_icon tc"><img class="va-m" src="../../images/m-icon.png"/></div>
+                <input placeholder="请输入手机号码" type="telephone" id="mobile"/>
+                <span class="warning">手机号不能为空</span>
+                <span class="warning">格式错误</span>
+            </div>
+            <div class="wp100 p_r">
+                <div class="l_icon tc"><img class="va-m" src="../../images/p-icon.png"/></div>
+                <input placeholder="请输入密码" type="password" id="password"/>
+                <span class="warning">密码不能为空</span>
+            </div>
+        </div>
+        <div class="mt30">
+            <div class="wp100">
+                <input type="button" class="lh3_5rem wp100 bg_f64444 t_white b_radius4 s_13" value="登录" id="loginBtn"/>
+            </div>
+            <div class="wp100 pt20 s_10">
+                <a class="fl t_666" id="fdPwd" href="#">忘记密码</a>
+                <a id="toRegister" class="fr t_red" href="#">注册新用户</a>
+            </div>
+        </div>
+    </div>
+    <link rel="import" href="../footer.html?__inline">
+    <script>
+        require(['app/controller/Login']);
+    </script>
+</body>
+</html>
