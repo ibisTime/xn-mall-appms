@@ -45,5 +45,7 @@ public class ConfigProperties {
         public static String PRE_DIR = props.getProperty("PRE_DIR");
 
         public static String FILE_PRE_DIR = props.getProperty("FILE_PRE_DIR");
+
+        public static String MOBILE_URL = props.getProperty("MOBILE_URL");
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.xnjr.moom.front.session.ISessionProvider;
 import com.xnjr.moom.front.session.SessionUser;
+import com.xnjr.moom.front.util.ConfigProperties;
 
 /**
  * 跳转页面Controller
@@ -70,16 +71,24 @@ public class PageController {
     public String page(HttpServletRequest request) {
         SessionUser user = (SessionUser) sessionProvider
             .getAttribute(SESSION_KEY_USER);
+        if (JudgeIsMoblie(request)) {
+            return "redirect:" + ConfigProperties.Config.MOBILE_URL
+                    + "/home/index.html";
+        }
         // if (null == user) {
         return "redirect:home/index.htm";
         // }
-        // return (JudgeIsMoblie(request) ? "m/project/l" : "user/home");
+        // return (JudgeIsMoblie(request) ? "m/project/l" : "home/index");
     }
 
     @RequestMapping(value = "/{module}.htm", method = RequestMethod.GET)
     public String indexAction(@PathVariable String module,
             HttpServletRequest request) {
-        String url = (JudgeIsMoblie(request) ? "m/" : "") + module;
+        if (JudgeIsMoblie(request)) {
+            return "redirect:" + ConfigProperties.Config.MOBILE_URL + "/"
+                    + module + ".html";
+        }
+        String url = module;
         System.out.println("url: " + url);
         return url;
     }
@@ -87,7 +96,11 @@ public class PageController {
     @RequestMapping(value = "/{first}/{page}.htm", method = RequestMethod.GET)
     public String commonPage1Action(@PathVariable String first,
             @PathVariable String page, HttpServletRequest request) {
-        String url = (JudgeIsMoblie(request) ? "m/" : "") + first + "/" + page;
+        if (JudgeIsMoblie(request)) {
+            return "redirect:" + ConfigProperties.Config.MOBILE_URL + "/"
+                    + first + "/" + page + ".html";
+        }
+        String url = first + "/" + page;
         System.out.println("url: " + url);
         return url;
     }
@@ -96,8 +109,11 @@ public class PageController {
     public String commonPage2Action(@PathVariable String first,
             @PathVariable String second, @PathVariable String page,
             HttpServletRequest request) {
-        String url = (JudgeIsMoblie(request) ? "m/" : "") + first + "/"
-                + second + "/" + page;
+        if (JudgeIsMoblie(request)) {
+            return "redirect:" + ConfigProperties.Config.MOBILE_URL + "/"
+                    + first + "/" + second + "/" + page + ".html";
+        }
+        String url = first + "/" + second + "/" + page;
         System.out.println("url: " + url);
         return url;
     }
