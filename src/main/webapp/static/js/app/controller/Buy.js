@@ -38,6 +38,9 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
                                 choseImg(index);
                             }
                         });
+                        if(data.length == 1){
+                        	choseImg(0);
+                        }
                         $("#cont").remove();
                     }else{
                         doError();
