@@ -41,7 +41,7 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     public XN805041Res doRegister(String mobile, String loginPwd,
-            String userReferee, String smsCaptcha) {
+            String userReferee, String smsCaptcha, String amount) {
         if (StringUtils.isBlank(mobile)) {
             throw new BizException("A010001", "手机号码不能为空");
         }
@@ -52,7 +52,10 @@ public class UserAOImpl implements IUserAO {
             throw new BizException("A010001", "验证码不能为空");
         }
         if (StringUtils.isBlank(userReferee)) {
-            userReferee = "";
+            throw new BizException("A010001", "推荐人不能为空");
+        }
+        if (StringUtils.isBlank(amount)) {
+            throw new BizException("A010001", "初始积分不能为空");
         }
         XN805041Req req = new XN805041Req();
         req.setMobile(mobile);
@@ -60,6 +63,7 @@ public class UserAOImpl implements IUserAO {
         req.setLoginPwd(loginPwd);
         req.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
         req.setUserReferee(userReferee);
+        req.setAmount(amount);
         return BizConnecter.getBizData("805041", JsonUtils.object2Json(req),
             XN805041Res.class);
     }

@@ -76,14 +76,14 @@ define([
 	                        for(var i = 0, len = code.length; i < len; i++){
 	                            var d = data[code[i]];
 	                        	var eachCount = (+d.salePrice) * (+d.quantity);
-	                        	d.totalAmount = (eachCount / 1000).toFixed(2);
+	                        	d.totalAmount = (eachCount / 1000).toFixed(0);
 	                            totalCount += eachCount;
 	                            items.push(d);
 	                        }
 	                        var html = contentTmpl({items: items});
 	                        $("#cont").hide();
 	                        $("#items-cont").append(html);
-	                        $("#totalAmount").html( (totalCount / 1000).toFixed(2) );
+	                        $("#totalAmount").html( (totalCount / 1000).toFixed(0) );
 	                    }else{
 	                    	$("#cont").hide();
 	                    	doError("#items-cont");
@@ -106,13 +106,13 @@ define([
 	                    var data = response.data,
 	                        items = [];
                         var eachCount = +data.buyGuideList[0].discountPrice * +q;
-                        	data.totalAmount = (eachCount / 1000).toFixed(2);
+                        	data.totalAmount = (eachCount / 1000).toFixed(0);
                         data.quantity = q;
                         data.modelName = data.name;
                         items.push(data);
 	                    var html = contentTmpl({items: items});
 	                    $("#items-cont").append(html);
-	                    $("#totalAmount").html( ((+data.buyGuideList[0].discountPrice) * q / 1000).toFixed(2) );
+	                    $("#totalAmount").html( ((+data.buyGuideList[0].discountPrice) * q / 1000).toFixed(0) );
 	                    $("#cont").hide();
 	                }else{
 	                    doError("#items-cont");
@@ -140,7 +140,7 @@ define([
 	                var url = APIURL + '/operators/submitOrder',
 						config;
 	                if(type == 1){
-	                	var tPrice = (+$("#items-cont").find(".item_totalP").text().substr(1)) * 1000;
+	                	var tPrice = (+$("#items-cont").find(".item_totalP").text()) * 1000;
 			            config = {
 			                "modelCode": code,
 			                "quantity":	q,

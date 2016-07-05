@@ -38,12 +38,15 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
                                 choseImg(index);
                             }
                         });
+                        if(data.length == 1){
+                        	choseImg(0);
+                        }
                         $("#cont").remove();
                     }else{
-                        doError();
+                        doError("暂无数据");
                     }
                 }else{
-                    doError();
+                    doError("暂无数据");
                 }
             });
 
@@ -53,7 +56,16 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
                     user = response.data;
                 }
             });
-
+        function doError(msg){
+        	var d = dialog({
+                content: msg,
+                quickClose: true
+            });
+            d.show();
+            setTimeout(function () {
+                d.close().remove();
+            }, 2000);
+        }
         function addListeners() {
             $("#subCount").on("click", function () {
                 var orig = $("#buyCount").val();
@@ -90,7 +102,7 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
                 	this.value = "1";
                 }
                 var unitPrice = +$("#unit-price").val();
-                $("#btr-price").text("￥" + (unitPrice * +$(this).val() / 1000).toFixed(2));
+                $("#btr-price").text((unitPrice * +$(this).val() / 1000).toFixed(0));
             });
         }
          function choseImg(index){
@@ -126,10 +138,10 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
             if(msl.buyGuideList.length){
                 var discPrice = +msl.buyGuideList[0].discountPrice;
                 $("#unit-price").val(discPrice);
-                totalPrice = "￥" + (discPrice * +$("#buyCount").val() / 1000).toFixed(2);
+                totalPrice = (discPrice * +$("#buyCount").val() / 1000).toFixed(0);
                 $("#addCartBtn, #buyBtn").removeClass("no-buy-btn");
             }else{
-                totalPrice = "暂无价格";
+                totalPrice = "--";
                 $("#unit-price").val("9999999999999");
                 $("#addCartBtn, #buyBtn").addClass("no-buy-btn");
             }
@@ -160,7 +172,7 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
                 config = {
                     modelCode : choseCode || "",
                     quantity: $("#buyCount").val(),
-                    salePrice: (+$("#btr-price").text().substr(1))*1000
+                    salePrice: (+$("#btr-price").text())*1000
                 },
                 url = APIURL + '/operators/add2Cart';
             Ajax.post(url, config)

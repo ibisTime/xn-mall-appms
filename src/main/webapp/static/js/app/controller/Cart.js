@@ -25,12 +25,12 @@ define([
 	                        var totalAmount = 0;
 	                        data.forEach(function (cl) {
 	                            var amount = (+cl.salePrice) * (+cl.quantity);
-	                            cl.totalAmount = (amount / 1000).toFixed(2);
+	                            cl.totalAmount = (amount / 1000).toFixed(0);
 	                            infos.push(amount);
 	                        });
 
 	                        $("#od-ul").html( contentTmpl({items: data}) );
-	                        $("#totalAmount").html("0.00");
+	                        $("#totalAmount").html("0");
 	                    }else{
 	                    	$("#cart-bottom").hide();
 	                    	$("#cont").replaceWith('<div class="bg_fff" style="text-align: center;line-height: 150px;">购物车内暂无商品</div>');
@@ -120,13 +120,13 @@ define([
 	                            ori_total = +$("#totalAmount").text() * 1000,
 	                            new_total = new_amount - ori_amount + ori_total;
 	                        infos[gp.index()] = new_amount;
-	                        $parent.prev().text("￥" + ((+new_amount)/1000).toFixed(2));
+	                        $parent.prev().find("span:first").text( ((+new_amount)/1000).toFixed(0) );
 	                        if(flag){
-	                            $("#totalAmount").text((new_total/1000).toFixed(2) );
+	                            $("#totalAmount").text((new_total/1000).toFixed(0) );
 	                        }
 	                    }else{
 	                    	var $parent = $(me).parent();
-	                    	me.value = (+$parent.prev().text().substr(1) * 1000) / salePrice;
+	                    	me.value = (+$parent.prev().find("span:first").text() * 1000) / salePrice;
 	                        showMsg("数量修改失败，请重试！");
 	                    }
 	                });
@@ -149,10 +149,10 @@ define([
 	                for(var i = 0; i< infos.length; i++){
 	                    t += infos[i];
 	                }
-	                $("#totalAmount").text((t/1000).toFixed(2));
+	                $("#totalAmount").text((t/1000).toFixed(0));
 	                $("#deleteCheck").addClass("color_333");
 	            }else{
-	                $("#totalAmount").text("0.00");
+	                $("#totalAmount").text("0");
 	                $("#deleteCheck").removeClass("color_333");
 	            }
 	        });
@@ -177,13 +177,13 @@ define([
 	                	$("#allChecked").addClass("active");
 	                }
 	                var ori_total = (+$("#totalAmount").text()) * 1000;
-	                $("#totalAmount").text( ((ori_total + infos[$li.index()])/1000).toFixed(2) );
+	                $("#totalAmount").text( ((ori_total + infos[$li.index()])/1000).toFixed(0) );
 	            }else{
 	                var items = $("#od-ul").children("li").find("input[type=checkbox]"),
 	                    flag = false;
 	                $("#allChecked").removeClass("active");
 	                var ori_total = (+$("#totalAmount").text()) * 1000;
-	                $("#totalAmount").text( ((ori_total - infos[$li.index()])/1000).toFixed(2) );
+	                $("#totalAmount").text( ((ori_total - infos[$li.index()])/1000).toFixed(0) );
 	            }
 	        });
 	        $("#odOk").on("click", function(){
@@ -197,9 +197,9 @@ define([
 
 	    function showMsg(cont){
     		var d = dialog({
-						content: cont,
-						quickClose: true
-					});
+				content: cont,
+				quickClose: true
+			});
 			d.show();
 			setTimeout(function () {
 				d.close().remove();

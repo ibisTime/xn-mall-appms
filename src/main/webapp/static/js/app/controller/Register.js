@@ -5,7 +5,9 @@ define([
     'Handlebars'
 ], function (base, Ajax, dialog, Handlebars) {
 	$(function(){
-		var count = 1, returnUrl = base.getUrlParam("return");
+		var count = 1, returnUrl = base.getUrlParam("return"),
+			amount = base.getUrlParam("a"),
+			userReferee = base.getUrlParam("u");
 		addListeners();
 		init();
         function init(){
@@ -187,9 +189,27 @@ define([
             }
             return true;
         }
+        function validate_userReferee(){
+        	if(userReferee == undefined || userReferee.trim() == ""){
+        		showMsg("推荐人不能为空！");
+        		return false;
+        	}
+        	return true;
+        }
+        function validate_amount(){
+        	if(amount == undefined || amount.trim() == ""){
+        		showMsg("初始积分不能为空！")
+        		return false;
+        	}else if(!/^\d+(\.)?\d+$/ig.test(amount)){
+        		showMsg("初始积分必须为数字！")
+        	}
+        	return true;
+        }
+        
         function validate(){
             if(validate_mobile() && validate_captcha() && validate_verification()
-                && validate_password() && validate_repassword()){
+                && validate_password() && validate_repassword() 
+                && validate_userReferee() && validate_amount()){
                 if($("#registCheck")[0].checked){
                     return true;
                 }
@@ -210,7 +230,9 @@ define([
                 "loginName": $("#mobile").val(),
                 "loginPwd": $("#password").val(),
                 "smsCaptcha": $("#verification").val(),
-                "captcha": $("#captcha").val()
+                "captcha": $("#captcha").val(),
+                "amount": amount*1000,
+                "userReferee": userReferee
             };
             Ajax.post(APIURL + '/user/regist', param)
                 .then(function (response) {
@@ -222,19 +244,21 @@ define([
                         });
                     } else {
                         $("#captchaImg").attr('src', APIURL+'/captcha?_=' + new Date().getTime());
-                        var d = dialog({
-								content: response.msg,
-								quickClose: true
-							});
-						d.show();
-						setTimeout(function () {
-							d.close().remove();
-						}, 2000);
+                        showMsg(response.msg);
 						$("#registerBtn").removeAttr("disabled").val("注册");
                     }
                 });
         }
-
+        function showMsg(msg){
+        	var d = dialog({
+				content: msg,
+				quickClose: true
+			});
+			d.show();
+			setTimeout(function () {
+				d.close().remove();
+			}, 2000);
+        }
         function loginUser(param) {
             var url = APIURL + "/user/login";
             Ajax.post(url, param)

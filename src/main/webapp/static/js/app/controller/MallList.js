@@ -5,6 +5,7 @@ define([
 ], function (base, Ajax, Handlebars) {
     $(function () {
         var template = __inline("../ui/mall-list.handlebars"),
+        	idx = base.getUrlParam("i"),
             items = {}, count = 2, modelList = {}, first = true;
         $("#ml-head-ul").on("click", "li", function () {
             var $me = $(this);
@@ -65,7 +66,13 @@ define([
                     }
                 });
         }
-        $("#ml-head-ul>li:first").click();
+        var length = $("#ml-head-ul>li").length;
+        if(idx <= (length - 1)){
+        	$("#ml-head-ul>li:eq("+idx+")").click();
+        }else{
+        	$("#ml-head-ul>li:first").click();
+        }
+        
         function isReady(func) {
             if(!--count){
                 func();
@@ -84,7 +91,7 @@ define([
             var data = [];
             for( var name in items ){
                 if(modelList[name]){
-                    items[name].price = modelList[name].toFixed(2);
+                    items[name].price = modelList[name].toFixed(0);
                     data.push(items[name]);
                 }
             }

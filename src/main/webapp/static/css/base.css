@@ -126,8 +126,7 @@ html, body {
 *:focus {
     outline: none;
 }
-
-input, input[type="text"], input[type="tel"], input[type="button"], input[type="num"], input[type="search"], input[type="radio"], input[type="checkbox"], input[type="password"], button {
+input[type="text"], input[type="tel"], input[type="button"], input[type="num"], input[type="search"], input[type="radio"], input[type="password"], button {
     -webkit-appearance: none;
 }
 
@@ -292,6 +291,9 @@ textarea {
 
 .p10 {
     padding: 10px;
+}
+.pl5 {
+	padding-left: 5px;
 }
 .pl5em {
     padding-left: 5em;
@@ -1076,6 +1078,9 @@ textarea {
 .t_ed2b2b {
 	color: #ED2B2B;
 }
+.t_40pe {
+	color: rgb(40%, 40%, 40%);
+}
 .t-i2 {
     text-indent: 2.4rem;
 }
@@ -1331,6 +1336,9 @@ textarea {
 }
 .hp1em {
 	height: 1em;
+}
+.hp26p{
+	height: 26px;
 }
 /*定位*/
 .re {
@@ -2020,6 +2028,51 @@ table th, table td {
     height: 36px;
     vertical-align: middle;
 }
-.hcont>ul>li img, #items-cont>ul>li img, #ol-ul>li img #od-ul li img {
+.hcont>ul>li img, #items-cont>ul>li img, #ol-ul>li img #od-ul li img, .max-hp100 img {
 	max-height: 100px;
+}
+.hIdx-popular-r{
+	position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    text-align: center;
+}
+.popular-r-t{
+	position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.popular-r-b{
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.buy-cart-icon {
+	position: fixed;
+	bottom: 80px;
+	right: 20px;
+	width: 46px;
+	height: 46px;
+	border-radius: 50%;
+	background-color: rgba(0,0,0,.4);
+	text-align: center;
+}
+.buy-cart-icon:after{
+	display: inline-block;
+	content: "";
+	width: 0;
+	height: 46px;
+	vertical-align: middle;
+}
+.buy-cart-icon i {
+	display: inline-block;
+	vertical-align: middle;
+	width: 33px;
+	height: 33px;
+	background: url(../images/cart1.png) center no-repeat;
 }

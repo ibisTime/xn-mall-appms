@@ -28,7 +28,7 @@ define([
 	        Ajax.get(APIURL + "/account/infos/page", {"start": 0, "limit": 8}, true)
 	            .then(function (response) {
 	                if(response.success){
-	                    $("#amount").text("￥"+(+response.data.list[0].amount / 1000).toFixed(2));
+	                    $("#amount").text((+response.data.list[0].amount / 1000).toFixed(0));
 	                }else{
 	                    $("#amount").text("--");
 	                }

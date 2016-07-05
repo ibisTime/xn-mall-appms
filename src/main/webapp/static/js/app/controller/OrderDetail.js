@@ -47,10 +47,10 @@ define([
 	                        addListener();
 	                        if (invoiceModelLists.length) {
 	                            invoiceModelLists.forEach(function (invoiceModelList) {
-	                                invoiceModelList.totalAmount = (+invoiceModelList.quantity * +invoiceModelList.salePrice / 1000).toFixed(2);
+	                                invoiceModelList.totalAmount = (+invoiceModelList.quantity * +invoiceModelList.salePrice / 1000).toFixed(0);
 	                            });
 	                            $("#od-ul").html(contTmpl({items: invoiceModelLists}));
-	                            $("#totalAmount").html((+data.totalAmount / 1000).toFixed(2));
+	                            $("#totalAmount").html((+data.totalAmount / 1000).toFixed(0));
 	                            $("#od-rtype").html(getReceiptType(data.receiptType));
 	                            $("#od-rtitle").html(data.receiptTitle || "无");
 	                            $("#od-id").html(data.code);

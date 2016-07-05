@@ -74,7 +74,7 @@ define([
 						                        '</div>';
 						        if(invoices.length == 1){
 		                            invoice = invoices[0];
-	                            	var amount = ((+invoice.salePrice * + invoice.quantity) / 1000).toFixed(2);
+	                            	var amount = ((+invoice.salePrice * + invoice.quantity) / 1000).toFixed(0);
 	                            	html += '<div class="wp100 clearfix plr10 ptb4 p_r">'+
 					                            '<div class="fl wp30 tc"><img src="'+invoice.pic1+'"></div>'+
 					                            '<div class="fl wp40 pl12 pt12">'+
@@ -82,9 +82,9 @@ define([
 					                                '<p class="tl pt4">'+invoice.modelName+'</p>'+
 					                            '</div>'+
 					                            '<div class="fl wp30 tr s_10 pt12">'+
-					                                '<p class="item_totalP">￥'+amount+'</p>'+
+					                                '<p class="item_totalP">'+amount+'积分</p>'+
 					                                '<p class="t_80">×<span>'+invoice.quantity+'</span></p>'+
-					                                '<p class="ab wp100 r_10 b_18">金额:￥'+(+cl.totalAmount / 1000).toFixed(2)+'</p>'+
+					                                '<p class="ab wp100 r_10 b_18">总积分：'+(+cl.totalAmount / 1000).toFixed(0)+'</p>'+
 					                            '</div>';
 		                        }else{
 		                        	html += '<div class="wp100 clearfix plr10 ptb4 p_r">';

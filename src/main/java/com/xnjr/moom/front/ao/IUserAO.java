@@ -33,12 +33,13 @@ public interface IUserAO {
      * @param registerIp
      * @param userReferee
      * @param smsCaptcha
+     * @param amount
      * @return 
      * @create: 2015年9月19日 上午11:24:33 myb858
      * @history:
      */
     public XN805041Res doRegister(String mobile, String loginPwd,
-            String userReferee, String smsCaptcha);
+            String userReferee, String smsCaptcha, String amount);
 
     /**
      * 身份认证

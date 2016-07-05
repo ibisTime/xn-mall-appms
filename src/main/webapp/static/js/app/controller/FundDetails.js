@@ -61,7 +61,7 @@ define([
 							                    '<p class="s_09 t_999 pt10">'+getMyDate(ll.createDatetime)+'</p>' +
 							                '</div>' +
 							                '<div class="wp40 fl tr '+t_class+' s_10">' +
-							                    '<span class="inline_block va-m pt1em">' + prev_f + (+ll.transAmount / 1000).toFixed(2) + '元</span>' +
+							                    '<span class="inline_block va-m pt1em">' + prev_f + (+ll.transAmount / 1000).toFixed(0) + '积分</span>' +
 							                '</div>' +
 							            '</li>';
 	                        });
