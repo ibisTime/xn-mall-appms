@@ -37,7 +37,13 @@ define([
 	        $("#sbtn").on("click", function(){
 	            valide();
 	        });
-
+	        $("#getVerification").one("click", function innerFunc(){
+            	if(validate_mobile()){
+            		handleSendVerifiy();
+            	}else{
+            		$("#getVerification").one("click", innerFunc);
+            	}
+            });
 	    }
 	    function handleSendVerifiy() {
 	    	$("#getVerification").addClass("cancel-send");
@@ -53,13 +59,21 @@ define([
 		                                $("#getVerification").text((60 - i) + "s");
 		                            }else{
 		                            	$("#getVerification").text("获取验证码").removeClass("cancel-send")
-				                            .one("click", handleSendVerifiy);
+			                            	.one("click", function(){
+			                                	if(validate_mobile()){
+			                                		handleSendVerifiy();
+			                                	}
+			                            	});
 		                            }
 		                        }, 1000*i);
 		                    })(i);
 		                }
 		            } else {
-		            	$("#getVerification").one("click", handleSendVerifiy);
+		            	$("#getVerification").one("click", function(){
+		                	if(validate_mobile()){
+		                		handleSendVerifiy();
+		                	}
+		                });
 		            	var parent = $("#verification").parent();
 	                    var span = parent.find("span.warning")[2];
 	                    $(span).fadeIn(150).fadeOut(3000);
@@ -144,7 +158,6 @@ define([
 	        var elem = $("#mobile")[0],
 	            parent = elem.parentNode,
 	            span;
-	        $("#getVerification").off("click");
 	        if(elem.value == ""){
 	            span = $(parent).find("span.warning")[0];
 	            $(span).fadeIn(150).fadeOut(3000);
@@ -153,9 +166,6 @@ define([
 	            span = $(parent).find("span.warning")[1];
 	            $(span).fadeIn(150).fadeOut(3000);
 	            return false;
-	        }
-	        if(!$("#getVerification").hasClass("cancel-send")){
-	        	$("#getVerification").one("click", handleSendVerifiy);
 	        }
 	        return true;
 	    }

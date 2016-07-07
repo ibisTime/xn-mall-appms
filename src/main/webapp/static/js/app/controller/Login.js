@@ -73,12 +73,14 @@ define([
                 Ajax.post(url, param)
                     .then(function (response) {
                         if (response.success) {
+                        	sessionStorage.setItem("user", "1");
                             if(returnUrl){
                                 location.href = returnUrl;
                             }else{
                                 location.href = "./user_info.html";
                             }
                         } else {
+                        	sessionStorage.setItem("user", "0");
                 			$("#loginBtn").removeAttr("disabled").val("登录");
                             var d = dialog({
 								content: response.msg,

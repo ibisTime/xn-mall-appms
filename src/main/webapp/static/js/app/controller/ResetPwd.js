@@ -73,10 +73,12 @@ define([
 	            });
 	    }
 	    function doSuccess(){
+	    	sessionStorage.setItem("user", "0");
 	    	$("#sbtn").text("设置");
-	        showMsg("修改登录密码成功!");
+	        showMsg("登录密码修改成功!");
+	        sessionStorage.setItem("user", "0");
 	        setTimeout(function(){
-	        	location.href = './user_info.html';
+	        	location.href = './login.html';
 	        }, 1000);
 	    }
 	    function showMsg(cont){

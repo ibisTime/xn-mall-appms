@@ -6,7 +6,10 @@ define([
 ], function (base, Ajax, dialog, Handlebars) {
     $(function () {
     	var tradeFlag = false;
-    	initView();
+    	if(sessionStorage.getItem("user") == "1"){
+    		$("#cont").remove();
+    		initView();
+    	}
 	    function initView() {
 	        Ajax.get(APIURL + '/user', {})
 	            .then(function (response) {

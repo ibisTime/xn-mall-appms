@@ -16,17 +16,6 @@ public class XN805041Req {
     // 验证码
     private String smsCaptcha;
 
-    // 初始积分
-    private String amount;
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
     public String getMobile() {
         return mobile;
     }

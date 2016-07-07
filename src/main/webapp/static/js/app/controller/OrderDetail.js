@@ -101,10 +101,10 @@ define([
 	        $("#odOk").on("click", function(){
 				cancelOrder();
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
-	        })
+	        });
 	        $("#odCel").on("click", function(){
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
-	        })
+	        });
 	    }
 
 	    function getStatus(status){

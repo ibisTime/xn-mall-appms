@@ -28,6 +28,7 @@ import com.xnjr.moom.front.req.XN602081Req;
 import com.xnjr.moom.front.req.XN602403Req;
 import com.xnjr.moom.front.req.XN602404Req;
 import com.xnjr.moom.front.req.XN602405Req;
+import com.xnjr.moom.front.req.XN802002Req;
 
 @Service
 public class OperatorAOImpl implements IOperatorAO {
@@ -392,6 +393,16 @@ public class OperatorAOImpl implements IOperatorAO {
         XN602405Req req = new XN602405Req();
         req.setCode(code);
         return BizConnecter.getBizData("602405", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    public Object IntegralRecharge(String userId) {
+        if (StringUtils.isBlank(userId)) {
+            throw new BizException("A010001", "请登录后再进行扫码充值!");
+        }
+        XN802002Req req = new XN802002Req();
+        req.setUserId(userId);
+        return BizConnecter.getBizData("802002", JsonUtils.object2Json(req),
             Object.class);
     }
 }

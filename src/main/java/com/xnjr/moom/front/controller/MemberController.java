@@ -57,8 +57,7 @@ public class MemberController extends BaseController {
             @RequestParam("loginPwd") String loginPwd,
             @RequestParam("smsCaptcha") String smsCaptcha,
             @RequestParam("captcha") String captcha,
-            @RequestParam("userReferee") String userReferee,
-            @RequestParam("amount") String amount) {
+            @RequestParam("userReferee") String userReferee) {
 
         String sessionId = ControllerContext.getRequest().getSession().getId();
         boolean flag = imageCaptchaService.validateResponseForID(sessionId,
@@ -67,8 +66,7 @@ public class MemberController extends BaseController {
         if (!flag) { // 验证码正确
             throw new BizException("83099901", "图片验证码不正确");
         }
-        return userAO.doRegister(mobile, loginPwd, userReferee, smsCaptcha,
-            amount);
+        return userAO.doRegister(mobile, loginPwd, userReferee, smsCaptcha);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

@@ -6,7 +6,6 @@ define([
 ], function (base, Ajax, dialog, Handlebars) {
 	$(function(){
 		var count = 1, returnUrl = base.getUrlParam("return"),
-			amount = base.getUrlParam("a"),
 			userReferee = base.getUrlParam("u");
 		addListeners();
 		init();
@@ -54,6 +53,13 @@ define([
             $("#captchaImg").on("click", function () {
                 $(this).attr( 'src', APIURL + '/captcha?_=' + new Date().getTime() );
             });
+            $("#getVerification").one("click", function innerFunc(){
+            	if(validate_mobile()){
+            		handleSendVerifiy();
+            	}else{
+            		$("#getVerification").one("click", innerFunc);
+            	}
+            });
         }
 
         function checkMobile (){
@@ -95,13 +101,21 @@ define([
 	                                    $("#getVerification").text((60 - i) + "s");
 	                                } else {
 	                                    $("#getVerification").text("获取验证码").removeClass("cancel-send")
-	                                    	.one("click", handleSendVerifiy);
+	                                    	.one("click", function(){
+	                                    		if(validate_mobile()){
+	                                        		handleSendVerifiy();
+	                                        	}
+	                                    	});
 	                                }
 	                            }, 1000 * i);
 	                        })(i);
 	                    }
 	                } else {
-	                    $("#getVerification").one("click", handleSendVerifiy);
+	                    $("#getVerification").one("click", function(){
+	                    	if(validate_mobile()){
+	                    		handleSendVerifiy();
+	                    	}
+                    	});
                         var parent = $("#verification").parent();
 	                    var span = parent.find("span.warning")[2];
 	                    $(span).fadeIn(150).fadeOut(3000);
@@ -112,7 +126,6 @@ define([
             var $elem = $("#mobile"),
                 $parent = $elem.parent(),
                 span;
-            $("#getVerification").off("click");
             if($elem.val() == ""){
                 span = $parent.find("span.warning")[0];
                 $(span).fadeIn(150).fadeOut(3000);
@@ -121,9 +134,6 @@ define([
                 span = $parent.find("span.warning")[1];
                 $(span).fadeIn(150).fadeOut(3000);
                 return false;
-            }
-            if(!$("#getVerification").hasClass("cancel-send")){
-                $("#getVerification").one("click", handleSendVerifiy);
             }
             return true;
         }
@@ -196,20 +206,11 @@ define([
         	}
         	return true;
         }
-        function validate_amount(){
-        	if(amount == undefined || amount.trim() == ""){
-        		showMsg("初始积分不能为空！")
-        		return false;
-        	}else if(!/^\d+(\.)?\d+$/ig.test(amount)){
-        		showMsg("初始积分必须为数字！")
-        	}
-        	return true;
-        }
         
         function validate(){
             if(validate_mobile() && validate_captcha() && validate_verification()
                 && validate_password() && validate_repassword() 
-                && validate_userReferee() && validate_amount()){
+                && validate_userReferee()){
                 if($("#registCheck")[0].checked){
                     return true;
                 }
@@ -231,7 +232,6 @@ define([
                 "loginPwd": $("#password").val(),
                 "smsCaptcha": $("#verification").val(),
                 "captcha": $("#captcha").val(),
-                "amount": amount*1000,
                 "userReferee": userReferee
             };
             Ajax.post(APIURL + '/user/regist', param)
@@ -264,12 +264,14 @@ define([
             Ajax.post(url, param)
                 .then(function (response) {
                     if (response.success) {
+                    	sessionStorage.setItem("user", "1");
                         if(returnUrl){
                             location.href = returnUrl;
                         }else{
                             location.href = "./user_info.html";
                         }
                     } else {
+                    	sessionStorage.setItem("user", "0");
                         if(returnUrl){
                             location.href = "./login.html?return="+encodeURIComponent(returnUrl);
                         }else{

@@ -53,11 +53,17 @@ define([
 	                        list.forEach(function (ll) {
 	                        	var flag = +ll.transAmount >= 0 ? true : false,
 	                        		t_class = flag && "t_f64444" || "t_21b504",
-	                        		prev_f = flag && "+" || "";
-
+	                        		prev_f = flag && "+" || "",
+	                        		bType = ll.bizType, bName = "";
+	                        	
+	                        	if(bType == "21" || bType == "22"){
+	                        		bName = ll.remark;
+	                        	}else{
+	                        		bName = fundType[ll.bizType] || "未知类型";
+	                        	}
 	                            html += '<li class="plr20 ptb20 b_bd_b clearfix lh15rem">' +
 							                '<div class="wp60 fl s_10">' +
-							                    '<p class="t_4d">'+(fundType[ll.bizType] || "未知类型")+'</p>' +
+							                    '<p class="t_4d">'+bName+'</p>' +
 							                    '<p class="s_09 t_999 pt10">'+getMyDate(ll.createDatetime)+'</p>' +
 							                '</div>' +
 							                '<div class="wp40 fl tr '+t_class+' s_10">' +

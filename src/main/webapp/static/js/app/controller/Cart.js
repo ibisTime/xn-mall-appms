@@ -8,8 +8,10 @@ define([
     	var url = APIURL + '/operators/queryCart', infos = [],
         	contentTmpl = __inline("../ui/cart-imgs.handlebars"),
         	$this;
-
-        initView();
+    	
+    	if(sessionStorage.getItem("user") == "1"){
+    		initView();
+    	}
 
 	    function initView() {
 	        getMyCart();
@@ -44,7 +46,7 @@ define([
 	    function addListeners() {
 	        $("#sbtn").on("click", function () {
 	            var checkItem = [];
-	            $("#od-ul>ul>li>div.c-img-l>div.radio-tip1")
+	            $("#od-ul>ul>li div.c-img-l div.radio-tip1")
 	            	.each(function(i, item){
 	            		if($(item).hasClass("active")){
 	            			checkItem.push(i);
@@ -111,7 +113,7 @@ define([
 	                .then(function(response){
 	                	$("#loaddingIcon").addClass("hidden");
 	                    if(response.success){
-	                        var flag = gp.find(".c-img-l > .radio-tip1.active").length,
+	                        var flag = gp.find(".c-img-l .radio-tip1.active").length,
 	                        	$parent = $(me).parent(),
 	                        	count = me.value,
 	                            unit = salePrice,
@@ -140,7 +142,7 @@ define([
 	            	flag = true;
 	            	doAction = "addClass";
 	            }
-	            $("#od-ul>ul>li>div.c-img-l>div")
+	            $("#od-ul>ul>li div.c-img-l div.radio-tip1")
 	            	.each(function(i, item){
 	            		$(item)[doAction]("active");
 	            	});
@@ -156,15 +158,10 @@ define([
 	                $("#deleteCheck").removeClass("color_333");
 	            }
 	        });
-	        $("#od-ul").on("click", ".del-icon", function(e){
-	            e.stopPropagation();
-	            $this = this;
-	            $("#od-mask, #od-tipbox").removeClass("hidden");
-	        });
-	        $("#od-ul").on("click", "li[code] .radio-tip1", function(e){
+	        $("#od-ul").on("click", "li[code] .cart-cont-left", function(e){
 	            e.stopPropagation();
 	            var $li = $(this).closest("li[code]"),
-	            	isChecked = false, me = $(this);
+	            	isChecked = false, me = $(this).find(".radio-tip1");
 	            if(me.hasClass("active")){
 	            	me.removeClass("active");
 	            }else{
@@ -173,7 +170,7 @@ define([
 	            }
 	            
 	            if(isChecked){
-	                if($("#od-ul>ul>li").length == $("#od-ul>ul>li>.c-img-l>div.active").length){
+	                if($("#od-ul>ul>li").length == $("#od-ul>ul>li .c-img-l div.active").length){
 	                	$("#allChecked").addClass("active");
 	                }
 	                var ori_total = (+$("#totalAmount").text()) * 1000;
@@ -193,6 +190,59 @@ define([
 	        $("#odCel").on("click", function(){
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
 	        })
+	        
+	        $("#od-ul").on("touchstart", ".cart-content-left", function(e){
+	        	e.stopPropagation();
+	        	var touches = e.originalEvent.targetTouches[0],
+	        		me = $(this);
+	        	var left = me.offset().left;
+	        	me.data("x",touches.clientX);
+	        	me.data("offsetLeft", left);
+	        });
+	        $("#od-ul").on("touchmove", ".cart-content-left", function(e){
+	        	e.stopPropagation();
+	        	var touches =  e.originalEvent.changedTouches[0],
+	        		me = $(this),
+		            ex = touches.clientX,
+		            xx = parseInt(me.data("x")) - ex,
+	        	    left = me.data("offsetLeft");
+		        if( xx > 10 ){
+		        	me.css({
+		        		"transition": "none",
+		        		"transform": "translate3d("+(-xx/2)+"px, 0px, 0px)"
+		        	});
+		        }else if(xx < -10){
+		        	var left = me.data("offsetLeft");
+		        	me.css({
+		        		"transition": "none",
+		        		"transform": "translate3d("+(left + (-xx/2))+"px, 0px, 0px)"
+		        	});
+		        }
+	        });
+	        $("#od-ul").on("touchend", ".cart-content-left", function(e){
+	        	e.stopPropagation();
+	        	var me = $(this);
+	            var touches = e.originalEvent.changedTouches[0],
+	                ex = touches.clientX,
+	                xx = parseInt(me.data("x")) - ex;
+	        	if( xx > 56 ){
+	        		me.css({
+		        		"transition": "-webkit-transform 0.2s ease-in",
+		        		"transform": "translate3d(-56px, 0px, 0px)"
+		        	});
+	            }else{
+	            	me.css({
+		        		"transition": "-webkit-transform 0.2s ease-in",
+		        		"transform": "translate3d(0px, 0px, 0px)"
+		        	});
+	            }
+	        });
+	        
+	        $("#od-ul").on("click", ".al_addr_del", function(e){
+	        	e.stopPropagation();
+	            $this = this;
+	            $("#od-mask, #od-tipbox").removeClass("hidden");
+	        });
 	    }
 
 	    function showMsg(cont){
@@ -224,8 +274,17 @@ define([
 	            .then(function (response) {
 	            	$("#loaddingIcon").addClass("hidden");
 	                if(response.success){
+	                	var ccl = $(me).prev().find(".cart-cont-left"),
+	                		activeRadio = ccl.find(".radio-tip1.active");
+	                	if(activeRadio.length){
+	                		activeRadio.click();
+	                	}
 	                    infos.splice($li.index(), 1);
 	                    $li.remove();
+	                    if(!$("#od-ul>ul>li").length){
+	                    	$("#cart-bottom").hide();
+	                    	$("#od-ul").html('<div class="bg_fff" style="text-align: center;line-height: 150px;">购物车内暂无商品</div>');
+	                    }
 	                }else{
 	                    showMsg("删除失败，请重试！");
 	                }

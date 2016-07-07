@@ -80,11 +80,7 @@ define([
         }
         function doError() {
             count = 0;
-            if(first){
-                $("header").remove();
-                first = false;
-            }
-            $("#cont").replaceWith('<div id="cont" class="bg_fff" style="text-align: center;line-height: 150px;">暂无数据</div>');
+            $("#cont").replaceWith('<div id="cont" class="bg_fff" style="text-align: center;line-height: 150px;">暂无商品</div>');
         }
         function doSuccess() {
             first = false;

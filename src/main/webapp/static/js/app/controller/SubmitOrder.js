@@ -121,60 +121,84 @@ define([
 	    }
     	function addListeners(){
     		$("#addressDiv").on("click", "a", function(){
-    			location.href = "./address_list.html?c=" + $(this).attr("code") + "&return=" + encodeURIComponent(location.pathname + location.search);
-    		});
-    		$("#add-addr").on("click", "a", function(){
-    			location.href = "./add_address.html?return=" + encodeURIComponent(location.pathname + location.search);
+    			if(this.id=="add-addr"){
+    				location.href = "./add_address.html?return=" + encodeURIComponent(location.pathname + location.search);
+    			}else{
+    				location.href = "./address_list.html?c=" + $(this).attr("code") + "&return=" + encodeURIComponent(location.pathname + location.search);
+    			}
     		});
 			$("#sbtn").on("click", function () {
 				var $a = $("#addressDiv>a");
 	            if($a.length){
-	                if($("#receiptTitle").val().length > 32){
+	            	var receiptT = $("#receiptTitle").val(),
+	            		receiptV = $("#receipt").val();
+	                if(receiptT.length > 32){
 						showMsg("发票抬头字数必须少于32位");
 	                    return;
 	                }
-	                if($("#apply_note").val() > 255){
+	                if($("#apply_note").val().length > 255){
 	                	showMsg("备注字数必须少于255位");
 	                	return;
 	                }
-	                var url = APIURL + '/operators/submitOrder',
-						config;
-	                if(type == 1){
-	                	var tPrice = (+$("#items-cont").find(".item_totalP").text()) * 1000;
-			            config = {
-			                "modelCode": code,
-			                "quantity":	q,
-			                "salePrice": tPrice / +q,
-			                "addressCode": $a.attr("code"),
-			                "receiptType": ($("#receipt").val() == "0" ? "": $("#receipt").val()),
-			                "receiptTitle": $("#receiptTitle").val(),
-			                "applyNote": $("#apply_note").val() || ""
-			            };
-	                }else if(type == 2){
-	                    var cartList = [],
-	                        $lis = $("#items-cont > ul > li");
-	                    for(var i = 0, len = $lis.length; i < len; i++){
-	                        cartList.push($($lis[i]).attr("modelCode"));
-	                    }
-	                    var config = {
-	                        "addressCode": $a.attr("code"),
-	                        "receiptType": ($("#receipt").val() == "0" ? "": $("#receipt").val()),
-	                        "receiptTitle": $("#receiptTitle").val(),
-	                        "applyNote": "",
-	                        "cartCodeList": cartList
-	                    };
-	                    url = APIURL + '/operators/submitCart';
-	                }else{
-	                	showMsg("类型错误，无法提交订单");
-	                    return;
+	                if(receiptT.length && receiptV == "0" || !receiptT.length && receiptV != "0"){
+	                	if(receiptT.length){
+	                		$("#od-tipbox>div:eq(1)").text("您还未选择发票类型，确定提交订单吗？");
+	                	}else{
+	                		$("#od-tipbox>div:eq(1)").text("您还未填写发票抬头，确定提交订单吗？");
+	                	}
+	                	$("#od-mask, #od-tipbox").removeClass("hidden");
+	                	return;
 	                }
-	                doSubmitOrder(config, url);
+	                PrepareConfig();
 	            }else{
 					showMsg("未选择地址");
 	            }
 	        });
+			
+			$("#odOk").on("click", function(){
+				PrepareConfig();
+	        	$("#od-mask, #od-tipbox").addClass("hidden");
+	        });
+	        $("#odCel").on("click", function(){
+	        	$("#od-mask, #od-tipbox").addClass("hidden");
+	        });
     	}
-
+    	
+    	function PrepareConfig(){
+    		var url = APIURL + '/operators/submitOrder',
+				config;
+	        if(type == 1){
+	        	var tPrice = (+$("#items-cont").find(".item_totalP").text()) * 1000;
+	            config = {
+	                "modelCode": code,
+	                "quantity":	q,
+	                "salePrice": tPrice / +q,
+	                "addressCode": $("#addressDiv>a").attr("code"),
+	                "receiptType": ($("#receipt").val() == "0" ? "": $("#receipt").val()),
+	                "receiptTitle": $("#receiptTitle").val(),
+	                "applyNote": $("#apply_note").val() || ""
+	            };
+	        }else if(type == 2){
+	            var cartList = [],
+	                $lis = $("#items-cont > ul > li");
+	            for(var i = 0, len = $lis.length; i < len; i++){
+	                cartList.push($($lis[i]).attr("modelCode"));
+	            }
+	            var config = {
+	                "addressCode": $("#addressDiv>a").attr("code"),
+	                "receiptType": ($("#receipt").val() == "0" ? "": $("#receipt").val()),
+	                "receiptTitle": $("#receiptTitle").val(),
+	                "applyNote": "",
+	                "cartCodeList": cartList
+	            };
+	            url = APIURL + '/operators/submitCart';
+	        }else{
+	        	showMsg("类型错误，无法提交订单");
+	            return;
+	        }
+	        doSubmitOrder(config, url);
+    	}
+    	
     	function showMsg(cont){
     		var d = dialog({
 						content: cont,

@@ -1,4 +1,10 @@
-define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', 'js/app/util/dialog', 'js/lib/handlebars.runtime-v3.0.3', 'js/lib/swiper-3.3.1.jquery.min'], function (base, Ajax, dialog, Handlebars) {
+define([
+    'js/app/controller/base',
+    'js/app/util/ajax',
+    'js/app/util/dialog',
+    'js/lib/handlebars.runtime-v3.0.3',
+    'js/lib/swiper-3.3.1.jquery.min'
+], function (base, Ajax, dialog, Handlebars) {
     $(function () {
         var mySwiper, rspData = [], user;
         Ajax.get(APIURL + '/commodity/queryListModel', {
