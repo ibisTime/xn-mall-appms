@@ -3,6 +3,7 @@ define([
     'js/app/util/ajax',
     'js/app/util/dialog',
     'js/lib/handlebars.runtime-v3.0.3',
+    //'js/lib/idangerous.swiper1.min.js'
     'js/lib/swiper-3.3.1.jquery.min'
 ], function (base, Ajax, dialog, Handlebars) {
     $(function () {
@@ -33,20 +34,23 @@ define([
                         });
                         addListeners();
                         var mySwiper1 = new Swiper('.swiper-container1',{
-                            'loop': (data.length > 1 ? true : false),
-                            'slidesPerView' : data.length,
-                            'pagination': '.swiper-pagination',
+                            //'loop': (data.length > 1 ? true : false),
+                            //'slidesPerView' : data.length,
+                            //'pagination': '.pagination',
+                            'preventClicks': false,
                             'slideToClickedSlide': true,
+                            'centeredSlides': true,
+                            'slidesPerView': 4,
+                            'watchActiveIndex': true,
                             'onSlideChangeEnd': function(swiper){
                                 var index = $("#container")
-                                                .find(".swiper-wrapper>.swiper-slide:eq("+swiper.activeIndex+")")
-                                                .attr("data-swiper-slide-index");
+                                                .find(".swiper-wrapper>.swiper-slide.swiper-slide-active").index();
                                 choseImg(index);
                             }
                         });
-                        if(data.length == 1){
+                        //if(data.length == 1){
                         	choseImg(0);
-                        }
+                        //}
                         $("#cont").remove();
                     }else{
                         doError("暂无数据");
@@ -128,10 +132,12 @@ define([
                             'pagination': '.swiper-pagination'
                         });
             }else{
-				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic1+'"></div>',
-				'<div class="swiper-slide tc"><img src="'+msl.pic2+'"></div>',
-				'<div class="swiper-slide tc"><img src="'+msl.pic3+'"></div>']);
-				mySwiper.removeSlide([3,4,5]);
+				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic3+'"></div>']);
+				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic2+'"></div>']);
+				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic1+'"></div>']);
+				mySwiper.removeSlide(3);
+				mySwiper.removeSlide(3);
+				mySwiper.removeSlide(3);
             }
             msl.modelSpecsList.forEach(function (data) {
                 table_html += "<tr><th>" + data.dkey + "</th><td>" + data.dvalue + "</td></tr>";

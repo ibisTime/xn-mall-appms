@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import com.xnjr.moom.front.base.ControllerContext;
 import com.xnjr.moom.front.session.ISessionProvider;
 import com.xnjr.moom.front.session.SessionUser;
-import com.xnjr.moom.front.session.UserDetailHolder;
 
 @Controller
 public class BaseController {
@@ -43,12 +42,17 @@ public class BaseController {
         }
         return user;
     }
+
     protected void setSessionUser(SessionUser user) {
-    	sessionProvider.setUserDetail(user);
+        sessionProvider.setUserDetail(user);
     }
+
     protected String getSessionUserId(String userId) {
         if (StringUtils.isBlank(userId)) {
             SessionUser user = getSessionUser();
+            if (user == null) {
+                return "";
+            }
             userId = user.getUserId();
         }
         return userId;

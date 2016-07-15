@@ -8,6 +8,7 @@ define([
     	var tradeFlag = false;
     	if(sessionStorage.getItem("user") == "1"){
     		$("#cont").remove();
+    		$(".hidden").removeClass("hidden");
     		initView();
     	}
 	    function initView() {

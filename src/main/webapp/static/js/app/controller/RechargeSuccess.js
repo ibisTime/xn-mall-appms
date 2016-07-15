@@ -4,7 +4,7 @@ define([
     'app/util/dialog'
 ], function (base, Ajax, dialog) {
 	$(function(){
-		Ajax.get(APIURL + "/operators/integral/recharge", {"userId": userId}, true)
+		Ajax.get(APIURL + "/operators/integral/recharge", true)
 			.then(function(res){
 				$("#cont").remove();
 				if(res.success){
@@ -15,7 +15,7 @@ define([
 			});
 		
 		function showMsg(msg){
-			var content = "积分充值失败！";
+			var content = "非常遗憾，积分充值失败！页面将在3秒后跳到79商城首页。";
 			if(msg.indexOf("登录后") != -1){
 				content = msg;
 				var d = dialog({
@@ -40,7 +40,7 @@ define([
 				}, 2000);
 				setTimeout(function(){
 					location.href = "../home/index.html";
-				}, 2000);
+				}, 3000);
 			}
 		}
 	});

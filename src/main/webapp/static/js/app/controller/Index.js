@@ -61,7 +61,11 @@ define([
                             }
                         }
                         isReady(doSuccess);
+                    }else{
+                    	doError();
                     }
+                }else{
+                	doError();
                 }
             });
         function isReady(func) {
@@ -81,8 +85,12 @@ define([
                     data.push(items[name]);
                 }
             }
-            var content = template({items: data});
-            $("#cont").replaceWith(content);
+            if(data.length){
+            	var content = template({items: data});
+                $("#cont").replaceWith(content);
+            }else{
+            	doError();
+            }
         }
     });
 });
