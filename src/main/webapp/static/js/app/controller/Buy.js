@@ -1,4 +1,11 @@
-define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', 'js/app/util/dialog', 'js/lib/handlebars.runtime-v3.0.3', 'js/lib/swiper-3.3.1.jquery.min'], function (base, Ajax, dialog, Handlebars) {
+define([
+    'js/app/controller/base',
+    'js/app/util/ajax',
+    'js/app/util/dialog',
+    'js/lib/handlebars.runtime-v3.0.3',
+    //'js/lib/idangerous.swiper1.min.js'
+    'js/lib/swiper-3.3.1.jquery.min'
+], function (base, Ajax, dialog, Handlebars) {
     $(function () {
         var mySwiper, rspData = [], user;
         Ajax.get(APIURL + '/commodity/queryListModel', {
@@ -27,26 +34,29 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
                         });
                         addListeners();
                         var mySwiper1 = new Swiper('.swiper-container1',{
-                            'loop': (data.length > 1 ? true : false),
-                            'slidesPerView' : data.length,
-                            'pagination': '.swiper-pagination',
+                            //'loop': (data.length > 1 ? true : false),
+                            //'slidesPerView' : data.length,
+                            //'pagination': '.pagination',
+                            'preventClicks': false,
                             'slideToClickedSlide': true,
+                            'centeredSlides': true,
+                            'slidesPerView': 4,
+                            'watchActiveIndex': true,
                             'onSlideChangeEnd': function(swiper){
                                 var index = $("#container")
-                                                .find(".swiper-wrapper>.swiper-slide:eq("+swiper.activeIndex+")")
-                                                .attr("data-swiper-slide-index");
+                                                .find(".swiper-wrapper>.swiper-slide.swiper-slide-active").index();
                                 choseImg(index);
                             }
                         });
-                        if(data.length == 1){
+                        //if(data.length == 1){
                         	choseImg(0);
-                        }
+                        //}
                         $("#cont").remove();
                     }else{
-                        doError();
+                        doError("暂无数据");
                     }
                 }else{
-                    doError();
+                    doError("暂无数据");
                 }
             });
 
@@ -56,7 +66,16 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
                     user = response.data;
                 }
             });
-
+        function doError(msg){
+        	var d = dialog({
+                content: msg,
+                quickClose: true
+            });
+            d.show();
+            setTimeout(function () {
+                d.close().remove();
+            }, 2000);
+        }
         function addListeners() {
             $("#subCount").on("click", function () {
                 var orig = $("#buyCount").val();
@@ -93,7 +112,7 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
                 	this.value = "1";
                 }
                 var unitPrice = +$("#unit-price").val();
-                $("#btr-price").text("￥" + (unitPrice * +$(this).val() / 1000).toFixed(2));
+                $("#btr-price").text((unitPrice * +$(this).val() / 1000).toFixed(0));
             });
         }
          function choseImg(index){
@@ -113,10 +132,12 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
                             'pagination': '.swiper-pagination'
                         });
             }else{
-				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic1+'"></div>',
-				'<div class="swiper-slide tc"><img src="'+msl.pic2+'"></div>',
-				'<div class="swiper-slide tc"><img src="'+msl.pic3+'"></div>']);
-				mySwiper.removeSlide([3,4,5]);
+				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic3+'"></div>']);
+				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic2+'"></div>']);
+				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic1+'"></div>']);
+				mySwiper.removeSlide(3);
+				mySwiper.removeSlide(3);
+				mySwiper.removeSlide(3);
             }
             msl.modelSpecsList.forEach(function (data) {
                 table_html += "<tr><th>" + data.dkey + "</th><td>" + data.dvalue + "</td></tr>";
@@ -129,10 +150,10 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
             if(msl.buyGuideList.length){
                 var discPrice = +msl.buyGuideList[0].discountPrice;
                 $("#unit-price").val(discPrice);
-                totalPrice = "￥" + (discPrice * +$("#buyCount").val() / 1000).toFixed(2);
+                totalPrice = (discPrice * +$("#buyCount").val() / 1000).toFixed(0);
                 $("#addCartBtn, #buyBtn").removeClass("no-buy-btn");
             }else{
-                totalPrice = "暂无价格";
+                totalPrice = "--";
                 $("#unit-price").val("9999999999999");
                 $("#addCartBtn, #buyBtn").addClass("no-buy-btn");
             }
@@ -163,7 +184,7 @@ define('js/app/controller/Buy', ['js/app/controller/base', 'js/app/util/ajax', '
                 config = {
                     modelCode : choseCode || "",
                     quantity: $("#buyCount").val(),
-                    salePrice: (+$("#btr-price").text().substr(1))*1000
+                    salePrice: (+$("#btr-price").text())*1000
                 },
                 url = APIURL + '/operators/add2Cart';
             Ajax.post(url, config)

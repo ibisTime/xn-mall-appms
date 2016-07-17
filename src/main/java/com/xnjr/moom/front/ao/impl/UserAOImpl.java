@@ -52,7 +52,7 @@ public class UserAOImpl implements IUserAO {
             throw new BizException("A010001", "验证码不能为空");
         }
         if (StringUtils.isBlank(userReferee)) {
-            userReferee = "";
+            throw new BizException("A010001", "推荐人不能为空");
         }
         XN805041Req req = new XN805041Req();
         req.setMobile(mobile);

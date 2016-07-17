@@ -53,12 +53,11 @@ public class MemberController extends BaseController {
 
     @RequestMapping(value = "/regist", method = RequestMethod.POST)
     @ResponseBody
-    public Object doRegister(
-            @RequestParam("loginName") String mobile,
+    public Object doRegister(@RequestParam("loginName") String mobile,
             @RequestParam("loginPwd") String loginPwd,
             @RequestParam("smsCaptcha") String smsCaptcha,
             @RequestParam("captcha") String captcha,
-            @RequestParam(value = "userReferee", required = false) String userReferee) {
+            @RequestParam("userReferee") String userReferee) {
 
         String sessionId = ControllerContext.getRequest().getSession().getId();
         boolean flag = imageCaptchaService.validateResponseForID(sessionId,

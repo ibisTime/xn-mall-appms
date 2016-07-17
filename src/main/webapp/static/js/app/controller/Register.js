@@ -5,7 +5,8 @@ define([
     'Handlebars'
 ], function (base, Ajax, dialog, Handlebars) {
 	$(function(){
-		var count = 1, returnUrl = base.getUrlParam("return");
+		var count = 1, returnUrl = base.getUrlParam("return"),
+			userReferee = base.getUrlParam("u");
 		addListeners();
 		init();
         function init(){
@@ -52,6 +53,13 @@ define([
             $("#captchaImg").on("click", function () {
                 $(this).attr( 'src', APIURL + '/captcha?_=' + new Date().getTime() );
             });
+            $("#getVerification").one("click", function innerFunc(){
+            	if(validate_mobile()){
+            		handleSendVerifiy();
+            	}else{
+            		$("#getVerification").one("click", innerFunc);
+            	}
+            });
         }
 
         function checkMobile (){
@@ -93,13 +101,21 @@ define([
 	                                    $("#getVerification").text((60 - i) + "s");
 	                                } else {
 	                                    $("#getVerification").text("获取验证码").removeClass("cancel-send")
-	                                    	.one("click", handleSendVerifiy);
+	                                    	.one("click", function(){
+	                                    		if(validate_mobile()){
+	                                        		handleSendVerifiy();
+	                                        	}
+	                                    	});
 	                                }
 	                            }, 1000 * i);
 	                        })(i);
 	                    }
 	                } else {
-	                    $("#getVerification").one("click", handleSendVerifiy);
+	                    $("#getVerification").one("click", function(){
+	                    	if(validate_mobile()){
+	                    		handleSendVerifiy();
+	                    	}
+                    	});
                         var parent = $("#verification").parent();
 	                    var span = parent.find("span.warning")[2];
 	                    $(span).fadeIn(150).fadeOut(3000);
@@ -110,7 +126,6 @@ define([
             var $elem = $("#mobile"),
                 $parent = $elem.parent(),
                 span;
-            $("#getVerification").off("click");
             if($elem.val() == ""){
                 span = $parent.find("span.warning")[0];
                 $(span).fadeIn(150).fadeOut(3000);
@@ -119,9 +134,6 @@ define([
                 span = $parent.find("span.warning")[1];
                 $(span).fadeIn(150).fadeOut(3000);
                 return false;
-            }
-            if(!$("#getVerification").hasClass("cancel-send")){
-                $("#getVerification").one("click", handleSendVerifiy);
             }
             return true;
         }
@@ -187,9 +199,18 @@ define([
             }
             return true;
         }
+        function validate_userReferee(){
+        	if(userReferee == undefined || userReferee.trim() == ""){
+        		showMsg("推荐人不能为空！");
+        		return false;
+        	}
+        	return true;
+        }
+        
         function validate(){
             if(validate_mobile() && validate_captcha() && validate_verification()
-                && validate_password() && validate_repassword()){
+                && validate_password() && validate_repassword() 
+                && validate_userReferee()){
                 if($("#registCheck")[0].checked){
                     return true;
                 }
@@ -210,7 +231,8 @@ define([
                 "loginName": $("#mobile").val(),
                 "loginPwd": $("#password").val(),
                 "smsCaptcha": $("#verification").val(),
-                "captcha": $("#captcha").val()
+                "captcha": $("#captcha").val(),
+                "userReferee": userReferee
             };
             Ajax.post(APIURL + '/user/regist', param)
                 .then(function (response) {
@@ -222,30 +244,34 @@ define([
                         });
                     } else {
                         $("#captchaImg").attr('src', APIURL+'/captcha?_=' + new Date().getTime());
-                        var d = dialog({
-								content: response.msg,
-								quickClose: true
-							});
-						d.show();
-						setTimeout(function () {
-							d.close().remove();
-						}, 2000);
+                        showMsg(response.msg);
 						$("#registerBtn").removeAttr("disabled").val("注册");
                     }
                 });
         }
-
+        function showMsg(msg){
+        	var d = dialog({
+				content: msg,
+				quickClose: true
+			});
+			d.show();
+			setTimeout(function () {
+				d.close().remove();
+			}, 2000);
+        }
         function loginUser(param) {
             var url = APIURL + "/user/login";
             Ajax.post(url, param)
                 .then(function (response) {
                     if (response.success) {
+                    	sessionStorage.setItem("user", "1");
                         if(returnUrl){
                             location.href = returnUrl;
                         }else{
                             location.href = "./user_info.html";
                         }
                     } else {
+                    	sessionStorage.setItem("user", "0");
                         if(returnUrl){
                             location.href = "./login.html?return="+encodeURIComponent(returnUrl);
                         }else{

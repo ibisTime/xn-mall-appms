@@ -6,7 +6,11 @@ define([
 ], function (base, Ajax, dialog, Handlebars) {
     $(function () {
     	var tradeFlag = false;
-    	initView();
+    	if(sessionStorage.getItem("user") == "1"){
+    		$("#cont").remove();
+    		$(".hidden").removeClass("hidden");
+    		initView();
+    	}
 	    function initView() {
 	        Ajax.get(APIURL + '/user', {})
 	            .then(function (response) {
@@ -28,7 +32,7 @@ define([
 	        Ajax.get(APIURL + "/account/infos/page", {"start": 0, "limit": 8}, true)
 	            .then(function (response) {
 	                if(response.success){
-	                    $("#amount").text("￥"+(+response.data.list[0].amount / 1000).toFixed(2));
+	                    $("#amount").text((+response.data.list[0].amount / 1000).toFixed(0));
 	                }else{
 	                    $("#amount").text("--");
 	                }

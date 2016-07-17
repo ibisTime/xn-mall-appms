@@ -229,4 +229,11 @@ public class OperatorController extends BaseController {
             @RequestParam(value = "code", required = false) String code) {
         return operatorAO.queryAccountNumber(code);
     }
+
+    // 积分充值
+    @RequestMapping(value = "integral/recharge", method = RequestMethod.GET)
+    @ResponseBody
+    public Object IntegralRecharge() {
+        return operatorAO.IntegralRecharge(getSessionUserId(""));
+    }
 }

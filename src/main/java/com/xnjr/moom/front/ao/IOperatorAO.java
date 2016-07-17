@@ -215,4 +215,12 @@ public interface IOperatorAO {
      * @history:
      */
     public Object queryAccountNumber(String code);
+
+    /**
+     * 积分充值
+     * @param userId
+     * @return 
+     * @history:
+     */
+    public Object IntegralRecharge(String userId);
 }

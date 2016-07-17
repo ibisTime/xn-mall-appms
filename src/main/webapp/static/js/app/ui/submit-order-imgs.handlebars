@@ -1,14 +1,14 @@
 <ul class="b_bd_b">
 	{{#each items}}
         <li class="ptb8 clearfix b_bd_b plr10" modelCode="{{code}}">
-            <a href="../detail/mall_detail.html?code={{productCode}}">
+            <a href="../detail/mall_detail.html?code={{productCode}}" class="show">
                 <div class="fl wp30 tc"><img src="{{pic1}}"/></div>
                 <div class="fl wp40 pl12">
-                    <p class="tl">{{productName}}</p>
-                    <p class="tl pt4">{{modelName}}</p>
+                    <p class="tl line-tow">{{productName}}</p>
+                    <p class="tl pt4 line-tow">{{modelName}}</p>
                 </div>
                 <div class="fl wp30 tr s_10">
-                    <p class="item_totalP">￥{{totalAmount}}</p>
+                    <p><span class="item_totalP">{{totalAmount}}</span><span class="t_40pe s_09 pl4">积分</span></p>
                     <p class="t_80">×<span>{{quantity}}</span></p>
                 </div>
             </a>

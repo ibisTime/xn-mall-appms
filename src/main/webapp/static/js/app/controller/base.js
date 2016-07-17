@@ -152,11 +152,19 @@ define(['app/util/common', 'app/util/ajax'], function (common, Ajax) {
           && pathname.indexOf("/user/findPwd.html") == -1)) 
         || pathname.indexOf("/account") != -1 
         || (pathname.indexOf("/operator/") != -1 && pathname.indexOf("/operator/buy.html") == -1)){
-        Base.getUser().then(function(response){
-            if(!response.success){
-                location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
-            }
-        });
+    	if(sessionStorage.getItem("user") == "0"){
+    		location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
+    	}else if(sessionStorage.getItem("user") == undefined){
+    		Base.getUser().then(function(response){
+                if(!response.success){
+                	sessionStorage.setItem("user", "0");
+                    location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
+                }else{
+                	sessionStorage.setItem("user", "1");
+                	location.reload(true);
+                }
+            });
+    	}
     }
     return Base;
 });

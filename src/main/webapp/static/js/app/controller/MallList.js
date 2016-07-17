@@ -5,6 +5,7 @@ define([
 ], function (base, Ajax, Handlebars) {
     $(function () {
         var template = __inline("../ui/mall-list.handlebars"),
+        	idx = base.getUrlParam("i"),
             items = {}, count = 2, modelList = {}, first = true;
         $("#ml-head-ul").on("click", "li", function () {
             var $me = $(this);
@@ -61,11 +62,21 @@ define([
                                 }
                             }
                             isReady(doSuccess);
+                        }else{
+                        	doError();
                         }
+                    }else{
+                    	doError();
                     }
                 });
         }
-        $("#ml-head-ul>li:first").click();
+        var length = $("#ml-head-ul>li").length;
+        if(idx <= (length - 1)){
+        	$("#ml-head-ul>li:eq("+idx+")").click();
+        }else{
+        	$("#ml-head-ul>li:first").click();
+        }
+        
         function isReady(func) {
             if(!--count){
                 func();
@@ -73,23 +84,23 @@ define([
         }
         function doError() {
             count = 0;
-            if(first){
-                $("header").remove();
-                first = false;
-            }
-            $("#cont").replaceWith('<div id="cont" class="bg_fff" style="text-align: center;line-height: 150px;">暂无数据</div>');
+            $("#cont").replaceWith('<div id="cont" class="bg_fff" style="text-align: center;line-height: 150px;">暂无商品</div>');
         }
         function doSuccess() {
             first = false;
             var data = [];
             for( var name in items ){
                 if(modelList[name]){
-                    items[name].price = modelList[name].toFixed(2);
+                    items[name].price = modelList[name].toFixed(0);
                     data.push(items[name]);
                 }
             }
-            var content = template({items: data});
-            $("#cont").replaceWith(content);
+            if(data.length){
+            	var content = template({items: data});
+                $("#cont").replaceWith(content);
+            }else{
+            	doError();
+            }
         }
     });
 });

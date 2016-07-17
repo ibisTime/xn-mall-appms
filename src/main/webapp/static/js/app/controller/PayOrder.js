@@ -35,15 +35,15 @@ define([
                         invoiceModelLists.forEach(function (invoiceModelList) {
                             quantity = invoiceModelList.quantity;
                             salePrice = invoiceModelList.salePrice;
-                            invoiceModelList.totalAmount = ((+salePrice)*(+quantity) / 1000).toFixed(2);
+                            invoiceModelList.totalAmount = ((+salePrice)*(+quantity) / 1000).toFixed(0);
                         });
                         $("#cont").remove();
                         $("footer, #items-cont").removeClass("hidden");
                         $("#items-cont").append( contentTmpl({items: invoiceModelLists}) );
-                        $("#po-total").html("￥" + (+data.totalAmount/1000).toFixed(2));
+                        $("#po-total").html((+data.totalAmount/1000).toFixed(0));
 
                         var addData = data.address;
-                        addData.totalAmount = (+data.totalAmount/1000).toFixed(2);
+                        addData.totalAmount = (+data.totalAmount/1000).toFixed(0);
                         addData.orderCode = code;
                         $("#addressDiv").html(addressTmpl(addData));
                     }else{

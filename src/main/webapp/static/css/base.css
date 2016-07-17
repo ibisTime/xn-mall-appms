@@ -10,7 +10,7 @@
 html {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-    font-size: 73%;
+    font-size: 80%;
 }
 
 input {
@@ -126,8 +126,7 @@ html, body {
 *:focus {
     outline: none;
 }
-
-input, input[type="text"], input[type="tel"], input[type="button"], input[type="num"], input[type="search"], input[type="radio"], input[type="checkbox"], input[type="password"], button {
+input[type="text"], input[type="tel"], input[type="button"], input[type="num"], input[type="search"], input[type="radio"], input[type="password"], button {
     -webkit-appearance: none;
 }
 
@@ -293,6 +292,9 @@ textarea {
 .p10 {
     padding: 10px;
 }
+.pl5 {
+	padding-left: 5px;
+}
 .pl5em {
     padding-left: 5em;
 }
@@ -390,6 +392,10 @@ textarea {
     padding-right: 20px;
 }
 
+.pr22 {
+	padding-right: 22px;
+}
+
 .pt20 {
     padding-top: 20px;
 }
@@ -452,6 +458,9 @@ textarea {
 
 .pl30 {
     padding-left: 30px;
+}
+.pl32 {
+	padding-left: 32px;
 }
 
 .pr30 {
@@ -1076,6 +1085,9 @@ textarea {
 .t_ed2b2b {
 	color: #ED2B2B;
 }
+.t_40pe {
+	color: rgb(40%, 40%, 40%);
+}
 .t-i2 {
     text-indent: 2.4rem;
 }
@@ -1154,6 +1166,9 @@ textarea {
 
 .s_12 {
     font-size: 1.2rem;
+}
+.s_125{
+	font-size: 1.25rem;
 }
 .s_13 {
     font-size: 1.3rem;
@@ -1294,6 +1309,15 @@ textarea {
 .wp100 {
     width: 100%;
 }
+.w60p {
+    width: 60px;
+}
+.wp225p {
+	width: 225px;
+}
+.wp240p {
+	width: 240px;
+}
 .w70p {
     width: 70px;
 }
@@ -1321,6 +1345,9 @@ textarea {
 .wp1em {
 	width: 1em;
 }
+.wp3em {
+	width: 3em;
+}
 
 /*高度*/
 .hp100 {
@@ -1329,8 +1356,14 @@ textarea {
 .hp42p{
     height: 42px;
 }
+.hp48p{
+	height: 48px;
+}
 .hp1em {
 	height: 1em;
+}
+.hp26p{
+	height: 26px;
 }
 /*定位*/
 .re {
@@ -1472,6 +1505,9 @@ textarea {
 .lh3em {
     line-height: 3em !important;
 }
+.lh3_1em {
+	line-height: 3.1em !important;
+}
 .lh3_5em {
 	line-height: 3.5em !important;
 }
@@ -1586,7 +1622,7 @@ textarea {
     width: 100%;
     display: block;
     position: fixed;
-    top: -69px;
+    top: -62px;
     height: 100%;
     left: 0;
     background-color: #fff;
@@ -1634,6 +1670,7 @@ table th, table td {
 	padding-top: 6px;
 	padding-bottom: 6px;
 	font-weight: normal;
+	word-wrap: break-word;
 }
 .addr-table th{
     text-align: right;
@@ -1642,6 +1679,9 @@ table th, table td {
     text-align: left;
     padding-left: 20px;
 }
+.addr-table tr {
+	height: 50px;
+}
 .addr-table th, .addr-table td {
     border: none;
     border-bottom: 1px solid #E6E6E6;
@@ -1649,7 +1689,8 @@ table th, table td {
     font-weight: normal;
 }
 .addr-table input {
-    line-height: 3em;
+    line-height: 1.2rem;
+    font-size: 1.2rem;
     width: 100%;
 }
 .swiper-container1 .swiper-slide{
@@ -1718,6 +1759,7 @@ table th, table td {
     position: absolute;
     left: 0;
     top: 0;
+    font-size: 0;
 }
 .bg_m_icon {
     background: url(../images/m-icon.png) center no-repeat;
@@ -1738,7 +1780,7 @@ table th, table td {
     line-height:1.2rem;
 }
 .login_input img {
-    width: 26px;
+    width: 20px;
 }
 .r-login {
     display: inline-block;
@@ -1833,8 +1875,6 @@ table th, table td {
     width: 16px;
     border-radius: 50%;
     background-color: #F64444;
-}
-.radio-tip1.active > i{
     left: 1px;
     top: 1px;
 }
@@ -1847,6 +1887,13 @@ table th, table td {
     margin-top: -10px;
     border-radius: 50%;
     border: 1px solid #F64444;
+}
+.cart-cont-left {
+	position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 20px;
 }
 .address-bottom{
     position: absolute;
@@ -1862,7 +1909,7 @@ table th, table td {
     border-radius: 50%;
     border: 1px solid #F64444;
     display: inline-block;
-    vertical-align: text-top;
+    vertical-align: middle;
     position: relative;
 }
 .radio-chose img {
@@ -1880,12 +1927,12 @@ table th, table td {
 }
 .cart-foot {
     position: fixed;
-    bottom: 69px;
+    bottom: 60px;
     width: 100%;
     left: 0;
     border-top: 1px solid #bdbdbd;
     background-color: #fff;
-    line-height: 3em;
+    line-height: 3.5em;
 }
 .ab_l0{
     left: 0;
@@ -2020,6 +2067,107 @@ table th, table td {
     height: 36px;
     vertical-align: middle;
 }
-.hcont>ul>li img, #items-cont>ul>li img, #ol-ul>li img #od-ul li img {
+.hcont>ul>li img, #items-cont>ul>li img, #ol-ul>li img, #od-ul li img, .max-hp100 img {
 	max-height: 100px;
+}
+.hIdx-popular-r{
+	position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    text-align: center;
+}
+.popular-r-t{
+	position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.popular-r-b{
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.buy-cart-icon {
+	position: fixed;
+	bottom: 80px;
+	right: 20px;
+	width: 46px;
+	height: 46px;
+	z-index: 999;
+	border-radius: 50%;
+	background-color: rgba(0,0,0,.4);
+	text-align: center;
+}
+.buy-cart-icon:after{
+	display: inline-block;
+	content: "";
+	width: 0;
+	height: 46px;
+	vertical-align: middle;
+}
+.buy-cart-icon i {
+	display: inline-block;
+	vertical-align: middle;
+	width: 33px;
+	height: 33px;
+	background: url(../images/cart1.png) center no-repeat;
+}
+.ml_header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+.al_addr_del{
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: -1;
+	height: 100%;
+	width: 56px;
+    color: #fff;
+    background: #f50;
+    cursor: pointer;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+}
+.z_index0 {
+	z-index: 0;
+}
+.line-tow{
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+.ui-phone-icon{
+	height: 1.2em;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+.break-word{
+	word-wrap: break-word;
+    word-break: break-all;
+}
+.about-a{
+	text-decoration: underline;
+	color: #6698eb;
+	display: inline;
 }

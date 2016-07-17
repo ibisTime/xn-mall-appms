@@ -148,6 +148,7 @@
 			<mvc:mapping path="/operator/**" />
 			
 			<mvc:exclude-mapping path="/operator/buy.htm"/>
+			<mvc:exclude-mapping path="/operators/integral/recharge"/>
 			
 			<!-- 注册相关 start  -->
 			<mvc:exclude-mapping path="/gene/register/send" />

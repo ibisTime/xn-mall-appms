@@ -61,7 +61,11 @@ define([
                             }
                         }
                         isReady(doSuccess);
+                    }else{
+                    	doError();
                     }
+                }else{
+                	doError();
                 }
             });
         function isReady(func) {
@@ -71,19 +75,22 @@ define([
         }
         function doError() {
             count = 0;
-            $("header").remove();
             $("#cont").replaceWith('<div class="bg_fff" style="text-align: center;line-height: 150px;">暂无数据</div>');
         }
         function doSuccess() {
             var data = [];
             for( var name in items ){
                 if(modelList[name]){
-                    items[name].price = modelList[name].toFixed(2);
+                    items[name].price = modelList[name].toFixed(0);
                     data.push(items[name]);
                 }
             }
-            var content = template({items: data});
-            $("#cont").replaceWith(content);
+            if(data.length){
+            	var content = template({items: data});
+                $("#cont").replaceWith(content);
+            }else{
+            	doError();
+            }
         }
     });
 });

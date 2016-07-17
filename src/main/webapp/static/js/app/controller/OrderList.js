@@ -69,22 +69,23 @@ define([
 	                                code = cl.code;
 				                html += '<li class="clearfix b_bd_b b_bd_t bg_fff mt10" code="'+code+'">'+
 						                    '<a class="show" href="./order_detail.html?code='+code+'" class="show">'+
-						                        '<div class="wp100 s_09 b_bd_b clearfix  ptb10 plr10">'+
+						                        '<div class="wp100 b_bd_b clearfix  ptb10 plr10">'+
 						                            '<div class="fl">订单号：<span>'+code+'</span></div>'+
 						                        '</div>';
 						        if(invoices.length == 1){
 		                            invoice = invoices[0];
-	                            	var amount = ((+invoice.salePrice * + invoice.quantity) / 1000).toFixed(2);
+	                            	var amount = ((+invoice.salePrice * + invoice.quantity) / 1000).toFixed(0);
 	                            	html += '<div class="wp100 clearfix plr10 ptb4 p_r">'+
 					                            '<div class="fl wp30 tc"><img src="'+invoice.pic1+'"></div>'+
 					                            '<div class="fl wp40 pl12 pt12">'+
-					                                '<p class="tl">'+invoice.productName+'</p>'+
-					                                '<p class="tl pt4">'+invoice.modelName+'</p>'+
+					                                '<p class="tl line-tow">'+invoice.productName+'</p>'+
+					                                '<p class="tl pt4 line-tow">'+invoice.modelName+'</p>'+
 					                            '</div>'+
-					                            '<div class="fl wp30 tr s_10 pt12">'+
-					                                '<p class="item_totalP">￥'+amount+'</p>'+
+					                            '<div class="fl wp30 tr pt12">'+
+					                                '<p class="item_totalP">'+amount+'<span class="t_40pe s_09 pl4">积分</span></p>'+
 					                                '<p class="t_80">×<span>'+invoice.quantity+'</span></p>'+
-					                                '<p class="ab wp100 r_10 b_18">金额:￥'+(+cl.totalAmount / 1000).toFixed(2)+'</p>'+
+					                                '<p>&nbsp;</p>'+
+					                                '<p>总积分：'+(+cl.totalAmount / 1000).toFixed(0)+'</p>'+
 					                            '</div>';
 		                        }else{
 		                        	html += '<div class="wp100 clearfix plr10 ptb4 p_r">';
