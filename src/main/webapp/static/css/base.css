@@ -187,6 +187,9 @@ textarea {
 }
 
 /*padding  内边距*/
+.pb2 {
+    padding-bottom: 2px;
+}
 .p4 {
     padding: 4px;
 }
@@ -239,6 +242,9 @@ textarea {
 
 .pr6 {
     padding-right: 6px;
+}
+.pr56 {
+    padding-right: 56px;
 }
 
 .pt6 {
@@ -342,11 +348,6 @@ textarea {
     padding-right: 12px;
 }
 
-.ptb10 {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
 .p15 {
     padding: 15px;
 }
@@ -440,6 +441,9 @@ textarea {
 
 .pb25 {
     padding-bottom: 25px;
+}
+.pb3 {
+    padding-bottom: 3px;
 }
 
 .plr25 {
@@ -562,6 +566,11 @@ textarea {
     margin-right: 4px;
 }
 
+.mlr6 {
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
 .mtb4 {
     margin-top: 4px;
     margin-bottom: 4px;
@@ -681,6 +690,9 @@ textarea {
 
 .mt20 {
     margin-top: 20px;
+}
+.mt24 {
+    margin-top: 24px;
 }
 .mt120 {
     margin-top: 120px;
@@ -1312,6 +1324,9 @@ textarea {
 .w60p {
     width: 60px;
 }
+.w50p {
+    width: 50px;
+}
 .wp225p {
 	width: 225px;
 }
@@ -1359,6 +1374,9 @@ textarea {
 .hp48p{
 	height: 48px;
 }
+.hp132p{
+    height: 132px;
+}
 .hp1em {
 	height: 1em;
 }
@@ -1386,6 +1404,9 @@ textarea {
 .br_50 {
     border-radius: 50%;
     overflow: hidden;
+}
+.br_4p {
+    border-radius: 4px;
 }
 
 /*display*/
@@ -2170,4 +2191,62 @@ table th, table td {
 	text-decoration: underline;
 	color: #6698eb;
 	display: inline;
+}
+.max-hp15em{
+    max-height: 1.5em;
+}
+.ml-img{
+    position: absolute;
+    right: 10px;
+    top: 8px;
+}
+.w10p {
+    width: 10px;
+}
+.ml-updown {
+    position: absolute;
+    left: 0;
+    top: 8px;
+}
+.w22p {
+    width: 22px;
+}
+.pl24 {
+    padding-left: 24px;
+}
+.bg_e3e3e5{
+    background-color: #E3E3E5;
+}
+.search-select {
+    width: 24%;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 4px;
+    color: #999;
+    font-size: 14px;
+    float: left;
+    margin-top: 5px;
+}
+.search-input{
+    width: 76%;
+    float: left;
+    line-height: 28px;
+    vertical-align: middle;
+    margin-top: 6px;
+}
+.bg_f6{
+    background-color: #F6F6F6;
+}
+#searchUl li {
+    padding: 6px 10px;
+    border-bottom: 1px solid #e6e6e6;
+}
+#searchUl li:last-child{
+    border-bottom: none;
+}
+.p_fixed {
+    position: fixed;
+}
+.hp55p{
+    height: 55px;
 }
