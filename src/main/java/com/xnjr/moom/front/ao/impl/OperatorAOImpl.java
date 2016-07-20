@@ -22,6 +22,7 @@ import com.xnjr.moom.front.req.XN602023Req;
 import com.xnjr.moom.front.req.XN602025Req;
 import com.xnjr.moom.front.req.XN602026Req;
 import com.xnjr.moom.front.req.XN602027Req;
+import com.xnjr.moom.front.req.XN602043Req;
 import com.xnjr.moom.front.req.XN602061Req;
 import com.xnjr.moom.front.req.XN602080Req;
 import com.xnjr.moom.front.req.XN602081Req;
@@ -403,6 +404,21 @@ public class OperatorAOImpl implements IOperatorAO {
         XN802002Req req = new XN802002Req();
         req.setUserId(userId);
         return BizConnecter.getBizData("802002", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    public Object confirmReceipt(String code, String userId) {
+        if (StringUtils.isBlank(userId)) {
+            throw new BizException("A010001", "请登录后再进行操作!");
+        }
+        if (StringUtils.isBlank(code)) {
+            throw new BizException("A010001", "物流单编号不能为空!");
+        }
+        XN602043Req req = new XN602043Req();
+        req.setCode(code);
+        req.setUpdater(userId);
+        req.setRemark("确认收货");
+        return BizConnecter.getBizData("602043", JsonUtils.object2Json(req),
             Object.class);
     }
 }

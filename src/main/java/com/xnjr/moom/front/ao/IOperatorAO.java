@@ -223,4 +223,13 @@ public interface IOperatorAO {
      * @history:
      */
     public Object IntegralRecharge(String userId);
+
+    /**
+     * 物流单确认收货
+     * @param code
+     * @param userId
+     * @return 
+     * @history:
+     */
+    public Object confirmReceipt(String code, String userId);
 }

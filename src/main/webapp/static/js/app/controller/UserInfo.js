@@ -5,7 +5,6 @@ define([
     'Handlebars'
 ], function (base, Ajax, dialog, Handlebars) {
     $(function () {
-    	var tradeFlag = false;
     	if(sessionStorage.getItem("user") == "1"){
     		$("#cont").remove();
     		$(".hidden").removeClass("hidden");
@@ -16,12 +15,6 @@ define([
 	            .then(function (response) {
 	                if (response.success) {
 	                    var data = response.data;
-	                    if(data.tradePwdStrength){
-                        	tradeFlag = true;
-                        	$("#uTop").attr("href", "./user_set.html?t=1");
-                        }else{
-                        	$("#uTop").attr("href", "./user_set.html?t=0");
-                        }
 	                    $("#mobile").text(data.mobile);
 	                    sessionStorage.setItem("m", data.mobile);
 	                } else {
@@ -41,13 +34,6 @@ define([
 	        $("#fundList").on("click", function () {
 	            location.href = "../account/fundDetails.html";
 	        });
-	        $("#withdraw").on("click", function () {
-	            if(tradeFlag){
-	                location.href = "../account/withdraw.html";
-	            }else{
-	                showMsg("请先设置交易密码！");
-	            }
-	        })
 	    }
 	    function showMsg(cont){
     		var d = dialog({

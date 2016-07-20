@@ -236,4 +236,11 @@ public class OperatorController extends BaseController {
     public Object IntegralRecharge() {
         return operatorAO.IntegralRecharge(getSessionUserId(""));
     }
+
+    // 确认收货
+    @RequestMapping(value = "receipt/confirm", method = RequestMethod.POST)
+    @ResponseBody
+    public Object confirmReceipt(@RequestParam("code") String code) {
+        return operatorAO.confirmReceipt(code, getSessionUserId(""));
+    }
 }
