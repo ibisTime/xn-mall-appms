@@ -162,6 +162,9 @@ define([
 	        $("#odCel").on("click", function(){
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
 	        });
+			$("#psfs").on("change", function(){
+
+			});
     	}
     	
     	function PrepareConfig(){
@@ -211,6 +214,9 @@ define([
     	}
 
     	function doSubmitOrder(config, url){
+			if($("#psfs").val() == "1"){
+				$("#mdxz")
+			}
     		Ajax.post(url, config)
 				.then(function (response) {
 					if(response.success){

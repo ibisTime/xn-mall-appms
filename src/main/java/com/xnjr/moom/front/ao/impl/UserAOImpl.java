@@ -109,16 +109,19 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public XN805043Res doLogin(String loginName, String loginPwd) {
+    public XN805043Res doLogin(String loginName, String loginPwd, String kind) {
         if (StringUtils.isBlank(loginName)) {
             throw new BizException("A010001", "登陆名不能为空");
         }
         if (StringUtils.isBlank(loginPwd)) {
             throw new BizException("A010001", "登陆密码不能为空");
         }
+
         XN805043Req req = new XN805043Req();
         req.setLoginName(loginName);
         req.setLoginPwd(loginPwd);
+        req.setKind("f1");
+
         return BizConnecter.getBizData("805043", JsonUtils.object2Json(req),
             XN805043Res.class);
     }

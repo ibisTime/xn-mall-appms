@@ -15,7 +15,39 @@ define([
         });
         var template = __inline("../ui/index-imgs.handlebars"),
             items = {}, count = 2, types = {}, modelList = {};
-        Ajax.get(APIURL + '/commodity/queryProduces', true)
+
+        function getProduces(){
+            Ajax.get(APIURL + '/commodity/product/list', true)
+                .then(function (res) {
+                    if(res.success){
+                        var data = res.data;
+                        if(data.length){
+                            for(var i = 0; i < data.length; i++){
+                                var d = data[i];
+                                if(!types[d.type]){
+                                    types[d.type] = 0;
+                                }
+                                if(types[d.type] < 3){
+                                    items[d.code] = {
+                                        "name": d.name,
+                                        "advTitle": d.advTitle,
+                                        "advPic": d.advPic,
+                                        "code": d.code
+                                    };
+                                    types[d.type]++;
+                                }
+                            }
+                            isReady(doSuccess);
+                        }else{
+                            doError();
+                        }
+                    }else{
+                        doError();
+                    }
+                });
+        }
+
+        /*Ajax.get(APIURL + '/commodity/queryProduces', true)
             .then(function (res) {
                 if(res.success){
                     var data = res.data;
@@ -67,7 +99,7 @@ define([
                 }else{
                 	doError();
                 }
-            });
+            });*/
         function isReady(func) {
             if(!--count){
                 func();

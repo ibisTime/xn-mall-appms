@@ -144,10 +144,17 @@ define(['app/util/common', 'app/util/ajax'], function (common, Ajax) {
         },
         getUser: function (flag) {
             return Ajax.get(APIURL + '/user');
+        },
+        throttle: function(method, context, t) {
+        	var tt = t || 100;
+        	clearTimeout(method.tId);
+        	method.tId = setTimeout(function(){
+        		method.call(context);
+        	}, tt)
         }
     };
-    var pathname = location.pathname;
-    if( (pathname.indexOf("/user/") != -1 && 
+    /*var pathname = location.pathname;
+    if( (pathname.indexOf("/user/") != -1 &&
          (pathname.indexOf("/user/login.html") == -1 && pathname.indexOf("/user/register.html") == -1 
           && pathname.indexOf("/user/findPwd.html") == -1)) 
         || pathname.indexOf("/account") != -1 
@@ -165,6 +172,6 @@ define(['app/util/common', 'app/util/ajax'], function (common, Ajax) {
                 }
             });
     	}
-    }
+    }*/
     return Base;
 });

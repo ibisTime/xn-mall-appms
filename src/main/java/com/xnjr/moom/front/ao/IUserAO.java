@@ -68,11 +68,12 @@ public interface IUserAO {
      * @param loginName
      * @param loginPwd
      * @param loginIp
+     * @param kind
      * @create: 2014-12-10 下午7:37:18 miyb
      * @history:
      */
 
-    public XN805043Res doLogin(String loginName, String loginPwd);
+    public XN805043Res doLogin(String loginName, String loginPwd, String kind);
 
     /**
      * 查询用户的详细信息

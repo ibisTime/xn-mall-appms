@@ -14,11 +14,13 @@ public interface IOperatorAO {
      * @param applyNote
      * @param receiptType
      * @param receiptTitle
+     * @param toUser
      * @return
      */
     public Object submitOrder(String applyUser, String modelCode,
             String quantity, String salePrice, String addressCode,
-            String applyNote, String receiptType, String receiptTitle);
+            String applyNote, String receiptType, String receiptTitle,
+            String toUser);
 
     /**
      * 支付订单

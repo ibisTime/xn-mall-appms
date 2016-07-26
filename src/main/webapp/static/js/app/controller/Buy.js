@@ -7,23 +7,18 @@ define([
     'js/lib/swiper-3.3.1.jquery.min'
 ], function (base, Ajax, dialog, Handlebars) {
     $(function () {
-        var mySwiper, rspData = [], user;
+        var mySwiper, rspData, user, code = base.getUrlParam("code") || "";
         Ajax.get(APIURL + '/commodity/queryListModel', {
-            productCode : base.getUrlParam("code") || ""
+            code : code
         }, true)
             .then(function (res) {
                 if(res.success){
                     var data = res.data, imgs_html = "";
                     if(data.length){
-                        rspData = data;
-                        var $swiper = $("#container").find(".swiper-wrapper");
-                        data.forEach(function (d, i) {
-                            imgs_html += '<div code="'+d.code+'" class="swiper-slide"><img src="'+d.pic1+'"/></div>'
-                        });
-                        $swiper.html(imgs_html);
+                        rspData = data[0];
                         $("#buyBtn").click(function () {
                             if(!$(this).hasClass("no-buy-btn")){
-                                var choseCode = $swiper.find(".swiper-slide.swiper-slide-active").attr("code");
+                                var choseCode = code;
                                 location.href = "./submit_order.html?code=" + choseCode + "&q=" + $("#buyCount").val();
                             }
                         });
@@ -33,24 +28,7 @@ define([
                             }
                         });
                         addListeners();
-                        var mySwiper1 = new Swiper('.swiper-container1',{
-                            //'loop': (data.length > 1 ? true : false),
-                            //'slidesPerView' : data.length,
-                            //'pagination': '.pagination',
-                            'preventClicks': false,
-                            'slideToClickedSlide': true,
-                            'centeredSlides': true,
-                            'slidesPerView': 4,
-                            'watchActiveIndex': true,
-                            'onSlideChangeEnd': function(swiper){
-                                var index = $("#container")
-                                                .find(".swiper-wrapper>.swiper-slide.swiper-slide-active").index();
-                                choseImg(index);
-                            }
-                        });
-                        //if(data.length == 1){
-                        	choseImg(0);
-                        //}
+                        choseImg();
                         $("#cont").remove();
                     }else{
                         doError("暂无数据");
@@ -115,8 +93,8 @@ define([
                 $("#btr-price").text((unitPrice * +$(this).val() / 1000).toFixed(0));
             });
         }
-         function choseImg(index){
-            var msl = rspData[index],
+         function choseImg(){
+            var msl = rspData,
                 table_html = "<tbody>";
 			
             if(!mySwiper){
@@ -131,13 +109,6 @@ define([
                             'autoplay': 2000,
                             'pagination': '.swiper-pagination'
                         });
-            }else{
-				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic3+'"></div>']);
-				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic2+'"></div>']);
-				mySwiper.prependSlide([ '<div class="swiper-slide tc"><img src="'+msl.pic1+'"></div>']);
-				mySwiper.removeSlide(3);
-				mySwiper.removeSlide(3);
-				mySwiper.removeSlide(3);
             }
             msl.modelSpecsList.forEach(function (data) {
                 table_html += "<tr><th>" + data.dkey + "</th><td>" + data.dvalue + "</td></tr>";

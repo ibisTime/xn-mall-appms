@@ -73,8 +73,9 @@ public class MemberController extends BaseController {
     @ResponseBody
     public Object doLogin(@RequestParam("loginName") String loginName,
             @RequestParam("loginPwd") String loginPwd,
-            @RequestParam("terminalType") String terminalType) {
-        XN805043Res res = userAO.doLogin(loginName, loginPwd);
+            @RequestParam("terminalType") String terminalType,
+            @RequestParam(value = "kind", required = false) String kind) {
+        XN805043Res res = userAO.doLogin(loginName, loginPwd, kind);
         XN805056Res res1 = userAO.doGetUser(res.getUserId());
         if (ETermType.WEB.getCode().equals(terminalType)) {
             SessionUser sessionUser = new SessionUser();

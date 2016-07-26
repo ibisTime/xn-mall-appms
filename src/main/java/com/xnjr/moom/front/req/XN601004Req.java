@@ -1,20 +1,23 @@
 package com.xnjr.moom.front.req;
 
-public class XN601005Req {
-    // 产品大类
+public class XN601004Req {
     private String category;
 
-    // 产品类型
     private String type;
 
-    // 产品名称
     private String name;
 
-    // 状态
     private String status;
 
-    // 更新人
     private String updater;
+
+    private String start;
+
+    private String limit;
+
+    private String orderColumn;
+
+    private String orderDir;
 
     public String getCategory() {
         return category;
@@ -54,5 +57,37 @@ public class XN601005Req {
 
     public void setUpdater(String updater) {
         this.updater = updater;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getLimit() {
+        return limit;
+    }
+
+    public void setLimit(String limit) {
+        this.limit = limit;
+    }
+
+    public String getOrderColumn() {
+        return orderColumn;
+    }
+
+    public void setOrderColumn(String orderColumn) {
+        this.orderColumn = orderColumn;
+    }
+
+    public String getOrderDir() {
+        return orderDir;
+    }
+
+    public void setOrderDir(String orderDir) {
+        this.orderDir = orderDir;
     }
 }

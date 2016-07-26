@@ -28,10 +28,11 @@ public class OperatorController extends BaseController {
             @RequestParam("addressCode") String addressCode,
             @RequestParam(value = "applyNote", required = false) String applyNote,
             @RequestParam(value = "receiptType", required = false) String receiptType,
-            @RequestParam(value = "receiptTitle", required = false) String receiptTitle) {
+            @RequestParam(value = "receiptTitle", required = false) String receiptTitle,
+            @RequestParam("toUser") String toUser) {
         return operatorAO.submitOrder(getSessionUserId(applyUser), modelCode,
             quantity, salePrice, addressCode, applyNote, receiptType,
-            receiptTitle);
+            receiptTitle, toUser);
     }
 
     @RequestMapping(value = "/payOrder", method = RequestMethod.POST)

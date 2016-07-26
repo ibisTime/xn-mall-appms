@@ -36,7 +36,8 @@ public class OperatorAOImpl implements IOperatorAO {
 
     public Object submitOrder(String applyUser, String modelCode,
             String quantity, String salePrice, String addressCode,
-            String applyNote, String receiptType, String receiptTitle) {
+            String applyNote, String receiptType, String receiptTitle,
+            String toUser) {
 
         if (StringUtils.isBlank(applyUser)) {
             throw new BizException("A010001", "申请人编号不能为空");
@@ -62,6 +63,7 @@ public class OperatorAOImpl implements IOperatorAO {
         req.setReceiptTitle(receiptTitle);
         req.setReceiptType(receiptType);
         req.setSalePrice(salePrice);
+        req.setToUser(toUser);
         return BizConnecter.getBizData("602020", JsonUtils.object2Json(req),
             Object.class);
     }
