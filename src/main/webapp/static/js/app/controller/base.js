@@ -153,7 +153,7 @@ define(['app/util/common', 'app/util/ajax'], function (common, Ajax) {
         	}, tt)
         }
     };
-    /*var pathname = location.pathname;
+    var pathname = location.pathname;
     if( (pathname.indexOf("/user/") != -1 &&
          (pathname.indexOf("/user/login.html") == -1 && pathname.indexOf("/user/register.html") == -1 
           && pathname.indexOf("/user/findPwd.html") == -1)) 
@@ -161,17 +161,20 @@ define(['app/util/common', 'app/util/ajax'], function (common, Ajax) {
         || (pathname.indexOf("/operator/") != -1 && pathname.indexOf("/operator/buy.html") == -1)){
     	if(sessionStorage.getItem("user") == "0"){
     		location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
+            sessionStorage.setItem("trade", "0");
     	}else if(sessionStorage.getItem("user") == undefined){
     		Base.getUser().then(function(response){
                 if(!response.success){
                 	sessionStorage.setItem("user", "0");
+                    sessionStorage.setItem("trade", "0");
                     location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
                 }else{
+                    var data = response.data;
                 	sessionStorage.setItem("user", "1");
                 	location.reload(true);
                 }
             });
     	}
-    }*/
+    }
     return Base;
 });

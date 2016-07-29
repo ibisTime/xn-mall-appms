@@ -39,28 +39,27 @@ public class CommodityController extends BaseController {
     @RequestMapping(value = "/queryListModel", method = RequestMethod.GET)
     @ResponseBody
     public Object queryListModel(
-            @RequestParam(value = "code", required = false) String code,
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "status", required = false) String status,
-            @RequestParam(value = "productCode", required = false) String productCode) {
-        return commodityAO.queryListModel(code, name, status, productCode);
+            @RequestParam(value = "modelCode", required = false) String modelCode,
+            @RequestParam(value = "toSite", required = false) String toSite) {
+        return commodityAO.queryListModel(modelCode, toSite);
     }
 
     // 分页查询型号
     @RequestMapping(value = "/queryPageModel", method = RequestMethod.POST)
     @ResponseBody
     public Object queryPageModel(
-            @RequestParam(value = "code", required = false) String code,
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "status", required = false) String status,
-            @RequestParam(value = "productCode", required = false) String productCode,
+            @RequestParam(value = "modelCode", required = false) String modelCode,
+            @RequestParam(value = "toSite", required = false) String toSite,
             @RequestParam("start") String start,
             @RequestParam("limit") String limit,
             @RequestParam(value = "orderColumn", required = false) String orderColumn,
             @RequestParam(value = "orderDir", required = false) String orderDir,
-            @RequestParam(value = "productName", required = false) String productName) {
-        return commodityAO.queryPageModel(code, name, status, productCode,
-            start, limit, orderColumn, orderDir, productName);
+            @RequestParam(value = "category", required = false) String category,
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(value = "productCode", required = false) String productCode,
+            @RequestParam(value = "modelName", required = false) String modelName) {
+        return commodityAO.queryPageModel(modelCode, toSite, start, limit,
+            orderColumn, orderDir, category, type, productCode, modelName);
     }
 
     // 详情查询型号
@@ -98,5 +97,12 @@ public class CommodityController extends BaseController {
             @RequestParam(value = "updater", required = false) String updater) {
         return commodityAO
             .getProductList(category, type, name, status, updater);
+    }
+
+    // 根据大类查询所有启用产品的小类
+    @RequestMapping(value = "/subdivision/list", method = RequestMethod.GET)
+    @ResponseBody
+    public Object querySubdivisionList(@RequestParam("category") String category) {
+        return commodityAO.querySubdivisionList(category);
     }
 }

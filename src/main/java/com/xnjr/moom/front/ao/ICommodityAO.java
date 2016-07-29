@@ -21,14 +21,11 @@ public interface ICommodityAO {
 
     /**
      * 查询列表型号
-     * @param code
-     * @param name
-     * @param status
-     * @param productCode
+     * @param modelCode
+     * @param toSite
      * @return
      */
-    public Object queryListModel(String code, String name, String status,
-            String productCode);
+    public Object queryListModel(String modelCode, String toSite);
 
     /**
      * 详情查询型号
@@ -39,19 +36,19 @@ public interface ICommodityAO {
 
     /**
      * 分页查询型号
-     * @param code
-     * @param name
-     * @param status
-     * @param productCode
+     * @param modelCode
+     * @param toSite
      * @param start
      * @param limit
      * @param orderColumn
      * @param orderDir
-     * @return
+     * @param modelName
+     * @return 
+     * @history:
      */
-    public Object queryPageModel(String code, String name, String status,
-            String productCode, String start, String limit, String orderColumn,
-            String orderDir, String productName);
+    public Object queryPageModel(String modelCode, String toSite, String start,
+            String limit, String orderColumn, String orderDir, String category,
+            String type, String productCode, String modelName);
 
     /**
      * 分页查询产品类型
@@ -83,4 +80,12 @@ public interface ICommodityAO {
      */
     public Object getProductList(String category, String type, String name,
             String status, String updater);
+
+    /**
+     * 根据大类查询所有启用产品的小类
+     * @param category
+     * @return 
+     * @history:
+     */
+    public Object querySubdivisionList(String category);
 }

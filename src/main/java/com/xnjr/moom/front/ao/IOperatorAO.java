@@ -26,19 +26,18 @@ public interface IOperatorAO {
      * 支付订单
      * @param code
      * @param userId
-     * @param tradePwd
+     * @param amount
      * @return
      */
-    public Object payOrder(String code, String userId, String tradePwd);
+    public Object payOrder(String code, String userId, String amount);
 
     /**
      * 取消订单
      * @param code
      * @param userId
-     * @param applyNote
      * @return
      */
-    public Object cancelOrder(String code, String userId, String applyNote);
+    public Object cancelOrder(String code, String userId);
 
     /**
      * 订单分页查询
@@ -122,11 +121,12 @@ public interface IOperatorAO {
      * @param applyNote
      * @param receiptType
      * @param receiptTitle
+     * @param toUser
      * @return
      */
     public Object submitCart(String applyUser, List<String> cartCodeList,
             String addressCode, String applyNote, String receiptType,
-            String receiptTitle);
+            String receiptTitle, String toUser);
 
     /**
      * 查询购物车型号列表
@@ -221,10 +221,11 @@ public interface IOperatorAO {
     /**
      * 积分充值
      * @param userId
+     * @param integralCode
      * @return 
      * @history:
      */
-    public Object IntegralRecharge(String userId);
+    public Object IntegralRecharge(String userId, String integralCode);
 
     /**
      * 物流单确认收货

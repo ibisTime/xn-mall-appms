@@ -409,7 +409,10 @@ textarea {
     padding-left: 20px;
     padding-right: 20px;
 }
-
+.plr2 {
+    padding-left: 2px;
+    padding-right: 2px;
+}
 .ptb20 {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -1742,18 +1745,12 @@ table th, table td {
 .swiper-container1 .swiper-slide img {
         height: 304px;
 }
-.swiper-container .buy-swiper-top .swiper-slide img {
-    	height: 600px;
-}
 @media only screen and (max-width: 1024px){
     .swiper-container1 .swiper-slide img {
         height: 160px;
     }
     .swiper-container1 .swiper-slide{
         width: 246px;
-    }
-    .swiper-container .buy-swiper-top .swiper-slide img {
-    	height: 500px;
     }
 }
 @media only screen and (max-width: 735px){
@@ -1763,9 +1760,6 @@ table th, table td {
     .swiper-container1 .swiper-slide{
         width: 173.75px;
     }
-    .swiper-container .buy-swiper-top .swiper-slide img {
-    	height: 410px;
-    }
 }
 @media only screen and (max-width: 480px){
     .swiper-container1 .swiper-slide img {
@@ -1773,9 +1767,6 @@ table th, table td {
     }
     .swiper-container1 .swiper-slide{
         width: 83.75px;
-    }
-    .swiper-container .buy-swiper-top .swiper-slide img {
-    	height: 337px;
     }
 }
 .no-buy-btn{
@@ -2205,7 +2196,7 @@ table th, table td {
 }
 .ml-img{
     position: absolute;
-    right: 10px;
+    left: 10px;
     top: 8px;
 }
 .w10p {
@@ -2214,7 +2205,7 @@ table th, table td {
 .ml-updown {
     position: absolute;
     right: 4px;
-    top: 8px;
+    top: 6px;
 }
 .w22p {
     width: 22px;
@@ -2340,7 +2331,7 @@ table th, table td {
 	border: none;
 	margin-top: 10px;
 }
-.index-table tr td>div{
+.index-table tr td div.it-f{
 	display: inline-block;
 	float: left;
 	line-height: 1em;
@@ -2349,6 +2340,7 @@ table th, table td {
 .index-table th, .index-table td {
     border: none;
     text-align: left;
+    width: 33%;
 }
 .nowrap{
 	overflow: visible;
@@ -2365,4 +2357,39 @@ table th, table td {
 .mall_list_table th, .mall_list_table td {
     padding-top: 0;
     padding-bottom: 20px;
+}
+.icon-loading2{
+    background: url(/static/images/loading.gif) center no-repeat;
+    width: 100%;
+    display: block;
+    background-color: #fff;
+    z-index: 999;
+    height: 130px;
+}
+.index-rmtj{
+    border: none;
+    width: 100%;
+}
+.index-rmtj th, .index-rmtj td{
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: 50%;
+}
+.index-rmtj img{
+    max-width: 100%;
+}
+.over-hide{
+    overflow: hidden;
+}
+.zIndex900{
+    z-index: 900;
+}
+.zIndex901{
+    z-index: 901;
+}
+.overwrap{
+    overflow-wrap: break-word;
 }

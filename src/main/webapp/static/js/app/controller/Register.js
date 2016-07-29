@@ -20,45 +20,11 @@ define([
 		function addListeners() {
             $("#mobile").on("change", validate_mobile);
             $("#captcha").on("change", validate_captcha);
-            $("#verification").on("change",validate_verification);
-            $("#password").on("change", validate_password)
-	            .on("focus", function(){
-	                $(this).parent().find(".register_verifycon")
-		                .css({
-		                    "display": "block"
-		                });
-	            })
-	            .on("blur", function(){
-	                $(this).parent().find(".register_verifycon")
-		                .css({
-		                    "display": "none"
-		                });
-	            });
-            $("#repassword").on("change", validate_repassword)
-	            .on("focus", function(){
-	                $(this).parent().find(".register_verifycon")
-		                .css({
-		                    "display": "block"
-		                });
-	            })
-	            .on("blur", function(){
-	                $(this).parent().find(".register_verifycon")
-		                .css({
-		                    "display": "none"
-		                });
-	            });
             $("#registerBtn").on("click", function (e) {
                 register();
             });
             $("#captchaImg").on("click", function () {
                 $(this).attr( 'src', APIURL + '/captcha?_=' + new Date().getTime() );
-            });
-            $("#getVerification").one("click", function innerFunc(){
-            	if(validate_mobile()){
-            		handleSendVerifiy();
-            	}else{
-            		$("#getVerification").one("click", innerFunc);
-            	}
             });
         }
 
@@ -86,41 +52,6 @@ define([
         }
         function notOk() {
             count = -1;
-        }
-        function handleSendVerifiy() {
-            $("#getVerification").addClass("cancel-send");
-            Ajax.post(APIURL + '/gene/register/send',
-                {
-                    "mobile": $("#mobile").val()
-                }).then(function (response) {
-	                if (response.success) {
-	                    for (var i = 0; i <= 60; i++) {
-	                        (function (i) {
-	                            setTimeout(function () {
-	                                if (i < 60) {
-	                                    $("#getVerification").text((60 - i) + "s");
-	                                } else {
-	                                    $("#getVerification").text("获取验证码").removeClass("cancel-send")
-	                                    	.one("click", function(){
-	                                    		if(validate_mobile()){
-	                                        		handleSendVerifiy();
-	                                        	}
-	                                    	});
-	                                }
-	                            }, 1000 * i);
-	                        })(i);
-	                    }
-	                } else {
-	                    $("#getVerification").one("click", function(){
-	                    	if(validate_mobile()){
-	                    		handleSendVerifiy();
-	                    	}
-                    	});
-                        var parent = $("#verification").parent();
-	                    var span = parent.find("span.warning")[2];
-	                    $(span).fadeIn(150).fadeOut(3000);
-	                }
-	            });
         }
         function validate_mobile(){
             var $elem = $("#mobile"),
@@ -152,53 +83,6 @@ define([
             }
             return true;
         }
-        function validate_verification(){
-            var $elem = $("#verification"),
-                $parent = $elem.parent(),
-                span;
-            if($elem.val() == ""){
-                span = $parent.find("span.warning")[0];
-                $(span).fadeIn(150).fadeOut(3000);
-                return false;
-            }else if(!/^[\d]{4}$/.test($elem.val())){
-                span = $parent.find("span.warning")[1];
-                $(span).fadeIn(150).fadeOut(3000);
-                return false;
-            }
-            return true;
-        }
-        function validate_password(){
-            var $elem = $("#password"),
-                $parent = $elem.parent(),
-                myreg = /^[^\s]{6,16}$/,
-                span;
-            if($elem.val() == ""){
-                span = $parent.find("span.warning")[0];
-                $(span).fadeIn(150).fadeOut(3000);
-                return false;
-            }else if(!myreg.test($elem.val())){
-                span = $parent.find("span.warning")[1];
-                $(span).fadeIn(150).fadeOut(3000);
-                return false;
-            }
-            return true;
-        }
-        function validate_repassword(){
-            var $elem1 = $("#password"),
-                $elem2 = $("#repassword"),
-                $parent = $elem2.parent(),
-                span;
-            if($elem2.val() == ""){
-                span = $parent.find("span.warning")[0];
-                $(span).fadeIn(150).fadeOut(3000);
-                return false;
-            }else if($elem2.val() !== $elem1.val()){
-                span = $parent.find("span.warning")[1];
-                $(span).fadeIn(150).fadeOut(3000);
-                return false;
-            }
-            return true;
-        }
         function validate_userReferee(){
         	if(userReferee == undefined || userReferee.trim() == ""){
         		showMsg("推荐人不能为空！");
@@ -208,40 +92,28 @@ define([
         }
         
         function validate(){
-            if(validate_mobile() && validate_captcha() && validate_verification()
-                && validate_password() && validate_repassword() 
-                && validate_userReferee()){
-                if($("#registCheck")[0].checked){
-                    return true;
-                }
-                var d = dialog({
-						content: "请勾选协议！",
-						quickClose: true
-					});
-				d.show();
-				setTimeout(function () {
-					d.close().remove();
-				}, 2000);
-                return false;
+            if(validate_mobile() && validate_captcha() && validate_userReferee()){
+                return true;
             }
             return false;
         }
         function finalRegister() {
             var param = {
                 "loginName": $("#mobile").val(),
-                "loginPwd": $("#password").val(),
-                "smsCaptcha": $("#verification").val(),
                 "captcha": $("#captcha").val(),
                 "userReferee": userReferee
             };
             Ajax.post(APIURL + '/user/regist', param)
                 .then(function (response) {
                     if (response.success) {
-                        loginUser({
-                            "loginName": param.loginName,
-                            "loginPwd": param.loginPwd,
-                            "terminalType": "1"
-                        });
+                        showMsg("<div class='tc'>恭喜您注册成功！<br/>稍后登录密码将发送到您的手机上，请注意查收！</div>");
+                        setTimeout(function(){
+                            if(returnUrl){
+                                location.href = "./login.html?return="+encodeURIComponent(returnUrl);
+                            }else{
+                                location.href = "./login.html";
+                            }
+                        }, 2100);
                     } else {
                         $("#captchaImg").attr('src', APIURL+'/captcha?_=' + new Date().getTime());
                         showMsg(response.msg);
@@ -258,27 +130,6 @@ define([
 			setTimeout(function () {
 				d.close().remove();
 			}, 2000);
-        }
-        function loginUser(param) {
-            var url = APIURL + "/user/login";
-            Ajax.post(url, param)
-                .then(function (response) {
-                    if (response.success) {
-                    	sessionStorage.setItem("user", "1");
-                        if(returnUrl){
-                            location.href = returnUrl;
-                        }else{
-                            location.href = "./user_info.html";
-                        }
-                    } else {
-                    	sessionStorage.setItem("user", "0");
-                        if(returnUrl){
-                            location.href = "./login.html?return="+encodeURIComponent(returnUrl);
-                        }else{
-                            location.href = "./login.html";
-                        }
-                    }
-                });
         }
 
         function register(){

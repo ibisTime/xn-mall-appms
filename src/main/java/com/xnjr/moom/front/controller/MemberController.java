@@ -54,8 +54,6 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/regist", method = RequestMethod.POST)
     @ResponseBody
     public Object doRegister(@RequestParam("loginName") String mobile,
-            @RequestParam("loginPwd") String loginPwd,
-            @RequestParam("smsCaptcha") String smsCaptcha,
             @RequestParam("captcha") String captcha,
             @RequestParam("userReferee") String userReferee) {
 
@@ -66,7 +64,7 @@ public class MemberController extends BaseController {
         if (!flag) { // 验证码正确
             throw new BizException("83099901", "图片验证码不正确");
         }
-        return userAO.doRegister(mobile, loginPwd, userReferee, smsCaptcha);
+        return userAO.doRegister(mobile, userReferee);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -293,9 +291,10 @@ public class MemberController extends BaseController {
     // **** 换手机号start************
     @RequestMapping(value = "/mobile/change", method = RequestMethod.POST)
     @ResponseBody
-    public boolean doChangeMobile(@RequestParam("newMobile") String newMobile,
+    public boolean doChangeMobile(
+            @RequestParam("newMobile") String newMobile,
             @RequestParam("smsCaptcha") String smsCaptcha,
-            @RequestParam("tradePwd") String tradePwd,
+            @RequestParam(value = "tradePwd", required = false) String tradePwd,
             @RequestParam(value = "userId", required = false) String userId) {
 
         userAO.doChangeMoblie(getSessionUserId(userId), newMobile, smsCaptcha,
@@ -311,4 +310,10 @@ public class MemberController extends BaseController {
         return userAO.doKyc(getSessionUserId(userId));
     }
 
+    @RequestMapping(value = "/getHpsList", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getHpsList(
+            @RequestParam(value = "userId", required = false) String userId) {
+        return userAO.getHpsList(getSessionUserId(userId));
+    }
 }

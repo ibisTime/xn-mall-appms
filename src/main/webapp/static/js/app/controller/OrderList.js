@@ -57,7 +57,7 @@ define([
 	            .then(function (response) {
 	                if (response.success) {
 	                    var data = response.data, html = "",
-	                    	totalCount = data.totalCount,
+	                    	totalCount = +data.totalCount,
 	                    	curList = data.list;
 	                    if(totalCount < config.limit || curList.length < config.limit){
 	                    	isEnd = true;
@@ -78,8 +78,8 @@ define([
 	                            	html += '<div class="wp100 clearfix plr10 ptb4 p_r">'+
 					                            '<div class="fl wp30 tc"><img src="'+invoice.pic1+'"></div>'+
 					                            '<div class="fl wp40 pl12 pt12">'+
-					                                '<p class="tl line-tow">'+invoice.productName+'</p>'+
-					                                '<p class="tl pt4 line-tow">'+invoice.modelName+'</p>'+
+					                                '<p class="tl line-tow">'+invoice.modelName+'</p>'+
+					                                '<p class="tl pt4 line-tow">'+invoice.productName+'</p>'+
 					                            '</div>'+
 					                            '<div class="fl wp30 tr pt12">'+
 					                                '<p class="item_totalP">'+amount+'<span class="t_40pe s_09 pl4">积分</span></p>'+
@@ -91,7 +91,7 @@ define([
 		                        	html += '<div class="wp100 clearfix plr10 ptb4 p_r">';
 		                        	var arr = invoices.splice(0, 3);
 		                        	arr.forEach(function(invoice){
-		                        		html += '<div class="fl wp33 tc"><img src="'+invoice.pic1+'"></div>';
+		                        		html += '<div class="fl wp33 tc plr2"><img src="'+invoice.pic1+'"></div>';
 		                        	});
 		                        }
 		                        html += '</div>'+
@@ -131,7 +131,7 @@ define([
 	    }
 
 	    function doError() {
-            $("#ol-ul").html('<li class="bg_fff" style="text-align: center;line-height: 93px;">暂无数据</li>');
+            $("#ol-ul").html('<li style="text-align: center;line-height: 93px;">您还没有相关订单</li>');
         }
 
 	    function getStatus(status) {

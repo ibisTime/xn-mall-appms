@@ -10,9 +10,10 @@ import com.xnjr.moom.front.http.JsonUtils;
 import com.xnjr.moom.front.req.XN601004Req;
 import com.xnjr.moom.front.req.XN601005Req;
 import com.xnjr.moom.front.req.XN601006Req;
-import com.xnjr.moom.front.req.XN601024Req;
-import com.xnjr.moom.front.req.XN601025Req;
+import com.xnjr.moom.front.req.XN601007Req;
 import com.xnjr.moom.front.req.XN601026Req;
+import com.xnjr.moom.front.req.XN601042Req;
+import com.xnjr.moom.front.req.XN601043Req;
 
 @Service
 public class CommodityAOImpl implements ICommodityAO {
@@ -49,25 +50,16 @@ public class CommodityAOImpl implements ICommodityAO {
             Object.class);
     }
 
-    public Object queryListModel(String code, String name, String status,
-            String productCode) {
-        if (StringUtils.isBlank(code)) {
-            code = "";
-        }
-        if (StringUtils.isBlank(name)) {
-            name = "";
-        }
-        if (StringUtils.isBlank(productCode)) {
-            productCode = "";
-        }
-        status = "3";
-        XN601025Req xn601025Req = new XN601025Req();
-        xn601025Req.setCode(code);
-        xn601025Req.setName(name);
-        xn601025Req.setProductCode(productCode);
-        xn601025Req.setStatus(status);
-        return BizConnecter.getBizData("601025",
-            JsonUtils.object2Json(xn601025Req), Object.class);
+    public Object queryListModel(String modelCode, String toSite) {
+        String status = "1";
+        XN601043Req req = new XN601043Req();
+        String toLevel = "0";
+        req.setModelCode(modelCode);
+        req.setStatus(status);
+        req.setToLevel(toLevel);
+        req.setToSite(toSite);
+        return BizConnecter.getBizData("601043", JsonUtils.object2Json(req),
+            Object.class);
     }
 
     public Object queryModel(String code) {
@@ -80,46 +72,32 @@ public class CommodityAOImpl implements ICommodityAO {
             JsonUtils.object2Json(xn601026Req), Object.class);
     }
 
-    public Object queryPageModel(String code, String name, String status,
-            String productCode, String start, String limit, String orderColumn,
-            String orderDir, String productName) {
-        if (StringUtils.isBlank(code)) {
-            code = "";
-        }
-        if (StringUtils.isBlank(name)) {
-            name = "";
-        }
-        if (StringUtils.isBlank(productCode)) {
-            productCode = "";
-        }
-        if (StringUtils.isBlank(orderColumn)) {
-            productCode = "";
-        }
-        if (StringUtils.isBlank(orderDir)) {
-            orderDir = "desc";
-        }
-        if (StringUtils.isBlank(productName)) {
-            productName = "";
-        }
+    public Object queryPageModel(String modelCode, String toSite, String start,
+            String limit, String orderColumn, String orderDir, String category,
+            String type, String productCode, String modelName) {
         if (StringUtils.isBlank(start)) {
             throw new BizException("A010001", "开始页不能为空");
         }
         if (StringUtils.isBlank(limit)) {
             throw new BizException("A010001", "每页个数不能为空");
         }
-        status = "3";
-        XN601024Req xn601024Req = new XN601024Req();
-        xn601024Req.setCode(code);
-        xn601024Req.setName(name);
-        xn601024Req.setProductCode(productCode);
-        xn601024Req.setStatus(status);
-        xn601024Req.setLimit(limit);
-        xn601024Req.setOrderDir(orderDir);
-        xn601024Req.setOrderColumn(orderColumn);
-        xn601024Req.setStart(start);
-        xn601024Req.setProductName(productName);
-        return BizConnecter.getBizData("601024",
-            JsonUtils.object2Json(xn601024Req), Object.class);
+        String status = "1";
+        String toLevel = "0";
+        XN601042Req req = new XN601042Req();
+        req.setCategory(category);
+        req.setProductCode(productCode);
+        req.setType(type);
+        req.setStatus(status);
+        req.setLimit(limit);
+        req.setOrderDir(orderDir);
+        req.setOrderColumn(orderColumn);
+        req.setStart(start);
+        req.setToLevel(toLevel);
+        req.setToSite(toSite);
+        req.setModelCode(modelCode);
+        req.setModelName(modelName);
+        return BizConnecter.getBizData("601042", JsonUtils.object2Json(req),
+            Object.class);
     }
 
     public Object getProductPage(String category, String type, String name,
@@ -150,10 +128,21 @@ public class CommodityAOImpl implements ICommodityAO {
         XN601005Req req = new XN601005Req();
         req.setCategory(category);
         req.setName(name);
-        req.setStatus(status);
+        req.setStatus("1");
         req.setType(type);
         req.setUpdater(updater);
         return BizConnecter.getBizData("601005", JsonUtils.object2Json(req),
             Object.class);
     }
+
+    public Object querySubdivisionList(String category) {
+        if (StringUtils.isBlank(category)) {
+            throw new BizException("A010001", "大类不能为空");
+        }
+        XN601007Req req = new XN601007Req();
+        req.setCategory(category);
+        return BizConnecter.getBizData("601007", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
 }

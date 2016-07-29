@@ -3,13 +3,12 @@ define([
     'js/app/util/ajax',
     'js/app/util/dialog',
     'js/lib/handlebars.runtime-v3.0.3',
-    //'js/lib/idangerous.swiper1.min.js'
     'js/lib/swiper-3.3.1.jquery.min'
 ], function (base, Ajax, dialog, Handlebars) {
     $(function () {
         var mySwiper, rspData, user, code = base.getUrlParam("code") || "";
         Ajax.get(APIURL + '/commodity/queryListModel', {
-            code : code
+            modelCode : code
         }, true)
             .then(function (res) {
                 if(res.success){
@@ -38,7 +37,7 @@ define([
                 }
             });
 
-         base.getUser()
+        base.getUser()
             .then(function(response){
                 if(response.success){
                     user = response.data;
@@ -75,59 +74,60 @@ define([
             });
             $("#buyCount").on("keyup", function (e) {
                 var keyCode = e.charCode || e.keyCode;
+                var me = $(this);
                 if(!isSpecialCode(keyCode) && !isNumber(keyCode)){
-                    this.value = this.value.replace(/[^\d]/g, "");
+                    me.val(me.val().replace(/[^\d]/g, ""));
+                }
+                if(!me.val()){
+                    me.change();
                 }
             }).on("change", function(e){
             	var keyCode = e.charCode || e.keyCode;
+                var me = $(this);
             	if(!isSpecialCode(keyCode) && !isNumber(keyCode)){
-                    this.value = this.value.replace(/[^\d]/g, "");
+                    me.val(me.val().replace(/[^\d]/g, ""))
                 }
-                if(!$(this).val()){
-                    this.value = "1";
+                if(!me.val()){
+                    me.val("1");
                 }
-                if($(this).val() == "0"){
-                	this.value = "1";
+                if(me.val() == "0"){
+                    me.val("1");
                 }
                 var unitPrice = +$("#unit-price").val();
                 $("#btr-price").text((unitPrice * +$(this).val() / 1000).toFixed(0));
             });
         }
-         function choseImg(){
+        function choseImg(){
             var msl = rspData,
-                table_html = "<tbody>";
-			
+             modelData = rspData.model,
+             table_html = "<tbody>";
             if(!mySwiper){
-				$("#btlImgs").children("div.swiper-slide:not(.swiper-slide-duplicate)")
-            	.find("img")
-            	.each(function (i, item) {
-	                $(item).attr("src", msl["pic" + (i+1)]);
-	            });
-                mySwiper = new Swiper ('.swiper-container', {
-                            'direction': 'horizontal',
-                            'loop': true,
-                            'autoplay': 2000,
-                            'pagination': '.swiper-pagination'
-                        });
+             $("#btlImgs").children("div.swiper-slide:not(.swiper-slide-duplicate)")
+                 .find("img")
+                 .each(function (i, item) {
+                     $(item).attr("src", modelData["pic" + (i+1)]);
+                 });
+             mySwiper = new Swiper ('.swiper-container', {
+                 'direction': 'horizontal',
+                 'loop': true,
+                 'autoplay': 2000,
+                 'pagination': '.swiper-pagination'
+             });
             }
             msl.modelSpecsList.forEach(function (data) {
-                table_html += "<tr><th>" + data.dkey + "</th><td>" + data.dvalue + "</td></tr>";
+             table_html += "<tr><th>" + data.dkey + "</th><td>" + data.dvalue + "</td></tr>";
             });
             table_html += "</tbody>";
             $("#bb-table").html(table_html);
-            $("#btr-name").text(msl.name);
-            $("#btr-description").text(msl.description);
+            $("#btr-name").text(modelData.name);
+            $("#btr-description").html(modelData.description);
             var totalPrice;
-            if(msl.buyGuideList.length){
-                var discPrice = +msl.buyGuideList[0].discountPrice;
-                $("#unit-price").val(discPrice);
-                totalPrice = (discPrice * +$("#buyCount").val() / 1000).toFixed(0);
-                $("#addCartBtn, #buyBtn").removeClass("no-buy-btn");
-            }else{
-                totalPrice = "--";
-                $("#unit-price").val("9999999999999");
-                $("#addCartBtn, #buyBtn").addClass("no-buy-btn");
-            }
+            var discPrice = +msl.discountPrice;
+            $("#originalPrice").text(+msl.originalPrice/1000 + "积分");
+            $("#discountPrice").text(discPrice/1000 + "积分");
+            $("#unit-price").val(discPrice);
+            totalPrice = (discPrice * +$("#buyCount").val() / 1000).toFixed(0);
+            $("#addCartBtn, #buyBtn").removeClass("no-buy-btn");
             $("#btr-price").text(totalPrice);
         }
         function isNumber(code){
@@ -151,11 +151,10 @@ define([
             }
         }
         function a2cart(){
-            var choseCode = $("#container").find(".swiper-wrapper>.swiper-slide-active").attr("code"),
+            var choseCode = code,
                 config = {
                     modelCode : choseCode || "",
-                    quantity: $("#buyCount").val(),
-                    salePrice: (+$("#btr-price").text())*1000
+                    quantity: $("#buyCount").val()
                 },
                 url = APIURL + '/operators/add2Cart';
             Ajax.post(url, config)

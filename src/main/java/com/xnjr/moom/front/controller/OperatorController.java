@@ -39,17 +39,15 @@ public class OperatorController extends BaseController {
     @ResponseBody
     public Object payOrder(@RequestParam("code") String code,
             @RequestParam(value = "userId", required = false) String userId,
-            @RequestParam(value = "tradePwd", required = false) String tradePwd) {
-        return operatorAO.payOrder(code, getSessionUserId(userId), tradePwd);
+            @RequestParam("amount") String amount) {
+        return operatorAO.payOrder(code, getSessionUserId(userId), amount);
     }
 
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
     @ResponseBody
     public Object cancelOrder(@RequestParam("code") String code,
-            @RequestParam(value = "userId", required = false) String userId,
-            @RequestParam("applyNote") String applyNote) {
-        return operatorAO
-            .cancelOrder(code, getSessionUserId(userId), applyNote);
+            @RequestParam(value = "userId", required = false) String userId) {
+        return operatorAO.cancelOrder(code, getSessionUserId(userId));
     }
 
     @RequestMapping(value = "/queryPageOrders", method = RequestMethod.POST)
@@ -142,9 +140,10 @@ public class OperatorController extends BaseController {
             @RequestParam("addressCode") String addressCode,
             @RequestParam(value = "applyNote", required = false) String applyNote,
             @RequestParam(value = "receiptType", required = false) String receiptType,
-            @RequestParam(value = "receiptTitle", required = false) String receiptTitle) {
+            @RequestParam(value = "receiptTitle", required = false) String receiptTitle,
+            @RequestParam(value = "toUser", required = false) String toUser) {
         return operatorAO.submitCart(getSessionUserId(applyUser), cartCodeList,
-            addressCode, applyNote, receiptType, receiptTitle);
+            addressCode, applyNote, receiptType, receiptTitle, toUser);
     }
 
     // 货分页查询
@@ -234,8 +233,9 @@ public class OperatorController extends BaseController {
     // 积分充值
     @RequestMapping(value = "integral/recharge", method = RequestMethod.GET)
     @ResponseBody
-    public Object IntegralRecharge() {
-        return operatorAO.IntegralRecharge(getSessionUserId(""));
+    public Object IntegralRecharge(
+            @RequestParam("integralCode") String integralCode) {
+        return operatorAO.IntegralRecharge(getSessionUserId(""), integralCode);
     }
 
     // 确认收货

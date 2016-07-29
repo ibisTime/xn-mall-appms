@@ -4,18 +4,24 @@ define([
     'app/util/dialog'
 ], function (base, Ajax, dialog) {
 	$(function(){
-		Ajax.get(APIURL + "/operators/integral/recharge", true)
+		var integralCode = base.getUrlParam("i");
+		var config = {"integralCode": integralCode};
+		Ajax.get(APIURL + "/operators/integral/recharge", config, true)
 			.then(function(res){
 				$("#cont").remove();
 				if(res.success){
-					$("#content").removeClass("hidden");
+					if(res.data.status == "0"){
+						$("#content1").removeClass("hidden");
+					}else{
+						$("#content").removeClass("hidden");
+					}
 				}else{
 					showMsg(res.msg);
 				}
 			});
 		
 		function showMsg(msg){
-			var content = "非常遗憾，积分充值失败！页面将在3秒后跳到79商城首页。";
+			var content = "<div class='tc'>非常遗憾，积分充值失败！<br/>页面将在3秒后跳到菜狗商城首页。</div>";
 			if(msg.indexOf("登录后") != -1){
 				content = msg;
 				var d = dialog({

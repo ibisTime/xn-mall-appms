@@ -88,7 +88,7 @@ define([
 	    
 	    function confirmReceipt(){
 	    	$("#loaddingIcon").removeClass("hidden");
-	    	Ajax.post(APIURL + '/receipt/confirm', {code: logisticsNO})
+	    	Ajax.post(APIURL + '/operators/receipt/confirm', {code: logisticsNO})
 	            .then(function(response) {
 	            	$("#loaddingIcon").addClass("hidden");
 	                if (response.success) {
@@ -145,8 +145,7 @@ define([
 	    function cancelOrder(){
 	        var url = APIURL + '/operators/cancelOrder',
 	            config = {
-	                code: code,
-	                applyNote: "用户主动取消"
+	                code: code
 	            };
 	        $("#loaddingIcon").removeClass("hidden");
 	        Ajax.post(url, config)

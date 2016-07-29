@@ -2,12 +2,14 @@ define([
     'app/controller/base',
     'app/util/ajax',
     'app/util/dialog',
+	'app/util/dict',
     'Handlebars'
-], function (base, Ajax, dialog, Handlebars) {
+], function (base, Ajax, dialog, dict, Handlebars) {
     $(function () {
     	if(sessionStorage.getItem("user") == "1"){
     		$("#cont").remove();
     		$(".hidden").removeClass("hidden");
+			$("#telephone").text(dict.get("telephone"));
     		initView();
     	}
 	    function initView() {
