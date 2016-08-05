@@ -2,49 +2,189 @@
 <html lang="zh-CN">
 <head>
     <link rel="import" href="../head.html?__inline">
-    <title>79商城</title>
+    <title>菜狗商城</title>
 </head>
 <body class="bg_f5">
-    <header>
-        <div class="swiper-container">
-            <div class="swiper-wrapper" style="display: -webkit-box;display: -moz-box;">
-                <div class="swiper-slide"><a href="../detail/mall_list.html?i=0" class="show"><img class="wp100" src="../../images/hh1.png"></a></div>
-                <div class="swiper-slide"><a href="../detail/mall_list.html?i=0" class="show"><img class="wp100" src="../../images/hh2.png"></a></div>
-            </div>
-            <!-- 如果需要分页器 -->
-            <div class="swiper-pagination"></div>
+<header>
+    <div class="swiper-container">
+        <div id="top-swiper" class="swiper-wrapper" style="display: -webkit-box;display: -moz-box;">
+            <!--<div class="swiper-slide"><a href="../detail/mall_list.html?i=0" class="show"><img class="wp100" src="../../images/hh1.png"></a></div>
+            <div class="swiper-slide"><a href="../detail/mall_list.html?i=0" class="show"><img class="wp100" src="../../images/hh2.png"></a></div>-->
         </div>
-    </header>
-    <div class="mlr10 s_14 ptb10"><img src="../../images/rqtj.png" class="hp26p"/><span class="pl10">人气推荐</span></div>
-    <div class="mlr10 s_12 ptb10 tc">
-    	<div class="clearfix p_r">
-	    	<div class="wp50 tc pr4">
-	    		<a href="../detail/mall_list.html?i=0"><img src="../../images/popular1.png"/></a>
-	    	</div>
-	    	<div class="wp50 hIdx-popular-r">
-	    		<div class="popular-r-t tc">
-	    			<a href="../detail/mall_list.html?i=0"><img src="../../images/popular2.png"/></a>
-	    		</div>
-	    		<div class="popular-r-b tc">
-	    			<a href="../detail/mall_list.html?i=1"><img src="../../images/popular3.png"/></a>
-	    		</div>
-	    	</div>
-	    </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
     </div>
-    <div class="mlr10 s_14 ptb10"><img src="../../images/fljx.png" class="hp26p"/><span class="pl10">分类精选</span></div>
-    <div class="mlr10 bg_fff mt10 hcont">
-        <i id="cont" class="icon-loading"></i>
-    </div>
-    <div style="height: 88px;"></div>
-    <footer class="fixft bg_fff b_bd_t hfoot s_11">
-        <a href="./index.html" class="wp25 fl tc active"><div class="wp100 pt8"><img src="../../images/hf1_2.png"/></div><p class="ptb2">首页</p></a>
-        <a href="../detail/mall_list.html" class="wp25 fl tc"><div class="wp100 pt8"><img src="../../images/hf2.png"/></div><p class="ptb2">产品分类</p></a>
-        <a href="../user/cart.html" class="wp25 fl tc"><div class="wp100 pt8"><img src="../../images/hf3.png"/></div><p class="ptb2">购物车</p></a>
-        <a href="../user/user_info.html" class="wp25 fl tc"><div class="wp100 pt8"><img src="../../images/hf4.png"/></div><p class="ptb2">个人中心</p></a>
-    </footer>
-    <link rel="import" href="../footer.html?__inline">
-    <script>
-        require(['app/controller/Index']);
-    </script>
+</header>
+<div class="mlr10 s_14 ptb10"><img src="../../images/rqtj.png" class="hp26p wp30p"/><span class="pl10">人气推荐</span></div>
+<div class="mlr10 s_12 ptb10 tc" id="rmtj">
+    <!--<div class="clearfix p_r">
+        <div class="wp50 tc pr4">
+            <a href="../detail/mall_list.html?i=0"><img src="../../images/popular1.png"/></a>
+        </div>
+        <div class="wp50 hIdx-popular-r">
+            <div class="popular-r-t tc">
+                <a href="../detail/mall_list.html?i=0"><img src="../../images/popular2.png"/></a>
+            </div>
+            <div class="popular-r-b tc">
+                <a href="../detail/mall_list.html?i=1"><img src="../../images/popular3.png"/></a>
+            </div>
+        </div>
+    </div>-->
+    <!--<table class="index-rmtj">
+        <tr>
+            <td><img src="../../images/popular2.png"/></td>
+            <td><img src="../../images/popular2.png"/></td>
+        </tr>
+        <tr>
+            <td><img src="../../images/popular2.png"/></td>
+            <td><img src="../../images/popular2.png"/></td>
+        </tr>
+    </table>-->
+</div>
+<div class="mlr10 s_14 ptb10"><img src="../../images/fljx.png" class="hp26p wp30p"/><span class="pl10">分类精选</span></div>
+<div class="mlr10 bg_fff mt10 hcont" id="allItems">
+
+
+    <!--<table class="wp100 index-table">
+        <tr>
+            <td rowspan="2"><img src="../../images/popular2.png"/></td>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="wp100 index-table">
+        <tr>
+            <td rowspan="2"><img src="../../images/popular2.png"/></td>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+            <td class="pl6 clearfix">
+                <div class="wp55">
+                    <div class="s_10">茶叶</div>
+                    <div class="s_09 nowrap t_40pe">茶香浓郁</div>
+                </div>
+                <div class="wp45">
+                    <img src="/static/images/popular3.png">
+                </div>
+            </td>
+        </tr>
+    </table>-->
+</div>
+<div style="height: 88px;"></div>
+<footer class="fixft bg_fff b_bd_t hfoot s_11">
+    <a href="./index.html" class="wp25 fl tc active"><div class="wp100 pt8"><img src="../../images/hf1_2.png"/></div><p class="ptb2">首页</p></a>
+    <a href="../detail/mall_list.html" class="wp25 fl tc"><div class="wp100 pt8"><img src="../../images/hf2.png"/></div><p class="ptb2">产品分类</p></a>
+    <a href="../user/cart.html" class="wp25 fl tc"><div class="wp100 pt8"><img src="../../images/hf3.png"/></div><p class="ptb2">购物车</p></a>
+    <a href="../user/user_info.html" class="wp25 fl tc"><div class="wp100 pt8"><img src="../../images/hf4.png"/></div><p class="ptb2">个人中心</p></a>
+</footer>
+<link rel="import" href="../footer.html?__inline">
+<script src="../../js/lib/jquery.lazyload.min.js"></script>
+<script>
+    require(['app/controller/Index']);
+</script>
 </body>
 </html>

@@ -63,7 +63,8 @@ public class BizConnecter {
 
     private static String getPostUrl(String code) {
         String postUrl = null;
-        if (code.startsWith("601") || code.startsWith("602")) {
+        if (code.startsWith("lh") || code.startsWith("601")
+                || code.startsWith("602")) {
             postUrl = MALL_URL;
         } else if (code.startsWith("802")) {
             postUrl = ACCOUNT_URL;

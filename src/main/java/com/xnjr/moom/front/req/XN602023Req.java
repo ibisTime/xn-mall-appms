@@ -7,9 +7,6 @@ public class XN602023Req {
     // 用户编号
     private String userId;
 
-    // 取消说明
-    private String approveNote;
-
     public String getCode() {
         return code;
     }
@@ -24,13 +21,5 @@ public class XN602023Req {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getApproveNote() {
-        return approveNote;
-    }
-
-    public void setApproveNote(String approveNote) {
-        this.approveNote = approveNote;
     }
 }

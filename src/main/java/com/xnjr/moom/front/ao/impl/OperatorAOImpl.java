@@ -22,20 +22,22 @@ import com.xnjr.moom.front.req.XN602023Req;
 import com.xnjr.moom.front.req.XN602025Req;
 import com.xnjr.moom.front.req.XN602026Req;
 import com.xnjr.moom.front.req.XN602027Req;
+import com.xnjr.moom.front.req.XN602043Req;
 import com.xnjr.moom.front.req.XN602061Req;
 import com.xnjr.moom.front.req.XN602080Req;
 import com.xnjr.moom.front.req.XN602081Req;
 import com.xnjr.moom.front.req.XN602403Req;
 import com.xnjr.moom.front.req.XN602404Req;
 import com.xnjr.moom.front.req.XN602405Req;
-import com.xnjr.moom.front.req.XN802002Req;
+import com.xnjr.moom.front.req.XN602623Req;
 
 @Service
 public class OperatorAOImpl implements IOperatorAO {
 
     public Object submitOrder(String applyUser, String modelCode,
             String quantity, String salePrice, String addressCode,
-            String applyNote, String receiptType, String receiptTitle) {
+            String applyNote, String receiptType, String receiptTitle,
+            String toUser) {
 
         if (StringUtils.isBlank(applyUser)) {
             throw new BizException("A010001", "申请人编号不能为空");
@@ -61,42 +63,40 @@ public class OperatorAOImpl implements IOperatorAO {
         req.setReceiptTitle(receiptTitle);
         req.setReceiptType(receiptType);
         req.setSalePrice(salePrice);
+        req.setToUser(toUser);
         return BizConnecter.getBizData("602020", JsonUtils.object2Json(req),
             Object.class);
     }
 
-    public Object payOrder(String code, String userId, String tradePwd) {
+    public Object payOrder(String code, String userId, String amount) {
         if (StringUtils.isBlank(code)) {
             throw new BizException("A010001", "订单编号不能为空");
         }
         if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "用户编号不能为空");
         }
-        tradePwd = "123456";
-        if (StringUtils.isBlank(tradePwd)) {
-            throw new BizException("A010001", "交易密码不能为空");
+        if (StringUtils.isBlank(amount)) {
+            throw new BizException("A010001", "支付金额不能为空");
         }
+        String tradePwd = "888888";
         XN602022Req req = new XN602022Req();
         req.setCode(code);
         req.setTradePwd(tradePwd);
         req.setUserId(userId);
+        req.setAmount(amount);
         return BizConnecter.getBizData("602022", JsonUtils.object2Json(req),
             Object.class);
     }
 
-    public Object cancelOrder(String code, String userId, String applyNote) {
+    public Object cancelOrder(String code, String userId) {
         if (StringUtils.isBlank(code)) {
             throw new BizException("A010001", "订单编号不能为空");
         }
         if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "用户编号不能为空");
         }
-        if (StringUtils.isBlank(applyNote)) {
-            throw new BizException("A010001", "取消说明不能为空");
-        }
         XN602023Req req = new XN602023Req();
         req.setCode(code);
-        req.setApproveNote(applyNote);
         req.setUserId(userId);
         return BizConnecter.getBizData("602023", JsonUtils.object2Json(req),
             Object.class);
@@ -238,7 +238,7 @@ public class OperatorAOImpl implements IOperatorAO {
 
     public Object submitCart(String applyUser, List<String> cartCodeList,
             String addressCode, String applyNote, String receiptType,
-            String receiptTitle) {
+            String receiptTitle, String toUser) {
         if (StringUtils.isBlank(applyUser)) {
             throw new BizException("A010001", "用户编号不能为空");
         }
@@ -264,6 +264,7 @@ public class OperatorAOImpl implements IOperatorAO {
         req.setCartCodeList(cartCodeList);
         req.setReceiptTitle(receiptTitle);
         req.setReceiptType(receiptType);
+        req.setToUser(toUser);
         return BizConnecter.getBizData("602021", JsonUtils.object2Json(req),
             Object.class);
     }
@@ -396,13 +397,29 @@ public class OperatorAOImpl implements IOperatorAO {
             Object.class);
     }
 
-    public Object IntegralRecharge(String userId) {
+    public Object IntegralRecharge(String userId, String integralCode) {
         if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "请登录后再进行扫码充值!");
         }
-        XN802002Req req = new XN802002Req();
+        XN602623Req req = new XN602623Req();
         req.setUserId(userId);
-        return BizConnecter.getBizData("802002", JsonUtils.object2Json(req),
+        req.setIntegralCode(integralCode);
+        return BizConnecter.getBizData("602623", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    public Object confirmReceipt(String code, String userId) {
+        if (StringUtils.isBlank(userId)) {
+            throw new BizException("A010001", "请登录后再进行操作!");
+        }
+        if (StringUtils.isBlank(code)) {
+            throw new BizException("A010001", "物流单编号不能为空!");
+        }
+        XN602043Req req = new XN602043Req();
+        req.setCode(code);
+        req.setUpdater(userId);
+        req.setRemark("确认收货");
+        return BizConnecter.getBizData("602043", JsonUtils.object2Json(req),
             Object.class);
     }
 }

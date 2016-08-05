@@ -1,30 +1,55 @@
 package com.xnjr.moom.front.req;
 
 public class XNlh5014Req {
-    // id
-    private String id;
 
-    // 父ID
     private String type;
 
-    // key
-    private String key;
+    private String parentKey;
 
-	public String getId() {
-		return id;
-	}
+    private String dkey;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    private String orderColumn;
 
-	public String getType() {
-		return type;
-	}
+    private String orderDir;
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getParentKey() {
+        return parentKey;
+    }
+
+    public void setParentKey(String parentKey) {
+        this.parentKey = parentKey;
+    }
+
+    public String getOrderColumn() {
+        return orderColumn;
+    }
+
+    public void setOrderColumn(String orderColumn) {
+        this.orderColumn = orderColumn;
+    }
+
+    public String getOrderDir() {
+        return orderDir;
+    }
+
+    public void setOrderDir(String orderDir) {
+        this.orderDir = orderDir;
+    }
+
+    public String getDkey() {
+        return dkey;
+    }
+
+    public void setDkey(String dkey) {
+        this.dkey = dkey;
+    }
 
 }

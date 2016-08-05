@@ -25,7 +25,7 @@ define([
                     var data = response.data,
                         invoiceModelLists = data.invoiceModelList;
                     if(data.status !== "1"){
-                        location.href = "../user/order_list.html";
+                        location.href = "../user/user_info.html";
                     }
                     $("#cont").remove();
                     $("#od-rtype").html(getReceiptType(data.receiptType));
@@ -82,16 +82,20 @@ define([
             $("#loaddingIcon").removeClass("hidden");
             Ajax.post(APIURL + '/operators/payOrder',
                 {
-                    code: code
+                    code: code,
+                    amount: +$("#po-total").text() * 1000
                 }
             ).then(function (response) {
-                if(response.success){
-                    location.href = "./pay_success.html";
-                }else{
-                    $("#loaddingIcon").addClass("hidden");
-                    showMsg(response.msg);
-                }
-            });
+                    if(response.success){
+                        location.href = "./pay_success.html";
+                    }else{
+                        $("#loaddingIcon").addClass("hidden");
+                        showMsg(response.msg);
+                        setTimeout(function(){
+                            location.href = "../user/user_info.html";
+                        }, 2000);
+                    }
+                });
         });
     }
 });

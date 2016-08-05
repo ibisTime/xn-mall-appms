@@ -7,6 +7,7 @@ import com.xnjr.moom.front.ao.IUserAO;
 import com.xnjr.moom.front.exception.BizException;
 import com.xnjr.moom.front.http.BizConnecter;
 import com.xnjr.moom.front.http.JsonUtils;
+import com.xnjr.moom.front.req.XN602601Req;
 import com.xnjr.moom.front.req.XN602800Req;
 import com.xnjr.moom.front.req.XN602801Req;
 import com.xnjr.moom.front.req.XN602802Req;
@@ -14,18 +15,18 @@ import com.xnjr.moom.front.req.XN602803Req;
 import com.xnjr.moom.front.req.XN602804Req;
 import com.xnjr.moom.front.req.XN602805Req;
 import com.xnjr.moom.front.req.XN805040Req;
-import com.xnjr.moom.front.req.XN805041Req;
 import com.xnjr.moom.front.req.XN805043Req;
 import com.xnjr.moom.front.req.XN805045Req;
 import com.xnjr.moom.front.req.XN805047Req;
 import com.xnjr.moom.front.req.XN805048Req;
 import com.xnjr.moom.front.req.XN805049Req;
 import com.xnjr.moom.front.req.XN805051Req;
+import com.xnjr.moom.front.req.XN805055Req;
 import com.xnjr.moom.front.req.XN805057Req;
 import com.xnjr.moom.front.req.XNfd0003Req;
 import com.xnjr.moom.front.req.XNfd0004Req;
+import com.xnjr.moom.front.res.XN602601Res;
 import com.xnjr.moom.front.res.XN801215Res;
-import com.xnjr.moom.front.res.XN805041Res;
 import com.xnjr.moom.front.res.XN805043Res;
 import com.xnjr.moom.front.res.XN805056Res;
 import com.xnjr.moom.front.res.XNfd0003Res;
@@ -40,28 +41,18 @@ import com.xnjr.moom.front.util.PwdUtil;
 public class UserAOImpl implements IUserAO {
 
     @Override
-    public XN805041Res doRegister(String mobile, String loginPwd,
-            String userReferee, String smsCaptcha) {
+    public XN602601Res doRegister(String mobile, String userReferee) {
         if (StringUtils.isBlank(mobile)) {
             throw new BizException("A010001", "手机号码不能为空");
-        }
-        if (StringUtils.isBlank(loginPwd)) {
-            throw new BizException("A010001", "登陆密码不能为空");
-        }
-        if (StringUtils.isBlank(smsCaptcha)) {
-            throw new BizException("A010001", "验证码不能为空");
         }
         if (StringUtils.isBlank(userReferee)) {
             throw new BizException("A010001", "推荐人不能为空");
         }
-        XN805041Req req = new XN805041Req();
+        XN602601Req req = new XN602601Req();
         req.setMobile(mobile);
-        req.setSmsCaptcha(smsCaptcha);
-        req.setLoginPwd(loginPwd);
-        req.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
         req.setUserReferee(userReferee);
-        return BizConnecter.getBizData("805041", JsonUtils.object2Json(req),
-            XN805041Res.class);
+        return BizConnecter.getBizData("602601", JsonUtils.object2Json(req),
+            XN602601Res.class);
     }
 
     @Override
@@ -109,16 +100,19 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public XN805043Res doLogin(String loginName, String loginPwd) {
+    public XN805043Res doLogin(String loginName, String loginPwd, String kind) {
         if (StringUtils.isBlank(loginName)) {
             throw new BizException("A010001", "登陆名不能为空");
         }
         if (StringUtils.isBlank(loginPwd)) {
             throw new BizException("A010001", "登陆密码不能为空");
         }
+
         XN805043Req req = new XN805043Req();
         req.setLoginName(loginName);
         req.setLoginPwd(loginPwd);
+        req.setKind("f1");
+
         return BizConnecter.getBizData("805043", JsonUtils.object2Json(req),
             XN805043Res.class);
     }
@@ -224,6 +218,7 @@ public class UserAOImpl implements IUserAO {
         req.setUserId(userId);
         req.setNewMobile(newMobile);
         req.setSmsCaptcha(smsCaptcha);
+        tradePwd = "888888";
         req.setTradePwd(tradePwd);
         BizConnecter.getBizData("805047", JsonUtils.object2Json(req),
             Object.class);
@@ -408,10 +403,21 @@ public class UserAOImpl implements IUserAO {
     public Object queryAddress(String code) {
         XN602805Req req = new XN602805Req();
         if (StringUtils.isBlank(code)) {
-            throw new BizException("A010001", "用户编号不能为空");
+            throw new BizException("A010001", "收件编号不能为空");
         }
         req.setCode(code);
         return BizConnecter.getBizData("602805", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    public Object getHpsList(String userId) {
+        if (StringUtils.isBlank(userId)) {
+            throw new BizException("A010001", "用户编号不能为空");
+        }
+        XN805055Req req = new XN805055Req();
+        req.setStatus("0");
+        req.setKind("05");
+        return BizConnecter.getBizData("805055", JsonUtils.object2Json(req),
             Object.class);
     }
 }

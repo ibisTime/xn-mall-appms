@@ -1,21 +1,57 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <link rel="import" href="../head.html?__inline">
-    <title>产品详情</title>
+	<link rel="import" href="../head.html?__inline">
+	<title>产品详情</title>
 </head>
 <body class="bg_f5">
-    <div class="wp100 bg_fff">
-        <i id="cont" class="icon-loading"></i>
-    </div>
-    <div style="height: 70px;"></div>
-    <footer class="fixft bg_fff b_bd_t s_14 lh2_5em p10">
-        <span class="s_125" id="foot-cont"></span>
-        <a id="foot-buy" class="fr wp30 bg_ff0000 t_white tc b_radius6">购买</a>
-    </footer>
-    <link rel="import" href="../footer.html?__inline">
-    <script>
-        require(['app/controller/MallDetail']);
-    </script>
+<header class="bg_fff ml_header p_r b_bd_b">
+	<nav style="height: 44px;">
+		<a href="javascript:void(0)" class="show"><img class="va-m max-hp15em ml-img" src="../../images/search.png"/></a>
+		<input id="searchInput" style="height: 44px;padding-left:44px;padding-right:20px;width: 100%;font-size: 1.2rem;" type="text"/>
+	</nav>
+	<div class="wp100 p_fixed" id="searchCont">
+		<ul class="wp100 s_11 br_4p plr20 bg_f5 b_bd" id="searchUl">
+			<!-- <li>商品名称1</li>
+            <li>商品名称2</li>
+            <li>商品名称3</li> -->
+		</ul>
+	</div>
+</header>
+<div class="hp48p"></div>
+<div id="md-div" class="wp100 bg_fff">
+	<ul id="contUl" class="b_bd_b max-hp100">
+		<li class="scroll-loadding"></li>
+		<!-- <li class="ptb8 clearfix b_bd_b">
+            <a class="pl12 show clearfix" href="../operator/buy.html?code={{code}}">
+                <div class="fl wp30 tc"><img src="../../images/hc1.png"/></div>
+                <div class="fl wp70 pl12">
+                    <p class="t_323232 s_12 line-tow">{{name}}</p>
+                    <p class="t_999 s_10 line-tow">{{advTitle}}</p>
+                    <p class="t_red">{{price}}<span class="s_10 t_40pe pl4">积分</span></p>
+                </div>
+            </a>
+        </li>
+        <li class="ptb8 clearfix b_bd_b">
+            <a class="pl12 show clearfix" href="../operator/buy.html?code={{code}}">
+                <div class="fl wp30 tc"><img src="../../images/hc1.png"/></div>
+                <div class="fl wp70 pl12">
+                    <p class="t_323232 s_12 line-tow">{{name}}</p>
+                    <p class="t_999 s_10 line-tow">{{advTitle}}</p>
+                    <p class="t_red">{{price}}<span class="s_10 t_40pe pl4">积分</span></p>
+                </div>
+            </a>
+        </li> -->
+	</ul>
+</div>
+<!-- <div style="height: 70px;"></div>
+<footer class="fixft bg_fff b_bd_t s_14 lh2_5em p10">
+    <span class="s_125" id="foot-cont"></span>
+    <a id="foot-buy" class="fr wp30 bg_ff0000 t_white tc b_radius6">购买</a>
+</footer> -->
+<link rel="import" href="../footer.html?__inline">
+<script>
+	require(['app/controller/MallDetail']);
+</script>
 </body>
 </html>
