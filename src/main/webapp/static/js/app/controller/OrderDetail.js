@@ -12,7 +12,8 @@ define([
 	        fastMail = Dict.get("fastMail"),
 	        companyCode = Dict.get("companyCode"),
 	        addrTmpl = __inline("../ui/order-detail-addr.handlebars"),
-	        contTmpl = __inline("../ui/pay-order-imgs.handlebars");
+	        contTmpl = __inline("../ui/pay-order-imgs.handlebars"),
+	        logisticsNO = "";
 
 	    initView();
 
@@ -35,6 +36,17 @@ define([
 	                        $("#orderStatus").text(getStatus(data.status));
 	                        if(data.status == "1"){
 	                        	$("footer").removeClass("hidden");
+	                        	$("#cbtn").on("click", function (e) {
+	                	        	$("#od-mask, #od-tipbox").removeClass("hidden");
+	                	        });
+	                	        $("#sbtn").on("click", function(){
+	                	        	location.href = '../operator/pay_order.html?code=' + code;
+	                	        });
+	                        }else if(data.status == "3"){
+	                        	$("#qrsh").removeClass("hidden");
+	                        	$("#qr_btn").on("click", function(){
+	                        		confirmReceipt();
+	                        	});
 	                        }
 	                        if(data.approveNote){
 	                        	$("#approveNoteTitle, #approveNoteInfo").removeClass("hidden");
@@ -59,9 +71,10 @@ define([
 	                            $("#addressDiv").html(addrTmpl(addData));
 	                            var logistic = data.logistics;
 	                            if(logistic && logistic.code){
+	                            	logisticsNO = logistic.code;
 	                                $("#logisticsTitle, #logisticsInfo").removeClass("hidden");
 	                                $("#logisticsComp").text(fastMail[logistic.company]);
-	                                $("#logisticsNO").text(logistic.code);
+	                                $("#logisticsNO").text(logisticsNO);
 	                            }
 	                        }else{
 	                        	showMsg("暂时无法获取商品信息！");
@@ -72,7 +85,23 @@ define([
 	                });
 	        })();
 	    }
-
+	    
+	    function confirmReceipt(){
+	    	$("#loaddingIcon").removeClass("hidden");
+	    	Ajax.post(APIURL + '/operators/receipt/confirm', {code: logisticsNO})
+	            .then(function(response) {
+	            	$("#loaddingIcon").addClass("hidden");
+	                if (response.success) {
+	                	showMsg("确认收货成功！");
+	                    setTimeout(function(){
+	                    	location.href = "./order_list.html";
+	                    }, 1000);
+	                }else{
+	                    showMsg(response.msg);
+	                }
+	            });
+	    }
+	    
 	    function getMyDate(value) {
 	        var date = new Date(value);
 	        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
@@ -92,12 +121,7 @@ define([
 	    }
 
 	    function addListener() {
-	        $("#cbtn").length && $("#cbtn").on("click", function (e) {
-	        	$("#od-mask, #od-tipbox").removeClass("hidden");
-	        });
-	        $("#sbtn").length && $("#sbtn").on("click", function(){
-	        	location.href = '../operator/pay_order.html?code=' + code;
-	        });
+	        
 	        $("#odOk").on("click", function(){
 				cancelOrder();
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
@@ -121,8 +145,7 @@ define([
 	    function cancelOrder(){
 	        var url = APIURL + '/operators/cancelOrder',
 	            config = {
-	                code: code,
-	                applyNote: "用户主动取消"
+	                code: code
 	            };
 	        $("#loaddingIcon").removeClass("hidden");
 	        Ajax.post(url, config)

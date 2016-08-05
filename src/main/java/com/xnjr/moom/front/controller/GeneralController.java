@@ -40,7 +40,7 @@ public class GeneralController extends BaseController {
 
     @Autowired
     IDictAO dictAO;
-    
+
     @Autowired
     IGeneralAO generalAO;
 
@@ -49,7 +49,7 @@ public class GeneralController extends BaseController {
     @RequestMapping(value = "/smscaptcha/send", method = RequestMethod.POST)
     @ResponseBody
     public boolean sendSmsCaptcha(@RequestParam("bizType") String bizType) {
-    	XN805056Res user = userAO.doGetUser(this.getSessionUser().getUserId());
+        XN805056Res user = userAO.doGetUser(this.getSessionUser().getUserId());
         sendPhoneCode(bizType, user.getMobile());
         return true;
     }
@@ -93,19 +93,13 @@ public class GeneralController extends BaseController {
         smsAO.sendSmsCaptcha(mobile, bizType);
     }
 
-    // dict data
-    @RequestMapping(value = "/dict", method = RequestMethod.GET)
-    @ResponseBody
-    public List getDict(@RequestParam("type") String type) {
-        return dictAO.queryDictList(type);
-    }
-    
     // 查询银行列表
     @RequestMapping(value = "/banks", method = RequestMethod.GET)
     @ResponseBody
-    public List getBanks(@RequestParam(value = "status", required = false) String status,
-    		@RequestParam(value = "orderColumn", required = false) String orderColumn,
-    		@RequestParam(value = "orderDir", required = false) String orderDir) {
+    public List getBanks(
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "orderColumn", required = false) String orderColumn,
+            @RequestParam(value = "orderDir", required = false) String orderDir) {
         return generalAO.queryBanks(status, orderColumn, orderDir);
     }
 
