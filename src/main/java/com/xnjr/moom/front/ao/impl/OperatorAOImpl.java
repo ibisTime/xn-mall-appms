@@ -51,9 +51,6 @@ public class OperatorAOImpl implements IOperatorAO {
         if (StringUtils.isBlank(salePrice)) {
             throw new BizException("A010001", "单价不能为空");
         }
-        if (StringUtils.isBlank(addressCode)) {
-            throw new BizException("A010001", "收货信息编号不能为空");
-        }
         XN602020Req req = new XN602020Req();
         req.setAddressCode(addressCode);
         req.setApplyNote(applyNote);
@@ -241,9 +238,6 @@ public class OperatorAOImpl implements IOperatorAO {
             String receiptTitle, String toUser) {
         if (StringUtils.isBlank(applyUser)) {
             throw new BizException("A010001", "用户编号不能为空");
-        }
-        if (StringUtils.isBlank(addressCode)) {
-            throw new BizException("A010001", "地址编号不能为空");
         }
         if (cartCodeList == null || cartCodeList.isEmpty()) {
             throw new BizException("A010001", "购物车编号列表不能为空");

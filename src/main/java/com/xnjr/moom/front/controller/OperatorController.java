@@ -25,7 +25,7 @@ public class OperatorController extends BaseController {
             @RequestParam("modelCode") String modelCode,
             @RequestParam("quantity") String quantity,
             @RequestParam("salePrice") String salePrice,
-            @RequestParam("addressCode") String addressCode,
+            @RequestParam(value = "addressCode", required = false) String addressCode,
             @RequestParam(value = "applyNote", required = false) String applyNote,
             @RequestParam(value = "receiptType", required = false) String receiptType,
             @RequestParam(value = "receiptTitle", required = false) String receiptTitle,
@@ -137,7 +137,7 @@ public class OperatorController extends BaseController {
     public Object submitCart(
             @RequestParam(value = "applyUser", required = false) String applyUser,
             @RequestParam("cartCodeList") List<String> cartCodeList,
-            @RequestParam("addressCode") String addressCode,
+            @RequestParam(value = "addressCode", required = false) String addressCode,
             @RequestParam(value = "applyNote", required = false) String applyNote,
             @RequestParam(value = "receiptType", required = false) String receiptType,
             @RequestParam(value = "receiptTitle", required = false) String receiptTitle,

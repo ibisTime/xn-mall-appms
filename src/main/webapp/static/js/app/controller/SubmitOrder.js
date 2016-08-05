@@ -70,9 +70,8 @@ define([
 								var d = data[i];
 								if(d.userReferee.trim() == ""){
 									toUser = d.userId;
-								}else{
-									html += '<option value="'+ d.userId+'">'+ d.loginName+'</option>'
 								}
+								html += '<option value="'+ d.userId+'">'+ d.loginName+'</option>';
 							}
 							$("#seller").html(html);
 						}
@@ -152,30 +151,32 @@ define([
     		});
 			$("#sbtn").on("click", function () {
 				var $a = $("#addressDiv>a");
-	            if($a.length){
-	            	var receiptT = $("#receiptTitle").val(),
-	            		receiptV = $("#receipt").val();
-	                if(receiptT.length > 32){
-						showMsg("发票抬头字数必须少于32位");
-	                    return;
-	                }
-	                if($("#apply_note").val().length > 255){
-	                	showMsg("备注字数必须少于255位");
-	                	return;
-	                }
-	                if(receiptT.length && receiptV == "0" || !receiptT.length && receiptV != "0"){
-	                	if(receiptT.length){
-	                		$("#od-tipbox>div:eq(1)").text("您还未选择发票类型，确定提交订单吗？");
-	                	}else{
-	                		$("#od-tipbox>div:eq(1)").text("您还未填写发票抬头，确定提交订单吗？");
-	                	}
-	                	$("#od-mask, #od-tipbox").removeClass("hidden");
-	                	return;
-	                }
-	                PrepareConfig();
-	            }else{
-					showMsg("未选择地址");
-	            }
+				if($("#psfs").val() == "1"){
+					if(!$a.length){
+						showMsg("未选择地址");
+						return;
+					}
+				}
+				var receiptT = $("#receiptTitle").val(),
+					receiptV = $("#receipt").val();
+				if(receiptT.length > 32){
+					showMsg("发票抬头字数必须少于32位");
+					return;
+				}
+				if($("#apply_note").val().length > 255){
+					showMsg("备注字数必须少于255位");
+					return;
+				}
+				if(receiptT.length && receiptV == "0" || !receiptT.length && receiptV != "0"){
+					if(receiptT.length){
+						$("#od-tipbox>div:eq(1)").text("您还未选择发票类型，确定提交订单吗？");
+					}else{
+						$("#od-tipbox>div:eq(1)").text("您还未填写发票抬头，确定提交订单吗？");
+					}
+					$("#od-mask, #od-tipbox").removeClass("hidden");
+					return;
+				}
+				PrepareConfig();
 	        });
 			
 			$("#odOk").on("click", function(){
@@ -246,6 +247,7 @@ define([
 				config.toUser = toUser;
 			}else{
 				config.toUser = $("#seller").val();
+				config.addressCode = "";
 			}
     		Ajax.post(url, config)
 				.then(function (response) {

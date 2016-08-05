@@ -68,7 +68,10 @@ define([
 	                            $("#od-id").html(data.code);
 
 	                            var addData = data.address;
-	                            $("#addressDiv").html(addrTmpl(addData));
+								if(addData){
+									$("#addressTitle, #addressDiv").removeClass("hidden");
+									$("#addressDiv").html(addrTmpl(addData));
+								}
 	                            var logistic = data.logistics;
 	                            if(logistic && logistic.code){
 	                            	logisticsNO = logistic.code;
@@ -104,7 +107,7 @@ define([
 	    
 	    function getMyDate(value) {
 	        var date = new Date(value);
-	        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
+	        return date.getFullYear() + "-" + get2(date.getMonth() + 1) + "-" + get2(date.getDate()) + " " +
 	            get2(date.getHours()) + ":" + get2(date.getMinutes()) + ":" + get2(date.getSeconds());
 	    }
 

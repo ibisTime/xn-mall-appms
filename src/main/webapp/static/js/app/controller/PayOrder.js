@@ -7,8 +7,8 @@ define([
 ], function (base, Ajax, Dict, dialog, Handlebars) {
 	var code = base.getUrlParam("code") || "",
         receiptType = Dict.get("receiptType"),
-        contentTmpl = __inline("../ui/pay-order-imgs.handlebars"),
-        addressTmpl = __inline("../ui/pay-order-address.handlebars");
+        contentTmpl = __inline("../ui/pay-order-imgs.handlebars")/*,
+        addressTmpl = __inline("../ui/pay-order-address.handlebars")*/;
 
 	queryOrder();
 	addListener();
@@ -42,10 +42,17 @@ define([
                         $("#items-cont").append( contentTmpl({items: invoiceModelLists}) );
                         $("#po-total").html((+data.totalAmount/1000).toFixed(0));
 
-                        var addData = data.address;
+                        var addData = data.address || {};
                         addData.totalAmount = (+data.totalAmount/1000).toFixed(0);
                         addData.orderCode = code;
-                        $("#addressDiv").html(addressTmpl(addData));
+                        var addrHtml = '<p><span class="pr1em">总积分</span>：<span class="pl_5rem">'+ addData.totalAmount+'<span></span></p>' +
+                            '<p><span class="pr1em">订单号</span>：<span class="pl_5rem">'+ addData.orderCode+'</span></p>';
+                        if(addData.addressee){
+                            addrHtml += '<p><span>配送信息：</span><span class="pl_5rem">'+addData.addressee+'</span><span class="pl10">'+addData.mobile+'</span></p>' +
+                            '<p class="pl5_5rem t_73 s_09_5"><span class="pr10">'+addData.province+'</span>' +
+                            '<span class="pr10">'+addData.city+'</span><span class="pr10">'+addData.district+'</span><span>'+addData.detailAddress+'</span></p>';
+                        }
+                        $("#addressDiv").html(addrHtml);
                     }else{
                     	$("#cont").remove();
                     	doError("#container");
