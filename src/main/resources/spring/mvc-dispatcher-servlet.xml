@@ -144,8 +144,8 @@
 			<mvc:mapping path="/project/**" />
 			<mvc:mapping path="/subject/**" />
 			<mvc:mapping path="/business/**" />
-			<!-- <mvc:mapping path="/operators/**" />
-			<mvc:mapping path="/operator/**" /> -->
+			<mvc:mapping path="/operators/**" />
+			<mvc:mapping path="/operator/**" />
 			
 			<mvc:exclude-mapping path="/operator/buy.htm"/>
 			<mvc:exclude-mapping path="/operators/integral/recharge"/>

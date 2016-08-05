@@ -10,6 +10,7 @@ define([
     			.then(function(res){
     				$("#loaddingIcon").addClass("hidden");
     				if(res.success){
+						sessionStorage.setItem("user", "0");
                         location.href = '../home/index.html';
                     }else{
                     	showMsg(res.msg);
