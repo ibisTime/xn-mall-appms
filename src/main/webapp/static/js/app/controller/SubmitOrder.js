@@ -11,6 +11,7 @@ define([
 	        q = base.getUrlParam("q") || "1",
 	        receiptType = Dict.get("receiptType"),
 	        contentTmpl = __inline("../ui/submit-order-imgs.handlebars"),
+			contentTmpl1 = __inline("../ui/submit-order-imgs1.handlebars"),
 			toUser = "";
     	init();    	
     	function init(){
@@ -99,7 +100,7 @@ define([
 	                            totalCount += eachCount;
 	                            items.push(d);
 	                        }
-	                        var html = contentTmpl({items: items});
+	                        var html = contentTmpl1({items: items});
 	                        $("#cont").hide();
 	                        $("#items-cont").append(html);
 	                        $("#totalAmount").html( (totalCount / 1000).toFixed(0) );

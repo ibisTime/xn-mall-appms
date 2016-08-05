@@ -65,7 +65,7 @@ define([
             "QT": "其他"
         },
         indexTopImg: ['/static/images/ht1.jpg', '/static/images/ht2.jpg', '/static/images/ht3.jpg'],
-        telephone: "xxx-xxx-xxxx"
+        telephone: "400-0579-228"
     };
 
     var changeToObj = function(data) {
