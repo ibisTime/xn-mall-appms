@@ -1109,6 +1109,9 @@ textarea {
 .t-i2 {
     text-indent: 2.4rem;
 }
+.t-i2em{
+    text-indent: 2em;
+}
 
 /*text 文字对齐*/
 .tc {
