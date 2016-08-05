@@ -64,7 +64,8 @@ public class PageController {
             isMoblie = true;
         }
         System.out.println("isMobile: " + isMoblie);
-        return isMoblie;
+        // return isMoblie;
+        return true;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)

@@ -10,7 +10,8 @@ define([
 	        type = base.getUrlParam("type") || "1",
 	        q = base.getUrlParam("q") || "1",
 	        receiptType = Dict.get("receiptType"),
-	        contentTmpl = __inline("../ui/submit-order-imgs.handlebars");
+	        contentTmpl = __inline("../ui/submit-order-imgs.handlebars"),
+			toUser = "";
     	init();    	
     	function init(){
 			(function () {
@@ -58,6 +59,24 @@ define([
 	            }
 	            $("#receipt").html(html);
 	        })();
+			(function(){
+				var html = "";
+				Ajax.get(APIURL + '/user/getHpsList', true)
+					.then(function(res){
+						if(res.success){
+							var data = res.data, html = "";
+							for(var i = 0; i < data.length; i++){
+								var d = data[i];
+								if(!d.userReferee){
+									toUser = d.userId;
+									//break;
+								}
+								html += '<option value="'+ d.userId+'">'+ d.loginName+'</option>'
+							}
+							$("#seller").html(html);
+						}
+					});
+			})();
 	        addListeners();
     	}
     	function doError(cc) {
@@ -96,23 +115,26 @@ define([
 	    }
 
 	    function getModel() {
-	        var url = APIURL + '/commodity/queryModel',
+	        var url = APIURL + '/commodity/queryListModel',
 	            config = {
-	                "code": code
+	                "modelCode": code
 	            };
 	        Ajax.get(url, config)
 	            .then(function(response){
 	                if(response.success){
-	                    var data = response.data,
+	                    var data = response.data[0],
 	                        items = [];
-                        var eachCount = +data.buyGuideList[0].discountPrice * +q;
+                        var eachCount = +data.discountPrice * +q;
                         	data.totalAmount = (eachCount / 1000).toFixed(0);
                         data.quantity = q;
-                        data.modelName = data.name;
+                        data.modelName = data.model.name;
+						data.code = data.model.code;
+						data.productName = data.model.productName;
+						data.pic1 = data.model.pic1;
                         items.push(data);
 	                    var html = contentTmpl({items: items});
 	                    $("#items-cont").append(html);
-	                    $("#totalAmount").html( ((+data.buyGuideList[0].discountPrice) * q / 1000).toFixed(0) );
+	                    $("#totalAmount").html( data.totalAmount );
 	                    $("#cont").hide();
 	                }else{
 	                    doError("#items-cont");
@@ -162,6 +184,14 @@ define([
 	        $("#odCel").on("click", function(){
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
 	        });
+			$("#psfs").on("change", function(){
+				var me = $(this);
+				if(me.val() == "2"){
+					$("#sj").removeClass("hidden");
+				}else{
+					$("#sj").addClass("hidden");
+				}
+			});
     	}
     	
     	function PrepareConfig(){
@@ -211,6 +241,11 @@ define([
     	}
 
     	function doSubmitOrder(config, url){
+			if($("#psfs").val() == "1"){
+				config.toUser = toUser;
+			}else{
+				config.toUser = $("#seller").val();
+			}
     		Ajax.post(url, config)
 				.then(function (response) {
 					if(response.success){

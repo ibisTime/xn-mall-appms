@@ -8,7 +8,7 @@
  */
 package com.xnjr.moom.front.ao;
 
-import com.xnjr.moom.front.res.XN805041Res;
+import com.xnjr.moom.front.res.XN602601Res;
 import com.xnjr.moom.front.res.XN805043Res;
 import com.xnjr.moom.front.res.XN805056Res;
 
@@ -29,16 +29,12 @@ public interface IUserAO {
     /**
      * 用户注册
      * @param mobile
-     * @param loginPwd
-     * @param registerIp
      * @param userReferee
-     * @param smsCaptcha
      * @return 
      * @create: 2015年9月19日 上午11:24:33 myb858
      * @history:
      */
-    public XN805041Res doRegister(String mobile, String loginPwd,
-            String userReferee, String smsCaptcha);
+    public XN602601Res doRegister(String mobile, String userReferee);
 
     /**
      * 身份认证
@@ -68,11 +64,12 @@ public interface IUserAO {
      * @param loginName
      * @param loginPwd
      * @param loginIp
+     * @param kind
      * @create: 2014-12-10 下午7:37:18 miyb
      * @history:
      */
 
-    public XN805043Res doLogin(String loginName, String loginPwd);
+    public XN805043Res doLogin(String loginName, String loginPwd, String kind);
 
     /**
      * 查询用户的详细信息
@@ -246,4 +243,12 @@ public interface IUserAO {
      * @return
      */
     public Object queryAddress(String code);
+
+    /**
+     * 列表查询货品商
+     * @param userId
+     * @return 
+     * @history:
+     */
+    public Object getHpsList(String userId);
 }
