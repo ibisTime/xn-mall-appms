@@ -4,105 +4,103 @@ define([
     'Handlebars'
 ], function (base, Ajax, Handlebars) {
     $(function () {
-        var cate = base.getUrlParam("c") || "";
-        init();
-        function init(){
-            var html = '';
-            addListeners();
-            Ajax.get(APIURL + '/general/dict/list',
-                {parentKey: "pro_category", "orderColumn": "id", "orderDir": "asc"})
-                .then(function(res){
-                    if(res.success){
-                        var cateData = res.data;
-                        for(var i = 0; i < cateData.length; i++){
-                            var d = cateData[i];
-                            html += '<li class="fl pt8 pr20" l_type="'+d.dkey+'"><span class="inline_block pb10">'+d.dvalue+'</span></li>';
-                        }
-                        $("#ml-head-ul").html(html).css("height", "auto");
-                        if( +$("#ml-head-ul").height() > 55 ){
-                            $("#ml-head-ul").css("height", "48px");
-                            $("#updown").removeClass("hidden");
-                        }
-                        if(cate){
-                            $("#ml-head-ul").find("li[l_type="+cate+"]").click();
-                        }else{
-                            $("#ml-head-ul").children("li:first").click();
-                        }
-                    }
-                });
-        }
-        function addListeners(){
-            $("#ml-head-ul").on("click", "li", function () {
-                var $me = $(this);
-                if(!$me.hasClass("active")){
-                    $("#ml-head-ul").find("li.active").removeClass("active");
-                    $me.addClass("active");
-                    getProduces($me.attr("l_type"));
-                }
-                var $ud = $("#updown");
-                if(!$ud.hasClass("hidden") && $ud.hasClass("up")){
-                    $("#updown").click();
-                }
-            });
-            $("#updown").on("click", function(){
-                var me = $(this);
-                if(me.hasClass("down")){
-                    me.attr("src", "/static/images/u-arrow.png")
-                        .removeClass("down").addClass("up");
-                    $("#ml-head-ul").css("height", "auto");
-                    $("#mask").removeClass("hidden");
-                }else if(me.hasClass("up")){
-                    me.attr("src", "/static/images/d-arrow.png")
-                        .removeClass("up").addClass("down");
-                    $("#ml-head-ul").css("height", "48px");
-                    $("#mask").addClass("hidden");
-                }
-
-            });
-            $("#mask").on("click", function(){
-                var $ud = $("#updown");
-                if(!$ud.hasClass("hidden") && $ud.hasClass("up")){
-                    $("#updown").click();
-                }
-            });
-        }
-
-        function getProduces(category) {
-            var url = APIURL + "/commodity/subdivision/list";
-            Ajax.get(url, {"category": category}, true)
-                .then(function(res){
-                    if(res.success){
+        var template = __inline("../ui/mall-list.handlebars"),
+        	idx = base.getUrlParam("i"),
+            items = {}, count = 2, modelList = {}, first = true;
+        $("#ml-head-ul").on("click", "li", function () {
+            var $me = $(this);
+            if(!$me.hasClass("active")){
+                $("#ml-head-ul").find("li.active").removeClass("active");
+                $me.addClass("active");
+                getProduces($me.attr("l_type"));
+            }
+        });
+        function getProduces(type) {
+            if(!first){
+                $("#cont").replaceWith('<i id="cont" class="icon-loading1"></i>');
+            }
+            items = {}; count = 2; modelList = {};
+            Ajax.get(APIURL + '/commodity/queryProduces', {
+                "type": type
+            }, true)
+                .then(function (res) {
+                    if (res.success) {
                         var data = res.data;
-                        if(data.length){
-                            var html = '<table class="wp100 mall_list_table" id="mlTable">';
-                            for(var i = 0, len = data.length; i < len; i+=3){
-                                if(i + 2 <= len - 1){
-                                    html += '<tr><td><a href="./mall_detail.html?c='+category+'&t='+ data[i].type+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
-                                        '<td><a href="./mall_detail.html?c='+category+'&t='+ data[i+1].type+'"><img class="b_radius6" src="'+ data[i+1].typePic+'"/></a></td>'+
-                                        '<td><a href="./mall_detail.html?c='+category+'&t='+ data[i+2].type+'"><img class="b_radius6" src="'+ data[i+2].typePic+'"/></a></td></tr>';
-                                }else if(i + 1 <= len - 1){
-                                    html += '<tr><td><a href="./mall_detail.html?c='+category+'&t='+ data[i].type+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
-                                        '<td><a href="./mall_detail.html?c='+category+'&t='+ data[i+1].type+'"><img class="b_radius6" src="'+ data[i+1].typePic+'"/></a></td><td></td></tr>';
-                                }else{
-                                    html += '<tr><td><a href="./mall_detail.html?c='+category+'&t='+ data[i].type+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
-                                    '<td></td><td></td></tr>';
-                                }
+                        if (data.length) {
+                            for (var i = 0; i < data.length; i++) {
+                                var d = data[i];
+                                items[d.code] = {
+                                    "name": d.name,
+                                    "advTitle": d.advTitle,
+                                    "advPic": d.advPic,
+                                    "code": d.code
+                                };
                             }
-                            html += '</table>';
-                            $("#cont").hide();
-                            $("#mlTable").replaceWith(html);
-                        }else{
+                            isReady(doSuccess);
+                        } else {
                             doError();
                         }
-                    }else{
+                    } else {
                         doError();
                     }
                 });
+            Ajax.get(APIURL + '/commodity/queryListModel', true)
+                .then(function (res) {
+                    if (res.success) {
+                        var data = res.data;
+                        if (data.length) {
+                            for (var i = 0; i < data.length; i++) {
+                                var d = data[i];
+                                if (d.buyGuideList.length) {
+                                    if (modelList[d.productCode] == undefined) {
+                                        modelList[d.productCode] = Infinity;
+                                    }
+                                    var s = +d.buyGuideList[0].discountPrice / 1000;
+                                    if (s < modelList[d.productCode]) {
+                                        modelList[d.productCode] = s;
+                                    }
+                                }
+                            }
+                            isReady(doSuccess);
+                        }else{
+                        	doError();
+                        }
+                    }else{
+                    	doError();
+                    }
+                });
         }
-
+        var length = $("#ml-head-ul>li").length;
+        if(idx <= (length - 1)){
+        	$("#ml-head-ul>li:eq("+idx+")").click();
+        }else{
+        	$("#ml-head-ul>li:first").click();
+        }
+        
+        function isReady(func) {
+            if(!--count){
+                func();
+            }
+        }
         function doError() {
-            $("#cont").hide();
-            $("#mlTable").replaceWith('<div id="mlTable" class="bg_fff" style="text-align: center;line-height: 150px;">暂无商品</div>');
+            count = 0;
+            $("#cont").replaceWith('<div id="cont" class="bg_fff" style="text-align: center;line-height: 150px;">暂无商品</div>');
+        }
+        function doSuccess() {
+            first = false;
+            var data = [];
+            for( var name in items ){
+                if(modelList[name]){
+                    items[name].price = modelList[name].toFixed(0);
+                    data.push(items[name]);
+                }
+            }
+            if(data.length){
+            	var content = template({items: data});
+                $("#cont").replaceWith(content);
+            }else{
+            	doError();
+            }
         }
     });
 });

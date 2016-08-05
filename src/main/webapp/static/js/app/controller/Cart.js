@@ -83,34 +83,32 @@ define([
 	        $("#od-ul").on("keyup", "input", function (e) {
 	            e.stopPropagation();
 	            var keyCode = e.charCode || e.keyCode;
-				var me = $(this);
-				if(!isSpecialCode(keyCode) && !isNumber(keyCode)){
-					me.val(me.val().replace(/[^\d]/g, ""));
+	            if(!isSpecialCode(keyCode) && !isNumber(keyCode)){
+	                this.value = this.value.replace(/[^\d]/g, "");
 	            }
-				if(!me.val()){
-					me.change();
-				}
+	            if(this.value == "0"){
+	                this.value = "1";
+	            }
 	        });
 	        $("#od-ul").on("change", "input[type=text]", function (e) {
 	            e.stopPropagation();
 	            var keyCode = e.charCode || e.keyCode;
-				var me = $(this);
 	            if(!isSpecialCode(keyCode)){
-					me.val(me.val().replace(/[^\d]/g, ""));
+	                this.value = this.value.replace(/[^\d]/g, "");
 	            }
-				if(!me.val()){
-					me.val("1");
-				}
-				if(me.val() == "0"){
-					me.val("1");
-				}
+	            if(!$(this).val()){
+                    this.value = "1";
+                }
+	            if(this.value == "0"){
+	                this.value = "1";
+	            }
 	            var gp = $(this).parents("li[code]"), salePrice = +gp.attr("saleP");
 	            var config = {
 	                "code": gp.attr("code"),
 	                "quantity": this.value
 	            };
+	            var me = this;
 	            $("#loaddingIcon").removeClass("hidden");
-				me = this;
 	            Ajax.post(APIURL + '/operators/editCart', config)
 	                .then(function(response){
 	                	$("#loaddingIcon").addClass("hidden");

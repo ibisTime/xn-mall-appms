@@ -12,6 +12,19 @@ define([
 	    function addListeners(){
 	    	$("#verification").on("change",validate_verification);
 	    	$("#mobile").on("change", validate_mobile);
+	    	$("#password").on("change", validate_password)
+		        .on("focus", function(){
+		            $(this).siblings(".register_verifycon")
+			            .css({
+			                "display": "block"
+			            });
+		        })
+		        .on("blur", function(){
+		            $(this).siblings(".register_verifycon")
+			            .css({
+			                "display": "none"
+			            });
+		        });
             $("#sbtn").on("click", function (e) {
                 changeMobile();
             });
@@ -90,8 +103,24 @@ define([
 	        return true;
         }
 
+        function validate_password(){
+        	var elem = $("#password")[0],
+	            parent = elem.parentNode,
+	            myreg = /^[^\s]{6,16}$/,
+	            span;
+	        if(elem.value == ""){
+	            span = $(parent).find("span.warning")[0];
+	            $(span).fadeIn(150).fadeOut(3000);
+	            return false;
+	        }else if(!myreg.test(elem.value)){
+	            span = $(parent).find("span.warning")[1];
+	            $(span).fadeIn(150).fadeOut(3000);
+	            return false;
+	        }
+	        return true;
+        }
 	    function validate(){
-            if(validate_mobile() && validate_verification()){
+            if(validate_mobile() && validate_verification() && validate_password()){
                 return true;
             }
             return false;

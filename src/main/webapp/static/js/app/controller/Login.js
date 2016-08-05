@@ -26,6 +26,7 @@ define([
             $("#password").on("change", function () {
                 validate_password();
             });
+            fdPwd
         }
 
 		function validate_username(){
