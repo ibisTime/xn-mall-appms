@@ -77,14 +77,14 @@ define([
                             var html = '<table class="wp100 mall_list_table" id="mlTable">';
                             for(var i = 0, len = data.length; i < len; i+=3){
                                 if(i + 2 <= len - 1){
-                                    html += '<tr><td><a href="./mall_detail.html?pc='+ data[i].code+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
-                                        '<td><a href="./mall_detail.html?pc='+ data[i+1].code+'"><img class="b_radius6" src="'+ data[i+1].typePic+'"/></a></td>'+
-                                        '<td><a href="./mall_detail.html?pc='+ data[i+2].code+'"><img class="b_radius6" src="'+ data[i+2].typePic+'"/></a></td></tr>';
+                                    html += '<tr><td><a href="./mall_detail.html?c='+category+'&t='+ data[i].type+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
+                                        '<td><a href="./mall_detail.html?c='+category+'&t='+ data[i+1].type+'"><img class="b_radius6" src="'+ data[i+1].typePic+'"/></a></td>'+
+                                        '<td><a href="./mall_detail.html?c='+category+'&t='+ data[i+2].type+'"><img class="b_radius6" src="'+ data[i+2].typePic+'"/></a></td></tr>';
                                 }else if(i + 1 <= len - 1){
-                                    html += '<tr><td><a href="./mall_detail.html?pc='+ data[i].code+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
-                                        '<td><a href="./mall_detail.html?pc='+ data[i+1].code+'"><img class="b_radius6" src="'+ data[i+1].typePic+'"/></a></td><td></td></tr>';
+                                    html += '<tr><td><a href="./mall_detail.html?c='+category+'&t='+ data[i].type+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
+                                        '<td><a href="./mall_detail.html?c='+category+'&t='+ data[i+1].type+'"><img class="b_radius6" src="'+ data[i+1].typePic+'"/></a></td><td></td></tr>';
                                 }else{
-                                    html += '<tr><td><a href="./mall_detail.html?pc='+ data[i].code+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
+                                    html += '<tr><td><a href="./mall_detail.html?c='+category+'&t='+ data[i].type+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
                                     '<td></td><td></td></tr>';
                                 }
                             }

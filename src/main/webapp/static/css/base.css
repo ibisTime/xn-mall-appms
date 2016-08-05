@@ -1650,7 +1650,7 @@ textarea {
     border-bottom: none;
 }
 .icon-loading {
-    background: url(/static/images/loading.gif) 50% 56% no-repeat;
+    background: url(../images/loading.gif) 50% 56% no-repeat;
     width: 100%;
     display: block;
     position: fixed;
@@ -1661,7 +1661,7 @@ textarea {
     z-index: 999;
 }
 .icon-loading1 {
-    background: url(/static/images/loading.gif) center no-repeat;
+    background: url(../images/loading.gif) center no-repeat;
     width: 100%;
     display: block;
     height: 500px;
@@ -2359,7 +2359,7 @@ table th, table td {
     padding-bottom: 20px;
 }
 .icon-loading2{
-    background: url(/static/images/loading.gif) center no-repeat;
+    background: url(../images/loading.gif) center no-repeat;
     width: 100%;
     display: block;
     background-color: #fff;
@@ -2380,6 +2380,7 @@ table th, table td {
 }
 .index-rmtj img{
     max-width: 100%;
+    border-radius: 8px;
 }
 .over-hide{
     overflow: hidden;

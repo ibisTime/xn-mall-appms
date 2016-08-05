@@ -60,6 +60,7 @@ define([
 	            $("#receipt").html(html);
 	        })();
 			(function(){
+				var html = "";
 				Ajax.get(APIURL + '/user/getHpsList', true)
 					.then(function(res){
 						if(res.success){
@@ -68,9 +69,11 @@ define([
 								var d = data[i];
 								if(!d.userReferee){
 									toUser = d.userId;
-									break;
+									//break;
 								}
+								html += '<option value="'+ d.userId+'">'+ d.loginName+'</option>'
 							}
+							$("#seller").html(html);
 						}
 					});
 			})();
@@ -181,6 +184,14 @@ define([
 	        $("#odCel").on("click", function(){
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
 	        });
+			$("#psfs").on("change", function(){
+				var me = $(this);
+				if(me.val() == "2"){
+					$("#sj").removeClass("hidden");
+				}else{
+					$("#sj").addClass("hidden");
+				}
+			});
     	}
     	
     	function PrepareConfig(){
@@ -230,7 +241,11 @@ define([
     	}
 
     	function doSubmitOrder(config, url){
-			config.toUser = toUser;
+			if($("#psfs").val() == "1"){
+				config.toUser = toUser;
+			}else{
+				config.toUser = $("#seller").val();
+			}
     		Ajax.post(url, config)
 				.then(function (response) {
 					if(response.success){

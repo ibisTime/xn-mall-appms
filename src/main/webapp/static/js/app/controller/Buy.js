@@ -114,11 +114,15 @@ define([
                  'pagination': '.swiper-pagination'
              });
             }
-            msl.modelSpecsList.forEach(function (data) {
-             table_html += "<tr><th>" + data.dkey + "</th><td>" + data.dvalue + "</td></tr>";
-            });
-            table_html += "</tbody>";
-            $("#bb-table").html(table_html);
+            if(msl.modelSpecsList && msl.modelSpecsList.length) {
+                msl.modelSpecsList.forEach(function (data) {
+                    table_html += "<tr><th>" + data.dkey + "</th><td>" + data.dvalue + "</td></tr>";
+                });
+                table_html += "</tbody>";
+                $("#bb-table").html(table_html);
+            }else{
+                $("#i-tip,#bb-table").addClass("hidden");
+            }
             $("#btr-name").text(modelData.name);
             $("#btr-description").html(modelData.description);
             var totalPrice;

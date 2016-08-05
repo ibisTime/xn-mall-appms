@@ -28,7 +28,7 @@ define([
             });
         }
 
-        function checkMobile (){
+        /*function checkMobile (){
             Ajax.post(APIURL + '/user/mobile/check',
                 {"loginName": $("#mobile").val()})
                 .then(function (response) {
@@ -52,7 +52,7 @@ define([
         }
         function notOk() {
             count = -1;
-        }
+        }*/
         function validate_mobile(){
             var $elem = $("#mobile"),
                 $parent = $elem.parent(),
@@ -136,7 +136,7 @@ define([
             if(validate()){
                 count = 1;
                 $("#registerBtn").attr("disabled", "disabled").val("注册中...");
-                checkMobile();
+                finalRegister();
             }
         }
 	});
