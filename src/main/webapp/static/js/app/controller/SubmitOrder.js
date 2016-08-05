@@ -68,11 +68,11 @@ define([
 							var data = res.data, html = "";
 							for(var i = 0; i < data.length; i++){
 								var d = data[i];
-								if(!d.userReferee){
+								if(d.userReferee.trim() == ""){
 									toUser = d.userId;
-									//break;
+								}else{
+									html += '<option value="'+ d.userId+'">'+ d.loginName+'</option>'
 								}
-								html += '<option value="'+ d.userId+'">'+ d.loginName+'</option>'
 							}
 							$("#seller").html(html);
 						}
