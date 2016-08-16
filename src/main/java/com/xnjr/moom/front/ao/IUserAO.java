@@ -246,9 +246,8 @@ public interface IUserAO {
 
     /**
      * 列表查询货品商
-     * @param userId
      * @return 
      * @history:
      */
-    public Object getHpsList(String userId);
+    public Object getHpsList();
 }

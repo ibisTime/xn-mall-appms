@@ -70,8 +70,9 @@ define([
 								var d = data[i];
 								if(d.userReferee.trim() == ""){
 									toUser = d.userId;
+								}else{
+									html += '<option value="'+ d.userId+'">'+ d.loginName+'</option>';
 								}
-								html += '<option value="'+ d.userId+'">'+ d.loginName+'</option>';
 							}
 							$("#seller").html(html);
 						}
@@ -248,6 +249,10 @@ define([
 			}else{
 				config.toUser = $("#seller").val();
 				config.addressCode = "";
+				if(!config.toUser){
+					showMsg("商家不能为空");
+					return;
+				}
 			}
     		Ajax.post(url, config)
 				.then(function (response) {

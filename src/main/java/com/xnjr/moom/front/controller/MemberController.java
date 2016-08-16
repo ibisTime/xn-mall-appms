@@ -312,8 +312,7 @@ public class MemberController extends BaseController {
 
     @RequestMapping(value = "/getHpsList", method = RequestMethod.GET)
     @ResponseBody
-    public Object getHpsList(
-            @RequestParam(value = "userId", required = false) String userId) {
-        return userAO.getHpsList(getSessionUserId(userId));
+    public Object getHpsList() {
+        return userAO.getHpsList();
     }
 }

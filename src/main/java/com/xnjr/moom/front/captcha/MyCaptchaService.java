@@ -13,8 +13,7 @@ import com.xnjr.moom.front.exception.BizException;
  * @since: 2014-8-3 下午4:23:50 
  * @history:
  */
-public class MyCaptchaService extends
-        GenericManageableCaptchaService {
+public class MyCaptchaService extends GenericManageableCaptchaService {
 
     /** 
      * The constructor method of class CustomManageableCaptchaService.java . 

@@ -154,6 +154,7 @@
 			<mvc:exclude-mapping path="/gene/register/send" />
 			<mvc:exclude-mapping path="/user/mobile/check" />
 		 	<mvc:exclude-mapping path="/user/regist" />
+		 	<mvc:exclude-mapping path="/user/getHpsList" />
 		 	<!-- 注册相关 end 
 		 	登录登出相关 start  -->
 		 	<mvc:exclude-mapping path="/user/login"/>

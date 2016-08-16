@@ -410,10 +410,7 @@ public class UserAOImpl implements IUserAO {
             Object.class);
     }
 
-    public Object getHpsList(String userId) {
-        if (StringUtils.isBlank(userId)) {
-            throw new BizException("A010001", "用户编号不能为空");
-        }
+    public Object getHpsList() {
         XN805055Req req = new XN805055Req();
         req.setStatus("0");
         req.setKind("05");

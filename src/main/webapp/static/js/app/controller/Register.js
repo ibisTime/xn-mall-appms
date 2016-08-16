@@ -6,7 +6,7 @@ define([
 ], function (base, Ajax, dialog, Handlebars) {
 	$(function(){
 		var count = 1, returnUrl = base.getUrlParam("return"),
-			userReferee = base.getUrlParam("u");
+			userReferee = base.getUrlParam("u"), toUser;
 		addListeners();
 		init();
         function init(){
@@ -16,6 +16,7 @@ define([
                 url = url + "?return=" + encodeURIComponent(returnUrl);
             }
             $("#toLogin").attr("href", url);
+            getTjr();
         }
 		function addListeners() {
             $("#mobile").on("change", validate_mobile);
@@ -27,32 +28,21 @@ define([
                 $(this).attr( 'src', APIURL + '/captcha?_=' + new Date().getTime() );
             });
         }
-
-        /*function checkMobile (){
-            Ajax.post(APIURL + '/user/mobile/check',
-                {"loginName": $("#mobile").val()})
-                .then(function (response) {
-                    var $parent = $("#mobile").parent();
-                    if (response.success) {
-                        isReady(finalRegister);
-                    } else {
-                    	if(response.msg.indexOf("服务器") == -1){
-	                        var span = $parent.find("span.warning")[2];
-	                        $(span).fadeIn(150).fadeOut(3000);
-	                        notOk();
-	                        $("#registerBtn").removeAttr("disabled").val("注册");
-	                    }
+        function getTjr(){
+            Ajax.get(APIURL + '/user/getHpsList', true)
+                .then(function(res){
+                    if(res.success){
+                        var data = res.data, html = "";
+                        for(var i = 0; i < data.length; i++){
+                            var d = data[i];
+                            if(d.userReferee.trim() == ""){
+                                toUser = d.userId;
+                                break;
+                            }
+                        }
                     }
                 });
         }
-        function isReady(func) {
-            if(!--count){
-                func();
-            }
-        }
-        function notOk() {
-            count = -1;
-        }*/
         function validate_mobile(){
             var $elem = $("#mobile"),
                 $parent = $elem.parent(),
@@ -84,7 +74,8 @@ define([
             return true;
         }
         function validate_userReferee(){
-        	if(userReferee == undefined || userReferee.trim() == ""){
+        	if( (userReferee == undefined || userReferee.trim() == "") &&
+                (toUser == undefined || toUser.trim() == "") ){
         		showMsg("推荐人不能为空！");
         		return false;
         	}
@@ -101,7 +92,7 @@ define([
             var param = {
                 "loginName": $("#mobile").val(),
                 "captcha": $("#captcha").val(),
-                "userReferee": userReferee
+                "userReferee": userReferee || toUser
             };
             Ajax.post(APIURL + '/user/regist', param)
                 .then(function (response) {

@@ -2338,6 +2338,7 @@ table th, table td {
 	float: left;
 	line-height: 1em;
 	text-align: left;
+    word-wrap: break-word;
 }
 .index-table th, .index-table td {
     border: none;
