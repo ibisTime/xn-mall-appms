@@ -2397,3 +2397,9 @@ table th, table td {
 .overwrap{
     overflow-wrap: break-word;
 }
+.cart-down{
+    position: absolute;
+    bottom: 10px;
+    left: 34px;
+    font-size: 1.2rem;
+}

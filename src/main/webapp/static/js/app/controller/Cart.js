@@ -6,7 +6,6 @@ define([
 ], function (base, Ajax, dialog, Handlebars) {
     $(function () {
     	var url = APIURL + '/operators/queryCart', infos = [],
-        	contentTmpl = __inline("../ui/cart-imgs.handlebars"),
         	$this;
     	
     	if(sessionStorage.getItem("user") == "1"){
@@ -25,13 +24,41 @@ define([
 	                    var data = response.data, html = "";
 	                    if(data.length){
 	                        var totalAmount = 0;
+							html = '<ul class="b_bd_b bg_fff">';
 	                        data.forEach(function (cl) {
 	                            var amount = (+cl.salePrice) * (+cl.quantity);
 	                            cl.totalAmount = (amount / 1000).toFixed(0);
+
+								html += '<li class="ptb8 plr10 clearfix b_bd_b p_r" code="'+cl.code+'" saleP="'+cl.salePrice+'">' +
+										'<div class="wp100 p_r z_index0">' +
+											'<div class="clearfix bg_fff cart-content-left">';
+								if(cl.status == "0"){
+									html += '<div class="cart-down t_999">已下架</div>';
+								}
+								html +=	'<div class="fl wp40 tc pl32 p_r c-img-l">'+
+									'<div class="cart-cont-left"><div class="radio-tip1 ab_l0"><i></i></div></div>' +
+									'<a href="../operator/buy.html?code='+cl.modelCode+'">' +
+									'<img src="'+cl.pic1+'"/>' +
+									'</a>' +
+									'</div>' +
+									'<div class="fl wp60 pl12">' +
+									'<p class="t_323232 s_12 line-tow">'+cl.modelName+'</p>' +
+									'<p class="t_f64444 s_12"><span>'+cl.totalAmount+'</span><span class="t_40pe s_10">积分</span></p>' +
+									'<div class="t_666 ptb10">' +
+									'<span class="subCount a_s_span t_bold tc"><img src="/static/images/sub-icon.png" style="width: 20px;"/></span>' +
+									'<input class="buyCount tc w60p s_13 lh36" type="text" value="'+cl.quantity+'"/>' +
+									'<span class="addCount a_s_span t_bold tc"><img src="/static/images/add-icon.png" style="width: 20px;"/></span>' +
+									'</div>' +
+									'</div>' +
+									'</div>' +
+									'<div class="al_addr_del">删除</div>' +
+									'</div></li>';
+
 	                            infos.push(amount);
 	                        });
+							html += "</ul>";
 
-	                        $("#od-ul").html( contentTmpl({items: data}) );
+	                        $("#od-ul").html( html );
 	                        $("#totalAmount").html("0");
 	                    }else{
 	                    	$("#cart-bottom").hide();
@@ -46,12 +73,18 @@ define([
 	    function addListeners() {
 	        $("#sbtn").on("click", function () {
 	            var checkItem = [];
-	            $("#od-ul>ul>li div.c-img-l div.radio-tip1")
-	            	.each(function(i, item){
-	            		if($(item).hasClass("active")){
-	            			checkItem.push(i);
-	            		}
-	            	});
+	            var allItems = $("#od-ul>ul>li div.c-img-l div.radio-tip1");
+				for(var i = 0; i < allItems.length; i++){
+					var item = allItems[i];
+					if( $(item).hasClass("active") ){
+						if( !$(item).closest("li[code]").find("div.cart-down").length ){
+							checkItem.push(i);
+						}else{
+							showMsg("您所选择的商品中包含已经下架的商品，<br/>请重新选择！", 3000);
+							return;
+						}
+					}
+				}
 	            if(checkItem.length) {
 	                location.href = '../operator/submit_order.html?code='+checkItem.join("_")+'&type=2';
 	            }else{
@@ -188,10 +221,10 @@ define([
 	        $("#odOk").on("click", function(){
 				deleteFromCart($this);
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
-	        })
+	        });
 	        $("#odCel").on("click", function(){
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
-	        })
+	        });
 	        
 	        $("#od-ul").on("touchstart", ".cart-content-left", function(e){
 	        	e.stopPropagation();
@@ -247,7 +280,7 @@ define([
 	        });
 	    }
 
-	    function showMsg(cont){
+	    function showMsg(cont, time){
     		var d = dialog({
 				content: cont,
 				quickClose: true
@@ -255,7 +288,7 @@ define([
 			d.show();
 			setTimeout(function () {
 				d.close().remove();
-			}, 2000);
+			}, time || 2000);
     	}
     	function doError(cc) {
             $(cc).replaceWith('<div class="bg_fff" style="text-align: center;line-height: 150px;">暂时无法获取数据</div>');

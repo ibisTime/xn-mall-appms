@@ -130,7 +130,7 @@ define([
                             }
                         }
                         html += '<td class="pl6">' +
-                            '<a class="clearfix" href="../detail/mall_detail.html?t='+typeSequence[i][0]+'&c='+category+'&pc='+arr[j].code+'">' +
+                            '<a class="clearfix show" href="../detail/mall_detail.html?t='+typeSequence[i][0]+'&c='+category+'&pc='+arr[j].code+'">' +
                             '<div class="wp55 it-f">' +
                             '<div class="s_10">'+arr[j].name+'</div>' +
                             '<div class="s_08 t_40pe">'+arr[j].advTitle+'</div>' +
@@ -138,7 +138,7 @@ define([
                             '<div class="wp45 it-f"><img class="lazy" src="'+loadImg+'" data-original="'+arr[j].advPic+'"></div></a>' +
                             '</td>' +
                             '<td class="pl6">' +
-                            '<a class="clearfix" href="../detail/mall_detail.html?t='+typeSequence[i][0]+'&c='+category+'&pc='+arr[j+1].code+'">' +
+                            '<a class="clearfix show" href="../detail/mall_detail.html?t='+typeSequence[i][0]+'&c='+category+'&pc='+arr[j+1].code+'">' +
                             '<div class="wp55 it-f">' +
                             '<div class="s_10">'+arr[j+1].name+'</div>' +
                             '<div class="s_08 t_40pe">'+arr[j+1].advTitle+'</div>' +
@@ -153,7 +153,7 @@ define([
                             }
                         }
                         html += '<td class="pl6">' +
-                            '<a class="clearfix" href="../detail/mall_detail.html?t='+typeSequence[i][0]+'&c='+category+'&pc='+arr[j].code+'">' +
+                            '<a class="clearfix show" href="../detail/mall_detail.html?t='+typeSequence[i][0]+'&c='+category+'&pc='+arr[j].code+'">' +
                             '<div class="wp55 it-f">' +
                             '<div class="s_10">'+arr[j].name+'</div>' +
                             '<div class="s_08 t_40pe">'+arr[j].advTitle+'</div>' +
