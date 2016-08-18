@@ -33,12 +33,16 @@ define([
 										'<div class="wp100 p_r z_index0">' +
 											'<div class="clearfix bg_fff cart-content-left">';
 								if(cl.status == "0"){
-									html += '<div class="cart-down t_999">已下架</div>';
+									html += '<div class="cart-down t_999">已下架</div>'+
+										'<div class="fl wp40 tc pl32 p_r c-img-l">'+
+										'<div class="cart-cont-left"><div class="radio-tip1 ab_l0"><i></i></div></div>' +
+										'<a href="javascript:void(0)">';
+								}else{
+									html += '<div class="fl wp40 tc pl32 p_r c-img-l">'+
+										'<div class="cart-cont-left"><div class="radio-tip1 ab_l0"><i></i></div></div>' +
+										'<a href="../operator/buy.html?code='+cl.modelCode+'">';
 								}
-								html +=	'<div class="fl wp40 tc pl32 p_r c-img-l">'+
-									'<div class="cart-cont-left"><div class="radio-tip1 ab_l0"><i></i></div></div>' +
-									'<a href="../operator/buy.html?code='+cl.modelCode+'">' +
-									'<img src="'+cl.pic1+'"/>' +
+								html +=	'<img src="'+cl.pic1+'"/>' +
 									'</a>' +
 									'</div>' +
 									'<div class="fl wp60 pl12">' +
