@@ -36,13 +36,17 @@ define([
                     doError("暂无数据");
                 }
             });
-
-        base.getUser()
-            .then(function(response){
-                if(response.success){
-                    user = response.data;
-                }
-            });
+        if(sessionStorage.getItem("user") !== "1"){
+            base.getUser()
+                .then(function(response){
+                    if(response.success){
+                        user = response.data;
+                    }
+                });
+        }else{
+            user = true;
+        }
+        
         function doError(msg){
         	var d = dialog({
                 content: msg,
@@ -93,8 +97,6 @@ define([
                 if(me.val() == "0"){
                     me.val("1");
                 }
-                var unitPrice = +$("#unit-price").val();
-                $("#btr-price").text((unitPrice * +$(this).val() / 1000).toFixed(0));
             });
         }
         function choseImg(){
@@ -130,9 +132,7 @@ define([
             $("#originalPrice").text(+msl.originalPrice/1000 + "积分");
             $("#discountPrice").text(discPrice/1000 + "积分");
             $("#unit-price").val(discPrice);
-            totalPrice = (discPrice * +$("#buyCount").val() / 1000).toFixed(0);
             $("#addCartBtn, #buyBtn").removeClass("no-buy-btn");
-            $("#btr-price").text(totalPrice);
         }
         function isNumber(code){
             if(code >= 48 && code <= 57 || code >= 96 && code <= 105){

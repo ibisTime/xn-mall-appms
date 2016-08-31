@@ -20,11 +20,13 @@ import com.xnjr.moom.front.http.JsonUtils;
 import com.xnjr.moom.front.req.XN802005Req;
 import com.xnjr.moom.front.req.XN802010Req;
 import com.xnjr.moom.front.req.XN802021Req;
+import com.xnjr.moom.front.req.XN802110Req;
 import com.xnjr.moom.front.req.XN802211Req;
 import com.xnjr.moom.front.req.XN803900Req;
 import com.xnjr.moom.front.req.XNfd0032Req;
 import com.xnjr.moom.front.req.XNfd0050Req;
 import com.xnjr.moom.front.res.Page;
+import com.xnjr.moom.front.session.SessionTimeoutException;
 
 /** 
  * @author: miyb 
@@ -194,4 +196,26 @@ public class AccountAOImpl implements IAccountAO {
             Object.class);
     }
 
+    public Object recharge(String userId, String accountNumber, String amount,
+            String fromType, String fromCode) {
+        if (StringUtils.isBlank(userId)) {
+            throw new SessionTimeoutException("登录链接已超时，请重新登录.");
+        }
+        if (StringUtils.isBlank(accountNumber)) {
+            throw new BizException("A010001", "账号不能为空");
+        }
+        if (StringUtils.isBlank(amount)) {
+            throw new BizException("A010001", "充值金额不能为空");
+        }
+        if (StringUtils.isBlank(fromCode)) {
+            throw new BizException("A010001", "支付宝账号不能为空");
+        }
+        XN802110Req req = new XN802110Req();
+        req.setAccountNumber(accountNumber);
+        req.setAmount(amount);
+        req.setFromCode(fromCode);
+        req.setFromType("1");
+        return BizConnecter.getBizData("802110", JsonUtils.object2Json(req),
+            Object.class);
+    }
 }

@@ -94,4 +94,17 @@ public interface IAccountAO {
     public Object withdraw(String accountNumber, String amount, String toType,
             String toCode, String toBelong, String tradePwd);
 
+    /**
+     * 线下充值
+     * @param userId
+     * @param accountNumber
+     * @param amount
+     * @param fromType
+     * @param fromCode
+     * @return 
+     * @history:
+     */
+    public Object recharge(String userId, String accountNumber, String amount,
+            String fromType, String fromCode);
+
 }

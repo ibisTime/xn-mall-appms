@@ -13,8 +13,19 @@
     </a>
 </header>
 <i id="cont" class="icon-loading"></i>
-<div class="b_bd_tb ptb10 mt10 bg_fff p_r s_12 hidden">
+<div class="clearfix bg_dd3d3d tc s_12">
+    <div class="fl wp50 br_f64444 ptb10"><a href="./recharge.html" class="show t_white" href=""><img src="../../images/recharge.png" class="wp22p va-m"/><span class="inline_block va-m pl4">充值</span></a></div>
+    <div class="fl wp50 ptb10"><a href="./withdraw.html" class="show t_white" href=""><img src="../../images/withdraw.png" class="wp22p va-m"/><span class="inline_block va-m pl4">提现</span></a></div>
+</div>
+<div class="b_bd_tb ptb10 bg_fff p_r s_12 hidden">
     <img src="../../images/zhye.png" class="va-m wp22p ml10"/>
+    <span class="pl4 inline_block va-m"><span>账户余额：</span><span class="t_f64444 s_12">￥<span id="mAmount"></span></span></span>
+    <div class="fr s_10">
+        <span class="t_6698eb button b_6698eb ml4 mr10" id="mFundList">资金明细</span>
+    </div>
+</div>
+<div class="b_bd_tb ptb10 mt10 bg_fff p_r s_12 hidden">
+    <img src="../../images/kyjf.png" class="va-m wp22p ml10"/>
     <span class="pl4 inline_block va-m"><span>可用积分：</span><span class="t_f64444 s_12"><span id="amount"></span></span></span>
     <div class="fr s_10">
         <span class="t_6698eb button b_6698eb ml4 mr10" id="fundList">积分明细</span>
@@ -62,7 +73,7 @@
     <a href="../home/index.html" class="wp25 fl tc">
         <div class="wp100 pt8"><img src="../../images/hf1.png"/></div><p class="ptb2">首页</p>
     </a>
-    <a href="../detail/mall_list.html" class="wp25 fl tc">
+    <a href="../detail/mall_index.html" class="wp25 fl tc">
         <div class="wp100 pt8"><img src="../../images/hf2.png"/></div><p class="ptb2">产品分类</p>
     </a>
     <a href="./cart.html" class="wp25 fl tc">

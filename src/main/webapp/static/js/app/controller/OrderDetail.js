@@ -19,6 +19,7 @@ define([
 
 	    function initView() {
 	    	$("#orderCode").text(code);
+	    	//查询订单
 	        (function () {
 	            var url = APIURL + '/operators/queryOrder',
 	                config = {
@@ -34,44 +35,52 @@ define([
 
 	                        $("#orderDate").text(getMyDate(data.applyDatetime));
 	                        $("#orderStatus").text(getStatus(data.status));
+	                        //待支付(可取消)
 	                        if(data.status == "1"){
 	                        	$("footer").removeClass("hidden");
+	                        	//取消订单
 	                        	$("#cbtn").on("click", function (e) {
 	                	        	$("#od-mask, #od-tipbox").removeClass("hidden");
 	                	        });
+	                        	//支付订单
 	                	        $("#sbtn").on("click", function(){
 	                	        	location.href = '../operator/pay_order.html?code=' + code;
 	                	        });
+	                	        addListener();
+	                        //待收货
 	                        }else if(data.status == "3"){
 	                        	$("#qrsh").removeClass("hidden");
 	                        	$("#qr_btn").on("click", function(){
 	                        		confirmReceipt();
 	                        	});
 	                        }
+	                        //说明
 	                        if(data.approveNote){
 	                        	$("#approveNoteTitle, #approveNoteInfo").removeClass("hidden");
 	                        	$("#approveNoteInfo").text(data.approveNote);
 	                        }
+	                        //备注
 	                        if(data.applyNote){
 	                        	$("#applyNoteTitle, #applyNoteInfo").removeClass("hidden");
 	                        	$("#applyNoteInfo").text(data.applyNote);
 	                        }
-	                        addListener();
+	                        //商品信息
 	                        if (invoiceModelLists.length) {
 	                            invoiceModelLists.forEach(function (invoiceModelList) {
 	                                invoiceModelList.totalAmount = (+invoiceModelList.quantity * +invoiceModelList.salePrice / 1000).toFixed(0);
 	                            });
 	                            $("#od-ul").html(contTmpl({items: invoiceModelLists}));
 	                            $("#totalAmount").html((+data.totalAmount / 1000).toFixed(0));
-	                            $("#od-rtype").html(getReceiptType(data.receiptType));
-	                            $("#od-rtitle").html(data.receiptTitle || "无");
+	                           /* $("#od-rtype").html(getReceiptType(data.receiptType));
+	                            $("#od-rtitle").html(data.receiptTitle || "无");*/
 	                            $("#od-id").html(data.code);
-
+	                            //地址信息
 	                            var addData = data.address;
 								if(addData){
 									$("#addressTitle, #addressDiv").removeClass("hidden");
 									$("#addressDiv").html(addrTmpl(addData));
 								}
+								//物流信息
 	                            var logistic = data.logistics;
 	                            if(logistic && logistic.code){
 	                            	logisticsNO = logistic.code;
@@ -88,7 +97,7 @@ define([
 	                });
 	        })();
 	    }
-	    
+	    //确认收货
 	    function confirmReceipt(){
 	    	$("#loaddingIcon").removeClass("hidden");
 	    	Ajax.post(APIURL + '/operators/receipt/confirm', {code: logisticsNO})
@@ -104,13 +113,13 @@ define([
 	                }
 	            });
 	    }
-	    
+	    //日期格式
 	    function getMyDate(value) {
 	        var date = new Date(value);
 	        return date.getFullYear() + "-" + get2(date.getMonth() + 1) + "-" + get2(date.getDate()) + " " +
 	            get2(date.getHours()) + ":" + get2(date.getMinutes()) + ":" + get2(date.getSeconds());
 	    }
-
+	    //把一位数变成两位数
 	    function get2(val) {
 	        if(val < 10){
 	            return "0" + val;
@@ -118,22 +127,23 @@ define([
 	            return val;
 	        }
 	    }
-
-	    function getReceiptType(data) {
+	    //获取发票类型
+	    /*function getReceiptType(data) {
 	        return data == "" ? "无": receiptType[data];
-	    }
+	    }*/
 
 	    function addListener() {
-	        
+	        //取消订单确认框点击确认
 	        $("#odOk").on("click", function(){
 				cancelOrder();
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
 	        });
+	        //取消订单确认框点击取消
 	        $("#odCel").on("click", function(){
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
 	        });
 	    }
-
+	    //获取定单状态
 	    function getStatus(status){
 	        return orderStatus[status] || "未知状态";
 	    }

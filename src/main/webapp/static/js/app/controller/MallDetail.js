@@ -16,11 +16,7 @@ define([
 				category: category,
 				type: type,
 				productCode: productCode
-			}, url = APIURL + '/commodity/queryPageModel',
-			searchConfig = {
-				limit: 10,
-				start: 1
-			}, searchUrl = APIURL + '/commodity/queryPageModel';
+			}, url = APIURL + '/commodity/queryPageModel';
 
 		init();
         function init(){
@@ -83,46 +79,14 @@ define([
 	        		queryPageModel();
 	        	}
 	        });
-			$("#searchInput").on("keyup", function(){
-				base.throttle(doSearch, this);
-			});
+        	$("#searchIcon").on("click", function(){
+        		var sVal = $("#searchInput").val().trim();
+        		sVal = decodeURIComponent(sVal);
+        		location.href = "./search.html?s=" + sVal;
+        	});
         }
-		function doSearch(){
-			var iValue = this.value;
-			if(iValue.trim()){
-				addSearchLoading();
-				searchConfig.start = 1;
-				searchConfig.modelName = iValue;
-				Ajax.post(searchUrl, searchConfig, true)
-					.then(function(res){
-						if(res.success){
-							var data = res.data.list;
-							if(data.length){
-								var html = '';
-								data.forEach(function(d){
-									var model = d.model;
-									html += '<li><a class="show" href="../operator/buy.html?code='+ model.code+'">'+ model.name+'</a></li>'
-								});
-								$("#searchUl").html( html );
-							}else{
-								noData();
-							}
-						}else{
-							noData();
-						}
-					});
-			}else{
-				$("#searchUl").empty();
-			}
-		}
-		function noData(){
-			$("#searchUl").html('<li style="text-align: center;">暂无相关商品</li>');
-		}
-		function addSearchLoading(){
-			$("#searchUl").html('<li class="scroll-loadding"></li>');
-		}
         function doError() {
-            $("#contUl").html('<li class="bg_fff" style="text-align: center;line-height: 150px;">暂无数据</li>');
+            $("#contUl").html('<li class="bg_fff" style="text-align: center;line-height: 150px;">暂无相关商品信息</li>');
         }
         
 	    function addLoading() {

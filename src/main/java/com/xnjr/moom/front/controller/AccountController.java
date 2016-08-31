@@ -141,4 +141,17 @@ public class AccountController extends BaseController {
         return accountAO.getSumPP(getSessionUserId(userId));
     }
 
+    // 线下充值
+    @RequestMapping(value = "/doRecharge", method = RequestMethod.GET)
+    @ResponseBody
+    public Object recharge(
+            @RequestParam(value = "userId", required = false) String userId,
+            @RequestParam("accountNumber") String accountNumber,
+            @RequestParam("amount") String amount,
+            @RequestParam(value = "fromType", required = false) String fromType,
+            @RequestParam("fromCode") String fromCode) {
+        return accountAO.recharge(getSessionUserId(userId), accountNumber,
+            amount, fromType, fromCode);
+    }
+
 }

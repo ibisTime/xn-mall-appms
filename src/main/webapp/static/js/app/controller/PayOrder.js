@@ -7,12 +7,11 @@ define([
 ], function (base, Ajax, Dict, dialog, Handlebars) {
 	var code = base.getUrlParam("code") || "",
         receiptType = Dict.get("receiptType"),
-        contentTmpl = __inline("../ui/pay-order-imgs.handlebars")/*,
-        addressTmpl = __inline("../ui/pay-order-address.handlebars")*/;
+        contentTmpl = __inline("../ui/pay-order-imgs.handlebars")
 
 	queryOrder();
 	addListener();
-
+	//查询订单信息
 	function queryOrder() {
         var url = APIURL + '/operators/queryOrder',
             config = {
@@ -24,14 +23,17 @@ define([
                 if(response.success){
                     var data = response.data,
                         invoiceModelLists = data.invoiceModelList;
+                    //如果不是待支付订单，则直接跳到个人中心页面
                     if(data.status !== "1"){
                         location.href = "../user/user_info.html";
                     }
                     $("#cont").remove();
-                    $("#od-rtype").html(getReceiptType(data.receiptType));
-                    $("#od-rtitle").html(data.receiptTitle || "无");
-                    //收货信息编号
+                    //发票信息
+                    /*$("#od-rtype").html(getReceiptType(data.receiptType));
+                    $("#od-rtitle").html(data.receiptTitle || "无");*/
+                    //订单相关商品信息
                     if(invoiceModelLists.length){
+                    	//计算每种商品的总价
                         invoiceModelLists.forEach(function (invoiceModelList) {
                             quantity = invoiceModelList.quantity;
                             salePrice = invoiceModelList.salePrice;
@@ -41,7 +43,7 @@ define([
                         $("footer, #items-cont").removeClass("hidden");
                         $("#items-cont").append( contentTmpl({items: invoiceModelLists}) );
                         $("#po-total").html((+data.totalAmount/1000).toFixed(0));
-
+                        //添加地址信息
                         var addData = data.address || {};
                         addData.totalAmount = (+data.totalAmount/1000).toFixed(0);
                         addData.orderCode = code;
@@ -78,31 +80,46 @@ define([
             d.close().remove();
         }, 2000);
     }
-
+    //获取发票类型
     function getReceiptType(data) {
         return data == "" ? "无": receiptType[data];
     }
 
     function addListener() {
+    	/*********支付订单前的确认框start*********/
+    	//确定支付按钮
+    	$("#odOk").on("click", function(e){
+    		$("#od-mask, #od-tipbox").addClass("hidden");
+    		doPayOrder();
+    	});
+    	$("#odCel").on("click", function(e){
+    		$("#od-mask, #od-tipbox").addClass("hidden");
+    	});
+    	//取消支付按钮
+    	/*********支付订单前的确认框end*********/
+    	//点击支付按钮
         $("#sbtn").on("click", function (e) {
             e.stopPropagation();
-            $("#loaddingIcon").removeClass("hidden");
-            Ajax.post(APIURL + '/operators/payOrder',
-                {
-                    code: code,
-                    amount: +$("#po-total").text() * 1000
-                }
-            ).then(function (response) {
-                    if(response.success){
-                        location.href = "./pay_success.html";
-                    }else{
-                        $("#loaddingIcon").addClass("hidden");
-                        showMsg(response.msg);
-                        setTimeout(function(){
-                            location.href = "../user/user_info.html";
-                        }, 2000);
-                    }
-                });
+            $("#od-mask, #od-tipbox").removeClass("hidden");
+        });
+    }
+    function doPayOrder(){
+    	$("#loaddingIcon").removeClass("hidden");
+        Ajax.post(APIURL + '/operators/payOrder',
+            {
+                code: code,
+                amount: +$("#po-total").text() * 1000
+            }
+        ).then(function (response) {
+        	if(response.success){
+                location.href = "./pay_success.html";
+            }else{
+                $("#loaddingIcon").addClass("hidden");
+                showMsg(response.msg);
+                setTimeout(function(){
+                    location.href = "../user/user_info.html";
+                }, 2000);
+            }
         });
     }
 });

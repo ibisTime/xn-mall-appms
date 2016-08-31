@@ -24,7 +24,7 @@ define([
 	                    var data = response.data.list[0];
 	                    config.accountNumber = data.accountNumber;
 	                    AMOUNT = data.amount;
-	                    $("#account_amount").text(currencyUnit[data.currency] + (+AMOUNT / 1000).toFixed(2));
+	                    $("#kyje").text("￥" + (+AMOUNT / 1000).toFixed(2));
 	                }else{
 	                    showMsg("账户信息获取失败！");
 	                    $("#wdBtn").attr("disabled", "disabled");
@@ -45,23 +45,22 @@ define([
 	    }
 
 	    function addListeners() {
-	        $("#bankCard").on("change", validate_bankCard);
-	        $("#amount").on("change", validate_amount);
-	        $("#trade_pwd").on("change", validate_tradePwd);
+	        $("#yhk").on("change", validate_bankCard);
+	        $("#qxje").on("change", validate_amount);
 	        $("#toBelong").on("change", validate_toBelong);
-	        $("#wdBtn").on("click", function () {
+	        $("#sbtn").on("click", function () {
 	            if(validate()){
 	                $(this).attr("disabled", "disabled").val("提交中...");
-	                config.amount = (+$("#amount").val()) * 1000;
-	                config.toCode = $("#bankCard").val();
-	                config.tradePwd = $("#trade_pwd").val();
+	                config.amount = (+$("#qxje").val()) * 1000;
+	                config.toCode = $("#yhk").val();
+	                //config.tradePwd = $("#trade_pwd").val();
 	                config.toBelong = $("#toBelong").val();
 	                withdraw();
 	            }
 	        });
 	    }
 	    function validate_amount() {
-	        var flag = true, me = $("#amount"), amount = me.val();
+	        var flag = true, me = $("#qxje"), amount = me.val();
 	        if(amount == undefined || amount === ""){
 	            showMsg("取现金额不能为空！");
 	            flag = false;
@@ -92,7 +91,7 @@ define([
 	        return true;
 	    }
 	    function validate_bankCard() {
-	        if( $("#bankCard").val() == undefined || trim($("#bankCard").val()) === ""){
+	        if( $("#yhk").val() == undefined || trim($("#yhk").val()) === ""){
 	            showMsg("银行卡不能为空！");
 	            return false;
 	        }else if( !/^\d{16}|\d{19}$/.test($("#bankCard").val()) ){
@@ -102,7 +101,7 @@ define([
 	        return true;
 	    }
 	    function validate() {
-	        return validate_amount() && validate_bankCard() && validate_tradePwd() && validate_toBelong();
+	        return validate_amount() && validate_bankCard() && validate_toBelong();
 	    }
 
 	    function trim(str) {

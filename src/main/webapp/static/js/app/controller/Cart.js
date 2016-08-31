@@ -7,7 +7,7 @@ define([
     $(function () {
     	var url = APIURL + '/operators/queryCart', infos = [],
         	$this;
-    	
+    	//如果已经登录
     	if(sessionStorage.getItem("user") == "1"){
     		initView();
     	}
@@ -16,6 +16,7 @@ define([
 	        getMyCart();
 	        addListeners();
 	    }
+		//获取购物车商品
 	    function getMyCart() {
 	        infos = [];
 	        Ajax.get(url, true)
@@ -32,6 +33,7 @@ define([
 								html += '<li class="ptb8 plr10 clearfix b_bd_b p_r" code="'+cl.code+'" saleP="'+cl.salePrice+'">' +
 										'<div class="wp100 p_r z_index0">' +
 											'<div class="clearfix bg_fff cart-content-left">';
+								//如果已经下架，则无法点击进入购买页，并在页面上提示
 								if(cl.status == "0"){
 									html += '<div class="cart-down t_999">已下架</div>'+
 										'<div class="fl wp40 tc pl32 p_r c-img-l">'+
@@ -47,9 +49,10 @@ define([
 									'</div>' +
 									'<div class="fl wp60 pl12">' +
 									'<p class="t_323232 s_12 line-tow">'+cl.modelName+'</p>' +
-									'<p class="t_f64444 s_12"><span>'+cl.totalAmount+'</span><span class="t_40pe s_10">积分</span></p>' +
+									'<p class="t_f64444 s_12"><span>'+(+cl.salePrice/1000).toFixed(0)+'</span><span class="t_40pe s_10">积分</span></p>' +
 									'<div class="t_666 ptb10">' +
 									'<span class="subCount a_s_span t_bold tc"><img src="/static/images/sub-icon.png" style="width: 20px;"/></span>' +
+									'<input type="hidden" value="'+(+cl.quantity)+'"/>' +
 									'<input class="buyCount tc w60p s_13 lh36" type="text" value="'+cl.quantity+'"/>' +
 									'<span class="addCount a_s_span t_bold tc"><img src="/static/images/add-icon.png" style="width: 20px;"/></span>' +
 									'</div>' +
@@ -57,7 +60,7 @@ define([
 									'</div>' +
 									'<div class="al_addr_del">删除</div>' +
 									'</div></li>';
-
+								//保存每种商品当前的总价
 	                            infos.push(amount);
 	                        });
 							html += "</ul>";
@@ -75,6 +78,7 @@ define([
 	            });
 	    }
 	    function addListeners() {
+			//购买
 	        $("#sbtn").on("click", function () {
 	            var checkItem = [];
 	            var allItems = $("#od-ul>ul>li div.c-img-l div.radio-tip1");
@@ -83,6 +87,7 @@ define([
 					if( $(item).hasClass("active") ){
 						if( !$(item).closest("li[code]").find("div.cart-down").length ){
 							checkItem.push(i);
+						//如果包含下架商品
 						}else{
 							showMsg("您所选择的商品中包含已经下架的商品，<br/>请重新选择！", 3000);
 							return;
@@ -95,9 +100,10 @@ define([
 	                showMsg("未选择购买的商品");
 	            }
 	        });
+			//减少商品数量按钮
 	        $("#od-ul").on("click", ".subCount", function (e) {
 	            e.stopPropagation();
-	            var $input = $(this).next();
+	            var $input = $(this).next().next();
 	            var orig = $input.val();
 	            if(orig == undefined || orig == "" || orig == "0" || orig == "1"){
 	                orig = 2;
@@ -106,6 +112,7 @@ define([
 	            $input.val(orig);
 	            $input.change();
 	        });
+			//增加商品数量按钮
 	        $("#od-ul").on("click", ".addCount", function (e) {
 	            e.stopPropagation();
 	            var $input = $(this).prev();
@@ -117,6 +124,7 @@ define([
 	            $input.val(orig);
 	            $input.change();
 	        });
+			/********监测数量输入框的变化start*******/
 	        $("#od-ul").on("keyup", "input", function (e) {
 	            e.stopPropagation();
 	            var keyCode = e.charCode || e.keyCode;
@@ -146,6 +154,7 @@ define([
 	                "code": gp.attr("code"),
 	                "quantity": this.value
 	            };
+				//修改购物车商品信息
 	            $("#loaddingIcon").removeClass("hidden");
 				me = this;
 	            Ajax.post(APIURL + '/operators/editCart', config)
@@ -153,25 +162,28 @@ define([
 	                	$("#loaddingIcon").addClass("hidden");
 	                    if(response.success){
 	                        var flag = gp.find(".c-img-l .radio-tip1.active").length,
-	                        	$parent = $(me).parent(),
+	                        	$prev = $(me).prev(),
 	                        	count = me.value,
 	                            unit = salePrice,
 	                            new_amount = unit * (+count),
 	                            ori_amount = infos[gp.index()],
 	                            ori_total = +$("#totalAmount").text() * 1000,
 	                            new_total = new_amount - ori_amount + ori_total;
+							//更新当前商品的总价
 	                        infos[gp.index()] = new_amount;
-	                        $parent.prev().find("span:first").text( ((+new_amount)/1000).toFixed(0) );
+	                        $prev.val(count);
+							//如果当前商品处于被勾选的状态，则更新页面底部的总价
 	                        if(flag){
 	                            $("#totalAmount").text((new_total/1000).toFixed(0) );
 	                        }
 	                    }else{
-	                    	var $parent = $(me).parent();
-	                    	me.value = (+$parent.prev().find("span:first").text() * 1000) / salePrice;
+	                    	me.value = $(me).prev().val();
 	                        showMsg("数量修改失败，请重试！");
 	                    }
 	                });
 	        });
+			/********监测数量输入框的变化end*******/
+			//全选按钮
 	        $("#allChecked").on("click", function () {
 	            var flag = false, me = $(this), doAction = "removeClass";
 	            if(me.hasClass("active")){
@@ -181,22 +193,24 @@ define([
 	            	flag = true;
 	            	doAction = "addClass";
 	            }
+				//点击全选后，每种商品前面的勾选框也相应变化
 	            $("#od-ul>ul>li div.c-img-l div.radio-tip1")
 	            	.each(function(i, item){
 	            		$(item)[doAction]("active");
 	            	});
+				//如果目前处于全选状态，则更新页面底部的总价
 	            if(flag){
 	                var t = 0;
 	                for(var i = 0; i< infos.length; i++){
 	                    t += infos[i];
 	                }
 	                $("#totalAmount").text((t/1000).toFixed(0));
-	                $("#deleteCheck").addClass("color_333");
+				//否则把页面底部总价置为0
 	            }else{
 	                $("#totalAmount").text("0");
-	                $("#deleteCheck").removeClass("color_333");
 	            }
 	        });
+			//勾选商品
 	        $("#od-ul").on("click", "li[code] .cart-cont-left", function(e){
 	            e.stopPropagation();
 	            var $li = $(this).closest("li[code]"),
@@ -222,14 +236,16 @@ define([
 	                $("#totalAmount").text( ((ori_total - infos[$li.index()])/1000).toFixed(0) );
 	            }
 	        });
+			//确认删除框点击确认按钮
 	        $("#odOk").on("click", function(){
 				deleteFromCart($this);
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
 	        });
+			//确认删除框点击取消按钮
 	        $("#odCel").on("click", function(){
 	        	$("#od-mask, #od-tipbox").addClass("hidden");
 	        });
-	        
+	        /**********左滑显示删除按钮事件start**********/
 	        $("#od-ul").on("touchstart", ".cart-content-left", function(e){
 	        	e.stopPropagation();
 	        	var touches = e.originalEvent.targetTouches[0],
@@ -276,7 +292,8 @@ define([
 		        	});
 	            }
 	        });
-	        
+	        /**********左滑显示删除按钮事件end**********/
+			//左滑后删除商品
 	        $("#od-ul").on("click", ".al_addr_del", function(e){
 	        	e.stopPropagation();
 	            $this = this;
