@@ -50,6 +50,7 @@ define([
 	                        //待收货
 	                        }else if(data.status == "3"){
 	                        	$("#qrsh").removeClass("hidden");
+	                        	//确认收货
 	                        	$("#qr_btn").on("click", function(){
 	                        		confirmReceipt();
 	                        	});
@@ -65,13 +66,21 @@ define([
 	                        	$("#applyNoteInfo").text(data.applyNote);
 	                        }
 	                        //商品信息
+	                        var cnyAmount = 0;	//人民币总计
 	                        if (invoiceModelLists.length) {
 	                            invoiceModelLists.forEach(function (invoiceModelList) {
-	                                invoiceModelList.totalAmount = (+invoiceModelList.quantity * +invoiceModelList.salePrice / 1000).toFixed(0);
+	                            	if(invoiceModelList.saleCnyPrice && +invoiceModelList.saleCnyPrice){
+	                            		cnyAmount += (+invoiceModelList.saleCnyPrice) * (+invoiceModelList.quantity);
+	                            		invoiceModelList.saleCnyPrice = (+invoiceModelList.saleCnyPrice / 1000).toFixed(2);
+	                            	}
 	                            });
 	                            $("#od-ul").html(contTmpl({items: invoiceModelLists}));
 	                            $("#totalAmount").html((+data.totalAmount / 1000).toFixed(0));
-	                           /* $("#od-rtype").html(getReceiptType(data.receiptType));
+	                            if(cnyAmount){
+	                            	$("#cnySpan").removeClass("hidden");
+	                            	$("#totalCnyAmount").text((+cnyAmount / 1000).toFixed(2));
+	                            }
+	                            /*$("#od-rtype").html(getReceiptType(data.receiptType));
 	                            $("#od-rtitle").html(data.receiptTitle || "无");*/
 	                            $("#od-id").html(data.code);
 	                            //地址信息

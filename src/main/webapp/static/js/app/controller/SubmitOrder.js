@@ -96,20 +96,30 @@ define([
 	                if (response.success) {
 	                    var data = response.data,
 	                        html = "",
-	                        totalCount = 0;
+	                        totalCount = 0, cnyTotalCount = 0;
 	                    if(data.length){
-	                    	var items = [];
+	                    	var items = [], flag = false;
 	                        for(var i = 0, len = code.length; i < len; i++){
 	                            var d = data[code[i]];
-	                        	var eachCount = (+d.salePrice) * (+d.quantity);
-	                        	d.totalAmount = (eachCount / 1000).toFixed(0);
+	                        	var eachCount = (+d.salePrice) * (+d.quantity),
+	                        		cnyEachCount = 0;
+	                        	d.salePrice = (+d.salePrice / 1000).toFixed(0);
+	                        	if(d.saleCnyPrice && +d.saleCnyPrice){
+	                        		cnyEachCount = (+d.saleCnyPrice) * (+d.quantity);
+	                        		d.saleCnyPrice = (+d.saleCnyPrice / 1000).toFixed(2);
+	                        	}
 	                            totalCount += eachCount;
+	                            cnyTotalCount += cnyEachCount;
 	                            items.push(d);
 	                        }
 	                        var html = contentTmpl1({items: items});
 	                        $("#cont").hide();
 	                        $("#items-cont").append(html);
 	                        $("#totalAmount").html( (totalCount / 1000).toFixed(0) );
+	                        if(cnyTotalCount){
+	                        	$("#mAdd, #cnyDiv").removeClass("hidden");
+	    	                    $("#totalCnyAmount").html( (cnyTotalCount / 1000).toFixed(2) )
+	                        }
 	                    }else{
 	                    	$("#cont").hide();
 	                    	doError("#items-cont");
@@ -133,6 +143,12 @@ define([
 	                        items = [];
                         var eachCount = +data.discountPrice * +q;
                         	data.totalAmount = (eachCount / 1000).toFixed(0);
+                        data.discountPrice = (+data.discountPrice / 1000).toFixed(0);
+                        if(data.cnyPrice && +data.cnyPrice){
+                        	data.cnyPrice = (+data.cnyPrice / 1000).toFixed(2);
+                        	$("#mAdd, #cnyDiv").removeClass("hidden");
+    	                    $("#totalCnyAmount").html( (data.cnyPrice * +q).toFixed(2) )
+                        }
                         data.quantity = q;
                         data.modelName = data.model.name;
 						data.code = data.model.code;
@@ -225,7 +241,6 @@ define([
 	            config = {
 	                "modelCode": code,
 	                "quantity":	q,
-	                "salePrice": tPrice / +q,
 	                "addressCode": $("#addressDiv>a").attr("code"),
 	               /* "receiptType": ($("#receipt").val() == "0" ? "": $("#receipt").val()),
 	                "receiptTitle": $("#receiptTitle").val(),*/

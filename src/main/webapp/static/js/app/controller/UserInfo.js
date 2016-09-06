@@ -6,6 +6,7 @@ define([
     'Handlebars'
 ], function (base, Ajax, dialog, dict, Handlebars) {
     $(function () {
+    	var XNBAccount, CNYAccount;
     	if(sessionStorage.getItem("user") == "1"){
     		$("#cont").remove();
     		$(".hidden").removeClass("hidden");
@@ -27,14 +28,26 @@ define([
 	        Ajax.get(APIURL + "/account/infos/page", {"start": 0, "limit": 8}, true)
 	            .then(function (response) {
 	                if(response.success){
-	                    $("#amount").text((+response.data.list[0].amount / 1000).toFixed(0));
+	                	if(response.data.list[0].currency == "CNY"){
+	                		CNYAccount = response.data.list[0];
+	                		XNBAccount = response.data.list[1];
+	                	}else{
+	                		CNYAccount = response.data.list[1];
+	                		XNBAccount = response.data.list[0];
+	                	}
+	                    $("#amount").text((+XNBAccount.amount / 1000).toFixed(0));
+	                    $("#mAmount").text((+CNYAccount.amount / 1000).toFixed(2));
 	                }else{
 	                    $("#amount").text("--");
+	                    $("#mAmount").parent().text("--");
 	                }
 	            });
 
 	        $("#fundList").on("click", function () {
 	            location.href = "../account/fundDetails.html";
+	        });
+	        $("#mFundList").on("click", function () {
+	            location.href = "../account/fundDetails.html?m=1";
 	        });
 	    }
 	    function showMsg(cont){

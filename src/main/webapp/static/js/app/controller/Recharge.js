@@ -11,9 +11,33 @@ define([
         }
         
         function addListeners(){
+        	function copy(text) {
+        		var $ct = $("#copyText");
+        		$ct && $ct.remove();
+        		var textarea = document.createElement("textarea");
+				textarea.style.position = 'fixed';
+				textarea.style.top = 0;
+				textarea.style.left = 0;
+				textarea.style.border = 'none';
+				textarea.style.outline = 'none';
+				textarea.style.resize = 'none';
+				textarea.style.background = 'transparent';
+				textarea.style.color = 'transparent';
+				textarea.id = '';
+				textarea.value = text;
+				document.body.appendChild(textarea);
+				textarea.select();
+				try {
+					document.execCommand('copy') ? 'successful' : 'unsuccessful';
+					showMsg("复制成功！");
+				} catch (err) {
+					showMsg("复制失败，请手动长按复制！");
+				}
+				document.body.removeChild(textarea);
+        	}
         	$("#copy").on("click", function(){
-                copyToClipboard($("#account").text());
-            });
+        		copy($("#account").text());
+        	});
         }
 
         function showMsg(cont){
@@ -24,39 +48,7 @@ define([
             d.show();
             setTimeout(function () {
                 d.close().remove();
-            }, 2000);
-        }
-        function copyToClipboard(txt) {
-            if (window.clipboardData) {
-                window.clipboardData.clearData();
-                clipboardData.setData("Text", txt);
-                showMsg("复制成功！");
-            } else if (navigator.userAgent.indexOf("Opera") != -1) {
-                window.location = txt;
-            } else if (window.netscape) {
-                try {
-                    netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-                } catch (e) {
-                    showMsg("被浏览器拒绝！\n请在浏览器地址栏输入'about:config'并回车\n然后将 'signed.applets.codebase_principal_support'设置为'true'");
-                }
-                var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
-                if (!clip)  return;
-                var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
-                if (!trans) return;
-                trans.addDataFlavor("text/unicode");
-                var str = new Object();
-                var len = new Object();
-                var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
-                var copytext = txt;
-                str.data = copytext;
-                trans.setTransferData("text/unicode", str, copytext.length * 2);
-                var clipid = Components.interfaces.nsIClipboard;
-                if (!clip)  return false;
-                clip.setData(trans, null, clipid.kGlobalClipboard);
-                showMsg("复制成功！");
-            }else{
-                showMsg("复制失败！");
-            }
+            }, 1500);
         }
     });
 });

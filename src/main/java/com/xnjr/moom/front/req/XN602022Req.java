@@ -10,8 +10,19 @@ public class XN602022Req {
     // 交易密码
     private String tradePwd;
 
-    // 支付金额
+    // 支付积分
     private String amount;
+
+    // 支付人民币
+    private String cnyAmount;
+
+    public String getCnyAmount() {
+        return cnyAmount;
+    }
+
+    public void setCnyAmount(String cnyAmount) {
+        this.cnyAmount = cnyAmount;
+    }
 
     public String getAmount() {
         return amount;

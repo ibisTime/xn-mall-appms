@@ -565,6 +565,9 @@ textarea {
 .mt4 {
     margin-top: 4px;
 }
+.mt1em{
+	margin-top: 1em;
+}
 
 .mb4 {
     margin-bottom: 4px;
@@ -1578,6 +1581,9 @@ textarea {
 .lh1_2em {
     line-height: 1.2em !important;
 }
+.lh1em {
+    line-height: 1em !important;
+}
 .color0 {
     text-indent: -2000px;
 }
@@ -2466,4 +2472,9 @@ table th, table td {
 .recharge-ul .active{
     border-bottom: 2px solid #f64444;
     color: #f64444;
+}
+.ol_total_p{
+	position: absolute;
+    right: 10px;
+    bottom: -1em;
 }

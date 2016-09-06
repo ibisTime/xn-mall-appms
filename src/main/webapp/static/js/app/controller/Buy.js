@@ -1,9 +1,9 @@
 define([
-    'js/app/controller/base',
-    'js/app/util/ajax',
-    'js/app/util/dialog',
-    'js/lib/handlebars.runtime-v3.0.3',
-    'js/lib/swiper-3.3.1.jquery.min'
+    'app/controller/base',
+    'app/util/ajax',
+    'app/util/dialog',
+    'lib/handlebars.runtime-v3.0.3',
+    'lib/swiper-3.3.1.jquery.min'
 ], function (base, Ajax, dialog, Handlebars) {
     $(function () {
         var mySwiper, rspData, user, code = base.getUrlParam("code") || "";
@@ -129,10 +129,12 @@ define([
             $("#btr-description").html(modelData.description);
             var totalPrice;
             var discPrice = +msl.discountPrice;
-            $("#originalPrice").text(+msl.originalPrice/1000 + "积分");
-            $("#discountPrice").text(discPrice/1000 + "积分");
-            $("#unit-price").val(discPrice);
+            $("#discountPrice").text( (discPrice / 1000).toFixed(0) + "积分");
             $("#addCartBtn, #buyBtn").removeClass("no-buy-btn");
+            if(msl.cnyPrice && +msl.cnyPrice){
+            	$("#cnySpan").removeClass("hidden");
+            	$("#cnyPrice").text( (+msl.cnyPrice / 1000).toFixed(2) + "元");
+            }
         }
         function isNumber(code){
             if(code >= 48 && code <= 57 || code >= 96 && code <= 105){

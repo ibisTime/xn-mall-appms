@@ -19,6 +19,7 @@ import com.xnjr.moom.front.http.BizConnecter;
 import com.xnjr.moom.front.http.JsonUtils;
 import com.xnjr.moom.front.req.XN802005Req;
 import com.xnjr.moom.front.req.XN802010Req;
+import com.xnjr.moom.front.req.XN802013Req;
 import com.xnjr.moom.front.req.XN802021Req;
 import com.xnjr.moom.front.req.XN802110Req;
 import com.xnjr.moom.front.req.XN802211Req;
@@ -36,12 +37,18 @@ import com.xnjr.moom.front.session.SessionTimeoutException;
 @Service
 public class AccountAOImpl implements IAccountAO {
     @Override
-    public Object getAccountByUserId(String userId) {
+    public Object getAccountByUserId(String userId, String currency) {
         if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "账号不能为空");
         }
-        return BizConnecter.getBizData("fd0030",
-            JsonUtils.string2Json("userId", userId), Object.class);
+        if (StringUtils.isBlank(currency)) {
+            throw new BizException("A010001", "币种不能为空");
+        }
+        XN802013Req req = new XN802013Req();
+        req.setCurrency(currency);
+        req.setUserId(userId);
+        return BizConnecter.getBizData("802013", JsonUtils.object2Json(req),
+            Object.class);
     }
 
     @SuppressWarnings("rawtypes")
@@ -166,7 +173,7 @@ public class AccountAOImpl implements IAccountAO {
     }
 
     public Object withdraw(String accountNumber, String amount, String toType,
-            String toCode, String toBelong, String tradePwd) {
+            String toCode, String toBelong) {
         if (StringUtils.isBlank(accountNumber)) {
             throw new BizException("A010001", "账号不能为空");
         }
@@ -176,12 +183,6 @@ public class AccountAOImpl implements IAccountAO {
         if (StringUtils.isBlank(toCode)) {
             throw new BizException("A010001", "去方编号不能为空");
         }
-        if (StringUtils.isBlank(tradePwd)) {
-            throw new BizException("A010001", "交易密码不能为空");
-        }
-        if (StringUtils.isBlank(toType)) {
-            throw new BizException("A010001", "去方类型不能为空");
-        }
         if (StringUtils.isBlank(toBelong)) {
             throw new BizException("A010001", "开户支行不能为空");
         }
@@ -189,8 +190,7 @@ public class AccountAOImpl implements IAccountAO {
         req.setAccountNumber(accountNumber);
         req.setAmount(amount);
         req.setToCode(toCode);
-        req.setToType(toType);
-        req.setTradePwd(tradePwd);
+        req.setToType("alipay");
         req.setToBelong(toBelong);
         return BizConnecter.getBizData("802211", JsonUtils.object2Json(req),
             Object.class);
@@ -214,7 +214,7 @@ public class AccountAOImpl implements IAccountAO {
         req.setAccountNumber(accountNumber);
         req.setAmount(amount);
         req.setFromCode(fromCode);
-        req.setFromType("1");
+        req.setFromType("alipay");
         return BizConnecter.getBizData("802110", JsonUtils.object2Json(req),
             Object.class);
     }

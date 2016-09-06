@@ -10,9 +10,6 @@ public class XN602020Req {
     // 数量
     public String quantity;
 
-    // 单价
-    public String salePrice;
-
     // 收货信息编号
     public String addressCode;
 
@@ -50,14 +47,6 @@ public class XN602020Req {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
-    }
-
-    public String getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(String salePrice) {
-        this.salePrice = salePrice;
     }
 
     public String getAddressCode() {

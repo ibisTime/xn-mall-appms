@@ -17,7 +17,7 @@ define([
             config = {
                 "invoiceCode": code
             };
-        var modelCode = "" ,modelName, quantity, salePrice, receiveCode, productName;
+        var modelCode = "" ,modelName, quantity, salePrice, receiveCode, productName, cnyPrice;
         Ajax.post(url, config)
             .then(function(response){
                 if(response.success){
@@ -31,18 +31,26 @@ define([
                     //发票信息
                     /*$("#od-rtype").html(getReceiptType(data.receiptType));
                     $("#od-rtitle").html(data.receiptTitle || "无");*/
+                    var cnyTotal = 0, total = 0;
                     //订单相关商品信息
                     if(invoiceModelLists.length){
                     	//计算每种商品的总价
                         invoiceModelLists.forEach(function (invoiceModelList) {
-                            quantity = invoiceModelList.quantity;
-                            salePrice = invoiceModelList.salePrice;
-                            invoiceModelList.totalAmount = ((+salePrice)*(+quantity) / 1000).toFixed(0);
+                            quantity = +invoiceModelList.quantity;
+                            invoiceModelList.salePrice = (+invoiceModelList.salePrice / 1000).toFixed(0);
+                            if(invoiceModelList.saleCnyPrice && +invoiceModelList.saleCnyPrice){
+                            	cnyTotal += quantity * (+invoiceModelList.saleCnyPrice);
+                            	invoiceModelList.saleCnyPrice = (+invoiceModelList.saleCnyPrice / 1000).toFixed(2);
+                            }
                         });
                         $("#cont").remove();
                         $("footer, #items-cont").removeClass("hidden");
                         $("#items-cont").append( contentTmpl({items: invoiceModelLists}) );
-                        $("#po-total").html((+data.totalAmount/1000).toFixed(0));
+                        $("#totalAmount").html((+data.totalAmount/1000).toFixed(0));
+                        if(cnyTotal){
+                        	$("#mAdd, #cnyDiv").removeClass("hidden");
+    	                    $("#totalCnyAmount").html( (cnyTotal / 1000).toFixed(2) )
+                        }
                         //添加地址信息
                         var addData = data.address || {};
                         addData.totalAmount = (+data.totalAmount/1000).toFixed(0);
@@ -108,7 +116,8 @@ define([
         Ajax.post(APIURL + '/operators/payOrder',
             {
                 code: code,
-                amount: +$("#po-total").text() * 1000
+                amount: +$("#totalAmount").text() * 1000,
+                cnyAmount: +$("#totalCnyAmount").text() * 1000
             }
         ).then(function (response) {
         	if(response.success){

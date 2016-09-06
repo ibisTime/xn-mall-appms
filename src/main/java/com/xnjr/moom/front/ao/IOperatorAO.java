@@ -9,7 +9,6 @@ public interface IOperatorAO {
      * @param applyUser
      * @param modelCode
      * @param quantity
-     * @param salePrice
      * @param addressCode
      * @param applyNote
      * @param receiptType
@@ -18,18 +17,19 @@ public interface IOperatorAO {
      * @return
      */
     public Object submitOrder(String applyUser, String modelCode,
-            String quantity, String salePrice, String addressCode,
-            String applyNote, String receiptType, String receiptTitle,
-            String toUser);
+            String quantity, String addressCode, String applyNote,
+            String receiptType, String receiptTitle, String toUser);
 
     /**
      * 支付订单
      * @param code
      * @param userId
      * @param amount
+     * @param cnyAmount
      * @return
      */
-    public Object payOrder(String code, String userId, String amount);
+    public Object payOrder(String code, String userId, String amount,
+            String cnyAmount);
 
     /**
      * 取消订单

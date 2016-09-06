@@ -30,7 +30,7 @@ define([
 	            config.status = status;
 	            first = true;
 	            isEnd = false;
-	            canScrolling = true;
+	            canScrolling = false;
 	            $("#ol-ul").empty();
 	            addLoading();
 	            getOrderList();
@@ -82,11 +82,15 @@ define([
 					                                '<p class="tl pt4 line-tow">'+invoice.productName+'</p>'+
 					                            '</div>'+
 					                            '<div class="fl wp30 tr pt12">'+
-					                                '<p class="item_totalP">'+amount+'<span class="t_40pe s_09 pl4">积分</span></p>'+
-					                                '<p class="t_80">×<span>'+invoice.quantity+'</span></p>'+
-					                                '<p>&nbsp;</p>'+
-					                                '<p>总积分：'+(+cl.totalAmount / 1000).toFixed(0)+'</p>'+
-					                            '</div>';
+					                                '<p class="item_totalP">'+(+invoice.salePrice / 1000).toFixed(0)+'<span class="t_40pe s_09 pl4">积分</span></p>';
+	                            	if(invoice.saleCnyPrice && +invoice.saleCnyPrice){
+	                            		html += '<p class="item_totalP">'+(+invoice.saleCnyPrice / 1000).toFixed(2)+'<span class="t_40pe s_09 pl4">元</span></p>';
+	                            	}
+					                html += '<p class="t_80">×<span>'+invoice.quantity+'</span></p>'+
+			                                '<p>&nbsp;</p>'+
+			                                '<p class="ol_total_p">总计:<span class="pl4">'+(+cl.totalAmount / 1000).toFixed(0)+'积分'+
+			                                (invoice.saleCnyPrice ? "+" + (+invoice.saleCnyPrice * invoice.quantity / 1000).toFixed(2) + "元" : "")+'</span></p>'+
+			                            '</div>';
 		                        }else{
 		                        	html += '<div class="wp100 clearfix plr10 ptb4 p_r">';
 		                        	var arr = invoices.splice(0, 3);
@@ -95,7 +99,7 @@ define([
 		                        	});
 		                        }
 		                        html += '</div>'+
-					                        '<div class="wp100 clearfix plr10 ptb6">'+
+					                        '<div class="wp100 clearfix plr10 ptb6 '+(invoices.length == 1 ? "mt1em" : "")+'">'+
 					                            '<span class="fr inline_block bg_f64444 t_white s_10 plr8 ptb4 b_radius4 '+(cl.status == "1" ? "ol-tobuy" : "")+'">'+getStatus(cl.status)+'</span>'+
 					                        '</div>'+
 					                    '</a></li>';

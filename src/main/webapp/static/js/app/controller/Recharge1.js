@@ -1,13 +1,24 @@
 define([
     'app/controller/base',
+    'app/util/ajax',
     'app/util/dict',
     'app/util/dialog'
-], function (base, dict, dialog) {
+], function (base, Ajax, dict, dialog) {
     $(function () {
     	var accountNum = "";
         init();
         
         function init(){
+        	Ajax.get(APIURL + "/account/get", {"currency": "CNY"}, true)
+            .then(function (response) {
+                if(response.success){
+                    var data = response.data;
+                    accountNum = data.accountNumber;
+                }else{
+                    showMsg("账户信息获取失败！");
+                    $("#sbtn").attr("disabled", "disabled");
+                }
+            });
             addListeners();
         }
         
@@ -46,7 +57,7 @@ define([
             $("#sbtn").attr("disabled", "disabled").val("提交中...");
             var config = {
             		"accountNumber": accountNum,
-            		"amount": $("#amount").val(),
+            		"amount": $("#amount").val() * 1000,
             		"fromCode": $("#account").val()
             	};
             Ajax.post(APIURL + "/account/doRecharge", config)

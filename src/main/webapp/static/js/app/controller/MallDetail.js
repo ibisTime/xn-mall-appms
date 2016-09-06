@@ -24,7 +24,7 @@ define([
 			addListeners();
 		}
         function queryPageModel(){
-        	Ajax.post(url, config, true)
+        	Ajax.get(url, config, true)
                 .then(function (res) {
                     if(res.success){
                         var data = res.data,

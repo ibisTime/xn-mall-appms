@@ -32,8 +32,9 @@ public class AccountController extends BaseController {
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     @ResponseBody
     public Object getAccount(
-            @RequestParam(value = "userId", required = false) String userId) {
-        return accountAO.getAccountByUserId(getSessionUserId(userId));
+            @RequestParam(value = "userId", required = false) String userId,
+            @RequestParam("currency") String currency) {
+        return accountAO.getAccountByUserId(getSessionUserId(userId), currency);
     }
 
     // *********查询账户资产 end****
@@ -115,12 +116,11 @@ public class AccountController extends BaseController {
     @ResponseBody
     public Object withdraw(@RequestParam("accountNumber") String accountNumber,
             @RequestParam("amount") String amount,
-            @RequestParam("toType") String toType,
+            @RequestParam(value = "toType", required = false) String toType,
             @RequestParam("toCode") String toCode,
-            @RequestParam("toBelong") String toBelong,
-            @RequestParam("tradePwd") String tradePwd) {
+            @RequestParam("toBelong") String toBelong) {
         return accountAO.withdraw(accountNumber, amount, toType, toCode,
-            toBelong, tradePwd);
+            toBelong);
     }
 
     // *********获取银行列表 start****
@@ -142,7 +142,7 @@ public class AccountController extends BaseController {
     }
 
     // 线下充值
-    @RequestMapping(value = "/doRecharge", method = RequestMethod.GET)
+    @RequestMapping(value = "/doRecharge", method = RequestMethod.POST)
     @ResponseBody
     public Object recharge(
             @RequestParam(value = "userId", required = false) String userId,

@@ -13,7 +13,8 @@ define([
 		        "limit": 15,
 		        "bizType": "",
 		        "accountNumber": ""
-		    }, first = true, fundType = Dict.get("fundType"), isEnd = false, canScrolling = true;
+		    }, first = true, isEnd = false, canScrolling = true, unit = "积分",
+		    fundType = Dict.get("fundType"), m = base.getUrlParam("m") || "";
 
 		initView();
 
@@ -21,7 +22,14 @@ define([
 	        Ajax.get(APIURL + "/account/infos/page", {"start": 0, "limit": 8}, true)
 	            .then(function (response) {
 	                if(response.success){
-	                    config.accountNumber = response.data.list[0].accountNumber;
+	                	var list1 = response.data.list[0], list2 = response.data.list[1];
+	                	//人民币
+	                	if(m){
+	                		unit = "元";
+	                		config.accountNumber = list1.currency == "CNY" ? list1.accountNumber : list2.accountNumber;
+	                	}else{
+	                		config.accountNumber = list1.currency == "CNY" ? list2.accountNumber : list1.accountNumber;
+	                	}
 	                    queryFundDetails();
 	                    addListeners();
 	                }else{
@@ -30,8 +38,8 @@ define([
 	            });
 	    }
 
-	    function doError() {
-            $("#fd-ul").html('<li class="bg_fff" style="text-align: center;line-height: 93px;">暂无数据</li>');
+	    function doError(msg) {
+            $("#fd-ul").html('<li class="bg_fff" style="text-align: center;line-height: 93px;">'+(msg ? msg : "暂时无法查到数据!")+'</li>');
         }
 
 	    function queryFundDetails(){
@@ -67,7 +75,7 @@ define([
 							                    '<p class="s_09 t_999 pt10">'+getMyDate(ll.createDatetime)+'</p>' +
 							                '</div>' +
 							                '<div class="wp40 fl tr '+t_class+' s_10">' +
-							                    '<span class="inline_block va-m pt1em">' + prev_f + (+ll.transAmount / 1000).toFixed(0) + '积分</span>' +
+							                    '<span class="inline_block va-m pt1em">' + prev_f + (+ll.transAmount / 1000).toFixed(0) + unit + '</span>' +
 							                '</div>' +
 							            '</li>';
 	                        });
@@ -80,7 +88,7 @@ define([
 	                        config.start += 1;
 	                    }else{
 	                    	if(first){
-	                    		doError();
+	                    		doError("暂无资金流水!");
 	                    	}else{
 	                    		removeLoading();
 	                    	}

@@ -24,23 +24,25 @@ public class OperatorController extends BaseController {
             @RequestParam(value = "applyUser", required = false) String applyUser,
             @RequestParam("modelCode") String modelCode,
             @RequestParam("quantity") String quantity,
-            @RequestParam("salePrice") String salePrice,
             @RequestParam(value = "addressCode", required = false) String addressCode,
             @RequestParam(value = "applyNote", required = false) String applyNote,
             @RequestParam(value = "receiptType", required = false) String receiptType,
             @RequestParam(value = "receiptTitle", required = false) String receiptTitle,
             @RequestParam("toUser") String toUser) {
-        return operatorAO.submitOrder(getSessionUserId(applyUser), modelCode,
-            quantity, salePrice, addressCode, applyNote, receiptType,
-            receiptTitle, toUser);
+        return operatorAO
+            .submitOrder(getSessionUserId(applyUser), modelCode, quantity,
+                addressCode, applyNote, receiptType, receiptTitle, toUser);
     }
 
     @RequestMapping(value = "/payOrder", method = RequestMethod.POST)
     @ResponseBody
-    public Object payOrder(@RequestParam("code") String code,
+    public Object payOrder(
+            @RequestParam("code") String code,
             @RequestParam(value = "userId", required = false) String userId,
-            @RequestParam("amount") String amount) {
-        return operatorAO.payOrder(code, getSessionUserId(userId), amount);
+            @RequestParam("amount") String amount,
+            @RequestParam(value = "cnyAmount", required = false) String cnyAmount) {
+        return operatorAO.payOrder(code, getSessionUserId(userId), amount,
+            cnyAmount);
     }
 
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)

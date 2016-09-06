@@ -45,7 +45,7 @@ public class CommodityController extends BaseController {
     }
 
     // 分页查询型号
-    @RequestMapping(value = "/queryPageModel", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryPageModel", method = RequestMethod.GET)
     @ResponseBody
     public Object queryPageModel(
             @RequestParam(value = "modelCode", required = false) String modelCode,

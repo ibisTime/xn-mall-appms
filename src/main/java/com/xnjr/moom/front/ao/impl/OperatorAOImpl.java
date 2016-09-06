@@ -35,9 +35,8 @@ import com.xnjr.moom.front.req.XN602623Req;
 public class OperatorAOImpl implements IOperatorAO {
 
     public Object submitOrder(String applyUser, String modelCode,
-            String quantity, String salePrice, String addressCode,
-            String applyNote, String receiptType, String receiptTitle,
-            String toUser) {
+            String quantity, String addressCode, String applyNote,
+            String receiptType, String receiptTitle, String toUser) {
 
         if (StringUtils.isBlank(applyUser)) {
             throw new BizException("A010001", "申请人编号不能为空");
@@ -48,9 +47,6 @@ public class OperatorAOImpl implements IOperatorAO {
         if (StringUtils.isBlank(quantity)) {
             throw new BizException("A010001", "数量不能为空");
         }
-        if (StringUtils.isBlank(salePrice)) {
-            throw new BizException("A010001", "单价不能为空");
-        }
         XN602020Req req = new XN602020Req();
         req.setAddressCode(addressCode);
         req.setApplyNote(applyNote);
@@ -59,13 +55,13 @@ public class OperatorAOImpl implements IOperatorAO {
         req.setQuantity(quantity);
         req.setReceiptTitle(receiptTitle);
         req.setReceiptType(receiptType);
-        req.setSalePrice(salePrice);
         req.setToUser(toUser);
         return BizConnecter.getBizData("602020", JsonUtils.object2Json(req),
             Object.class);
     }
 
-    public Object payOrder(String code, String userId, String amount) {
+    public Object payOrder(String code, String userId, String amount,
+            String cnyAmount) {
         if (StringUtils.isBlank(code)) {
             throw new BizException("A010001", "订单编号不能为空");
         }
@@ -81,6 +77,7 @@ public class OperatorAOImpl implements IOperatorAO {
         req.setTradePwd(tradePwd);
         req.setUserId(userId);
         req.setAmount(amount);
+        req.setCnyAmount(cnyAmount);
         return BizConnecter.getBizData("602022", JsonUtils.object2Json(req),
             Object.class);
     }

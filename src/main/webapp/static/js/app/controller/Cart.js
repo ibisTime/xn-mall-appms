@@ -27,10 +27,13 @@ define([
 	                        var totalAmount = 0;
 							html = '<ul class="b_bd_b bg_fff">';
 	                        data.forEach(function (cl) {
-	                            var amount = (+cl.salePrice) * (+cl.quantity);
-	                            cl.totalAmount = (amount / 1000).toFixed(0);
-
-								html += '<li class="ptb8 plr10 clearfix b_bd_b p_r" code="'+cl.code+'" saleP="'+cl.salePrice+'">' +
+	                            var amount = (+cl.salePrice) * (+cl.quantity),
+	                            	cnyAmount = 0;
+                            	if(cl.saleCnyPrice && +cl.saleCnyPrice){
+                            		cnyAmount = (+cl.saleCnyPrice) * (+cl.quantity);
+                            		$("#cnySpan, #mAdd").removeClass("hidden");
+                            	}
+								html += '<li class="ptb8 plr10 clearfix b_bd_b p_r" code="'+cl.code+'" saleP="'+cl.salePrice+'" cnyP="'+(cl.saleCnyPrice || 0)+'">' +
 										'<div class="wp100 p_r z_index0">' +
 											'<div class="clearfix bg_fff cart-content-left">';
 								//如果已经下架，则无法点击进入购买页，并在页面上提示
@@ -49,7 +52,11 @@ define([
 									'</div>' +
 									'<div class="fl wp60 pl12">' +
 									'<p class="t_323232 s_12 line-tow">'+cl.modelName+'</p>' +
-									'<p class="t_f64444 s_12"><span>'+(+cl.salePrice/1000).toFixed(0)+'</span><span class="t_40pe s_10">积分</span></p>' +
+									'<p class="t_f64444 s_12"><span>'+(+cl.salePrice/1000).toFixed(0)+'</span><span class="t_40pe s_10">积分</span>';
+									if(cl.saleCnyPrice && +cl.saleCnyPrice){
+										html += '<span>+'+(+cl.saleCnyPrice/1000).toFixed(2)+'</span><span class="t_40pe s_10">元</span>';
+									}
+									html += '</p>' +
 									'<div class="t_666 ptb10">' +
 									'<span class="subCount a_s_span t_bold tc"><img src="/static/images/sub-icon.png" style="width: 20px;"/></span>' +
 									'<input type="hidden" value="'+(+cl.quantity)+'"/>' +
@@ -61,12 +68,13 @@ define([
 									'<div class="al_addr_del">删除</div>' +
 									'</div></li>';
 								//保存每种商品当前的总价
-	                            infos.push(amount);
+	                            infos.push([amount, cnyAmount]);
 	                        });
 							html += "</ul>";
 
 	                        $("#od-ul").html( html );
 	                        $("#totalAmount").html("0");
+	                        $("#totalCnyAmount").html("0");
 	                    }else{
 	                    	$("#cart-bottom").hide();
 	                    	$("#cont").replaceWith('<div class="bg_fff" style="text-align: center;line-height: 150px;">购物车内暂无商品</div>');
@@ -149,7 +157,7 @@ define([
 				if(me.val() == "0"){
 					me.val("1");
 				}
-	            var gp = $(this).parents("li[code]"), salePrice = +gp.attr("saleP");
+	            var gp = $(this).parents("li[code]"), salePrice = +gp.attr("saleP"), cnyPrice = +gp.attr("cnyP");
 	            var config = {
 	                "code": gp.attr("code"),
 	                "quantity": this.value
@@ -165,16 +173,32 @@ define([
 	                        	$prev = $(me).prev(),
 	                        	count = me.value,
 	                            unit = salePrice,
+	                            cnyUnit = cnyPrice,
+	                            //当前商品最新积分总价
 	                            new_amount = unit * (+count),
-	                            ori_amount = infos[gp.index()],
+	                            //当前商品最新人民币总价
+	                            new_cnyAmount = cnyUnit * (+count),
+	                            info = infos[gp.index()],
+	                            //当前商品老的积分总价
+	                            ori_amount = info[0],
+	                            //当前商品老的人民币总价
+	                            ori_cnyAmount = info[1],
+	                            //已经勾选的商品老的积分总价
 	                            ori_total = +$("#totalAmount").text() * 1000,
+	                            //已经勾选的商品老的人民币总价
+	                            ori_cnyTotal = +$("#totalCnyAmount").text() * 1000,
+	                            //已经勾选的商品最新的积分总价
 	                            new_total = new_amount - ori_amount + ori_total;
+	                        	//已经勾选的商品最新的人民币总价
+	                        	new_cnyTotal = new_cnyAmount - ori_cnyAmount + ori_cnyTotal;
 							//更新当前商品的总价
-	                        infos[gp.index()] = new_amount;
+	                        infos[gp.index()] = [new_amount, new_cnyAmount];
+	                        //保存当前商品最新的数量
 	                        $prev.val(count);
 							//如果当前商品处于被勾选的状态，则更新页面底部的总价
 	                        if(flag){
-	                            $("#totalAmount").text((new_total/1000).toFixed(0) );
+	                            $("#totalAmount").text((new_total / 1000).toFixed(0) );
+	                            $("#totalCnyAmount").text((new_cnyTotal / 1000).toFixed(2));
 	                        }
 	                    }else{
 	                    	me.value = $(me).prev().val();
@@ -200,14 +224,17 @@ define([
 	            	});
 				//如果目前处于全选状态，则更新页面底部的总价
 	            if(flag){
-	                var t = 0;
+	                var t = 0, t1 = 0;
 	                for(var i = 0; i< infos.length; i++){
-	                    t += infos[i];
+	                    t += infos[i][0];
+	                    t1 += infos[i][1];
 	                }
-	                $("#totalAmount").text((t/1000).toFixed(0));
+	                $("#totalAmount").text((t / 1000).toFixed(0));
+	                $("#totalCnyAmount").text((t1 / 1000).toFixed(2));
 				//否则把页面底部总价置为0
 	            }else{
 	                $("#totalAmount").text("0");
+	                $("#totalCnyAmount").text("0");
 	            }
 	        });
 			//勾选商品
@@ -227,13 +254,17 @@ define([
 	                	$("#allChecked").addClass("active");
 	                }
 	                var ori_total = (+$("#totalAmount").text()) * 1000;
-	                $("#totalAmount").text( ((ori_total + infos[$li.index()])/1000).toFixed(0) );
+	                var ori_cnyTotal = (+$("#totalCnyAmount").text()) * 1000;
+	                $("#totalAmount").text( ( ( ori_total + infos[$li.index()][0] ) / 1000 ).toFixed(0) );
+	                $("#totalCnyAmount").text( ( ( ori_cnyTotal + infos[$li.index()][1] ) / 1000 ).toFixed(2) );
 	            }else{
 	                var items = $("#od-ul").children("li").find("input[type=checkbox]"),
 	                    flag = false;
 	                $("#allChecked").removeClass("active");
 	                var ori_total = (+$("#totalAmount").text()) * 1000;
-	                $("#totalAmount").text( ((ori_total - infos[$li.index()])/1000).toFixed(0) );
+	                var ori_cnyTotal = (+$("#totalCnyAmount").text()) * 1000;
+	                $("#totalAmount").text( ( ( ori_total - infos[$li.index()][0] ) / 1000 ).toFixed(0) );
+	                $("#totalCnyAmount").text( ( ( ori_total - infos[$li.index()][1] ) / 1000 ).toFixed(0) );
 	            }
 	        });
 			//确认删除框点击确认按钮

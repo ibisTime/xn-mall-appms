@@ -1,27 +1,23 @@
 define([
     'app/controller/base',
     'app/util/ajax',
-    'app/util/dialog',
-    'app/util/dict',
-    'Handlebars'
-], function (base, Ajax, dialog, Dict, Handlebars) {
+    'app/util/dialog'
+], function (base, Ajax, dialog) {
     $(function () {
     	var config = {
 	        "accountNumber": "",
 	        "amount": "",
-	        "toType": "BC",
 	        "toCode": "",
-	        "toBelong": "",
-	        "tradePwd": ""
-	    }, currencyUnit = Dict.get("currencyUnit"), AMOUNT;
+	        "toBelong": ""
+	    }, AMOUNT;
 	    
 	    initView();
 
 	    function initView() {
-	        Ajax.get(APIURL + "/account/infos/page", {"start": 0, "limit": 8}, true)
+	        Ajax.get(APIURL + "/account/get", {"currency": "CNY"}, true)
 	            .then(function (response) {
 	                if(response.success){
-	                    var data = response.data.list[0];
+	                    var data = response.data;
 	                    config.accountNumber = data.accountNumber;
 	                    AMOUNT = data.amount;
 	                    $("#kyje").text("￥" + (+AMOUNT / 1000).toFixed(2));
@@ -45,22 +41,21 @@ define([
 	    }
 
 	    function addListeners() {
-	        $("#yhk").on("change", validate_bankCard);
-	        $("#qxje").on("change", validate_amount);
-	        $("#toBelong").on("change", validate_toBelong);
+	        $("#account").on("change", validate_account);
+	        $("#amount").on("change", validate_amount);
+	        $("#realName").on("change", validate_realName);
 	        $("#sbtn").on("click", function () {
 	            if(validate()){
 	                $(this).attr("disabled", "disabled").val("提交中...");
-	                config.amount = (+$("#qxje").val()) * 1000;
-	                config.toCode = $("#yhk").val();
-	                //config.tradePwd = $("#trade_pwd").val();
-	                config.toBelong = $("#toBelong").val();
+	                config.amount = (+$("#amount").val()) * 1000;
+	                config.toCode = $("#account").val();
+	                config.toBelong = $("#realName").val();
 	                withdraw();
 	            }
 	        });
 	    }
 	    function validate_amount() {
-	        var flag = true, me = $("#qxje"), amount = me.val();
+	        var flag = true, me = $("#amount"), amount = me.val();
 	        if(amount == undefined || amount === ""){
 	            showMsg("取现金额不能为空！");
 	            flag = false;
@@ -76,32 +71,22 @@ define([
 	        }
 	        return flag;
 	    }
-	    function validate_tradePwd() {
-	        if( $("#trade_pwd").val() == undefined || trim($("#trade_pwd").val()) === "" ){
-	            showMsg("交易密码不能为空！");
+	    function validate_realName() {
+	        if( $("#realName").val() == undefined || trim($("#realName").val()) === "" ){
+	            showMsg("真实姓名不能为空！");
 	            return false;
 	        }
 	        return true;
 	    }
-	    function validate_toBelong() {
-	        if( $("#toBelong").val() == undefined || trim($("#toBelong").val()) === "" ){
-	            showMsg("开户支行不能为空！");
-	            return false;
-	        }
-	        return true;
-	    }
-	    function validate_bankCard() {
-	        if( $("#yhk").val() == undefined || trim($("#yhk").val()) === ""){
-	            showMsg("银行卡不能为空！");
-	            return false;
-	        }else if( !/^\d{16}|\d{19}$/.test($("#bankCard").val()) ){
-	            showMsg("银行卡格式错误！");
+	    function validate_account() {
+	        if( $("#account").val() == undefined || trim($("#account").val()) === ""){
+	            showMsg("支付宝账号不能为空！");
 	            return false;
 	        }
 	        return true;
 	    }
 	    function validate() {
-	        return validate_amount() && validate_bankCard() && validate_toBelong();
+	        return validate_amount() && validate_account() && validate_realName();
 	    }
 
 	    function trim(str) {
@@ -112,14 +97,14 @@ define([
 	        Ajax.post(APIURL + "/account/doWithdraw", config)
 	            .then(function (response) {
 	                if(response.success){
-	                	$("#wdBtn").val("提交");
+	                	$("#sbtn").val("提交");
 	                    showMsg("取现申请提交成功！");
 	                    setTimeout(function(){
 	                    	location.href = "../user/user_info.html";
 	                    }, 1000);
 	                }else{
 	                    showMsg(response.msg);
-	                    $("#wdBtn").removeAttr("disabled").val("提交");
+	                    $("#sbtn").removeAttr("disabled").val("提交");
 	                }
 	            });
 	    }

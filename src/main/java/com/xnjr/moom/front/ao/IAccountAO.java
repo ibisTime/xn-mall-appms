@@ -12,13 +12,14 @@ import com.xnjr.moom.front.res.Page;
 public interface IAccountAO {
 
     /**
-     * 根据userId查询账户资金
+     * 根据userId和currency(币种)查询账户资金
      * @param userId
+     * @param currency
      * @return 
      * @create: 2015年8月31日 下午8:32:43 myb858
      * @history:
      */
-    Object getAccountByUserId(String userId);
+    Object getAccountByUserId(String userId, String currency);
 
     /**
      * 查询资金明细
@@ -87,12 +88,11 @@ public interface IAccountAO {
      * @param amount
      * @param toType
      * @param toCode
-     * @param tradePwd
      * @return 
      * @history:
      */
     public Object withdraw(String accountNumber, String amount, String toType,
-            String toCode, String toBelong, String tradePwd);
+            String toCode, String toBelong);
 
     /**
      * 线下充值

@@ -28,7 +28,12 @@
 </div>
 <div style="height: 60px;"></div>
 <footer class="fixft bg_fff b_bd_t s_14 tc lh3em hidden">
-    <div class="wp60 fl">商品总计：<span class="t_f64444" id="po-total"></span><span class="s_11 t_40pe">积分</span></div>
+    <div class="wp60 fl">商品总计:
+    	<div class="t_f64444 va-m lh1_2em inline_block s_11">
+            <div><span><span id="totalAmount"></span><span class="s_11 t_40pe">积分</span><span class="hidden" id="mAdd">+</span></span></div>
+            <div class="hidden" id="cnyDiv"><span><span id="totalCnyAmount"></span><span class="s_11 t_40pe">元</span></span></div>
+        </div>
+    </div>
     <div class="wp40 fl bg_f64444 t_white lh3_1em" id="sbtn">支付订单</div>
 </footer>
 <link rel="import" href="../footer.html?__inline">

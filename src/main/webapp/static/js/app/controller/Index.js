@@ -23,7 +23,7 @@ define([
                 'pagination': '.swiper-pagination'
             });
         })();
-        var canScrolling = true, isEnd = false, first = true,
+        var canScrolling = false, isEnd = false, first = true,
         	config = {
         		"toSite": "2",
                 "start": 1,
@@ -56,7 +56,7 @@ define([
         }
 
         function getRMTJ(){
-            Ajax.post(APIURL + '/commodity/queryPageModel', config, true)
+            Ajax.get(APIURL + '/commodity/queryPageModel', config, true)
                 .then(function (res) {
                     if (res.success) {
                         var data = res.data, curList = data.list,
@@ -69,19 +69,31 @@ define([
                                 if(i+1 <= len - 1){
                                     html += '<tr><td><a href="../operator/buy.html?code='+curList[i].model.code+'"><img src="'+curList[i].model.pic1+'"/>'+
                                     '<div class="s_11 tl">'+
-                                    '<div><span class="t_red">100</span>积分<span class="plr10">+</span><span class="t_red">50.00</span>元</div>'+
-                                    '<div class="s_10">市场参考价：<span>188.00</span>元</div>'+
+                                    '<div><span class="t_red">'+(+curList[i].discountPrice / 1000).toFixed(0)+'</span>积分';
+                                    if(curList[i].cnyPrice && +curList[i].cnyPrice){
+                                    	html += '<span class="plr10">+</span><span class="t_red">'+(+curList[i].cnyPrice / 1000).toFixed(2)+'</span>元';
+                                    }
+                                    html += '</div>'+
+                                    '<div class="s_10">市场参考价：<span>'+(+curList[i].originalPrice / 1000).toFixed(2)+'</span>元</div>'+
                                     '</div></a></td>'+
                                     '<td><a href="../operator/buy.html?code='+curList[i+1].model.code+'"><img src="'+curList[i+1].model.pic1+'"/>'+
                                     '<div class="s_11 tl">'+
-                                    '<div><span class="t_red">100</span>积分<span class="plr10">+</span><span class="t_red">50.00</span>元</div>'+
-                                    '<div class="s_10">市场参考价：<span>188.00</span>元</div>'+
+                                    '<div><span class="t_red">'+(+curList[i+1].discountPrice / 1000).toFixed(0)+'</span>积分';
+                                    if(curList[i+1].cnyPrice && +curList[i+1].cnyPrice){
+                                    	html += '<span class="plr10">+</span><span class="t_red">'+(+curList[i+1].cnyPrice / 1000).toFixed(2)+'</span>元';
+                                    }
+                                    html += '</div>'+
+                                    '<div class="s_10">市场参考价：<span>'+(+curList[i+1].originalPrice / 1000).toFixed(2)+'</span>元</div>'+
                                     '</div></a></td></tr>';
                                 }else{
                                     html+= '<tr><td><a href="../operator/buy.html?code='+curList[i].model.code+'"><img src="'+curList[i].model.pic1+'"/>'+
                                     '<div class="s_11 tl">'+
-                                    '<div><span class="t_red">100</span>积分<span class="plr10">+</span><span class="t_red">50.00</span>元</div>'+
-                                    '<div class="s_10">市场参考价：<span>188.00</span>元</div>'+
+                                    '<div><span class="t_red">'+(+curList[i].discountPrice / 1000).toFixed(0)+'</span>积分';
+                                    if(curList[i].cnyPrice && +curList[i].cnyPrice){
+                                    	html += '<span class="plr10">+</span><span class="t_red">'+(+curList[i].cnyPrice / 1000).toFixed(2)+'</span>元';
+                                    }
+                                    html += '</div>'+
+                                    '<div class="s_10">市场参考价：<span>'+(+curList[i].originalPrice / 1000).toFixed(2)+'</span>元</div>'+
                                     '</div></a>'+
                                     '</td><td></td></tr>';
                                 }
