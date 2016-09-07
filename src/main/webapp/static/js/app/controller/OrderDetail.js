@@ -69,6 +69,7 @@ define([
 	                        var cnyAmount = 0;	//人民币总计
 	                        if (invoiceModelLists.length) {
 	                            invoiceModelLists.forEach(function (invoiceModelList) {
+	                            	invoiceModelList.salePrice = (+invoiceModelList.salePrice / 1000).toFixed(0);
 	                            	if(invoiceModelList.saleCnyPrice && +invoiceModelList.saleCnyPrice){
 	                            		cnyAmount += (+invoiceModelList.saleCnyPrice) * (+invoiceModelList.quantity);
 	                            		invoiceModelList.saleCnyPrice = (+invoiceModelList.saleCnyPrice / 1000).toFixed(2);

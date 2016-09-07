@@ -12,8 +12,6 @@ define([
         
         function addListeners(){
         	function copy(text) {
-        		var $ct = $("#copyText");
-        		$ct && $ct.remove();
         		var textarea = document.createElement("textarea");
 				textarea.style.position = 'fixed';
 				textarea.style.top = 0;
@@ -23,13 +21,13 @@ define([
 				textarea.style.resize = 'none';
 				textarea.style.background = 'transparent';
 				textarea.style.color = 'transparent';
-				textarea.id = '';
 				textarea.value = text;
 				document.body.appendChild(textarea);
 				textarea.select();
 				try {
-					document.execCommand('copy') ? 'successful' : 'unsuccessful';
-					showMsg("复制成功！");
+					var kk = document.execCommand('copy') ? 'successful' : 'unsuccessful';
+					
+					showMsg(kk);
 				} catch (err) {
 					showMsg("复制失败，请手动长按复制！");
 				}

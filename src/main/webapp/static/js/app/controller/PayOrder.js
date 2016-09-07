@@ -55,7 +55,7 @@ define([
                         var addData = data.address || {};
                         addData.totalAmount = (+data.totalAmount/1000).toFixed(0);
                         addData.orderCode = code;
-                        var addrHtml = '<p><span class="pr1em">总积分</span>：<span class="pl_5rem">'+ addData.totalAmount+'<span></span></p>' +
+                        var addrHtml = '<p><span class="pr2em">总计</span>：<span class="pl_5rem">'+ addData.totalAmount+"积分"+(cnyTotal?" + "+(cnyTotal/1000).toFixed(2)+"元": "")+'<span></span></p>' +
                             '<p><span class="pr1em">订单号</span>：<span class="pl_5rem">'+ addData.orderCode+'</span></p>';
                         if(addData.addressee){
                             addrHtml += '<p><span>配送信息：</span><span class="pl_5rem">'+addData.addressee+'</span><span class="pl10">'+addData.mobile+'</span></p>' +
