@@ -34,7 +34,7 @@ define([
 	                    }
                         if(list.length){
                         	var html = "";
-							list.forEach(function(d){
+                        	list.forEach(function(d){
                         		var price = +d.discountPrice / 1000;
 								var model = d.model;
                         		html += '<li class="ptb8 clearfix b_bd_b">'+
@@ -43,10 +43,11 @@ define([
 							            '<div class="fl wp70 pl12">'+
 							                '<p class="t_323232 s_12 line-tow">'+model.name+'</p>'+
 							                '<p class="t_999 s_10 line-tow">'+model.productName+'</p>'+
-							                '<p class="t_red">'+price+'<span class="s_10 t_40pe pl4">积分</span></p>'+
-							            '</div>'+
-						            '</a>'+
-						        '</li>';
+							                '<p class="t_red">'+price.toFixed(0)+'<span class="s_10 t_40pe pl4">积分</span>';
+                        		if(d.cnyPrice){
+                        			html += "+" + (+d.cnyPrice / 1000).toFixed(2)+'<span class="s_10 t_40pe pl4">元</span></p>';
+                        		}
+							    html += '</div></a></li>';
                         	});
 							removeLoading();
                             $("#contUl").append(html);

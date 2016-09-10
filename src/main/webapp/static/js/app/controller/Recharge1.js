@@ -36,7 +36,10 @@ define([
             if(!me.value || !me.value.trim()){
                 showMsg("支付账号不能为空!");
                 return false;
-            }
+            }else if(me.value.length > 32){
+	        	showMsg("支付宝账号过长！");
+	        	return false;
+	        }
             return true;
         }
         function validateAmount() {
@@ -44,12 +47,18 @@ define([
 	        if(amount == undefined || amount === ""){
 	            showMsg("充值金额不能为空！");
 	            flag = false;
-	        }else if( !/^\d+(?:\.\d{1,2})?$/.test(amount) ) {
+	        }else if(isNaN(amount)){
+	        	showMsg("充值金额只能是数字！");
+	            flag = false;
+	        }else if( !/^-?\d+(?:\.\d{1,2})?$/.test(amount) ) {
 	            showMsg("充值金额只能是两位以内小数！");
 	            flag = false;
 	        }else if(+amount <= 0){
 	            showMsg("充值金额必须大于0！");
 	            flag = false;
+	        }else if(+amount > 1000000){
+	        	showMsg("充值金额不能大于1,000,000元！");
+	        	flag = false;
 	        }
 	        return flag;
 	    }

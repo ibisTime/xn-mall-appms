@@ -97,7 +97,7 @@ define([
                 });
     	}
     	function addLoading(){
-    		$("#searchUl").html('<li class="scroll-loadding"></li>');
+    		$("#searchUl").append('<li class="scroll-loadding"></li>');
     	}
         function doError(msg) {
         	msg = msg || "暂时无法获取商品信息";

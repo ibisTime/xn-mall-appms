@@ -59,34 +59,45 @@ define([
 	        if(amount == undefined || amount === ""){
 	            showMsg("取现金额不能为空！");
 	            flag = false;
-	        }else if( !/^\d+(?:\.\d{1,2})?$/.test(amount) ) {
-	            showMsg("取现金额只能是两位以内小数！");
+	        }else if(isNaN(amount)){
+	        	showMsg("取现金额只能是数字！");
 	            flag = false;
-	        }else if((+amount * 1000) > AMOUNT){
-	            showMsg("取现金额必须小于可用金额！");
+	        }else if( !/^-?\d+(?:\.\d{1,2})?$/.test(amount) ) {
+	            showMsg("取现金额只能是两位以内小数！");
 	            flag = false;
 	        }else if(+amount <= 0){
 	            showMsg("取现金额必须大于0！");
+	            flag = false;
+	        }else if((+amount * 1000) > AMOUNT){
+	            showMsg("取现金额必须小于可用金额！");
 	            flag = false;
 	        }
 	        return flag;
 	    }
 	    function validate_realName() {
-	        if( $("#realName").val() == undefined || trim($("#realName").val()) === "" ){
+	    	var value = $("#realName").val();
+	        if( value == undefined || trim(value) === "" ){
 	            showMsg("真实姓名不能为空！");
+	            return false;
+	        }else if( value.length > 20 ){
+	        	showMsg("真实姓名过长！");
 	            return false;
 	        }
 	        return true;
 	    }
 	    function validate_account() {
-	        if( $("#account").val() == undefined || trim($("#account").val()) === ""){
+	    	var value = $("#account").val();
+	        if( value == undefined || trim(value) === ""){
 	            showMsg("支付宝账号不能为空！");
 	            return false;
+	        }else if(value.length > 32){
+	        	showMsg("支付宝账号过长！");
+	        	return false;
 	        }
 	        return true;
 	    }
 	    function validate() {
-	        return validate_amount() && validate_account() && validate_realName();
+	        return validate_amount() && validate_realName() && validate_account();
 	    }
 
 	    function trim(str) {
