@@ -250,4 +250,76 @@ public interface IUserAO {
      * @history:
      */
     public Object getHpsList();
+
+    /**
+     * 对商家点赞
+     * @param toMerchant
+     * @param fromUser
+     * @return 
+     * @create: 2016年9月21日 下午1:59:00 wulq
+     * @history:
+     */
+    public Object praise(String toMerchant, String fromUser);
+
+    /**
+     * 积分消费
+     * @param toMerchant
+     * @param fromUser
+     * @param quantity
+     * @param amount
+     * @return 
+     * @create: 2016年9月21日 下午2:11:37 wulq
+     * @history:
+     */
+    public Object integralConsume(String toMerchant, String fromUser,
+            String quantity, String amount);
+
+    /**
+     * 分页查询商家信息
+     * @param loginName
+     * @param name
+     * @param type
+     * @param province
+     * @param city
+     * @param area
+     * @param status
+     * @param priority
+     * @param updater
+     * @param start
+     * @param limit
+     * @return 
+     * @create: 2016年9月21日 下午2:31:17 wulq
+     * @history:
+     */
+    public Object businessPage(String loginName, String name, String type,
+            String province, String city, String area, String status,
+            String priority, String updater, String start, String limit);
+
+    /**
+     * 列表查询商家信息
+     * @param loginName
+     * @param name
+     * @param type
+     * @param province
+     * @param city
+     * @param area
+     * @param status
+     * @param priority
+     * @param updater
+     * @return 
+     * @create: 2016年9月21日 下午3:03:38 wulq
+     * @history:
+     */
+    public Object businessList(String loginName, String name, String type,
+            String province, String city, String area, String status,
+            String priority, String updater);
+
+    /**
+     * 详情查询商家信息
+     * @param code
+     * @return 
+     * @create: 2016年9月21日 下午3:09:42 wulq
+     * @history:
+     */
+    public Object business(String code);
 }

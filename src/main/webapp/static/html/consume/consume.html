@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="import" href="../head.html?__inline">
+    <title>积分消费</title>
+</head>
+<body class="bg_f5">
+
+<div class="plr20 wp100 p_fixed bg_f64444 zIndex900">
+    <div class="wp100 ptb10 clearfix">
+    	<div class="inline_block consume-tl">
+    		<span class="va-m inline_block">金华</span>
+    		<img src="../../images/c-down.png" class="va-m wp16p"/>
+    	</div>
+        <div class="wp100 br_4p clearfix p_r inline_block pl70">
+            <input id="searchInput" placeholder="搜索商户" class="search-input bg_fff b_radius20i pr14i pl35i" type="text"/>
+            <a href="javascript:void(0)" id="searchIcon" class="show"><img class="va-m max-hp15em consume-ml" src="../../images/search.png"/></a>
+        </div>
+    </div>
+</div>
+
+<div class="plr20 wp100 consume-sul">
+    <ul class="wp100 bg_fff s_11 br_4p b_bd hidden" id="searchUl">
+       <!--  <li>商品名称1</li>
+        <li>商品名称2</li>
+        <li>商品名称3</li> -->
+    </ul>
+</div>
+<i id="loaddingIcon" class="icon-loading bg_transparent hidden top_0"></i>
+<div class="bg_fff p20 consume-fl">
+	<table class="consume-table">
+		<tr>
+			<td>
+				<a href="./list.html?t=1">
+					<div class="pb2em"><img src="../../images/food.png"/></div>
+					<span class="consume-top-span">美食</span>
+				</a>
+			</td>
+			<td>
+				<a href="./list.html?t=3">
+					<div class="pb2em"><img src="../../images/movie.png"/></div>
+					<span class="consume-top-span">电影</span>
+				</a>
+			</td>
+			<td>
+				<a href="./list.html?t=4">
+					<div class="pb2em"><img src="../../images/hotel.png"/></div>
+					<span class="consume-top-span">酒店</span>
+				</a>
+			</td>
+			<td>
+				<a href="./list.html?t=5">
+					<div class="pb2em"><img src="../../images/leisure.png"/></div>
+					<span class="consume-top-span">休闲娱乐</span>
+				</a>
+			</td>
+			<td>
+				<a href="./list.html?t=2">
+					<div class="pb2em"><img src="../../images/ktv.png"/></div>
+					<span class="consume-top-span">KTV</span>
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="./list.html?t=6">
+					<div class="pb2em"><img src="../../images/car.png"/></div>
+					<span class="consume-top-span">汽车</span>
+				</a>
+			</td>
+			<td>
+				<a href="./list.html?t=7">
+					<div class="pb2em"><img src="../../images/tourism.png"/></div>
+					<span class="consume-top-span">周边游</span>
+				</a>
+			</td>
+			<td>
+				<a href="./list.html?t=8">
+					<div class="pb2em"><img src="../../images/massage.png"/></div>
+					<span class="consume-top-span">足疗按摩</span>
+				</a>
+			</td>
+			<td>
+				<a href="./list.html?t=9">
+					<div class="pb2em"><img src="../../images/service.png"/></div>
+					<span class="consume-top-span">生活服务</span>
+				</a>
+			</td>
+			<td>
+				<a href="./list.html?t=10">
+					<div class="pb2em"><img src="../../images/travel.png"/></div>
+					<span class="consume-top-span">旅游</span>
+				</a>
+			</td>
+		</tr>
+	</table>
+</div>
+<div class="hp256p"></div>
+<div id="myPhone"></div>
+<div class="mt20 plr10 consume-cont bg_fff">
+	<ul id="consume-ul">
+		<li class="scroll-loadding"></li>
+        <!-- <li class="ptb8 clearfix b_bd_b plr10" modelCode="{{modelCode}}">
+            <a class="show p_r clearfix" href="#">
+                <div class="fl wp30 tc"><img src="../../images/hc1.png"/></div>
+                <div class="fl wp70 pl12">
+                    <p class="tl line-tow t_bold">满意小炒</p>
+                    <p class="tl pt4 line-tow s_10 t_80">200积分抵用50元</p>
+                </div>
+                <div class="good-div"><img src="../../images/good.png"/><span class="inline_block va-m pl6 t_80">44</span></div>
+            </a>
+        </li> -->
+	</ul>
+</div>
+<div style="height: 106px;"></div>
+<footer class="fixft bg_fff b_bd_t hfoot s_11">
+    <a href="../home/index.html" class="wp25 fl tc"><div class="wp100 pt8"><img src="../../images/hf1.png"/></div><p class="ptb2">首页</p></a>
+    <a href="../detail/mall_index.html" class="wp25 fl tc"><div class="wp100 pt8"><img src="../../images/hf2.png"/></div><p class="ptb2">积分商城</p></a>
+    <a href="./consume.html" class="wp25 fl tc active"><div class="wp100 pt8"><img src="../../images/hf3_2.png"/></div><p class="ptb2">积分消费</p></a>
+    <a href="../user/user_info.html" class="wp25 fl tc"><div class="wp100 pt8"><img src="../../images/hf4.png"/></div><p class="ptb2">个人中心</p></a>
+</footer>
+<link rel="import" href="../footer.html?__inline">
+<script>
+    require(['app/controller/Consume']);
+</script>
+</body>
+</html>

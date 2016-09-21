@@ -185,7 +185,9 @@ textarea {
 .b_radius8 {
     border-radius: 8px;
 }
-
+.b_radius20i{
+	border-radius: 20px !important;
+}
 .b_radius50 {
     border-radius: 50%;
 }
@@ -204,6 +206,9 @@ textarea {
 
 .pr4 {
     padding-right: 4px;
+}
+.pr14i{
+	padding-right: 14px !important;
 }
 
 .pt4 {
@@ -315,7 +320,12 @@ textarea {
 .pl12 {
     padding-left: 12px;
 }
-
+.pl70{
+	padding-left: 70px;
+}
+.pl35i{
+	padding-left: 35px !important;
+}
 .pr10 {
     padding-right: 10px;
 }
@@ -1405,6 +1415,9 @@ textarea {
 .hp132p{
     height: 132px;
 }
+.hp62p{
+	height: 62px;
+}
 .hp1em {
 	height: 1em;
 }
@@ -1583,6 +1596,9 @@ textarea {
 }
 .lh1em {
     line-height: 1em !important;
+}
+.h2_4em {
+	height: 2.4em;
 }
 .color0 {
     text-indent: -2000px;
@@ -1997,6 +2013,9 @@ table th, table td {
 }
 .wp66 {
     width: 66%;
+}
+.wp16p{
+	width: 16px;
 }
 .bg_transparent{
     background-color: transparent;
@@ -2480,4 +2499,82 @@ table th, table td {
 	position: absolute;
     right: 10px;
     bottom: -1em;
+}
+.consume-tl{
+	position: absolute;
+    width: 70px;
+    font-size: 1.2rem;
+    margin-top: -15px;
+    top: 50%;
+    color: #fff;
+}
+.consume-ml{
+    top: 11px;
+    width: 20px;
+    position: absolute;
+    left: 80px;
+}
+.consume-fl{
+	position: fixed;
+    top: 62px;
+    z-index: 900;
+}
+.consume-sul{
+    padding-left: 90px;
+    position: fixed;
+    top: 52px;
+    z-index: 999;
+}
+.consume-table{
+    font-size: 0.9rem;
+    border: none;
+}
+.consume-table td{
+	width: 20%;
+	position: relative;
+	padding: 0 10px;
+}
+.consume-table td, .consume-table th{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border: none;
+}
+.consume-top-span{
+    position: absolute;
+    bottom: 0;
+    display: block;
+    overflow: visible;
+    white-space: nowrap;
+    width: 100%;
+    left: 0;
+    text-align: center;
+}
+.pb2em{
+	padding-bottom: 2em;
+}
+.consume-cont .good-div{
+	position: absolute;
+	bottom: 0;
+	right: 10px;
+	font-size: .8rem;
+}
+.consume-cont .good-div img{
+	width: 16px;
+	vertical-align: middle;
+}
+.hp256p{
+	height: 256px;
+}
+.bg_efdade{
+	background-color: #EFDADE;
+}
+.cons-list{
+    position: fixed;
+    z-index: 999;
+    top: 50px;
+}
+.consume-detail-btn{
+	padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 1rem;
 }

@@ -59,7 +59,7 @@ define([
 	                    var data = response.data, html = "",
 	                    	totalCount = +data.totalCount,
 	                    	curList = data.list;
-	                    if(totalCount < config.limit || curList.length < config.limit){
+	                    if(totalCount <= config.limit || curList.length < config.limit){
 	                    	isEnd = true;
 	                    }
 	                    if(curList.length){

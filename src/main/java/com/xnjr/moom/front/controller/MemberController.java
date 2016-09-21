@@ -315,4 +315,67 @@ public class MemberController extends BaseController {
     public Object getHpsList() {
         return userAO.getHpsList();
     }
+
+    // 对商家点赞
+    @RequestMapping(value = "/praise", method = RequestMethod.POST)
+    @ResponseBody
+    public Object praise(@RequestParam("toMerchant") String toMerchant,
+            @RequestParam(value = "fromUser", required = false) String fromUser) {
+        return userAO.praise(toMerchant, getSessionUserId(fromUser));
+    }
+
+    // 积分消费
+    @RequestMapping(value = "/integral/consume", method = RequestMethod.POST)
+    @ResponseBody
+    public Object integralConsume(
+            @RequestParam("toMerchant") String toMerchant,
+            @RequestParam(value = "fromUser", required = false) String fromUser,
+            @RequestParam("quantity") String quantity,
+            @RequestParam(value = "amount", required = false) String amount) {
+        return userAO.integralConsume(toMerchant, getSessionUserId(fromUser),
+            quantity, amount);
+    }
+
+    // 分页查询商家信息
+    @RequestMapping(value = "/business/page", method = RequestMethod.POST)
+    @ResponseBody
+    public Object businessPage(
+            @RequestParam(value = "loginName", required = false) String loginName,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam("province") String province,
+            @RequestParam("city") String city,
+            @RequestParam("area") String area,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "priority", required = false) String priority,
+            @RequestParam(value = "updater", required = false) String updater,
+            @RequestParam("limit") String limit,
+            @RequestParam("start") String start) {
+        return userAO.businessPage(getSessionUserId(loginName), name, type,
+            province, city, area, status, priority, updater, limit, start);
+    }
+
+    // 列表查询商家信息
+    @RequestMapping(value = "/business/list", method = RequestMethod.POST)
+    @ResponseBody
+    public Object businessList(
+            @RequestParam("loginName") String loginName,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam("province") String province,
+            @RequestParam("city") String city,
+            @RequestParam("area") String area,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "priority", required = false) String priority,
+            @RequestParam(value = "updater", required = false) String updater) {
+        return userAO.businessList(getSessionUserId(loginName), name, type,
+            province, city, area, status, priority, updater);
+    }
+
+    // 详情查询商家信息
+    @RequestMapping(value = "/business", method = RequestMethod.POST)
+    @ResponseBody
+    public Object business(@RequestParam("code") String code) {
+        return userAO.business(code);
+    }
 }

@@ -7,7 +7,7 @@ define([
 ], function (base, Ajax, Dict, dialog, Handlebars) {
 	var code = base.getUrlParam("code") || "",
         receiptType = Dict.get("receiptType"),
-        contentTmpl = __inline("../ui/pay-order-imgs.handlebars")
+        contentTmpl = __inline("../ui/pay-order-imgs.handlebars");
 
 	queryOrder();
 	addListener();
