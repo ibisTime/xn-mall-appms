@@ -276,6 +276,7 @@ public interface IUserAO {
 
     /**
      * 分页查询商家信息
+     * @param userId
      * @param loginName
      * @param name
      * @param type
@@ -291,13 +292,14 @@ public interface IUserAO {
      * @create: 2016年9月21日 下午2:31:17 wulq
      * @history:
      */
-    public Object businessPage(String loginName, String name, String type,
-            String province, String city, String area, String status,
-            String priority, String updater, String start, String limit);
+    public Object businessPage(String userId, String loginName, String name,
+            String type, String province, String city, String area,
+            String status, String priority, String updater, String start,
+            String limit, String orderDir, String orderColumn);
 
     /**
      * 列表查询商家信息
-     * @param loginName
+     * @param userId
      * @param name
      * @param type
      * @param province
@@ -310,9 +312,9 @@ public interface IUserAO {
      * @create: 2016年9月21日 下午3:03:38 wulq
      * @history:
      */
-    public Object businessList(String loginName, String name, String type,
-            String province, String city, String area, String status,
-            String priority, String updater);
+    public Object businessList(String userId, String loginName, String name,
+            String type, String province, String city, String area,
+            String status, String priority, String updater);
 
     /**
      * 详情查询商家信息

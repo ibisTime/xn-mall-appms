@@ -2,6 +2,9 @@ package com.xnjr.moom.front.req;
 
 public class XN602920Req {
     // 用户编号
+    private String userId;
+
+    // 登录名
     private String loginName;
 
     // 名称
@@ -34,12 +37,42 @@ public class XN602920Req {
     // 页面个数
     private String limit;
 
+    // 排序字段
+    private String orderColumn;
+
+    // 排序方向
+    private String orderDir;
+
     public String getLoginName() {
         return loginName;
     }
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
+    }
+
+    public String getOrderColumn() {
+        return orderColumn;
+    }
+
+    public void setOrderColumn(String orderColumn) {
+        this.orderColumn = orderColumn;
+    }
+
+    public String getOrderDir() {
+        return orderDir;
+    }
+
+    public void setOrderDir(String orderDir) {
+        this.orderDir = orderDir;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {

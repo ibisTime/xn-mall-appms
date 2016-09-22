@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xnjr.moom.front.ao.IAccountAO;
+import com.xnjr.moom.front.ao.IDictAO;
 import com.xnjr.moom.front.ao.IUserAO;
 import com.xnjr.moom.front.enums.EBoolean;
 import com.xnjr.moom.front.res.Page;
@@ -27,6 +28,9 @@ public class AccountController extends BaseController {
 
     @Autowired
     IUserAO userAO;
+
+    @Autowired
+    IDictAO dictAO;
 
     // *********查询账户资产 start****
     @RequestMapping(value = "/get", method = RequestMethod.GET)
@@ -154,4 +158,14 @@ public class AccountController extends BaseController {
             amount, fromType, fromCode);
     }
 
+    // 购买积分
+    @RequestMapping(value = "/buyIntegral", method = RequestMethod.POST)
+    @ResponseBody
+    public Object buyIntegral(
+            @RequestParam(value = "userId", required = false) String userId,
+            @RequestParam("amount") String amount,
+            @RequestParam(value = "cnyAmount", required = false) String cnyAmount) {
+        return accountAO.buyIntegral(getSessionUserId(userId), amount,
+            cnyAmount);
+    }
 }

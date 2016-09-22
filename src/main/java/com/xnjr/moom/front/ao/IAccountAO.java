@@ -107,4 +107,31 @@ public interface IAccountAO {
     public Object recharge(String userId, String accountNumber, String amount,
             String fromType, String fromCode);
 
+    /**
+     * 返现积分
+     * @param fromUserId
+     * @param toUserId
+     * @param direction
+     * @param amount
+     * @param cnyAmount
+     * @param jfCashBack
+     * @param cnyCashBack
+     * @return 
+     * @create: 2016年9月22日 下午8:22:52 wulq
+     * @history:
+     */
+    public Object fxIntegral(String fromUserId, String toUserId, String amount,
+            String cnyAmount, String jfCashBack, String cnyCashBack);
+
+    /**
+     * 购买积分
+     * @param userId
+     * @param amount
+     * @param cnyAmount
+     * @return 
+     * @create: 2016年9月22日 下午8:31:27 wulq
+     * @history:
+     */
+    public Object buyIntegral(String userId, String amount, String cnyAmount);
+
 }

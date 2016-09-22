@@ -9,7 +9,12 @@ define([
     		config = {
 				code: code
     	    };
-    	initView();
+
+		if(sessionStorage.getItem("user") !== "1"){
+            location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
+        }else{
+            initView();
+        }
 
 	    function initView() {
 			if(code){
@@ -17,12 +22,16 @@ define([
 	        	addListeners();
 			}else{
 				$("#cont").remove();
+				showMsg("未传入商家编号!");
 			}
 			
 	    }
 	    function addListeners() {
 			$("#dzIcon").on("click", function(){
 				praise();
+			});
+			$("#sbtn").on("click", function(){
+				location.href = "./integral_consume.html?c=" + code + "&n=" + $("#name").text();
 			});
 	    }
 
@@ -46,13 +55,12 @@ define([
 					$("#cont").remove();
 	                if (response.success) {
 	                    var data = response.data;
-						$("#pic2").attr("src", data.pic2);
+						$("#pic1").attr("src", data.pic1);
 						$("#name").text(data.name);
 						$("#totalDzNum").text(data.totalDzNum);
 						$("#advert").text(data.advert);
 						$("#address").text(data.province + " " + data.city + " " + data.area + " " + data.address);
-						$("#detailCont").append('<a class="fr clearfix" href="tel://'+data.bookMoible+'"><img class="wp16p va-m" src="../../images/phone.png"/></a>');
-						//$("#bookMoible").attr("href", "tel://" + data.bookMoible);
+						$("#detailCont").append('<a class="fr clearfix" href="tel://'+data.bookMobile+'"><img class="wp16p va-m" src="../../images/phone.png"/></a>');
 	                }else{
 	                	doError();
 	                }

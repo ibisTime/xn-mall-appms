@@ -23,6 +23,8 @@ import com.xnjr.moom.front.req.XN802013Req;
 import com.xnjr.moom.front.req.XN802021Req;
 import com.xnjr.moom.front.req.XN802110Req;
 import com.xnjr.moom.front.req.XN802211Req;
+import com.xnjr.moom.front.req.XN802314Req;
+import com.xnjr.moom.front.req.XN802315Req;
 import com.xnjr.moom.front.req.XN803900Req;
 import com.xnjr.moom.front.req.XNfd0032Req;
 import com.xnjr.moom.front.req.XNfd0050Req;
@@ -36,6 +38,7 @@ import com.xnjr.moom.front.session.SessionTimeoutException;
  */
 @Service
 public class AccountAOImpl implements IAccountAO {
+
     @Override
     public Object getAccountByUserId(String userId, String currency) {
         if (StringUtils.isBlank(userId)) {
@@ -216,6 +219,45 @@ public class AccountAOImpl implements IAccountAO {
         req.setFromCode(fromCode);
         req.setFromType("alipay");
         return BizConnecter.getBizData("802110", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    public Object fxIntegral(String fromUserId, String toUserId, String amount,
+            String cnyAmount, String jfCashBack, String cnyCashBack) {
+        if (StringUtils.isBlank(fromUserId)) {
+            throw new SessionTimeoutException("登录链接已超时，请重新登录.");
+        }
+        if (StringUtils.isBlank(amount)) {
+            throw new BizException("A010001", "积分数量不能为空");
+        }
+        if (StringUtils.isBlank(cnyAmount)) {
+            throw new BizException("A010001", "人民币数量不能为空");
+        }
+        toUserId = "U201600000000000001";
+        XN802314Req req = new XN802314Req();
+        req.setAmount(amount);
+        req.setCnyAmount(cnyAmount);
+        req.setCnyCashBack(cnyCashBack);
+        req.setFromUserId(fromUserId);
+        req.setJfCashBack(jfCashBack);
+        req.setToUserId(toUserId);
+        return BizConnecter.getBizData("802314", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    public Object buyIntegral(String userId, String amount, String cnyAmount) {
+        if (StringUtils.isBlank(userId)) {
+            throw new SessionTimeoutException("登录链接已超时，请重新登录.");
+        }
+        if (StringUtils.isBlank(amount)) {
+            throw new BizException("A010001", "积分数量不能为空");
+        }
+        cnyAmount = "0";
+        XN802315Req req = new XN802315Req();
+        req.setAmount(amount);
+        req.setCnyAmount(cnyAmount);
+        req.setUserId(userId);
+        return BizConnecter.getBizData("802315", JsonUtils.object2Json(req),
             Object.class);
     }
 }

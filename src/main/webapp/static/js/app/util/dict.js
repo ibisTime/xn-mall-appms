@@ -73,7 +73,21 @@ define([
             "QT": "其他"
         },
         indexTopImg: ['/static/images/ht1.jpg', '/static/images/ht2.jpg', '/static/images/ht3.jpg'],
-        telephone: "400-0579-228"
+        telephone: "400-0579-228",
+        consumeType: {
+            "1": "美食",
+            "2": "KTV",
+            "3": "电影",
+            "4": "酒店",
+            "5": "休闲娱乐",
+            "6": "汽车",
+            "7": "周边游",
+            "8": "足疗按摩",
+            "9": "生活服务",
+            "10": "旅游"
+        },
+        gmjfdh_rate: "GMJFDH_RATE",
+        sjxffx_rate: "SJXFFX_RATE"
     };
 
     var changeToObj = function(data) {

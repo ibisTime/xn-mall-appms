@@ -460,10 +460,11 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public Object businessPage(String loginName, String name, String type,
-            String province, String city, String area, String status,
-            String priority, String updater, String start, String limit) {
-        if (StringUtils.isBlank(loginName)) {
+    public Object businessPage(String userId, String loginName, String name,
+            String type, String province, String city, String area,
+            String status, String priority, String updater, String start,
+            String limit, String orderDir, String orderColumn) {
+        if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "用户编号不能为空");
         }
         if (StringUtils.isBlank(province)) {
@@ -486,7 +487,7 @@ public class UserAOImpl implements IUserAO {
         req.setArea(area);
         req.setCity(city);
         req.setLimit(limit);
-        req.setLoginName(loginName);
+        req.setUserId(userId);
         req.setName(name);
         req.setPriority(priority);
         req.setProvince(province);
@@ -494,15 +495,18 @@ public class UserAOImpl implements IUserAO {
         req.setStatus(status);
         req.setType(type);
         req.setUpdater(updater);
+        req.setOrderColumn(orderColumn);
+        req.setOrderDir(orderDir);
+        req.setLoginName(loginName);
         return BizConnecter.getBizData("602920", JsonUtils.object2Json(req),
             Object.class);
     }
 
     @Override
-    public Object businessList(String loginName, String name, String type,
-            String province, String city, String area, String status,
-            String priority, String updater) {
-        if (StringUtils.isBlank(loginName)) {
+    public Object businessList(String userId, String loginName, String name,
+            String type, String province, String city, String area,
+            String status, String priority, String updater) {
+        if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "用户编号不能为空");
         }
         if (StringUtils.isBlank(province)) {
@@ -518,13 +522,14 @@ public class UserAOImpl implements IUserAO {
         XN602921Req req = new XN602921Req();
         req.setArea(area);
         req.setCity(city);
-        req.setLoginName(loginName);
+        req.setUserId(userId);
         req.setName(name);
         req.setPriority(priority);
         req.setProvince(province);
         req.setStatus(status);
         req.setType(type);
         req.setUpdater(updater);
+        req.setLoginName(loginName);
         return BizConnecter.getBizData("602921", JsonUtils.object2Json(req),
             Object.class);
     }

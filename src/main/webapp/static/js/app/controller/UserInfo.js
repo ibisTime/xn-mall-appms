@@ -49,6 +49,9 @@ define([
 	        $("#mFundList").on("click", function () {
 	            location.href = "../account/fundDetails.html?m=1";
 	        });
+			$("#fundBuy").on("click", function(){
+				location.href = "./buy_integral.html";
+			});
 	    }
 	    function showMsg(cont){
     		var d = dialog({

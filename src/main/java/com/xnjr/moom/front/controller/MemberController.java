@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xnjr.moom.front.ao.IAccountAO;
 import com.xnjr.moom.front.ao.IBankCardAO;
+import com.xnjr.moom.front.ao.IDictAO;
 import com.xnjr.moom.front.ao.ISmsAO;
 import com.xnjr.moom.front.ao.IUserAO;
 import com.xnjr.moom.front.base.ControllerContext;
@@ -20,6 +21,7 @@ import com.xnjr.moom.front.exception.BizException;
 import com.xnjr.moom.front.localToken.UserDAO;
 import com.xnjr.moom.front.res.XN805043Res;
 import com.xnjr.moom.front.res.XN805056Res;
+import com.xnjr.moom.front.res.XNlh5034Res;
 import com.xnjr.moom.front.session.ISessionProvider;
 import com.xnjr.moom.front.session.SessionUser;
 
@@ -40,6 +42,9 @@ public class MemberController extends BaseController {
 
     @Autowired
     ISmsAO smsAO;
+
+    @Autowired
+    IDictAO dictAO;
 
     @Resource(name = "imageCaptchaService")
     private MyCaptchaService imageCaptchaService;
@@ -332,14 +337,23 @@ public class MemberController extends BaseController {
             @RequestParam(value = "fromUser", required = false) String fromUser,
             @RequestParam("quantity") String quantity,
             @RequestParam(value = "amount", required = false) String amount) {
-        return userAO.integralConsume(toMerchant, getSessionUserId(fromUser),
+
+        userAO.integralConsume(toMerchant, getSessionUserId(fromUser),
             quantity, amount);
+        XNlh5034Res res = dictAO.queryDictByKey(getSessionUserId(fromUser),
+            "SJXFFX_RATE");
+        String cnyCashBack = (Integer.parseInt(res.getValue()) * Integer
+            .parseInt(quantity)) + "";
+        accountAO.fxIntegral(getSessionUserId(fromUser), "", quantity, "0", "",
+            cnyCashBack);
+        return cnyCashBack;
     }
 
     // 分页查询商家信息
     @RequestMapping(value = "/business/page", method = RequestMethod.POST)
     @ResponseBody
     public Object businessPage(
+            @RequestParam(value = "userId", required = false) String userId,
             @RequestParam(value = "loginName", required = false) String loginName,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "type", required = false) String type,
@@ -350,16 +364,20 @@ public class MemberController extends BaseController {
             @RequestParam(value = "priority", required = false) String priority,
             @RequestParam(value = "updater", required = false) String updater,
             @RequestParam("limit") String limit,
-            @RequestParam("start") String start) {
-        return userAO.businessPage(getSessionUserId(loginName), name, type,
-            province, city, area, status, priority, updater, limit, start);
+            @RequestParam("start") String start,
+            @RequestParam(value = "orderDir", required = false) String orderDir,
+            @RequestParam(value = "orderColumn", required = false) String orderColumn) {
+        return userAO.businessPage(getSessionUserId(userId), loginName, name,
+            type, province, city, area, status, priority, updater, limit,
+            start, orderDir, orderColumn);
     }
 
     // 列表查询商家信息
     @RequestMapping(value = "/business/list", method = RequestMethod.POST)
     @ResponseBody
     public Object businessList(
-            @RequestParam("loginName") String loginName,
+            @RequestParam(value = "userId", required = false) String userId,
+            @RequestParam(value = "loginName", required = false) String loginName,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "type", required = false) String type,
             @RequestParam("province") String province,
@@ -368,8 +386,8 @@ public class MemberController extends BaseController {
             @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "priority", required = false) String priority,
             @RequestParam(value = "updater", required = false) String updater) {
-        return userAO.businessList(getSessionUserId(loginName), name, type,
-            province, city, area, status, priority, updater);
+        return userAO.businessList(getSessionUserId(userId), loginName, name,
+            type, province, city, area, status, priority, updater);
     }
 
     // 详情查询商家信息

@@ -7,10 +7,10 @@
 <body class="bg_f5">
 
 	<div class="plr10">
-		<div class="s_10 b_bd_b ptb10">满意小炒金华店</div>
+		<div class="s_10 b_bd_b ptb10" id="name"></div>
 		<div class="ptb10">
 			<span class="pr10">消费积分</span>
-			<input type="text" placeholder="询问服务员后输入" class="plr10 lh2em s_12 h2_4em"/>
+			<input type="text" placeholder="询问服务员后输入" id="amount" class="plr10 lh2em s_12 h2_4em"/>
 		</div>
         <div class="wp100 mt20">
             <input type="button" class="lh3_5rem wp100 bg_f64444 t_white b_radius4 s_13" value="确认买单" id="sbtn"/>
@@ -24,11 +24,11 @@
 	        <div class="wp50 fl od-okbtn" id="odOk">确定支付</div><div class="wp50 fl t_80" id="odCel">取消</div>
 	    </div>
 	</div>
-    
+    <i id="loaddingIcon" class="icon-loading bg_transparent hidden top_0"></i>
 
 <link rel="import" href="../footer.html?__inline">
 <script>
-    require(['app/controller/Consume']);
+    require(['app/controller/IntegralConsume']);
 </script>
 </body>
 </html>

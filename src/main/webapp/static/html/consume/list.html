@@ -7,7 +7,7 @@
 <body class="bg_f5">
 
 <div class="wp100 p_fixed zIndex900">
-    <div class="wp100 plr20 bg_f64444 ptb10 clearfix">
+    <div class="wp100 plr20 bg_f64444 ptb4 clearfix">
         <div class="wp100 bg_f64444 ptb10">
 	        <div class="wp100 br_4p clearfix p_r">
 	            <input id="searchInput" placeholder="输入商户名" class="search-input bg_fff" type="text"/>
@@ -16,11 +16,37 @@
 	    </div>
     </div>
     <div class="plr20 bg_efdade s_10">
-   		<span class="va-m inline_block">金华</span>
-   		<img src="../../images/c-down.png" class="va-m wp16p"/>
-   		<span class="va-m inline_block pl10">金东区</span>
-   		<img src="../../images/c-down.png" class="va-m wp16p"/>
+        <div class="inline_block" id="lTypes">
+   		    <span class="va-m inline_block">美食</span>
+   		    <img src="../../images/c-down.png" class="va-m wp16p"/>
+        </div>
+   		<div class="inline_block" id="lAreas">
+            <span class="va-m inline_block pl10">金东区</span>
+   		    <img src="../../images/c-down.png" class="va-m wp16p"/>
+   		</div>
    	</div>
+</div>
+<div id="mask" class="mask hidden"></div>
+<div class="bg_fff wp100 clist_div hidden" id="cListDiv">
+    <ul class="wp100 consume_ul" id="consumeUl">
+        <!--<li l-type="1">美食</li>
+        <li l-type="3">电影</li>
+        <li l-type="4">酒店</li>
+        <li l-type="5">休闲娱乐</li>
+        <li l-type="2">KTV</li>
+        <li l-type="6">汽车</li>
+        <li l-type="7">周边游</li>
+        <li l-type="8">足疗按摩</li>
+        <li l-type="9">生活服务</li>
+        <li l-type="10">旅游</li>                -->
+    </ul>
+</div>
+<div class="bg_fff wp100 clist_div hidden" id="cAreaDiv">
+    <ul class="wp100 consume_ul" id="consumeAreaUl">
+        <li>金东区</li>
+        <li>某某区</li>
+        <li>啊啊区</li>              
+    </ul>
 </div>
 <div style="height:112px;"></div>
 <div class="plr20 wp100 cons-list">

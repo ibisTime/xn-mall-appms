@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xnjr.moom.front.ao.IDictAO;
+import com.xnjr.moom.front.res.XNlh5034Res;
 
 @Controller
 @RequestMapping(value = "/general/dict")
-public class DictController {
+public class DictController extends BaseController {
     @Autowired
     IDictAO dictAO;
 
@@ -26,5 +27,14 @@ public class DictController {
             @RequestParam(value = "parentKey", required = false) String parentKey) {
         return dictAO.queryDictList(type, parentKey, dkey, orderColumn,
             orderDir);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @RequestMapping(value = "/key", method = RequestMethod.GET)
+    @ResponseBody
+    public XNlh5034Res queryDictByKey(
+            @RequestParam(value = "userId", required = false) String userId,
+            @RequestParam("key") String key) {
+        return dictAO.queryDictByKey(getSessionUserId(userId), key);
     }
 }
