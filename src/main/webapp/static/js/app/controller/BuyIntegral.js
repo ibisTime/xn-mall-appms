@@ -12,7 +12,7 @@ define([
 	    initView();
 
 	    function initView() {
-			$.when( Ajax.get(APIURL + "/account/get", {"currency": "XNB"}, true),
+			$.when( Ajax.get(APIURL + "/account/get", {"currency": "CNY"}, true),
 			 		Ajax.get(APIURL + "/general/dict/key", {"key": RATEKEY}, true) 
 			 )
 			 .then(function(res1, res2){
@@ -20,7 +20,7 @@ define([
 				res2 = res2[0];
 				if(res1.success && res2.success){
 					var data = res1.data;
-					config.accountNumber = data.accountNumber;
+					//config.accountNumber = data.accountNumber;
 					AMOUNT = data.amount;
 					$("#kyje").text("￥" + (+AMOUNT / 1000).toFixed(2));
 					RATE = res2.data.value;
@@ -60,7 +60,7 @@ define([
 			});
 	        $("#sbtn").on("click", function () {
 	            if(validate()){
-					$("#integral").text($("#quality").text());
+					$("#integral").text($("#quality").val());
 					$("#money").text("￥" + $("#amount").text());
 	                $("#od-mask, #od-tipbox").removeClass("hidden");
 	            }
@@ -103,9 +103,10 @@ define([
 			$("#loaddingIcon").removeClass("hidden");
 	        Ajax.post(APIURL + "/account/buyIntegral", config)
 	            .then(function (response) {
+					$("#loaddingIcon").addClass("hidden");
+					$("#od-mask, #od-tipbox").addClass("hidden");
 	                if(response.success){
-						$("#loaddingIcon").addClass("hidden");
-	                    showMsg("积分购买申请提交成功！");
+	                    showMsg("积分购买成功！");
 	                    setTimeout(function(){
 	                    	location.href = "../user/user_info.html";
 	                    }, 1500);

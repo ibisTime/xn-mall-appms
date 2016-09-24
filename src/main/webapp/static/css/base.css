@@ -2556,7 +2556,7 @@ table th, table td {
 .consume-cont .good-div{
 	position: absolute;
 	bottom: 0;
-	right: 10px;
+	right: 0px;
 	font-size: .8rem;
 }
 .consume-cont .good-div img{
@@ -2609,4 +2609,11 @@ table th, table td {
     border-radius: 4px;
     background: #f64444;
     color: #fff;
+}
+.consume-top-a{
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    display: inline-block;
+    height: 30px;
 }

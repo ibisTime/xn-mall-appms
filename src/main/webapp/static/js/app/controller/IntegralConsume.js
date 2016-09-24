@@ -7,6 +7,8 @@ define([
     var code = base.getUrlParam("c") || "",
         name = base.getUrlParam("n");
     
+    initView();
+
     function initView(){
         if(code){
             $("#name").text(name);
@@ -43,6 +45,7 @@ define([
             }else if(+aVal <= 0){
                 showMsg("消费积分必须大于0!");
             }else{
+                $("#integral").text(aVal);                
                 $("#od-mask, #od-tipbox").removeClass("hidden");
             }
         });
@@ -58,13 +61,14 @@ define([
         $("#loaddingIcon").removeClass("hidden");
         Ajax.post(APIURL + "/user/integral/consume", {
             toMerchant: code,
-            quantity: +$("#amount").val() * 1000
+            amount: +$("#amount").val() * 1000
         }).then(function (response) {
                 $("#loaddingIcon").addClass("hidden");
+                $("#od-mask, #od-tipbox").addClass("hidden");
                 if (response.success) {
                     location.href = "./consume_success.html?m=" + response.data;
                 }else{
-                    showMsg("非常遗憾，支付失败!");
+                    showMsg(response.msg);
                 }
             });
     }

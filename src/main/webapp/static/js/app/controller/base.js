@@ -158,7 +158,8 @@ define(['app/util/common', 'app/util/ajax'], function (common, Ajax) {
          (pathname.indexOf("/user/login.html") == -1 && pathname.indexOf("/user/register.html") == -1 
           && pathname.indexOf("/user/findPwd.html") == -1)) 
         || pathname.indexOf("/account") != -1 
-        || (pathname.indexOf("/operator/") != -1 && pathname.indexOf("/operator/buy.html") == -1)){
+        || (pathname.indexOf("/operator/") != -1 && pathname.indexOf("/operator/buy.html") == -1)
+        || pathname.indexOf("/consume/") != -1){
     	if(sessionStorage.getItem("user") == "0"){
     		location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
             sessionStorage.setItem("trade", "0");

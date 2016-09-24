@@ -20,6 +20,7 @@ import com.xnjr.moom.front.req.XN602920Req;
 import com.xnjr.moom.front.req.XN602921Req;
 import com.xnjr.moom.front.req.XN602922Req;
 import com.xnjr.moom.front.req.XN805040Req;
+import com.xnjr.moom.front.req.XN805041Req;
 import com.xnjr.moom.front.req.XN805043Req;
 import com.xnjr.moom.front.req.XN805045Req;
 import com.xnjr.moom.front.req.XN805047Req;
@@ -35,6 +36,7 @@ import com.xnjr.moom.front.res.XN801215Res;
 import com.xnjr.moom.front.res.XN805043Res;
 import com.xnjr.moom.front.res.XN805056Res;
 import com.xnjr.moom.front.res.XNfd0003Res;
+import com.xnjr.moom.front.session.SessionTimeoutException;
 import com.xnjr.moom.front.util.PwdUtil;
 
 /** 
@@ -58,6 +60,19 @@ public class UserAOImpl implements IUserAO {
         req.setUserReferee(userReferee);
         return BizConnecter.getBizData("602601", JsonUtils.object2Json(req),
             XN602601Res.class);
+    }
+
+    @Override
+    public Object doReg(String mobile, String loginPwd, String smsCaptcha,
+            String userReferee) {
+        XN805041Req req = new XN805041Req();
+        req.setMobile(mobile);
+        req.setLoginPwd(loginPwd);
+        req.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
+        req.setSmsCaptcha(smsCaptcha);
+        req.setUserReferee(userReferee);
+        return BizConnecter.getBizData("805041", JsonUtils.object2Json(req),
+            Object.class);
     }
 
     @Override
@@ -439,21 +454,25 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public Object integralConsume(String toMerchant, String fromUser,
-            String quantity, String amount) {
-        if (StringUtils.isBlank(toMerchant)) {
-            throw new BizException("A010001", "商家编号不能为空");
-        }
+    public Object integralConsume(String fromUser, String toMerchant,
+            String amount, String cnyAmount, String jfCashBack,
+            String cnyCashBack) {
         if (StringUtils.isBlank(fromUser)) {
-            throw new BizException("A010001", "用户编号不能为空");
+            throw new SessionTimeoutException("登录链接已超时，请重新登录.");
         }
-        if (StringUtils.isBlank(quantity)) {
+        if (StringUtils.isBlank(toMerchant)) {
+            throw new BizException("A010001", "商家不能为空");
+        }
+        if (StringUtils.isBlank(amount)) {
             throw new BizException("A010001", "积分数量不能为空");
         }
+        cnyAmount = "0";
         XN602906Req req = new XN602906Req();
         req.setAmount(amount);
+        req.setCnyAmount(cnyAmount);
+        req.setCnyCashBack(cnyCashBack);
         req.setFromUser(fromUser);
-        req.setQuantity(quantity);
+        req.setJfCashBack(jfCashBack);
         req.setToMerchant(toMerchant);
         return BizConnecter.getBizData("602906", JsonUtils.object2Json(req),
             Object.class);
@@ -467,15 +486,6 @@ public class UserAOImpl implements IUserAO {
         if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "用户编号不能为空");
         }
-        if (StringUtils.isBlank(province)) {
-            throw new BizException("A010001", "省不能为空");
-        }
-        if (StringUtils.isBlank(city)) {
-            throw new BizException("A010001", "市不能为空");
-        }
-        if (StringUtils.isBlank(area)) {
-            throw new BizException("A010001", "区不能为空");
-        }
         if (StringUtils.isBlank(start)) {
             throw new BizException("A010001", "第几页不能为空");
         }
@@ -484,10 +494,10 @@ public class UserAOImpl implements IUserAO {
         }
         status = "1";
         XN602920Req req = new XN602920Req();
+        // req.setUserId(userId);
         req.setArea(area);
         req.setCity(city);
         req.setLimit(limit);
-        req.setUserId(userId);
         req.setName(name);
         req.setPriority(priority);
         req.setProvince(province);
@@ -509,20 +519,10 @@ public class UserAOImpl implements IUserAO {
         if (StringUtils.isBlank(userId)) {
             throw new BizException("A010001", "用户编号不能为空");
         }
-        if (StringUtils.isBlank(province)) {
-            throw new BizException("A010001", "省不能为空");
-        }
-        if (StringUtils.isBlank(city)) {
-            throw new BizException("A010001", "市不能为空");
-        }
-        if (StringUtils.isBlank(area)) {
-            throw new BizException("A010001", "区不能为空");
-        }
         status = "1";
         XN602921Req req = new XN602921Req();
         req.setArea(area);
         req.setCity(city);
-        req.setUserId(userId);
         req.setName(name);
         req.setPriority(priority);
         req.setProvince(province);

@@ -1,5 +1,6 @@
 package com.xnjr.moom.front.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.xnjr.moom.front.ao.IDictAO;
 import com.xnjr.moom.front.ao.IUserAO;
 import com.xnjr.moom.front.enums.EBoolean;
 import com.xnjr.moom.front.res.Page;
+import com.xnjr.moom.front.res.XNlh5034Res;
 
 /** 
  * @author: miyb 
@@ -165,6 +167,12 @@ public class AccountController extends BaseController {
             @RequestParam(value = "userId", required = false) String userId,
             @RequestParam("amount") String amount,
             @RequestParam(value = "cnyAmount", required = false) String cnyAmount) {
+        XNlh5034Res res = dictAO.queryDictByKey(getSessionUserId(userId),
+            "GMJFDH_RATE");
+        BigDecimal big1 = new BigDecimal(amount);
+        BigDecimal big2 = new BigDecimal(res.getValue());
+
+        cnyAmount = (int) (big1.multiply(big2).doubleValue()) + "";
         return accountAO.buyIntegral(getSessionUserId(userId), amount,
             cnyAmount);
     }

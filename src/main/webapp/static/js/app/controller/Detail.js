@@ -44,7 +44,7 @@ define([
 	                if (response.success) {
 						span.text(+span.text() + 1);
 					}else{
-						showMsg("非常遗憾，点赞失败!");
+						showMsg(response.msg);
 					}
 				});
 	    }
@@ -60,7 +60,7 @@ define([
 						$("#totalDzNum").text(data.totalDzNum);
 						$("#advert").text(data.advert);
 						$("#address").text(data.province + " " + data.city + " " + data.area + " " + data.address);
-						$("#detailCont").append('<a class="fr clearfix" href="tel://'+data.bookMobile+'"><img class="wp16p va-m" src="../../images/phone.png"/></a>');
+						$("#detailCont").append('<a class="fr clearfix" href="tel://'+data.bookMobile+'"><img class="wp16p va-m" src="/static/images/phone.png"/></a>');
 	                }else{
 	                	doError();
 	                }

@@ -1,8 +1,6 @@
 package com.xnjr.moom.front.req;
 
 public class XN602920Req {
-    // 用户编号
-    private String userId;
 
     // 登录名
     private String loginName;
@@ -65,14 +63,6 @@ public class XN602920Req {
 
     public void setOrderDir(String orderDir) {
         this.orderDir = orderDir;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getName() {

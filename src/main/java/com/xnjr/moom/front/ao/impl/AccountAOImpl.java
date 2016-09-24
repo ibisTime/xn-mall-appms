@@ -17,13 +17,13 @@ import com.xnjr.moom.front.ao.IAccountAO;
 import com.xnjr.moom.front.exception.BizException;
 import com.xnjr.moom.front.http.BizConnecter;
 import com.xnjr.moom.front.http.JsonUtils;
+import com.xnjr.moom.front.req.XN602906Req;
 import com.xnjr.moom.front.req.XN802005Req;
 import com.xnjr.moom.front.req.XN802010Req;
 import com.xnjr.moom.front.req.XN802013Req;
 import com.xnjr.moom.front.req.XN802021Req;
 import com.xnjr.moom.front.req.XN802110Req;
 import com.xnjr.moom.front.req.XN802211Req;
-import com.xnjr.moom.front.req.XN802314Req;
 import com.xnjr.moom.front.req.XN802315Req;
 import com.xnjr.moom.front.req.XN803900Req;
 import com.xnjr.moom.front.req.XNfd0032Req;
@@ -222,9 +222,9 @@ public class AccountAOImpl implements IAccountAO {
             Object.class);
     }
 
-    public Object fxIntegral(String fromUserId, String toUserId, String amount,
+    public Object fxIntegral(String fromUser, String toMerchant, String amount,
             String cnyAmount, String jfCashBack, String cnyCashBack) {
-        if (StringUtils.isBlank(fromUserId)) {
+        if (StringUtils.isBlank(fromUser)) {
             throw new SessionTimeoutException("登录链接已超时，请重新登录.");
         }
         if (StringUtils.isBlank(amount)) {
@@ -233,15 +233,15 @@ public class AccountAOImpl implements IAccountAO {
         if (StringUtils.isBlank(cnyAmount)) {
             throw new BizException("A010001", "人民币数量不能为空");
         }
-        toUserId = "U201600000000000001";
-        XN802314Req req = new XN802314Req();
+        toMerchant = "U201600000000000001";
+        XN602906Req req = new XN602906Req();
         req.setAmount(amount);
         req.setCnyAmount(cnyAmount);
         req.setCnyCashBack(cnyCashBack);
-        req.setFromUserId(fromUserId);
+        req.setFromUser(fromUser);
         req.setJfCashBack(jfCashBack);
-        req.setToUserId(toUserId);
-        return BizConnecter.getBizData("802314", JsonUtils.object2Json(req),
+        req.setToMerchant(toMerchant);
+        return BizConnecter.getBizData("602906", JsonUtils.object2Json(req),
             Object.class);
     }
 
@@ -252,7 +252,6 @@ public class AccountAOImpl implements IAccountAO {
         if (StringUtils.isBlank(amount)) {
             throw new BizException("A010001", "积分数量不能为空");
         }
-        cnyAmount = "0";
         XN802315Req req = new XN802315Req();
         req.setAmount(amount);
         req.setCnyAmount(cnyAmount);

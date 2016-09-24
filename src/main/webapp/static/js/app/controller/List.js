@@ -8,6 +8,8 @@ define([
     $(function () {
     	var url = APIURL + '/user/business/page',
 			type = base.getUrlParam("t") || "",
+			prov = base.getUrlParam("p") || "",
+			city = base.getUrlParam("c") || "",
 			conTypes = dict.get("consumeType"),
     		config = {
 				type: type,
@@ -17,9 +19,12 @@ define([
 				limit: 15,
     	        start: 1,
     	        orderDir: "desc",
-    	        orderColumn: "totalDzNum"
+    	        orderColumn: "total_dz_num"
     	    }, first = true, isEnd = false, canScrolling = false,
-			contentTmpl = __inline("../ui/consume.handlebars");
+			contentTmpl = __inline("../ui/consume.handlebars"),
+			areaOrCity = city ? "area" : "city",
+			citylist, areaArr = [];
+		
 
 		if(sessionStorage.getItem("user") !== "1"){
             location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
@@ -28,10 +33,20 @@ define([
         }
 
 	    function initView() {
-			addLoading();
-			addTypes();
-			businessPage();
-	        addListeners();
+
+			$.getJSON('/static/js/lib/city.min.json', function(data){
+				
+				citylist = data.citylist;
+				config.province = citylist[prov].p
+				if(city){
+					config.city = citylist[prov].c[city].n;
+				}
+				addLoading();
+				addTypes();
+				addAreas();
+				businessPage();
+				addListeners();
+			});
 	    }
 		
 		function addTypes(){
@@ -43,9 +58,28 @@ define([
 			$("#consumeUl").html(html);
 		}
 
+		function addAreas(){
+			var html = "<li class='all'>全部</li>";
+			if(city){
+				areaArr = citylist[prov].c[city].a;
+				$.each(areaArr, function(i, area){
+					html += '<li>'+area.s+'</li>';
+				});
+			}else{
+				areaArr = citylist[prov].c;
+				$.each(areaArr, function(i, area){
+					html += '<li>'+area.n+'</li>';
+				});
+			}
+			$("#consumeAreaUl").html(html);
+			$("#lAreas").find("span").text("全部");
+		}
+
 	    function addListeners() {
 			//点赞
-			$("#consume-ul").on("click", ".good-div", function(){
+			$("#consume-ul").on("click", ".good-div", function(e){
+				e.preventDefault();
+				e.stopPropagation();
 				praise(this);
 			});
 			//下拉加载
@@ -71,7 +105,18 @@ define([
 			});
 			//类型选择按钮
 			$("#lTypes").on("click", function(){
-				$("#mask, #cListDiv").removeClass("hidden");
+				var mask = $("#mask"), cList = $("#cListDiv");
+				if(cList.hasClass("hidden")){
+					if(mask.hasClass("hidden")){
+						mask.removeClass("hidden");
+					}else{
+						$("#cAreaDiv").addClass("hidden");
+					}
+					cList.removeClass("hidden");
+				}else{
+					mask.addClass("hidden");
+					cList.addClass("hidden");
+				}
 			});
 			//类型选择列表（酒店、周边游等）
 			$("#consumeUl").on("click", "li", function(){
@@ -81,12 +126,30 @@ define([
 			});
 			//选择区域按钮
 			$("#lAreas").on("click", function(){
-				$("#mask, #cAreaDiv").removeClass("hidden");
+
+				var mask = $("#mask"), cAreaDiv = $("#cAreaDiv");
+				if(cAreaDiv.hasClass("hidden")){
+					if(mask.hasClass("hidden")){
+						mask.removeClass("hidden");
+					}else{
+						$("#cListDiv").addClass("hidden");
+					}
+					cAreaDiv.removeClass("hidden");
+				}else{
+					mask.addClass("hidden");
+					cAreaDiv.addClass("hidden");
+				}
 			});
 			//区域选择列表
 			$("#consumeAreaUl").on("click", "li", function(){
-				config.area = $(this).text();
-				$("#lAreas").find("span").text(config.area);
+				var me = $(this);
+				if(me.hasClass("all")){
+					config[areaOrCity] = "";
+					$("#lAreas").find("span").text("全部");
+				}else{
+					config[areaOrCity] = me.text();
+					$("#lAreas").find("span").text(config[areaOrCity]);
+				}
 				doAreaOrTypeChose();
 			});
 			//点击覆盖层时，隐藏下拉列表
@@ -99,6 +162,7 @@ define([
 			canScrolling = false;
 			isEnd = false;
 			first = true;
+			config.start = 1;
 			$("#consume-ul").empty();
 			addLoading();
 			businessPage();
@@ -119,7 +183,7 @@ define([
 					limit: 10,
 					start: 1,
 					orderDir: "desc",
-					orderColumn: "totalDzNum"
+					orderColumn: "total_dz_num"
 				};
 			Ajax.post(url, sConfig)
 	            .then(function (response) {
@@ -127,9 +191,11 @@ define([
 						var html = "", curList = response.data.list;
 						if(curList.length){
 							curList.forEach(function(item){
-								html += '<li><a href="./detail.html?c='+item.code+'">'+item.name+'</a></li>';
+								html += '<li><a class="show" href="./detail.html?c='+item.code+'">'+item.name+'</a></li>';
 							});
 							$("#searchUl").removeClass("hidden").html(html);
+						}else{
+							$("#searchUl").empty().addClass("hidden");
 						}
 					}
 				});
@@ -146,7 +212,7 @@ define([
 	                if (response.success) {
 						span.text(+span.text() + 1);
 					}else{
-						showMsg("非常遗憾，点赞失败!");
+						showMsg(response.msg);
 					}
 				});
 	    }

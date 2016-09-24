@@ -1,8 +1,6 @@
 package com.xnjr.moom.front.req;
 
 public class XN602921Req {
-    // 用户编号
-    private String userId;
 
     // 登录名
     private String loginName;
@@ -30,14 +28,6 @@ public class XN602921Req {
 
     // 更新人
     private String updater;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getLoginName() {
         return loginName;

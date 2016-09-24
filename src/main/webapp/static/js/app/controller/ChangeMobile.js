@@ -38,10 +38,12 @@ define([
                                         $("#getVerification").text((60 - i) + "s");
                                     } else {
                                     	$("#getVerification").text("获取验证码").removeClass("cancel-send")
-			                            	.one("click", function(){
+			                            	.one("click", function innerFunc(){
 			                                	if(validate_mobile()){
 			                                		handleSendVerifiy();
-			                                	}
+			                                	}else{
+                                                    $("#getVerification").one("click", innerFunc);
+                                                }
 			                            	});
                                     }
                                 }, 1000 * i);
@@ -51,7 +53,9 @@ define([
                     	$("#getVerification").one("click", function(){
                         	if(validate_mobile()){
                         		handleSendVerifiy();
-                        	}
+                        	}else{
+                                $("#getVerification").one("click", innerFunc);
+                            }
                     	});
 		            	var parent = $("#verification").parent();
 	                    var span = parent.find("span.warning")[2];

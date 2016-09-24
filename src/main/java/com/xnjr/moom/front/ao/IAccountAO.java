@@ -109,18 +109,17 @@ public interface IAccountAO {
 
     /**
      * 返现积分
-     * @param fromUserId
-     * @param toUserId
-     * @param direction
+     * @param fromUser
+     * @param toMerchant
      * @param amount
      * @param cnyAmount
      * @param jfCashBack
      * @param cnyCashBack
      * @return 
-     * @create: 2016年9月22日 下午8:22:52 wulq
+     * @create: 2016年9月23日 下午1:58:46 wulq
      * @history:
      */
-    public Object fxIntegral(String fromUserId, String toUserId, String amount,
+    public Object fxIntegral(String fromUser, String toMerchant, String amount,
             String cnyAmount, String jfCashBack, String cnyCashBack);
 
     /**

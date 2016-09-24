@@ -1,5 +1,7 @@
 package com.xnjr.moom.front.controller;
 
+import java.math.BigDecimal;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +72,24 @@ public class MemberController extends BaseController {
             throw new BizException("83099901", "图片验证码不正确");
         }
         return userAO.doRegister(mobile, userReferee);
+    }
+
+    // 用户注册（密码短信方式）
+    @RequestMapping(value = "/reg", method = RequestMethod.POST)
+    @ResponseBody
+    public Object doReg(@RequestParam("mobile") String mobile,
+            @RequestParam("captcha") String captcha,
+            @RequestParam("loginPwd") String loginPwd,
+            @RequestParam("smsCaptcha") String smsCaptcha,
+            @RequestParam("userReferee") String userReferee) {
+        String sessionId = ControllerContext.getRequest().getSession().getId();
+        boolean flag = imageCaptchaService.validateResponseForID(sessionId,
+            captcha);
+        imageCaptchaService.removeCaptcha(sessionId);
+        if (!flag) { // 验证码正确
+            throw new BizException("83099901", "图片验证码不正确");
+        }
+        return userAO.doReg(mobile, loginPwd, smsCaptcha, userReferee);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -335,17 +355,17 @@ public class MemberController extends BaseController {
     public Object integralConsume(
             @RequestParam("toMerchant") String toMerchant,
             @RequestParam(value = "fromUser", required = false) String fromUser,
-            @RequestParam("quantity") String quantity,
-            @RequestParam(value = "amount", required = false) String amount) {
-
-        userAO.integralConsume(toMerchant, getSessionUserId(fromUser),
-            quantity, amount);
+            @RequestParam("amount") String amount,
+            @RequestParam(value = "cnyAmount", required = false) String cnyAmount,
+            @RequestParam(value = "jfCashBack", required = false) String jfCashBack,
+            @RequestParam(value = "cnyCashBack", required = false) String cnyCashBack) {
         XNlh5034Res res = dictAO.queryDictByKey(getSessionUserId(fromUser),
             "SJXFFX_RATE");
-        String cnyCashBack = (Integer.parseInt(res.getValue()) * Integer
-            .parseInt(quantity)) + "";
-        accountAO.fxIntegral(getSessionUserId(fromUser), "", quantity, "0", "",
-            cnyCashBack);
+        BigDecimal big1 = new BigDecimal(amount);
+        BigDecimal big2 = new BigDecimal(res.getValue());
+        cnyCashBack = (int) (big1.multiply(big2).doubleValue()) + "";
+        userAO.integralConsume(getSessionUserId(fromUser), toMerchant, amount,
+            cnyAmount, "0", cnyCashBack);
         return cnyCashBack;
     }
 
@@ -357,9 +377,9 @@ public class MemberController extends BaseController {
             @RequestParam(value = "loginName", required = false) String loginName,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "type", required = false) String type,
-            @RequestParam("province") String province,
-            @RequestParam("city") String city,
-            @RequestParam("area") String area,
+            @RequestParam(value = "province", required = false) String province,
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "area", required = false) String area,
             @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "priority", required = false) String priority,
             @RequestParam(value = "updater", required = false) String updater,
@@ -368,8 +388,8 @@ public class MemberController extends BaseController {
             @RequestParam(value = "orderDir", required = false) String orderDir,
             @RequestParam(value = "orderColumn", required = false) String orderColumn) {
         return userAO.businessPage(getSessionUserId(userId), loginName, name,
-            type, province, city, area, status, priority, updater, limit,
-            start, orderDir, orderColumn);
+            type, province, city, area, status, priority, updater, start,
+            limit, orderDir, orderColumn);
     }
 
     // 列表查询商家信息
@@ -380,9 +400,9 @@ public class MemberController extends BaseController {
             @RequestParam(value = "loginName", required = false) String loginName,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "type", required = false) String type,
-            @RequestParam("province") String province,
-            @RequestParam("city") String city,
-            @RequestParam("area") String area,
+            @RequestParam(value = "province", required = false) String province,
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "area", required = false) String area,
             @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "priority", required = false) String priority,
             @RequestParam(value = "updater", required = false) String updater) {

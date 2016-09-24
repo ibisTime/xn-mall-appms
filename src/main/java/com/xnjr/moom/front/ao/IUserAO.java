@@ -37,6 +37,19 @@ public interface IUserAO {
     public XN602601Res doRegister(String mobile, String userReferee);
 
     /**
+     * 用户注册(手填密码)
+     * @param mobile
+     * @param loginPwd
+     * @param smsCaptcha
+     * @param userReferee
+     * @return 
+     * @create: 2016年9月24日 下午4:35:57 wulq
+     * @history:
+     */
+    public Object doReg(String mobile, String loginPwd, String smsCaptcha,
+            String userReferee);
+
+    /**
      * 身份认证
      * @param userId
      * @param realName
@@ -263,16 +276,19 @@ public interface IUserAO {
 
     /**
      * 积分消费
-     * @param toMerchant
      * @param fromUser
-     * @param quantity
+     * @param toMerchant
      * @param amount
+     * @param cnyAmount
+     * @param jfCashBack
+     * @param cnyCashBack
      * @return 
-     * @create: 2016年9月21日 下午2:11:37 wulq
+     * @create: 2016年9月23日 下午3:19:28 wulq
      * @history:
      */
-    public Object integralConsume(String toMerchant, String fromUser,
-            String quantity, String amount);
+    public Object integralConsume(String fromUser, String toMerchant,
+            String amount, String cnyAmount, String jfCashBack,
+            String cnyCashBack);
 
     /**
      * 分页查询商家信息
