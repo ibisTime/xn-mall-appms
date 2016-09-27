@@ -176,4 +176,24 @@ public class AccountController extends BaseController {
         return accountAO.buyIntegral(getSessionUserId(userId), amount,
             cnyAmount);
     }
+
+    // 积分消费
+    @RequestMapping(value = "/integral/consume", method = RequestMethod.POST)
+    @ResponseBody
+    public Object integralConsume(
+            @RequestParam("toMerchant") String toMerchant,
+            @RequestParam(value = "fromUser", required = false) String fromUser,
+            @RequestParam("amount") String amount,
+            @RequestParam(value = "cnyAmount", required = false) String cnyAmount,
+            @RequestParam(value = "jfCashBack", required = false) String jfCashBack,
+            @RequestParam(value = "cnyCashBack", required = false) String cnyCashBack) {
+        XNlh5034Res res = dictAO.queryDictByKey(getSessionUserId(fromUser),
+            "SJXFFX_RATE");
+        BigDecimal big1 = new BigDecimal(amount);
+        BigDecimal big2 = new BigDecimal(res.getValue());
+        cnyCashBack = (int) (big1.multiply(big2).doubleValue()) + "";
+        accountAO.integralConsume(getSessionUserId(fromUser), toMerchant,
+            amount, cnyAmount, "0", cnyCashBack);
+        return cnyCashBack;
+    }
 }

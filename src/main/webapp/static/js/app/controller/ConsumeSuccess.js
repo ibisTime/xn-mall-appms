@@ -8,7 +8,7 @@ define([
     
     function initView(){
         if(money){
-            $("#money").text( (+money / 1000).toFixed(2) );
+            $("#money").text( (+money / 1000).toFixed(2) + "元" );
         }else{
             showMsg("无法获取返现金额!");
         }

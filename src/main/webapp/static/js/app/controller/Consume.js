@@ -5,7 +5,7 @@ define([
     'Handlebars'
 ], function (base, Ajax, dialog, Handlebars) {
     $(function () {
-    	var url = APIURL + '/user/business/page',
+    	var url = APIURL + '/commodity/business/page',
     		config = {
     			province: "",
     	        city: "",
@@ -16,18 +16,17 @@ define([
     	        orderColumn: "total_dz_num"
     	    }, first = true, isEnd = false, canScrolling = false,
 			contentTmpl = __inline("../ui/consume.handlebars"),
-			searchData = [], PROVINCE, CITY;
+			searchData = [],	//保存全国的城市信息，供搜索用
+			PROVINCE, CITY;		//当前定位的城市
 
-		if(sessionStorage.getItem("user") !== "1"){
-            location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
-        }else{
-            initView();
-        }
+		initView();
 		
 	    function initView() {
 			PROVINCE = sessionStorage.getItem("province");
 			CITY = sessionStorage.getItem("city") || "";
+			//如果session中没有保存地理信息，则重新获取
 			if(!PROVINCE){
+				//获取金纬度
 				var geolocation = new BMap.Geolocation();
 				geolocation.getCurrentPosition(function(r){
 					if(this.getStatus() == BMAP_STATUS_SUCCESS){
@@ -38,12 +37,16 @@ define([
 					}        
 				},{enableHighAccuracy: true});
 			}else{
+				/*oss端保存 北京->朝阳区时，是province=北京、city=朝阳区、area=0；而保存浙江->杭州->余杭区时，是province=浙江、city=杭州、area=余杭区。
+				  当前页面是按照倒数第二级去查找。如果是 北京->朝阳区，则按北京查，如果是 浙江->杭州->余杭区，则按 浙江->杭州去查询。
+				  百度定位里，如果是 北京->朝阳区 这种，它返回的信息是 province=北京，city=北京。
+				*/
 				CITY = CITY || PROVINCE;
 				getLocationJSON();
 			}
 	        addListeners();
 	    }
-
+		//根据金纬度获取当前城市名称
 		function showPosition(longitude, latitude){
 			var point = new BMap.Point(longitude, latitude);
 			var geoc = new BMap.Geocoder();
@@ -54,8 +57,10 @@ define([
 				getLocationJSON();
 			});
 		}
+		//获取全国所有城市信息
 		function getLocationJSON(){
 			$("#loaddingIcon").addClass("hidden");
+			addLoading();
 			$.getJSON('/static/js/lib/city.min.json', function(data){
 					citylist = data.citylist;
 					var	html = "", k = 0;
@@ -63,7 +68,9 @@ define([
 						//省市区
 						if(prov.c[0].a){
 							$.each(prov.c, function(j, city){
+								//按顺序保存位置信息，工搜索用
 								searchData.push(city.n);
+								//如果是当前定位的位置，则显示并保存到session中
 								if(city.n == CITY  || CITY.indexOf(city.n) != -1 || city.n.indexOf(CITY) != -1){
 									html += '<li class="cityn on" prov="'+i+'" city="'+j+'">'+city.n+'</li>';
 									$("#nowDiv").html('<input type="button" class="btn" id="nowCity" prov="'+i+'" city="'+j+'" value="'+city.n+'"/>');
@@ -72,13 +79,17 @@ define([
 									$("#city").find("span").text(city.n);
 									sessionStorage.setItem("province", prov.p);
 									sessionStorage.setItem("city", city.n);
+									//根据当前位置区查找商家信息
 									businessPage();
 								}else{
 									html += '<li class="cityn" prov="'+i+'" city="'+j+'">'+city.n+'</li>';
 								}
 							});
+						//市区
 						}else{
+							//按顺序保存位置信息，工搜索用
 							searchData.push(prov.p);
+							//如果是当前定位的位置，则显示并保存到session中
 							if(prov.p == PROVINCE || PROVINCE.indexOf(prov.p) != -1 || prov.p.indexOf(PROVINCE) != -1){
 								$("#nowDiv").html('<input type="button" class="btn" id="nowCity" prov="'+i+'" value="'+prov.p+'"/>');
 								html += '<li class="cityn on" prov="'+i+'">'+prov.p+'</li>';
@@ -87,6 +98,7 @@ define([
 								sessionStorage.setItem("province", prov.p);
 								sessionStorage.setItem("city", "");
 								$("#city").find("span").text(config.province);
+								//根据当前位置区查找商家信息
 								businessPage();
 							}else{
 								html += '<li class="cityn" prov="'+i+'">'+prov.p+'</li>';
@@ -97,11 +109,13 @@ define([
 				});
 		}
 	    function addListeners() {
+			//点赞
 			$("#consume-ul").on("click", ".good-div", function(e){
 				e.preventDefault();
 				e.stopPropagation();
 				praise(this);
 			});
+			//页面下拉加载
 			$(window).on("scroll", function(){
 	        	var me = $(this);
 	        	if( canScrolling && !isEnd && ($(document).height() - $(window).height() - 10 <= $(document).scrollTop())
@@ -112,15 +126,28 @@ define([
 	        		businessPage();
 	        	}
 	        });
-			$("#searchInput").on("keyup", function(){
-				hideMaskAndUl();
-				var sVal = $(this).val();
-				if(!sVal || sVal.trim() === ""){
-					$("#searchUl").addClass("hidden").empty();
-				}else{
-					base.throttle(searchBusiness, this, 150);
+			//搜索商家
+			(function(){
+				var str = "";
+				
+				$("#searchInput").on("focus", function(){
+					var time = setInterval(hasInput, 150);  
+					$(this).on('blur',function(){  
+						clearInterval(time);  
+					}); 
+					hideMaskAndUl();
+				});
+				function hasInput(){  
+					var sVal = $("#searchInput").val();
+					if(!sVal || sVal.trim() === ""){
+						$("#searchUl").addClass("hidden").empty();
+						str = "";
+					}else if(sVal != str){
+						searchBusiness($('#searchInput')[0]);
+						str = sVal;
+					}
 				}
-			});
+			})();
 			//选择城市按钮
 			$("#city").on("click", function(){
 				if($("#consumeDiv").hasClass("hidden")){
@@ -139,6 +166,7 @@ define([
 					city = li.attr("city");
 				$("#consumeUl").find("li.on").removeClass("on");
 				li.addClass("on");
+				//根据当前选择的城市更新config和session
 				config.province = citylist[prov].p;
 				config.city = city && citylist[prov].c[city].n || "";
 				config.start = 1;
@@ -146,20 +174,22 @@ define([
 				sessionStorage.setItem("city", config.city);
 				$("#nowCity").val(value);
 				$("#city").find("span").text(value);
+				//重新获取商家信息
 				doCityChose();
 			});
 			//点击覆盖层时，隐藏下拉列表
 			$("#mask").on("click", function(){
 				hideMaskAndUl();
 			});
+			//搜索城市
 			$("#searchCity").on("click", function(){
 				var name = $("#cityInput").val().trim(), flag = false;
 				if(!name){
-					showMsg("搜索条件不能为空!");
 					return;
 				}
 				$("#sResult").addClass("hidden")
 				for(var i = 0; i < searchData.length; i++){
+					//找到用户搜索的城市
 					if(searchData[i].indexOf(name) != -1){
 						var li =  $("#consumeUl").find("li:eq("+i+")");
 						var prov = li.attr("prov"), city = li.attr("city");
@@ -168,6 +198,7 @@ define([
 						break;
 					}
 				}
+				//如果没有找到相关城市
 				if(!flag){
 					$("#sResult").addClass("hidden");
 					$("#noResult").removeClass("hidden");
@@ -175,6 +206,7 @@ define([
 					$("#noResult").addClass("hidden");
 				}
 			});
+			//用户选择类型时（美食、电影等）
 			$("#con-table").on("click", "a", function(){
 				var type = $(this).attr("l_type"),
 					li = $("#consumeUl").find("li.on"),
@@ -186,6 +218,7 @@ define([
 				}
 				location.href = url;
 			});
+			//用户点击搜索城市结果的按钮
 			$("#sResult").on("click", "input", function(){
 				var idx = $(this).attr("indx"),
 					$conUl = $("#consumeUl");
@@ -209,13 +242,13 @@ define([
 		function hideMaskAndUl(){
 			$("#mask, #consumeDiv").addClass("hidden");
 		}
-
-		function searchBusiness(){
+		//搜索商家
+		function searchBusiness(me){
 			var sConfig = {
 					province: config.province,
 					city: config.city,
 					area: config.area,
-					name: this.value,
+					name: me.value,
 					limit: 10,
 					start: 1,
 					orderDir: "desc",
@@ -236,23 +269,25 @@ define([
 					}
 				});
 		}
-	    
+	    //点赞
 	    function praise(me){
 			var $me = $(me),
 				code = $me.closest("li[code]").attr("code"),
 				span = $me.find("span");
 			$("#loaddingIcon1").removeClass("hidden");
-	    	Ajax.post(APIURL + "/user/praise", {toMerchant: code})
-	            .then(function (response) {
+			Ajax.post(APIURL + "/operators/praise", {toMerchant: code})
+				.then(function (response) {
 					$("#loaddingIcon1").addClass("hidden");
-	                if (response.success) {
+					if (response.success) {
 						span.text(+span.text() + 1);
+					}else if(response.timeout){
+                		location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);						
 					}else{
 						showMsg(response.msg);
 					}
 				});
 	    }
-	    
+	    //获取商家
 	    function businessPage(){
 	    	Ajax.post(url, config)
 	            .then(function (response) {

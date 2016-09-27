@@ -14,6 +14,9 @@ import com.xnjr.moom.front.req.XN601007Req;
 import com.xnjr.moom.front.req.XN601026Req;
 import com.xnjr.moom.front.req.XN601042Req;
 import com.xnjr.moom.front.req.XN601043Req;
+import com.xnjr.moom.front.req.XN602920Req;
+import com.xnjr.moom.front.req.XN602921Req;
+import com.xnjr.moom.front.req.XN602922Req;
 
 @Service
 public class CommodityAOImpl implements ICommodityAO {
@@ -145,4 +148,63 @@ public class CommodityAOImpl implements ICommodityAO {
             Object.class);
     }
 
+    @Override
+    public Object businessPage(String loginName, String name, String type,
+            String province, String city, String area, String status,
+            String priority, String updater, String start, String limit,
+            String orderDir, String orderColumn) {
+        if (StringUtils.isBlank(start)) {
+            throw new BizException("A010001", "第几页不能为空");
+        }
+        if (StringUtils.isBlank(limit)) {
+            throw new BizException("A010001", "页面个数不能为空");
+        }
+        status = "1";
+        XN602920Req req = new XN602920Req();
+        req.setArea(area);
+        req.setCity(city);
+        req.setLimit(limit);
+        req.setName(name);
+        req.setPriority(priority);
+        req.setProvince(province);
+        req.setStart(start);
+        req.setStatus(status);
+        req.setType(type);
+        req.setUpdater(updater);
+        req.setOrderColumn(orderColumn);
+        req.setOrderDir(orderDir);
+        req.setLoginName(loginName);
+        return BizConnecter.getBizData("602920", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    @Override
+    public Object businessList(String loginName, String name, String type,
+            String province, String city, String area, String status,
+            String priority, String updater) {
+        status = "1";
+        XN602921Req req = new XN602921Req();
+        req.setArea(area);
+        req.setCity(city);
+        req.setName(name);
+        req.setPriority(priority);
+        req.setProvince(province);
+        req.setStatus(status);
+        req.setType(type);
+        req.setUpdater(updater);
+        req.setLoginName(loginName);
+        return BizConnecter.getBizData("602921", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    @Override
+    public Object business(String code) {
+        if (StringUtils.isBlank(code)) {
+            throw new BizException("A010001", "用户编号不能为空");
+        }
+        XN602922Req req = new XN602922Req();
+        req.setCode(code);
+        return BizConnecter.getBizData("602922", JsonUtils.object2Json(req),
+            Object.class);
+    }
 }

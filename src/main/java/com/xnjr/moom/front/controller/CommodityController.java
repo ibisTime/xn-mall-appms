@@ -105,4 +105,50 @@ public class CommodityController extends BaseController {
     public Object querySubdivisionList(@RequestParam("category") String category) {
         return commodityAO.querySubdivisionList(category);
     }
+
+    // 分页查询商家信息
+    @RequestMapping(value = "/business/page", method = RequestMethod.POST)
+    @ResponseBody
+    public Object businessPage(
+            @RequestParam(value = "loginName", required = false) String loginName,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(value = "province", required = false) String province,
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "area", required = false) String area,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "priority", required = false) String priority,
+            @RequestParam(value = "updater", required = false) String updater,
+            @RequestParam("limit") String limit,
+            @RequestParam("start") String start,
+            @RequestParam(value = "orderDir", required = false) String orderDir,
+            @RequestParam(value = "orderColumn", required = false) String orderColumn) {
+        return commodityAO.businessPage(loginName, name, type, province, city,
+            area, status, priority, updater, start, limit, orderDir,
+            orderColumn);
+    }
+
+    // 列表查询商家信息
+    @RequestMapping(value = "/business/list", method = RequestMethod.POST)
+    @ResponseBody
+    public Object businessList(
+            @RequestParam(value = "loginName", required = false) String loginName,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(value = "province", required = false) String province,
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "area", required = false) String area,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "priority", required = false) String priority,
+            @RequestParam(value = "updater", required = false) String updater) {
+        return commodityAO.businessList(loginName, name, type, province, city,
+            area, status, priority, updater);
+    }
+
+    // 详情查询商家信息
+    @RequestMapping(value = "/business", method = RequestMethod.POST)
+    @ResponseBody
+    public Object business(@RequestParam("code") String code) {
+        return commodityAO.business(code);
+    }
 }

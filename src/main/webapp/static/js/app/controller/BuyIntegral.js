@@ -20,7 +20,6 @@ define([
 				res2 = res2[0];
 				if(res1.success && res2.success){
 					var data = res1.data;
-					//config.accountNumber = data.accountNumber;
 					AMOUNT = data.amount;
 					$("#kyje").text("￥" + (+AMOUNT / 1000).toFixed(2));
 					RATE = res2.data.value;
@@ -44,6 +43,7 @@ define([
 	    }
 
 	    function addListeners() {
+			//购买积分输入框
 	        $("#quality").on("keyup", function(e){
 				var keyCode = e.charCode || e.keyCode;
 				var me = $(this);
@@ -58,6 +58,7 @@ define([
 					$amount.text( (+newVal * RATE).toFixed(2) );
 				}
 			});
+			//确认按钮
 	        $("#sbtn").on("click", function () {
 	            if(validate()){
 					$("#integral").text($("#quality").val());
@@ -65,14 +66,16 @@ define([
 	                $("#od-mask, #od-tipbox").removeClass("hidden");
 	            }
 	        });
+			//提示框确认按钮
 			$("#odOk").on("click", function(){
 				buyIntegral();
 			});
+			//提示框取消按钮
 			$("#odCel").on("click", function(){
 				$("#od-mask, #od-tipbox").addClass("hidden");
 			});
 	    }
-
+		
 		function validate(){
 			var quality = $("#quality").val(),	//	购买数量
 				$amount = $("#amount"),
@@ -97,8 +100,7 @@ define([
 			config.amount = +quality * 1000;
 			return true;
 		}
-	    
-
+	    //购买积分
 	    function buyIntegral() {
 			$("#loaddingIcon").removeClass("hidden");
 	        Ajax.post(APIURL + "/account/buyIntegral", config)
@@ -116,14 +118,14 @@ define([
 	                }
 	            });
 	    }
-
+		//是否是数字
 		function isNumber(code){
 			if(code >= 48 && code <= 57 || code >= 96 && code <= 105){
 				return true;
 			}
 			return false;
 		}
-
+		//左、右、backspace、delete
 		function isSpecialCode(code) {
 			if(code == 37 || code == 39 || code == 8 || code == 46){
 				return true;

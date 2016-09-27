@@ -14,11 +14,20 @@ define([
 		        "bizType": "",
 		        "accountNumber": ""
 		    }, first = true, isEnd = false, canScrolling = true, unit = "积分",
-		    fundType = Dict.get("fundType"), m = base.getUrlParam("m") || "";
+		    fundType = Dict.get("fundType"), m = base.getUrlParam("m") || "", precision = 0;
 
 		initView();
 
 	    function initView() {
+			if(m){
+				document.title = "资金明细";
+				var $iframe = $('<iframe src="/static/images/favicon.ico"></iframe>');
+				$iframe.on('load',function() {
+					setTimeout(function() {
+						$iframe.off('load').remove();
+					}, 0);
+				}).appendTo($("body"));
+			}
 	        Ajax.get(APIURL + "/account/infos/page", {"start": 0, "limit": 8}, true)
 	            .then(function (response) {
 	                if(response.success){
@@ -26,6 +35,7 @@ define([
 	                	//人民币
 	                	if(m){
 	                		unit = "元";
+							precision = 2;
 	                		config.accountNumber = list1.currency == "CNY" ? list1.accountNumber : list2.accountNumber;
 	                	}else{
 	                		config.accountNumber = list1.currency == "CNY" ? list2.accountNumber : list1.accountNumber;
@@ -75,7 +85,7 @@ define([
 							                    '<p class="s_09 t_999 pt10">'+getMyDate(ll.createDatetime)+'</p>' +
 							                '</div>' +
 							                '<div class="wp40 fl tr '+t_class+' s_10">' +
-							                    '<span class="inline_block va-m pt1em">' + prev_f + (+ll.transAmount / 1000).toFixed(0) + unit + '</span>' +
+							                    '<span class="inline_block va-m pt1em">' + prev_f + (+ll.transAmount / 1000).toFixed(precision) + unit + '</span>' +
 							                '</div>' +
 							            '</li>';
 	                        });

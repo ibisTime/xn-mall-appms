@@ -33,13 +33,18 @@ define([
         }
         function validateAccount(){
             var me = $("#account")[0];
+            var reg_mail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/g;
+            var reg_mobile = /^1[3,4,5,7,8]\d{9}$/g;
             if(!me.value || !me.value.trim()){
                 showMsg("支付账号不能为空!");
                 return false;
             }else if(me.value.length > 32){
-	        	showMsg("支付宝账号过长！");
+	        	showMsg("支付宝账号过长!");
 	        	return false;
-	        }
+	        }else if( !reg_mail.test(me.value) && !reg_mobile.test(me.value) ){
+                showMsg("支付宝账号格式错误!");
+                return false;
+            }
             return true;
         }
         function validateAmount() {

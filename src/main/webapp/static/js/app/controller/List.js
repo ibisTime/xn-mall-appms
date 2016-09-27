@@ -6,7 +6,7 @@ define([
     'Handlebars'
 ], function (base, Ajax, dialog, dict, Handlebars) {
     $(function () {
-    	var url = APIURL + '/user/business/page',
+    	var url = APIURL + '/commodity/business/page',
 			type = base.getUrlParam("t") || "",
 			prov = base.getUrlParam("p") || "",
 			city = base.getUrlParam("c") || "",
@@ -22,20 +22,13 @@ define([
     	        orderColumn: "total_dz_num"
     	    }, first = true, isEnd = false, canScrolling = false,
 			contentTmpl = __inline("../ui/consume.handlebars"),
-			areaOrCity = city ? "area" : "city",
+			areaOrCity = city ? "area" : "city",		//如果不是直辖市，则当前页面按照area搜索，否则按照city搜索
 			citylist, areaArr = [];
-		
 
-		if(sessionStorage.getItem("user") !== "1"){
-            location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
-        }else{
-            initView();
-        }
+		initView();
 
 	    function initView() {
-
 			$.getJSON('/static/js/lib/city.min.json', function(data){
-				
 				citylist = data.citylist;
 				config.province = citylist[prov].p
 				if(city){
@@ -48,16 +41,11 @@ define([
 				addListeners();
 			});
 	    }
-		
+		//添加类型列表
 		function addTypes(){
 			$("#lTypes").find("span").text(conTypes[type] || "");
-			var html = "";
-			for(var n in conTypes){
-				html += '<li l-type="'+n+'">'+conTypes[n]+'</li>';
-			}
-			$("#consumeUl").html(html);
 		}
-
+		//添加地区列表
 		function addAreas(){
 			var html = "<li class='all'>全部</li>";
 			if(city){
@@ -95,14 +83,35 @@ define([
 	        	}
 	        });
 			//搜索
-			$("#searchInput").on("keyup", function(){
-				var sVal = $(this).val();
-				if(!sVal || sVal.trim() === ""){
-					$("#searchUl").addClass("hidden").empty();
-				}else{
-					base.throttle(searchBusiness, this, 150);
+			// $("#searchInput").on("keyup", function(){
+			// 	var sVal = $(this).val();
+			// 	if(!sVal || sVal.trim() === ""){
+			// 		$("#searchUl").addClass("hidden").empty();
+			// 	}else{
+			// 		base.throttle(searchBusiness, this, 150);
+			// 	}
+			// });
+			(function(){
+				var str = "";
+				
+				$("#searchInput").on("focus", function(){
+					var time = setInterval(hasInput, 150);  
+					$(this).on('blur',function(){  
+						clearInterval(time);
+					}); 
+					hideMaskAndUl();
+				});
+				function hasInput(){  
+					var sVal = $("#searchInput").val();
+					if(!sVal || sVal.trim() === ""){
+						$("#searchUl").addClass("hidden").empty();
+						str = "";
+					}else if(sVal != str){
+						searchBusiness($('#searchInput')[0]);
+						str = sVal;
+					}
 				}
-			});
+			})();
 			//类型选择按钮
 			$("#lTypes").on("click", function(){
 				var mask = $("#mask"), cList = $("#cListDiv");
@@ -126,7 +135,6 @@ define([
 			});
 			//选择区域按钮
 			$("#lAreas").on("click", function(){
-
 				var mask = $("#mask"), cAreaDiv = $("#cAreaDiv");
 				if(cAreaDiv.hasClass("hidden")){
 					if(mask.hasClass("hidden")){
@@ -173,13 +181,13 @@ define([
 			$("#mask, #cListDiv, #cAreaDiv").addClass("hidden");
 		}
 		//搜索商家
-		function searchBusiness(){
+		function searchBusiness(me){
 			var sConfig = {
 					province: config.province,
 					city: config.city,
 					area: config.area,
 					type: config.type,
-					name: this.value,
+					name: me.value,
 					limit: 10,
 					start: 1,
 					orderDir: "desc",
@@ -206,11 +214,13 @@ define([
 				code = $me.closest("li[code]").attr("code"),
 				span = $me.find("span");
 			$("#loaddingIcon").removeClass("hidden");
-	    	Ajax.post(APIURL + "/user/praise", {toMerchant: code})
+	    	Ajax.post(APIURL + "/operators/praise", {toMerchant: code})
 	            .then(function (response) {
 					$("#loaddingIcon").addClass("hidden");
 	                if (response.success) {
 						span.text(+span.text() + 1);
+					}else if(response.timeout){
+						location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
 					}else{
 						showMsg(response.msg);
 					}

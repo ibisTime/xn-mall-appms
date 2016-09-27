@@ -235,4 +235,14 @@ public interface IOperatorAO {
      * @history:
      */
     public Object confirmReceipt(String code, String userId);
+
+    /**
+     * 对商家点赞
+     * @param toMerchant
+     * @param fromUser
+     * @return 
+     * @create: 2016年9月21日 下午1:59:00 wulq
+     * @history:
+     */
+    public Object praise(String toMerchant, String fromUser);
 }

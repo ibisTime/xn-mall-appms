@@ -76,25 +76,34 @@ define([
 	    }
 	    function validate_realName() {
 	    	var value = $("#realName").val();
+			var reg = /^([\u4E00-\u9FA5])*$/;
 	        if( value == undefined || trim(value) === "" ){
-	            showMsg("真实姓名不能为空！");
+	            showMsg("真实姓名不能为空!");
 	            return false;
 	        }else if( value.length > 20 ){
-	        	showMsg("真实姓名过长！");
+	        	showMsg("真实姓名过长!");
 	            return false;
-	        }
+	        }else if(!reg.test(value)){
+				showMsg("姓名格式错误!");
+				return false;
+			}
 	        return true;
 	    }
 	    function validate_account() {
 	    	var value = $("#account").val();
-	        if( value == undefined || trim(value) === ""){
-	            showMsg("支付宝账号不能为空！");
-	            return false;
-	        }else if(value.length > 32){
-	        	showMsg("支付宝账号过长！");
+            var reg_mail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/g;
+            var reg_mobile = /^1[3,4,5,7,8]\d{9}$/g;
+            if(!value || !value.trim()){
+                showMsg("支付账号不能为空!");
+                return false;
+            }else if(value.length > 32){
+	        	showMsg("支付宝账号过长!");
 	        	return false;
-	        }
-	        return true;
+	        }else if( !reg_mail.test(value) && !reg_mobile.test(value) ){
+                showMsg("支付宝账号格式错误!");
+                return false;
+            }
+            return true;
 	    }
 	    function validate() {
 	        return validate_amount() && validate_realName() && validate_account();

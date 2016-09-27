@@ -71,7 +71,7 @@ define([
                                     '<div class="s_11 tl">'+
                                     '<div><span class="t_red">'+(+curList[i].discountPrice / 1000).toFixed(0)+'</span>积分';
                                     if(curList[i].cnyPrice && +curList[i].cnyPrice){
-                                    	html += '<span class="plr10">+</span><span class="t_red">'+(+curList[i].cnyPrice / 1000).toFixed(2)+'</span>元';
+                                    	html += '<span class="plr4">+</span><span class="t_red">'+(+curList[i].cnyPrice / 1000).toFixed(2)+'</span>元';
                                     }
                                     html += '</div>'+
                                     '<div class="s_10">市场参考价：<span>'+(+curList[i].originalPrice / 1000).toFixed(2)+'</span>元</div>'+
@@ -80,7 +80,7 @@ define([
                                     '<div class="s_11 tl">'+
                                     '<div><span class="t_red">'+(+curList[i+1].discountPrice / 1000).toFixed(0)+'</span>积分';
                                     if(curList[i+1].cnyPrice && +curList[i+1].cnyPrice){
-                                    	html += '<span class="plr10">+</span><span class="t_red">'+(+curList[i+1].cnyPrice / 1000).toFixed(2)+'</span>元';
+                                    	html += '<span class="plr4">+</span><span class="t_red">'+(+curList[i+1].cnyPrice / 1000).toFixed(2)+'</span>元';
                                     }
                                     html += '</div>'+
                                     '<div class="s_10">市场参考价：<span>'+(+curList[i+1].originalPrice / 1000).toFixed(2)+'</span>元</div>'+
@@ -90,7 +90,7 @@ define([
                                     '<div class="s_11 tl">'+
                                     '<div><span class="t_red">'+(+curList[i].discountPrice / 1000).toFixed(0)+'</span>积分';
                                     if(curList[i].cnyPrice && +curList[i].cnyPrice){
-                                    	html += '<span class="plr10">+</span><span class="t_red">'+(+curList[i].cnyPrice / 1000).toFixed(2)+'</span>元';
+                                    	html += '<span class="plr4">+</span><span class="t_red">'+(+curList[i].cnyPrice / 1000).toFixed(2)+'</span>元';
                                     }
                                     html += '</div>'+
                                     '<div class="s_10">市场参考价：<span>'+(+curList[i].originalPrice / 1000).toFixed(2)+'</span>元</div>'+

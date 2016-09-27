@@ -246,4 +246,12 @@ public class OperatorController extends BaseController {
     public Object confirmReceipt(@RequestParam("code") String code) {
         return operatorAO.confirmReceipt(code, getSessionUserId(""));
     }
+
+    // 对商家点赞
+    @RequestMapping(value = "/praise", method = RequestMethod.POST)
+    @ResponseBody
+    public Object praise(@RequestParam("toMerchant") String toMerchant,
+            @RequestParam(value = "fromUser", required = false) String fromUser) {
+        return operatorAO.praise(toMerchant, getSessionUserId(fromUser));
+    }
 }

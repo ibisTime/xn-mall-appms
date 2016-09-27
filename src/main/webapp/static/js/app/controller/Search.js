@@ -70,7 +70,12 @@ define([
 							                '<p class="t_red">'+price.toFixed(0)+'<span class="s_10 t_40pe pl4">积分</span>';
                         		if(d.cnyPrice){
                         			html += "+" + (+d.cnyPrice / 1000).toFixed(2)+'<span class="s_10 t_40pe pl4">元</span></p>';
-                        		}
+                        		}else{
+									html += '</p>';
+								}
+								if(d.originalPrice){
+									html += '<p class="s_10">市场参考价：<span>'+(+d.originalPrice / 1000).toFixed(2)+'</span>元</p>';
+								}
 							    html += '</div></a></li>';
                         	});
 							removeLoading();

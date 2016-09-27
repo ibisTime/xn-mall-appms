@@ -259,4 +259,29 @@ public class AccountAOImpl implements IAccountAO {
         return BizConnecter.getBizData("802315", JsonUtils.object2Json(req),
             Object.class);
     }
+
+    @Override
+    public Object integralConsume(String fromUser, String toMerchant,
+            String amount, String cnyAmount, String jfCashBack,
+            String cnyCashBack) {
+        if (StringUtils.isBlank(fromUser)) {
+            throw new SessionTimeoutException("登录链接已超时，请重新登录.");
+        }
+        if (StringUtils.isBlank(toMerchant)) {
+            throw new BizException("A010001", "商家不能为空");
+        }
+        if (StringUtils.isBlank(amount)) {
+            throw new BizException("A010001", "积分数量不能为空");
+        }
+        cnyAmount = "0";
+        XN602906Req req = new XN602906Req();
+        req.setAmount(amount);
+        req.setCnyAmount(cnyAmount);
+        req.setCnyCashBack(cnyCashBack);
+        req.setFromUser(fromUser);
+        req.setJfCashBack(jfCashBack);
+        req.setToMerchant(toMerchant);
+        return BizConnecter.getBizData("602906", JsonUtils.object2Json(req),
+            Object.class);
+    }
 }

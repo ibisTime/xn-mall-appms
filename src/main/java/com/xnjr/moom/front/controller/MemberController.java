@@ -1,7 +1,5 @@
 package com.xnjr.moom.front.controller;
 
-import java.math.BigDecimal;
-
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,6 @@ import com.xnjr.moom.front.exception.BizException;
 import com.xnjr.moom.front.localToken.UserDAO;
 import com.xnjr.moom.front.res.XN805043Res;
 import com.xnjr.moom.front.res.XN805056Res;
-import com.xnjr.moom.front.res.XNlh5034Res;
 import com.xnjr.moom.front.session.ISessionProvider;
 import com.xnjr.moom.front.session.SessionUser;
 
@@ -341,79 +338,4 @@ public class MemberController extends BaseController {
         return userAO.getHpsList();
     }
 
-    // 对商家点赞
-    @RequestMapping(value = "/praise", method = RequestMethod.POST)
-    @ResponseBody
-    public Object praise(@RequestParam("toMerchant") String toMerchant,
-            @RequestParam(value = "fromUser", required = false) String fromUser) {
-        return userAO.praise(toMerchant, getSessionUserId(fromUser));
-    }
-
-    // 积分消费
-    @RequestMapping(value = "/integral/consume", method = RequestMethod.POST)
-    @ResponseBody
-    public Object integralConsume(
-            @RequestParam("toMerchant") String toMerchant,
-            @RequestParam(value = "fromUser", required = false) String fromUser,
-            @RequestParam("amount") String amount,
-            @RequestParam(value = "cnyAmount", required = false) String cnyAmount,
-            @RequestParam(value = "jfCashBack", required = false) String jfCashBack,
-            @RequestParam(value = "cnyCashBack", required = false) String cnyCashBack) {
-        XNlh5034Res res = dictAO.queryDictByKey(getSessionUserId(fromUser),
-            "SJXFFX_RATE");
-        BigDecimal big1 = new BigDecimal(amount);
-        BigDecimal big2 = new BigDecimal(res.getValue());
-        cnyCashBack = (int) (big1.multiply(big2).doubleValue()) + "";
-        userAO.integralConsume(getSessionUserId(fromUser), toMerchant, amount,
-            cnyAmount, "0", cnyCashBack);
-        return cnyCashBack;
-    }
-
-    // 分页查询商家信息
-    @RequestMapping(value = "/business/page", method = RequestMethod.POST)
-    @ResponseBody
-    public Object businessPage(
-            @RequestParam(value = "userId", required = false) String userId,
-            @RequestParam(value = "loginName", required = false) String loginName,
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "type", required = false) String type,
-            @RequestParam(value = "province", required = false) String province,
-            @RequestParam(value = "city", required = false) String city,
-            @RequestParam(value = "area", required = false) String area,
-            @RequestParam(value = "status", required = false) String status,
-            @RequestParam(value = "priority", required = false) String priority,
-            @RequestParam(value = "updater", required = false) String updater,
-            @RequestParam("limit") String limit,
-            @RequestParam("start") String start,
-            @RequestParam(value = "orderDir", required = false) String orderDir,
-            @RequestParam(value = "orderColumn", required = false) String orderColumn) {
-        return userAO.businessPage(getSessionUserId(userId), loginName, name,
-            type, province, city, area, status, priority, updater, start,
-            limit, orderDir, orderColumn);
-    }
-
-    // 列表查询商家信息
-    @RequestMapping(value = "/business/list", method = RequestMethod.POST)
-    @ResponseBody
-    public Object businessList(
-            @RequestParam(value = "userId", required = false) String userId,
-            @RequestParam(value = "loginName", required = false) String loginName,
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "type", required = false) String type,
-            @RequestParam(value = "province", required = false) String province,
-            @RequestParam(value = "city", required = false) String city,
-            @RequestParam(value = "area", required = false) String area,
-            @RequestParam(value = "status", required = false) String status,
-            @RequestParam(value = "priority", required = false) String priority,
-            @RequestParam(value = "updater", required = false) String updater) {
-        return userAO.businessList(getSessionUserId(userId), loginName, name,
-            type, province, city, area, status, priority, updater);
-    }
-
-    // 详情查询商家信息
-    @RequestMapping(value = "/business", method = RequestMethod.POST)
-    @ResponseBody
-    public Object business(@RequestParam("code") String code) {
-        return userAO.business(code);
-    }
 }

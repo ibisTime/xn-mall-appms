@@ -14,11 +14,6 @@ import com.xnjr.moom.front.req.XN602802Req;
 import com.xnjr.moom.front.req.XN602803Req;
 import com.xnjr.moom.front.req.XN602804Req;
 import com.xnjr.moom.front.req.XN602805Req;
-import com.xnjr.moom.front.req.XN602905Req;
-import com.xnjr.moom.front.req.XN602906Req;
-import com.xnjr.moom.front.req.XN602920Req;
-import com.xnjr.moom.front.req.XN602921Req;
-import com.xnjr.moom.front.req.XN602922Req;
 import com.xnjr.moom.front.req.XN805040Req;
 import com.xnjr.moom.front.req.XN805041Req;
 import com.xnjr.moom.front.req.XN805043Req;
@@ -36,7 +31,6 @@ import com.xnjr.moom.front.res.XN801215Res;
 import com.xnjr.moom.front.res.XN805043Res;
 import com.xnjr.moom.front.res.XN805056Res;
 import com.xnjr.moom.front.res.XNfd0003Res;
-import com.xnjr.moom.front.session.SessionTimeoutException;
 import com.xnjr.moom.front.util.PwdUtil;
 
 /** 
@@ -438,110 +432,4 @@ public class UserAOImpl implements IUserAO {
             Object.class);
     }
 
-    @Override
-    public Object praise(String toMerchant, String fromUser) {
-        if (StringUtils.isBlank(toMerchant)) {
-            throw new BizException("A010001", "商家编号不能为空");
-        }
-        if (StringUtils.isBlank(fromUser)) {
-            throw new BizException("A010001", "用户编号不能为空");
-        }
-        XN602905Req req = new XN602905Req();
-        req.setFromUser(fromUser);
-        req.setToMerchant(toMerchant);
-        return BizConnecter.getBizData("602905", JsonUtils.object2Json(req),
-            Object.class);
-    }
-
-    @Override
-    public Object integralConsume(String fromUser, String toMerchant,
-            String amount, String cnyAmount, String jfCashBack,
-            String cnyCashBack) {
-        if (StringUtils.isBlank(fromUser)) {
-            throw new SessionTimeoutException("登录链接已超时，请重新登录.");
-        }
-        if (StringUtils.isBlank(toMerchant)) {
-            throw new BizException("A010001", "商家不能为空");
-        }
-        if (StringUtils.isBlank(amount)) {
-            throw new BizException("A010001", "积分数量不能为空");
-        }
-        cnyAmount = "0";
-        XN602906Req req = new XN602906Req();
-        req.setAmount(amount);
-        req.setCnyAmount(cnyAmount);
-        req.setCnyCashBack(cnyCashBack);
-        req.setFromUser(fromUser);
-        req.setJfCashBack(jfCashBack);
-        req.setToMerchant(toMerchant);
-        return BizConnecter.getBizData("602906", JsonUtils.object2Json(req),
-            Object.class);
-    }
-
-    @Override
-    public Object businessPage(String userId, String loginName, String name,
-            String type, String province, String city, String area,
-            String status, String priority, String updater, String start,
-            String limit, String orderDir, String orderColumn) {
-        if (StringUtils.isBlank(userId)) {
-            throw new BizException("A010001", "用户编号不能为空");
-        }
-        if (StringUtils.isBlank(start)) {
-            throw new BizException("A010001", "第几页不能为空");
-        }
-        if (StringUtils.isBlank(limit)) {
-            throw new BizException("A010001", "页面个数不能为空");
-        }
-        status = "1";
-        XN602920Req req = new XN602920Req();
-        // req.setUserId(userId);
-        req.setArea(area);
-        req.setCity(city);
-        req.setLimit(limit);
-        req.setName(name);
-        req.setPriority(priority);
-        req.setProvince(province);
-        req.setStart(start);
-        req.setStatus(status);
-        req.setType(type);
-        req.setUpdater(updater);
-        req.setOrderColumn(orderColumn);
-        req.setOrderDir(orderDir);
-        req.setLoginName(loginName);
-        return BizConnecter.getBizData("602920", JsonUtils.object2Json(req),
-            Object.class);
-    }
-
-    @Override
-    public Object businessList(String userId, String loginName, String name,
-            String type, String province, String city, String area,
-            String status, String priority, String updater) {
-        if (StringUtils.isBlank(userId)) {
-            throw new BizException("A010001", "用户编号不能为空");
-        }
-        status = "1";
-        XN602921Req req = new XN602921Req();
-        req.setArea(area);
-        req.setCity(city);
-        req.setName(name);
-        req.setPriority(priority);
-        req.setProvince(province);
-        req.setStatus(status);
-        req.setType(type);
-        req.setUpdater(updater);
-        req.setLoginName(loginName);
-        return BizConnecter.getBizData("602921", JsonUtils.object2Json(req),
-            Object.class);
-    }
-
-    @Override
-    public Object business(String code) {
-        if (StringUtils.isBlank(code)) {
-            throw new BizException("A010001", "用户编号不能为空");
-        }
-        XN602922Req req = new XN602922Req();
-        req.setCode(code);
-        return BizConnecter.getBizData("602922", JsonUtils.object2Json(req),
-            Object.class);
-    }
 }

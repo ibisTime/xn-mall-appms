@@ -4,17 +4,13 @@ define([
     'app/util/dialog'
 ], function (base, Ajax, dialog) {
     $(function () {
-    	var url = APIURL + '/user/business',
-			code = base.getUrlParam("c") || ""
+    	var url = APIURL + '/commodity/business',
+			code = base.getUrlParam("c") || "",
     		config = {
 				code: code
     	    };
 
-		if(sessionStorage.getItem("user") !== "1"){
-            location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
-        }else{
-            initView();
-        }
+		initView();
 
 	    function initView() {
 			if(code){
@@ -24,31 +20,34 @@ define([
 				$("#cont").remove();
 				showMsg("未传入商家编号!");
 			}
-			
 	    }
 	    function addListeners() {
+			//点赞
 			$("#dzIcon").on("click", function(){
 				praise();
 			});
+			//积分消费
 			$("#sbtn").on("click", function(){
 				location.href = "./integral_consume.html?c=" + code + "&n=" + $("#name").text();
 			});
 	    }
-
+		//点赞
 	    function praise(){
 			var span = $("#totalDzNum");
 			$("#loaddingIcon").removeClass("hidden");
-	    	Ajax.post(APIURL + "/user/praise", {toMerchant: code})
+	    	Ajax.post(APIURL + "/operators/praise", {toMerchant: code})
 	            .then(function (response) {
 					$("#loaddingIcon").addClass("hidden");
 	                if (response.success) {
 						span.text(+span.text() + 1);
+					}else if(response.timeout){
+						location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
 					}else{
 						showMsg(response.msg);
 					}
 				});
 	    }
-	    
+	    //根据code搜索商家信息
 	    function business(){
 	    	Ajax.post(url, config)
 	            .then(function (response) {
@@ -60,7 +59,8 @@ define([
 						$("#totalDzNum").text(data.totalDzNum);
 						$("#advert").text(data.advert);
 						$("#address").text(data.province + " " + data.city + " " + data.area + " " + data.address);
-						$("#detailCont").append('<a class="fr clearfix" href="tel://'+data.bookMobile+'"><img class="wp16p va-m" src="/static/images/phone.png"/></a>');
+						$("#detailCont").append('<a class="fr clearfix" href="tel://'+data.bookMobile+'"><img class="wp18p va-m" src="/static/images/phone.png"/></a>');
+						$("#description").html(data.description);
 	                }else{
 	                	doError();
 	                }

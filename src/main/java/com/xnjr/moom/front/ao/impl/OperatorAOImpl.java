@@ -30,6 +30,7 @@ import com.xnjr.moom.front.req.XN602403Req;
 import com.xnjr.moom.front.req.XN602404Req;
 import com.xnjr.moom.front.req.XN602405Req;
 import com.xnjr.moom.front.req.XN602623Req;
+import com.xnjr.moom.front.req.XN602905Req;
 
 @Service
 public class OperatorAOImpl implements IOperatorAO {
@@ -413,4 +414,20 @@ public class OperatorAOImpl implements IOperatorAO {
         return BizConnecter.getBizData("602043", JsonUtils.object2Json(req),
             Object.class);
     }
+
+    @Override
+    public Object praise(String toMerchant, String fromUser) {
+        if (StringUtils.isBlank(toMerchant)) {
+            throw new BizException("A010001", "商家编号不能为空");
+        }
+        if (StringUtils.isBlank(fromUser)) {
+            throw new BizException("A010001", "用户编号不能为空");
+        }
+        XN602905Req req = new XN602905Req();
+        req.setFromUser(fromUser);
+        req.setToMerchant(toMerchant);
+        return BizConnecter.getBizData("602905", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
 }

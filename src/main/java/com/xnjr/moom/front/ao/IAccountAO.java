@@ -133,4 +133,19 @@ public interface IAccountAO {
      */
     public Object buyIntegral(String userId, String amount, String cnyAmount);
 
+    /**
+     * 积分消费
+     * @param fromUser
+     * @param toMerchant
+     * @param amount
+     * @param cnyAmount
+     * @param jfCashBack
+     * @param cnyCashBack
+     * @return 
+     * @create: 2016年9月23日 下午3:19:28 wulq
+     * @history:
+     */
+    public Object integralConsume(String fromUser, String toMerchant,
+            String amount, String cnyAmount, String jfCashBack,
+            String cnyCashBack);
 }
