@@ -5,7 +5,7 @@ define([
     'lib/handlebars.runtime-v3.0.3'
 ], function (base, Ajax, dialog, Handlebars) {
     var money = base.getUrlParam("m") || "";
-    
+    initView();
     function initView(){
         if(money){
             $("#money").text( (+money / 1000).toFixed(2) + "元" );

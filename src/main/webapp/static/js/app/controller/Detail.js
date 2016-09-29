@@ -24,7 +24,13 @@ define([
 	    function addListeners() {
 			//点赞
 			$("#dzIcon").on("click", function(){
-				praise();
+				var $img = $("#goodImg");
+				$img.attr("src");
+				if($img.attr("src").indexOf("/good.png") != -1){
+					praise();
+				}else{
+					praise(true);
+				}
 			});
 			//积分消费
 			$("#sbtn").on("click", function(){
@@ -32,14 +38,21 @@ define([
 			});
 	    }
 		//点赞
-	    function praise(){
-			var span = $("#totalDzNum");
+	    function praise(flag){
+			var span = $("#totalDzNum"),
+				img = $("#goodImg");
 			$("#loaddingIcon").removeClass("hidden");
 	    	Ajax.post(APIURL + "/operators/praise", {toMerchant: code})
 	            .then(function (response) {
 					$("#loaddingIcon").addClass("hidden");
 	                if (response.success) {
-						span.text(+span.text() + 1);
+	                	if(!flag){	                		
+	                		span.text(+span.text() + 1);
+	                		img.attr("src", "/static/images/good1.png");
+	                	}else{
+	                		span.text(+span.text() - 1);
+	                		img.attr("src", "/static/images/good.png");
+	                	}
 					}else if(response.timeout){
 						location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
 					}else{
@@ -54,6 +67,9 @@ define([
 					$("#cont").remove();
 	                if (response.success) {
 	                    var data = response.data;
+	                    if(data.isDZ){
+	                    	$("#goodImg").attr("src", "/static/images/good1.png");
+	                    }
 						$("#pic1").attr("src", data.pic1);
 						$("#name").text(data.name);
 						$("#totalDzNum").text(data.totalDzNum);

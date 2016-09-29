@@ -122,10 +122,11 @@ public class CommodityController extends BaseController {
             @RequestParam("limit") String limit,
             @RequestParam("start") String start,
             @RequestParam(value = "orderDir", required = false) String orderDir,
-            @RequestParam(value = "orderColumn", required = false) String orderColumn) {
+            @RequestParam(value = "orderColumn", required = false) String orderColumn,
+            @RequestParam(value = "fromUser", required = false) String fromUser) {
         return commodityAO.businessPage(loginName, name, type, province, city,
             area, status, priority, updater, start, limit, orderDir,
-            orderColumn);
+            orderColumn, getSessionUserId(fromUser));
     }
 
     // 列表查询商家信息
@@ -148,7 +149,8 @@ public class CommodityController extends BaseController {
     // 详情查询商家信息
     @RequestMapping(value = "/business", method = RequestMethod.POST)
     @ResponseBody
-    public Object business(@RequestParam("code") String code) {
-        return commodityAO.business(code);
+    public Object business(@RequestParam("code") String code,
+            @RequestParam(value = "fromUser", required = false) String fromUser) {
+        return commodityAO.business(code, getSessionUserId(fromUser));
     }
 }

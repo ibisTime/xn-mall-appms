@@ -43,21 +43,8 @@ define([
                             "display": "none"
                         });
                 });
-            $("#repassword").on("change", validate_repassword)
-                .on("focus", function(){
-                    $(this).siblings(".register_verifycon")
-                        .css({
-                            "display": "block"
-                        });
-                })
-                .on("blur", function(){
-                    $(this).siblings(".register_verifycon")
-                        .css({
-                            "display": "none"
-                        });
-                });
             $("#getVerification").one("click", function innerFunc(){
-                if(validate_mobile()){
+                if(validate_mobile() && validate_captcha()){
             		handleSendVerifiy();
             	}else{
             		$("#getVerification").one("click", innerFunc);
@@ -80,7 +67,7 @@ define([
                                 } else {
                                     $("#getVerification").text("获取验证码").removeClass("cancel-send")
                                         .one("click", function innerFunc(){
-                                            if(validate_mobile()){
+                                            if(validate_mobile() && validate_captcha()){
                                                 handleSendVerifiy();
                                             }else{
                                                 $("#getVerification").one("click", innerFunc);
@@ -93,7 +80,7 @@ define([
                 } else {
                     $("#getVerification")
                         .one("click", function innerFunc(){
-                            if(validate_mobile()){
+                            if(validate_mobile() && validate_captcha()){
                                 handleSendVerifiy();
                             }else{
                                 $("#getVerification").one("click", innerFunc);
@@ -137,22 +124,7 @@ define([
             }
             return true;
         }
-        function validate_repassword(){
-            var elem1 = $("#password")[0],
-                elem2 = $("#repassword")[0],
-                parent = elem2.parentNode,
-                span;
-            if(elem2.value == ""){
-                span = $(parent).find("span.warning")[0];
-                $(span).fadeIn(150).fadeOut(3000);
-                return false;
-            }else if(elem2.value !== elem1.value){
-                span = $(parent).find("span.warning")[1];
-                $(span).fadeIn(150).fadeOut(3000);
-                return false;
-            }
-            return true;
-        }
+        
         function getTjr(){
             Ajax.get(APIURL + '/user/getHpsList', true)
                 .then(function(res){
@@ -209,7 +181,7 @@ define([
         
         function validate(){
             if(validate_mobile() && validate_verification() && validate_password() 
-                && validate_repassword() && validate_captcha() && validate_userReferee()){
+                && validate_captcha() && validate_userReferee()){
                 return true;
             }
             return false;

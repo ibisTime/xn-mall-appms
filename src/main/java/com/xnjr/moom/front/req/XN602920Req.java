@@ -41,6 +41,17 @@ public class XN602920Req {
     // 排序方向
     private String orderDir;
 
+    // 用户编号
+    private String fromUser;
+
+    public String getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(String fromUser) {
+        this.fromUser = fromUser;
+    }
+
     public String getLoginName() {
         return loginName;
     }

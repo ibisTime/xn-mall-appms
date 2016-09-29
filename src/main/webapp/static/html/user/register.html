@@ -9,10 +9,17 @@
     <div class="mt10 bg_fff login_input b_bd">
         <div class="wp100 b_e6_b">
             <div class="l_icon tc"><img class="va-m" src="../../images/m-icon.png"/></div>
-            <input placeholder="请输入手机号码" type="tel" id="mobile"/>
+            <input placeholder="手机号" type="tel" id="mobile"/>
             <span class="warning">手机号不能为空</span>
             <span class="warning">格式错误</span>
             <span class="warning">该手机已经注册</span>
+        </div>
+        <div class="wp100">
+            <div class="l_icon tc"><img class="va-m" src="../../images/pt-icon.png"/></div>
+            <input type="text" placeholder="图片验证码" id="captcha" class="pr100p">
+            <span class="warning register_warning">验证码不能为空</span>
+            <span class="warning register_warning">验证码错误</span>
+            <div class="photo-verification"><img id="captchaImg" src="#" alt="图片验证码" /></div>
         </div>
         <div class="wp100 b_e6_b">
             <div class="l_icon tc"><img class="va-m" src="../../images/v-icon.png"/></div>
@@ -24,28 +31,12 @@
         </div>
         <div class="wp100 b_e6_b">
             <div class="l_icon tc"><img class="va-m" src="../../images/p-icon.png"/></div>
-            <input placeholder="密码" type="password" id="password"/>
+            <input placeholder="设置密码" type="password" id="password"/>
             <span class="warning">密码不能为空</span>
             <span class="warning">密码格式错误</span>
             <div class="register_verifycon">
                 <p>密码长度6~16位，可以是数字、字母和任意字符</p>
             </div>
-        </div>
-        <div class="wp100 b_e6_b">
-            <div class="l_icon tc"><img class="va-m" src="../../images/p-icon.png"/></div>
-            <input placeholder="再次输入密码" type="password" id="repassword"/>
-            <span class="warning">密码不能为空</span>
-            <span class="warning">两次密码输入不一致</span>
-            <div class="register_verifycon">
-                <p>密码长度6~16位，可以是数字、字母和任意字符</p>
-            </div>
-        </div>
-        <div class="wp100">
-            <div class="l_icon tc"><img class="va-m" src="../../images/pt-icon.png"/></div>
-            <input type="text" placeholder="请输入验证码" id="captcha" class="pr100p">
-            <span class="warning register_warning">验证码不能为空</span>
-            <span class="warning register_warning">验证码错误</span>
-            <div class="photo-verification"><img id="captchaImg" src="#" alt="图片验证码" /></div>
         </div>
     </div>
     <div class="mt30">

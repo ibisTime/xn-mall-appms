@@ -102,6 +102,9 @@ public interface ICommodityAO {
      * @param updater
      * @param start
      * @param limit
+     * @param orderDir
+     * @param orderColumn
+     * @param fromUser
      * @return 
      * @create: 2016年9月21日 下午2:31:17 wulq
      * @history:
@@ -109,7 +112,7 @@ public interface ICommodityAO {
     public Object businessPage(String loginName, String name, String type,
             String province, String city, String area, String status,
             String priority, String updater, String start, String limit,
-            String orderDir, String orderColumn);
+            String orderDir, String orderColumn, String fromUser);
 
     /**
      * 列表查询商家信息
@@ -132,9 +135,10 @@ public interface ICommodityAO {
     /**
      * 详情查询商家信息
      * @param code
+     * @param fromUser
      * @return 
      * @create: 2016年9月21日 下午3:09:42 wulq
      * @history:
      */
-    public Object business(String code);
+    public Object business(String code, String fromUser);
 }

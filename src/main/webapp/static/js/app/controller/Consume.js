@@ -15,7 +15,7 @@ define([
     	        orderDir: "desc",
     	        orderColumn: "total_dz_num"
     	    }, first = true, isEnd = false, canScrolling = false,
-			contentTmpl = __inline("../ui/consume.handlebars"),
+			//contentTmpl = __inline("../ui/consume.handlebars"),
 			searchData = [],	//保存全国的城市信息，供搜索用
 			PROVINCE, CITY;		//当前定位的城市
 
@@ -111,9 +111,15 @@ define([
 	    function addListeners() {
 			//点赞
 			$("#consume-ul").on("click", ".good-div", function(e){
+				var me = $(this),
+					$img = me.find("img");
 				e.preventDefault();
 				e.stopPropagation();
-				praise(this);
+				if($img.attr("src").indexOf("/good.png") != -1){
+					praise(this, $img);
+				}else{
+					praise(this, $img, true);
+				}
 			});
 			//页面下拉加载
 			$(window).on("scroll", function(){
@@ -270,7 +276,7 @@ define([
 				});
 		}
 	    //点赞
-	    function praise(me){
+	    function praise(me, img, flag){
 			var $me = $(me),
 				code = $me.closest("li[code]").attr("code"),
 				span = $me.find("span");
@@ -279,7 +285,13 @@ define([
 				.then(function (response) {
 					$("#loaddingIcon1").addClass("hidden");
 					if (response.success) {
-						span.text(+span.text() + 1);
+						if(!flag){	                		
+	                		span.text(+span.text() + 1);
+	                		img.attr("src", "/static/images/good1.png");
+	                	}else{
+	                		span.text(+span.text() - 1);
+	                		img.attr("src", "/static/images/good.png");
+	                	}
 					}else if(response.timeout){
                 		location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);						
 					}else{
@@ -299,7 +311,24 @@ define([
 	                    	isEnd = true;
 	                    }
 	                    if(curList.length){
-	                        $("#consume-ul").append( contentTmpl({items: curList}) );
+	                    	var html = "";
+	                    	for(var i = 0; i < curList.length; i++){
+	                    		html += '<li class="ptb8 clearfix b_bd_b plr10" code="'+curList[i].code+'">'+
+							        '<a class="show p_r clearfix" href="./detail.html?c='+curList[i].code+'">'+
+							            '<div class="fl wp30 tc"><img class="mh100p" src="'+curList[i].pic1+'"/></div>'+
+							            '<div class="fl wp60 pl12">'+
+							                '<p class="tl line-tow t_bold">'+curList[i].name+'</p>'+
+							                '<p class="tl pt4 line-tow s_10 t_80">'+curList[i].advert+'</p>'+
+							            '</div>'+
+							            '<div class="good-div">';
+							     if(!curList[i].isDZ){
+							    	 html += '<img src="/static/images/good.png"/><span class="inline_block va-m pl6 t_80">'+curList[i].totalDzNum+'</span>';
+							     }else{
+							    	 html += '<img src="/static/images/good1.png"/><span class="inline_block va-m pl6 t_80">'+curList[i].totalDzNum+'</span>';
+							     }
+							     html += '</div></a></li>';
+	                    	}
+	                        $("#consume-ul").append( html );
 	                        removeLoading();
 	                        config.start += 1;
 	                    }else{

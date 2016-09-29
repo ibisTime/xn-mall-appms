@@ -152,7 +152,7 @@ public class CommodityAOImpl implements ICommodityAO {
     public Object businessPage(String loginName, String name, String type,
             String province, String city, String area, String status,
             String priority, String updater, String start, String limit,
-            String orderDir, String orderColumn) {
+            String orderDir, String orderColumn, String fromUser) {
         if (StringUtils.isBlank(start)) {
             throw new BizException("A010001", "第几页不能为空");
         }
@@ -174,6 +174,7 @@ public class CommodityAOImpl implements ICommodityAO {
         req.setOrderColumn(orderColumn);
         req.setOrderDir(orderDir);
         req.setLoginName(loginName);
+        req.setFromUser(fromUser);
         return BizConnecter.getBizData("602920", JsonUtils.object2Json(req),
             Object.class);
     }
@@ -198,11 +199,12 @@ public class CommodityAOImpl implements ICommodityAO {
     }
 
     @Override
-    public Object business(String code) {
+    public Object business(String code, String fromUser) {
         if (StringUtils.isBlank(code)) {
             throw new BizException("A010001", "用户编号不能为空");
         }
         XN602922Req req = new XN602922Req();
+        req.setFromUser(fromUser);
         req.setCode(code);
         return BizConnecter.getBizData("602922", JsonUtils.object2Json(req),
             Object.class);
