@@ -1,34 +1,35 @@
 define([
-	'app/controller/base',
+    'app/controller/base',
     'app/util/ajax',
-    'app/util/dialog',
-    'Handlebars'
-], function (base, Ajax, dialog, Handlebars) {
-	$(function(){
+    'app/util/dialog'
+], function(base, Ajax, dialog) {
+    $(function() {
         var returnUrl;
-		addListeners();
+        addListeners();
         init();
-        function init(){
+
+        function init() {
             returnUrl = base.getUrlParam("return");
-            if(returnUrl){
-                $("#toRegister").attr("href", './register.html?return='+ encodeURIComponent(returnUrl));
-                $("#fdPwd").attr("href", './findPwd.html?return='+ encodeURIComponent(returnUrl));
-            }else{
+            if (returnUrl) {
+                $("#toRegister").attr("href", './register.html?return=' + encodeURIComponent(returnUrl));
+                $("#fdPwd").attr("href", './findPwd.html?return=' + encodeURIComponent(returnUrl));
+            } else {
                 $("#toRegister").attr("href", './register.html');
                 $("#fdPwd").attr("href", './findPwd.html');
             }
         }
-		function addListeners() {
+
+        function addListeners() {
             $("#loginBtn").on('click', loginAction);
-            $("#mobile").on("change", function (e) {
+            $("#mobile").on("change", function(e) {
                 validate_username();
             });
-            $("#password").on("change", function () {
+            $("#password").on("change", function() {
                 validate_password();
             });
         }
 
-		function validate_username(){
+        function validate_username() {
             var username = $("#mobile")[0],
                 parent = username.parentNode,
                 span;
@@ -37,61 +38,65 @@ define([
                 $(span).fadeIn(150).fadeOut(3000);
                 return false;
             } else if (!/^1[3,4,5,7,8]\d{9}$/.test(username.value)) {
-                span =  $(parent).find("span.warning")[1];
+                span = $(parent).find("span.warning")[1];
                 $(span).fadeIn(150).fadeOut(3000);
                 return false;
             }
             return true;
-		}
-		function validate_password() {
+        }
+
+        function validate_password() {
             var password = $("#password")[0],
                 parent = password.parentNode,
                 span;
             if (password.value == "") {
-                span =  $(parent).find("span.warning")[0];
+                span = $(parent).find("span.warning")[0];
                 $(span).fadeIn(150).fadeOut(3000);
                 return false;
             }
             return true;
-		}
-		function validate(){
+        }
+
+        function validate() {
             if (validate_username() && validate_password()) {
                 return true;
             }
             return false;
-		}
-		function loginAction () {
+        }
+
+        function loginAction() {
             if (validate()) {
                 $("#loginBtn").attr("disabled", "disabled").val("登录中...");
                 var param = {
-                    "loginName": $("#mobile").val(),
-                    "loginPwd": $("#password").val(),
-                    "terminalType": "1"
-                }, url = APIURL + "/user/login";
+                        "loginName": $("#mobile").val(),
+                        "loginPwd": $("#password").val(),
+                        "terminalType": "1"
+                    },
+                    url = APIURL + "/user/login";
 
                 Ajax.post(url, param)
-                    .then(function (response) {
+                    .then(function(response) {
                         if (response.success) {
-                        	sessionStorage.setItem("user", "1");
-                            if(returnUrl){
+                            sessionStorage.setItem("user", "1");
+                            if (returnUrl) {
                                 location.href = returnUrl;
-                            }else{
+                            } else {
                                 location.href = "./user_info.html";
                             }
                         } else {
-                        	sessionStorage.setItem("user", "0");
-                			$("#loginBtn").removeAttr("disabled").val("登录");
+                            sessionStorage.setItem("user", "0");
+                            $("#loginBtn").removeAttr("disabled").val("登录");
                             var d = dialog({
-								content: response.msg,
-								quickClose: true
-							});
-							d.show();
-							setTimeout(function () {
-								d.close().remove();
-							}, 2000);
+                                content: response.msg,
+                                quickClose: true
+                            });
+                            d.show();
+                            setTimeout(function() {
+                                d.close().remove();
+                            }, 2000);
                         }
                     });
             }
         }
-	});      
+    });
 });
