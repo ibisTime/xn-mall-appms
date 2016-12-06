@@ -1248,6 +1248,10 @@ textarea {
     color: #323232;
 }
 
+.t_333 {
+    color: #333;
+}
+
 .t_666 {
     color: #666;
 }
@@ -3138,4 +3142,14 @@ table td {
 
 .mh100p {
     max-height: 100px;
+}
+
+.center-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
 }

@@ -114,8 +114,17 @@ define([
                 mySwiper = new Swiper('.swiper-container', {
                     'direction': 'horizontal',
                     'loop': true,
-                    'autoplay': 2000,
-                    'pagination': '.swiper-pagination'
+                    'autoplay': 5000,
+                    'pagination': '.swiper-pagination',
+                    'onImagesReady': function(swiper) {
+                        var btnImgs = $("#btlImgs"),
+                            height = btnImgs.height();
+                        var slides = btnImgs.find(".swiper-slide");
+                        for (var i = 0; i < slides.length; i++) {
+                            slides.eq(i).css("height", height);
+                        }
+                        btnImgs.find("img").addClass("center-img");
+                    }
                 });
             }
             if (msl.modelSpecsList && msl.modelSpecsList.length) {
