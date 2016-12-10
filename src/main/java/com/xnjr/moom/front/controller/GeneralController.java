@@ -119,4 +119,10 @@ public class GeneralController extends BaseController {
 		return generalAO.queryBanks(status, orderColumn, orderDir);
 	}
 
+	// 前端列表查询导航
+	@RequestMapping(value = "/nav/list", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getNavList() {
+		return generalAO.getNavList();
+	}
 }

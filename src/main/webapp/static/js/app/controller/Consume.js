@@ -52,6 +52,7 @@ define([
         function getLocationJSON() {
             $("#loaddingIcon").addClass("hidden");
             addLoading();
+            getNavList();
             base.getAddress()
                 .then(function(data) {
                     citylist = data.citylist;
@@ -101,6 +102,58 @@ define([
                     $("#consumeUl").html(html);
                     !PROVINCE ? (removeLoading(), doError()) : "";
                 });
+        }
+        var count = 1;
+
+        function getNavList() {
+            $("#con-table").html('<i class="icon-loading3"></i>');
+            Ajax.get(APIURL + "/gene/nav/list")
+                .then(function(res) {
+                    if (res.success && res.data.length) {
+                        for (var i = 0, html = ""; i < res.data.length; i++) {
+                            if (i % 5 == 0) {
+                                if (i == 0) {
+                                    html += '<tr>';
+                                } else {
+                                    html += '</tr><tr>'
+                                }
+                            }
+                            html += '<td><a href="javascript:void(0)" l_type="' + res.data[i].code + '">' +
+                                '<div class="pb2em"><img src="' + res.data[i].pic + '" /></div>' +
+                                '<span class="consume-top-span">' + res.data[i].name + '</span>'
+                            '</a></td>';
+                        }
+                        html += '</tr>';
+                        var center = $(html),
+                            imgs = center.find('img'),
+                            length = imgs.length;
+                        count = length;
+                        for (var i = 0; i < length; i++) {
+                            var img = imgs.eq(i);
+                            if (img[0].complete) {
+                                isReady();
+                                continue;
+                            }
+                            (function(img) {
+                                img[0].onload = (function() {
+                                    isReady();
+                                });
+                            })(img);
+                        }
+                        $("#con-table").empty().append(center);
+                    } else {
+                        $("#con-table").html('<tr style="line-height: 140px;"><td>暂无分类信息</td></tr>');
+                    }
+                }, function() {
+                    $("#con-table").html('<tr style="line-height: 140px;"><td>暂无分类信息</td></tr>');
+                });
+        }
+
+        function isReady() {
+            if (!--count) {
+                var height = $("#conTop")[0].offsetHeight + $("#tableWrap")[0].offsetHeight;
+                $("#marginTop").css("height", height);
+            }
         }
 
         function addListeners() {
@@ -315,9 +368,9 @@ define([
                             var html = "";
                             for (var i = 0; i < curList.length; i++) {
                                 html += '<li class="ptb8 clearfix b_bd_b plr10" code="' + curList[i].code + '">' +
-                                    '<a class="show p_r clearfix" href="./detail.html?c=' + curList[i].code + '">' +
-                                    '<div class="fl wp30 tc"><img class="mh100p" src="' + curList[i].pic1 + '"/></div>' +
-                                    '<div class="fl wp60 pl12">' +
+                                    '<a class="show p_r min-h80p" href="./detail.html?c=' + curList[i].code + '">' +
+                                    '<div class="consume-center-wrap default-bg"><img class="center-img1 center-lazy" src="' + curList[i].pic1 + '"/></div>' +
+                                    '<div class="consume-right-wrap">' +
                                     '<p class="tl line-tow t_bold">' + curList[i].name + '</p>' +
                                     '<p class="tl pt4 line-tow s_10 t_80">' + curList[i].advert + '</p>' +
                                     '</div>' +
@@ -329,7 +382,35 @@ define([
                                 }
                                 html += '</div></a></li>';
                             }
-                            $("#consume-ul").append(html);
+                            var center = $(html);
+                            var imgs = center.find("img.center-lazy");
+                            for (var i = 0; i < imgs.length; i++) {
+                                var img = imgs.eq(i);
+                                if (img[0].complete) {
+                                    var width = img[0].width,
+                                        height = img[0].height;
+                                    if (width > height) {
+                                        img.addClass("hp100");
+                                    } else {
+                                        img.addClass("wp100");
+                                    }
+                                    img.removeClass("center-lazy").closest(".default-bg").removeClass("default-bg");
+                                    continue;
+                                }
+                                (function(img) {
+                                    img[0].onload = (function() {
+                                        var width = this.width,
+                                            height = this.height;
+                                        if (width > height) {
+                                            img.addClass("hp100");
+                                        } else {
+                                            img.addClass("wp100");
+                                        }
+                                        img.removeClass("center-lazy").closest(".default-bg").removeClass("default-bg");
+                                    });
+                                })(img);
+                            }
+                            $("#consume-ul").append(center);
                             removeLoading();
                             config.start += 1;
                         } else {
@@ -337,6 +418,12 @@ define([
                         }
                     } else {
                         judgeError();
+                    }
+                    if (first) {
+                        if ($("#con-table").find("img").length) {
+                            var height = $("#conTop")[0].offsetHeight + $("#tableWrap")[0].offsetHeight;
+                            $("#marginTop").css("height", height);
+                        }
                     }
                     first = false;
                     canScrolling = true;

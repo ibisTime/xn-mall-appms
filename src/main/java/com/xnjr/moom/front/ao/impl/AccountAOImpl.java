@@ -177,18 +177,6 @@ public class AccountAOImpl implements IAccountAO {
 
     public Object withdraw(String accountNumber, String amount, String toType,
             String toCode, String toBelong) {
-        if (StringUtils.isBlank(accountNumber)) {
-            throw new BizException("A010001", "账号不能为空");
-        }
-        if (StringUtils.isBlank(amount)) {
-            throw new BizException("A010001", "取现金额不能为空");
-        }
-        if (StringUtils.isBlank(toCode)) {
-            throw new BizException("A010001", "去方编号不能为空");
-        }
-        if (StringUtils.isBlank(toBelong)) {
-            throw new BizException("A010001", "开户支行不能为空");
-        }
         XN802211Req req = new XN802211Req();
         req.setAccountNumber(accountNumber);
         req.setAmount(amount);

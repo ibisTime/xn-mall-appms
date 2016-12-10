@@ -115,16 +115,7 @@ define([
                     'direction': 'horizontal',
                     'loop': true,
                     'autoplay': 5000,
-                    'pagination': '.swiper-pagination',
-                    'onImagesReady': function(swiper) {
-                        var btnImgs = $("#btlImgs"),
-                            height = btnImgs.height();
-                        var slides = btnImgs.find(".swiper-slide");
-                        for (var i = 0; i < slides.length; i++) {
-                            slides.eq(i).css("height", height);
-                        }
-                        btnImgs.find("img").addClass("center-img");
-                    }
+                    'pagination': '.swiper-pagination'
                 });
             }
             if (msl.modelSpecsList && msl.modelSpecsList.length) {

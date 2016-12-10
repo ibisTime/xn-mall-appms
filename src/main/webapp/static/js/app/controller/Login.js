@@ -78,24 +78,41 @@ define([
                     .then(function(response) {
                         if (response.success) {
                             sessionStorage.setItem("user", "1");
-                            if (returnUrl) {
-                                location.href = returnUrl;
+                            var amount = 0;
+                            if (amount = response.data.amount) {
+                                showMsg("每天首次登录获得积分+" + (+amount / 1000));
+                                setTimeout(function() {
+                                    goBack();
+                                }, 2000);
                             } else {
-                                location.href = "./user_info.html";
+                                goBack();
                             }
                         } else {
+                            showMsg(response.msg);
                             sessionStorage.setItem("user", "0");
                             $("#loginBtn").removeAttr("disabled").val("登录");
-                            var d = dialog({
-                                content: response.msg,
-                                quickClose: true
-                            });
-                            d.show();
-                            setTimeout(function() {
-                                d.close().remove();
-                            }, 2000);
+
                         }
                     });
+            }
+        }
+
+        function showMsg(msg) {
+            var d = dialog({
+                content: msg,
+                quickClose: true
+            });
+            d.show();
+            setTimeout(function() {
+                d.close().remove();
+            }, 2000);
+        }
+
+        function goBack() {
+            if (returnUrl) {
+                location.href = returnUrl;
+            } else {
+                location.href = "./user_info.html";
             }
         }
     });

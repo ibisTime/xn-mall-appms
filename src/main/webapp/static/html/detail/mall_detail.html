@@ -1,46 +1,29 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-	<link rel="import" href="../head.html?__inline">
-	<title>产品列表</title>
+    <link rel="import" href="../head.html?__inline">
+    <title>产品列表</title>
 </head>
+
 <body class="bg_f5">
-<header class="bg_fff ml_header p_r b_bd_b">
-	<nav style="height: 44px;" class="p_r">
-		<input id="searchInput" placeholder="搜索商品" class="searchInput b_radius8" type="text"/>
-		<a href="javascript:void(0)" id="searchIcon" class="show"><img class="va-m max-hp15em mr-img" src="../../images/search.png"/></a>
-	</nav>
-</header>
-<div class="hp48p"></div>
-<div id="md-div" class="wp100 bg_fff">
-	<ul id="contUl" class="b_bd_b max-hp100">
-		<li class="scroll-loadding"></li>
-		<!-- <li class="ptb8 clearfix b_bd_b">
-            <a class="pl12 show clearfix" href="../operator/buy.html?code={{code}}">
-                <div class="fl wp30 tc"><img src="../../images/hc1.png"/></div>
-                <div class="fl wp70 pl12">
-                    <p class="t_323232 s_12 line-tow">{{name}}</p>
-                    <p class="t_999 s_10 line-tow">{{advTitle}}</p>
-                    <p class="t_red">{{price}}<span class="s_10 t_40pe pl4">积分</span></p>
-                </div>
-            </a>
-        </li>
-        <li class="ptb8 clearfix b_bd_b">
-            <a class="pl12 show clearfix" href="../operator/buy.html?code={{code}}">
-                <div class="fl wp30 tc"><img src="../../images/hc1.png"/></div>
-                <div class="fl wp70 pl12">
-                    <p class="t_323232 s_12 line-tow">{{name}}</p>
-                    <p class="t_999 s_10 line-tow">{{advTitle}}</p>
-                    <p class="t_red">{{price}}<span class="s_10 t_40pe pl4">积分</span></p>
-                </div>
-            </a>
-        </li> -->
-	</ul>
-</div>
-<a class="buy-cart-icon" href="../user/cart.html"><i></i></a>
-<link rel="import" href="../footer.html?__inline">
-<script>
-	require(['app/controller/MallDetail']);
-</script>
+    <header class="bg_fff ml_header p_r b_bd_b">
+        <nav style="height: 44px;" class="p_r">
+            <input id="searchInput" placeholder="搜索商品" class="searchInput b_radius8" type="text" />
+            <a href="javascript:void(0)" id="searchIcon" class="show"><img class="mr-img2" src="../../images/search.png" /></a>
+        </nav>
+    </header>
+    <div class="hp48p"></div>
+    <div id="md-div" class="wp100 bg_fff">
+        <ul id="contUl" class="b_bd_b max-hp100">
+            <li class="scroll-loadding"></li>
+        </ul>
+    </div>
+    <a class="buy-cart-icon" href="../user/cart.html"><i></i></a>
+    <link rel="import" href="../footer.html?__inline">
+    <script>
+        require(['app/controller/MallDetail']);
+    </script>
 </body>
+
 </html>

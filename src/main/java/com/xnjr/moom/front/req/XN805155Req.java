@@ -1,6 +1,6 @@
 package com.xnjr.moom.front.req;
 
-public class XN805043Req {
+public class XN805155Req {
     // 手机号
     private String loginName;
 

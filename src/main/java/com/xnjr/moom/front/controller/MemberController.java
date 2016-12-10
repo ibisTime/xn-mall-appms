@@ -55,6 +55,7 @@ public class MemberController extends BaseController {
 		return userAO.checkMobileExit(mobile);
 	}
 
+	// （密码短信方式）
 	@RequestMapping(value = "/regist", method = RequestMethod.POST)
 	@ResponseBody
 	public Object doRegister(@RequestParam("loginName") String mobile,
@@ -71,7 +72,7 @@ public class MemberController extends BaseController {
 		return userAO.doRegister(mobile, userReferee);
 	}
 
-	// 用户注册（密码短信方式）
+	// 用户注册
 	@RequestMapping(value = "/reg", method = RequestMethod.POST)
 	@ResponseBody
 	public Object doReg(@RequestParam("mobile") String mobile,
@@ -93,20 +94,9 @@ public class MemberController extends BaseController {
 			SessionUser sessionUser = new SessionUser();
 			sessionUser.setUserId(res.getUserId());
 			sessionUser.setKind(res1.getKind());
-			// 创建session
 			setSessionUser(sessionUser);
-		}/*
-		 * else if (ETermType.APP.getCode().equals(terminalType)) { TokenDO
-		 * tokenDO = new TokenDO(); String userId = res.getUserId(); //
-		 * userId是否存在 User user = userDAO.getUser(userId); if (user != null) {
-		 * userDAO.del(userId); } String tokenId =
-		 * OrderNoGenerater.generateM(userId); // userId,tokenId保存在本地 User
-		 * userdo = new User(); userdo.setUserId(userId);
-		 * userdo.setTokenId(tokenId); userDAO.saveUser(userdo);
-		 * tokenDO.setTokenId(tokenId); tokenDO.setUserId(userId); // return
-		 * tokenDO给app客户端 return tokenDO; }
-		 */
-		return true;
+		}
+		return res;
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)

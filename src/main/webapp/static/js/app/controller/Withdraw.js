@@ -77,6 +77,7 @@ define([
                 flag = false;
             } else if (+amount < 100) {
                 showMsg("单笔取现金额不能少于100元！");
+                flag = false;
             }
             return flag;
         }

@@ -4,8 +4,8 @@ define([
 ], function(base, ajax) {
     var dict = {
         receiptType: {
-                "1": "个人",
-                "2": "企业"
+            "1": "个人",
+            "2": "企业"
         },
         fastMail: {
             "EMS": "邮政EMS",
@@ -18,9 +18,10 @@ define([
             "TTKD": "天天快递"
         },
         fundType: {
-        	"11": "充值",
-        	"-11": "取现",
-        	"19": "蓝补",
+            "5": "首次登录送积分",
+            "11": "充值",
+            "-11": "取现",
+            "19": "蓝补",
             "-19": "红冲",
             "-110": "取现冻结",
             "-111": "取现解冻",
@@ -97,7 +98,8 @@ define([
     };
 
     var changeToObj = function(data) {
-        var data = data || [], obj = {};
+        var data = data || [],
+            obj = {};
         data.forEach(function(item) {
             obj[item.dkey] = item.dvalue;
         });

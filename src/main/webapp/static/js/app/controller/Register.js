@@ -203,8 +203,16 @@ define([
             Ajax.post(APIURL + '/user/reg', param)
                 .then(function(response) {
                     if (response.success) {
-                        showMsg("恭喜您注册成功！");
-                        doLogin();
+                        var amount = 0;
+                        if (amount = response.data.amount) {
+                            showMsg("恭喜您注册成功<br/>获得积分+" + (+amount / 1000), 3000);
+                            setTimeout(function() {
+                                doLogin();
+                            }, 1000);
+                        } else {
+                            showMsg("恭喜您注册成功！");
+                            doLogin();
+                        }
                     } else {
                         $("#captchaImg").click();
                         showMsg(response.msg);
@@ -232,7 +240,7 @@ define([
                 })
         }
 
-        function showMsg(msg) {
+        function showMsg(msg, time) {
             var d = dialog({
                 content: msg,
                 quickClose: true
@@ -240,7 +248,7 @@ define([
             d.show();
             setTimeout(function() {
                 d.close().remove();
-            }, 2000);
+            }, time || 2000);
         }
 
         function register() {

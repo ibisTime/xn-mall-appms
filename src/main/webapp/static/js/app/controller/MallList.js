@@ -1,100 +1,143 @@
 define([
     'app/controller/base',
     'app/util/ajax',
-    'Handlebars'
-], function (base, Ajax, Handlebars) {
-    $(function () {
-        var cate = base.getUrlParam("c") || "";
+    'IScroll'
+], function(base, Ajax, IScroll) {
+    $(function() {
+        var cate = base.getUrlParam("c") || "",
+            imgWidth = (($(window).width() - 20) / 3 - 20) + "px",
+            myScroll;
         init();
-        function init(){
-            var html = '';
+
+        function init() {
+            var html = '',
+                html1 = "";
             addListeners();
-            Ajax.get(APIURL + '/general/dict/list',
-                {parentKey: "pro_category", "orderColumn": "id", "orderDir": "asc"})
-                .then(function(res){
-                    if(res.success){
+            Ajax.get(APIURL + '/general/dict/list', { parentKey: "pro_category", "orderColumn": "id", "orderDir": "asc" })
+                .then(function(res) {
+                    if (res.success) {
                         var cateData = res.data;
-                        for(var i = 0; i < cateData.length; i++){
+                        for (var i = 0; i < cateData.length; i++) {
                             var d = cateData[i];
-                            html += '<li class="fl pt8 pr20" l_type="'+d.dkey+'"><span class="inline_block pb10">'+d.dvalue+'</span></li>';
+                            html += '<li l_type="' + d.dkey + '">' + d.dvalue + '</li>';
+                            html1 += '<li l_type="' + d.dkey + '" class="wp33 tl fl">' + d.dvalue + '</li>';
                         }
-                        $("#ml-head-ul").html(html).css("height", "auto");
-                        if( +$("#ml-head-ul").height() > 55 ){
-                            $("#ml-head-ul").css("height", "48px");
-                            $("#updown").removeClass("hidden");
-                        }
-                        if(cate){
-                            $("#ml-head-ul").find("li[l_type="+cate+"]").click();
-                        }else{
-                            $("#ml-head-ul").children("li:first").click();
-                        }
+                        var scroller = $("#scroller");
+                        scroller.find("ul").html(html);
+                        $("#allItem").find("ul").html(html1);
+                        addCategory();
+                        cate == cate || cateData[0].dkey;
+                        scroller.find("ul>li[l_type='" + cate + "']").click();
                     }
                 });
         }
-        function addListeners(){
-            $("#ml-head-ul").on("click", "li", function () {
-                var $me = $(this);
-                if(!$me.hasClass("active")){
-                    $("#ml-head-ul").find("li.active").removeClass("active");
-                    $me.addClass("active");
-                    getProduces($me.attr("l_type"));
-                }
-                var $ud = $("#updown");
-                if(!$ud.hasClass("hidden") && $ud.hasClass("up")){
-                    $("#updown").click();
-                }
-            });
-            $("#updown").on("click", function(){
-                var me = $(this);
-                if(me.hasClass("down")){
-                    me.attr("src", "/static/images/u-arrow.png")
-                        .removeClass("down").addClass("up");
-                    $("#ml-head-ul").css("height", "auto");
-                    $("#mask").removeClass("hidden");
-                }else if(me.hasClass("up")){
-                    me.attr("src", "/static/images/d-arrow.png")
-                        .removeClass("up").addClass("down");
-                    $("#ml-head-ul").css("height", "48px");
-                    $("#mask").addClass("hidden");
-                }
 
-            });
-            $("#mask").on("click", function(){
-                var $ud = $("#updown");
-                if(!$ud.hasClass("hidden") && $ud.hasClass("up")){
-                    $("#updown").click();
+        function addCategory() {
+            var scroller = $("#scroller");
+            var lis = scroller.find("ul li");
+            for (var i = 0, width = 0; i < lis.length; i++) {
+                width += $(lis[i]).width() + 29;
+            }
+            $("#scroller").css("width", width);
+            myScroll = new IScroll('#mallWrapper', { scrollX: true, scrollY: false, mouseWheel: true, click: true });
+        }
+
+        function addListeners() {
+            /**大类start */
+            $("#down").on("click", function() {
+                var me = $(this);
+                if (me.hasClass("down-arrow")) {
+                    $("#allCont").removeClass("hidden");
+                    me.removeClass("down-arrow").addClass("up-arrow");
+                } else {
+                    $("#allCont").addClass("hidden");
+                    me.removeClass("up-arrow").addClass("down-arrow");
                 }
             });
+            $("#mall-mask").on("click", function() {
+                $("#down").click();
+            });
+            $("#allItem").on("click", "li", function() {
+                var lType = $(this).attr("l_type");
+                $("#scroller").find("li[l_type='" + lType + "']").click();
+                $("#down").click();
+            });
+            $("#scroller").on("click", "li", function() {
+                var me = $(this);
+                $("#mallWrapper").find(".current").removeClass("current");
+                me.addClass("current");
+                myScroll.scrollToElement(this);
+                lType = me.attr("l_type");
+                getProduces(lType);
+                var allItem = $("#allItem");
+                allItem.find("li.current").removeClass("current");
+                allItem.find("li[l_type='" + lType + "']").addClass("current");
+            });
+            /**大类end */
         }
 
         function getProduces(category) {
             var url = APIURL + "/commodity/subdivision/list";
-            Ajax.get(url, {"category": category}, true)
-                .then(function(res){
-                    if(res.success){
+            Ajax.get(url, { "category": category }, true)
+                .then(function(res) {
+                    if (res.success) {
                         var data = res.data;
-                        if(data.length){
-                            var html = '<table class="wp100 mall_list_table" id="mlTable">';
-                            for(var i = 0, len = data.length; i < len; i+=3){
-                                if(i + 2 <= len - 1){
-                                    html += '<tr><td><a href="./mall_detail.html?c='+category+'&t='+ data[i].type+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
-                                        '<td><a href="./mall_detail.html?c='+category+'&t='+ data[i+1].type+'"><img class="b_radius6" src="'+ data[i+1].typePic+'"/></a></td>'+
-                                        '<td><a href="./mall_detail.html?c='+category+'&t='+ data[i+2].type+'"><img class="b_radius6" src="'+ data[i+2].typePic+'"/></a></td></tr>';
-                                }else if(i + 1 <= len - 1){
-                                    html += '<tr><td><a href="./mall_detail.html?c='+category+'&t='+ data[i].type+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
-                                        '<td><a href="./mall_detail.html?c='+category+'&t='+ data[i+1].type+'"><img class="b_radius6" src="'+ data[i+1].typePic+'"/></a></td><td></td></tr>';
-                                }else{
-                                    html += '<tr><td><a href="./mall_detail.html?c='+category+'&t='+ data[i].type+'"><img class="b_radius6" src="'+ data[i].typePic+'"/></a></td>'+
-                                    '<td></td><td></td></tr>';
+                        if (data.length) {
+                            var html = '';
+                            for (var i = 0, len = data.length; i < len; i += 3) {
+                                if (i + 2 <= len - 1) {
+                                    html += '<tr><td><a class="wp100 b_radius6 default-bg p_r over-hide" style="height: ' + imgWidth + '" href="./mall_detail.html?c=' + category + '&t=' + data[i].type + '">' +
+                                        '<img class="center-img1" src="' + data[i].typePic + '"/></a></td>' +
+                                        '<td><a class="wp100 b_radius6 default-bg p_r over-hide" style="height: ' + imgWidth + '" href="./mall_detail.html?c=' + category + '&t=' + data[i + 1].type + '">' +
+                                        '<img class="center-img1" src="' + data[i + 1].typePic + '"/></a></td>' +
+                                        '<td><a class="wp100 b_radius6 default-bg p_r over-hide" style="height: ' + imgWidth + '" href="./mall_detail.html?c=' + category + '&t=' + data[i + 2].type + '">' +
+                                        '<img class="center-img1" src="' + data[i + 2].typePic + '"/></a></td></tr>';
+                                } else if (i + 1 <= len - 1) {
+                                    html += '<tr><td><a class="wp100 b_radius6 default-bg p_r over-hide" style="height: ' + imgWidth + '" href="./mall_detail.html?c=' + category + '&t=' + data[i].type + '">' +
+                                        '<img class="center-img1" src="' + data[i].typePic + '"/></a></td>' +
+                                        '<td><a class="wp100 b_radius6 default-bg p_r over-hide" style="height: ' + imgWidth + '" href="./mall_detail.html?c=' + category + '&t=' + data[i + 1].type + '">' +
+                                        '<img class="center-img1" src="' + data[i + 1].typePic + '"/></a></td><td></td></tr>';
+                                } else {
+                                    html += '<tr><td><a class="wp100 b_radius6 default-bg p_r over-hide" style="height: ' + imgWidth + '" href="./mall_detail.html?c=' + category + '&t=' + data[i].type + '">' +
+                                        '<img class="center-img1" src="' + data[i].typePic + '"/></a></td>' +
+                                        '<td></td><td></td></tr>';
                                 }
                             }
-                            html += '</table>';
+                            var center = $(html);
+                            var imgs = center.find("img");
+                            for (var i = 0; i < imgs.length; i++) {
+                                var img = imgs.eq(i);
+                                if (img[0].complete) {
+                                    var width = img[0].width,
+                                        height = img[0].height;
+                                    if (width > height) {
+                                        img.addClass("hp100");
+                                    } else {
+                                        img.addClass("wp100");
+                                    }
+                                    img.closest(".default-bg").removeClass("default-bg");
+                                    continue;
+                                }
+                                (function(img) {
+                                    img[0].onload = (function() {
+                                        var width = this.width,
+                                            height = this.height;
+                                        if (width > height) {
+                                            img.addClass("hp100");
+                                        } else {
+                                            img.addClass("wp100");
+                                        }
+                                        img.closest(".default-bg").removeClass("default-bg");
+                                    });
+                                })(img);
+
+                            }
                             $("#cont").hide();
-                            $("#mlTable").replaceWith(html);
-                        }else{
+                            $("#mlTable").empty().append(center);
+                        } else {
                             doError();
                         }
-                    }else{
+                    } else {
                         doError();
                     }
                 });
@@ -102,7 +145,7 @@ define([
 
         function doError() {
             $("#cont").hide();
-            $("#mlTable").replaceWith('<div id="mlTable" class="bg_fff" style="text-align: center;line-height: 150px;">暂无商品</div>');
+            $("#mlTable").html('<div class="bg_fff" style="text-align: center;line-height: 150px;">暂无商品</div>');
         }
     });
 });

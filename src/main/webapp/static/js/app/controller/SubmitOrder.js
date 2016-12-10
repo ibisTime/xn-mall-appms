@@ -9,8 +9,8 @@ define([
         type = base.getUrlParam("type") || "1",
         q = base.getUrlParam("q") || "1",
         receiptType = Dict.get("receiptType"),
-        contentTmpl = __inline("../ui/submit-order-imgs.handlebars"),
-        contentTmpl1 = __inline("../ui/submit-order-imgs1.handlebars"),
+        //contentTmpl = __inline("../ui/submit-order-imgs.handlebars"),
+        //contentTmpl1 = __inline("../ui/submit-order-imgs1.handlebars"),
         toUser = "";
     init();
 
@@ -103,7 +103,9 @@ define([
                         cnyTotalCount = 0;
                     if (data.length) {
                         var items = [],
-                            flag = false;
+                            flag = false,
+                            html = '<ul class="b_bd_b">';
+
                         for (var i = 0, len = code.length; i < len; i++) {
                             var d = data[code[i]];
                             var eachCount = (+d.salePrice) * (+d.quantity),
@@ -115,11 +117,53 @@ define([
                             }
                             totalCount += eachCount;
                             cnyTotalCount += cnyEachCount;
-                            items.push(d);
+                            html += '<li class="ptb8 clearfix b_bd_b plr10" modelCode="' + d.code + '">' +
+                                '<a href="../operator/buy.html?code=' + d.modelCode + '" class="show p_r min-h100p">' +
+                                '<div class="order-img-wrap tc default-bg"><img class="center-img1" src="' + d.pic1 + '"/></div>' +
+                                '<div class="order-right-wrap clearfix"><div class="fl wp60">' +
+                                '<p class="tl line-tow">' + d.modelName + '</p>' +
+                                '<p class="tl pt4 line-tow">' + d.productName + '</p>' +
+                                '</div>' +
+                                '<div class="fl wp40 tr s_10">' +
+                                '<p><span class="item_totalP">' + d.salePrice + '</span><span class="t_40pe s_09 pl4">积分</span></p>';
+                            if (d.saleCnyPrice) {
+                                html += '<p><span class="item_totalP">' + d.saleCnyPrice + '</span><span class="t_40pe s_09 pl4">元</span></p>';
+                            }
+                            '<p class="t_80">×<span>' + d.quantity + '</span></p></div></div></a></li>';
+                            //items.push(d);
                         }
-                        var html = contentTmpl1({ items: items });
+                        html += '</ul>';
+                        //var html = contentTmpl1({ items: items });
+                        var center = $(html);
+                        var imgs = center.find("img");
+                        for (var i = 0; i < imgs.length; i++) {
+                            var img = imgs.eq(i);
+                            if (img[0].complete) {
+                                var width = img[0].width,
+                                    height = img[0].height;
+                                if (width > height) {
+                                    img.addClass("hp100");
+                                } else {
+                                    img.addClass("wp100");
+                                }
+                                img.closest(".default-bg").removeClass("default-bg");
+                                continue;
+                            }
+                            (function(img) {
+                                img[0].onload = (function() {
+                                    var width = this.width,
+                                        height = this.height;
+                                    if (width > height) {
+                                        img.addClass("hp100");
+                                    } else {
+                                        img.addClass("wp100");
+                                    }
+                                    img.closest(".default-bg").removeClass("default-bg");
+                                });
+                            })(img);
+                        }
                         $("#cont").hide();
-                        $("#items-cont").append(html);
+                        $("#items-cont").append(center);
                         $("#totalAmount").html((totalCount / 1000).toFixed(0));
                         if (cnyTotalCount) {
                             $("#mAdd, #cnyDiv").removeClass("hidden");
@@ -145,7 +189,8 @@ define([
             .then(function(response) {
                 if (response.success) {
                     var data = response.data[0],
-                        items = [];
+                        items = [],
+                        html = '';
                     var eachCount = +data.discountPrice * +q;
                     data.totalAmount = (eachCount / 1000).toFixed(0);
                     data.discountPrice = (+data.discountPrice / 1000).toFixed(0);
@@ -160,8 +205,51 @@ define([
                     data.productName = data.model.productName;
                     data.pic1 = data.model.pic1;
                     items.push(data);
-                    var html = contentTmpl({ items: items });
-                    $("#items-cont").append(html);
+
+                    html += '<ul class="b_bd_b">' +
+                        '<li class="ptb8 clearfix b_bd_b plr10" modelCode="' + data.code + '">' +
+                        '<a href="../operator/buy.html?code=' + data.code + '" class="show p_r min-h100p">' +
+                        '<div class="order-img-wrap tc default-bg"><img class="center-img1" src="' + data.pic1 + '"/></div>' +
+                        '<div class="order-right-wrap clearfix"><div class="fl wp60">' +
+                        '<p class="tl line-tow">' + data.modelName + '</p>' +
+                        '<p class="tl pt4 line-tow">' + data.productName + '</p>' +
+                        '</div>' +
+                        '<div class="fl wp40 tr s_10">' +
+                        '<p><span class="item_totalP">' + data.discountPrice + '</span><span class="t_40pe s_09 pl4">积分</span></p>';
+                    if (data.cnyPrice) {
+                        html += '<p><span class="item_totalP">' + data.cnyPrice + '</span><span class="t_40pe s_09 pl4">元</span></p>';
+                    }
+                    html += '<p class="t_80">×<span>' + data.quantity + '</span></p></div></div></a></li></ul>';
+                    var center = $(html);
+                    var imgs = center.find("img");
+                    for (var i = 0; i < imgs.length; i++) {
+                        var img = imgs.eq(i);
+                        if (img[0].complete) {
+                            var width = img[0].width,
+                                height = img[0].height;
+                            if (width > height) {
+                                img.addClass("hp100");
+                            } else {
+                                img.addClass("wp100");
+                            }
+                            img.closest(".default-bg").removeClass("default-bg");
+                            continue;
+                        }
+                        (function(img) {
+                            img[0].onload = (function() {
+                                var width = this.width,
+                                    height = this.height;
+                                if (width > height) {
+                                    img.addClass("hp100");
+                                } else {
+                                    img.addClass("wp100");
+                                }
+                                img.closest(".default-bg").removeClass("default-bg");
+                            });
+                        })(img);
+                    }
+                    //var html = contentTmpl({ items: items });
+                    $("#items-cont").append(center);
                     $("#totalAmount").html(data.totalAmount);
                     $("#cont").hide();
                 } else {

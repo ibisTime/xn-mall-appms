@@ -1,6 +1,6 @@
 package com.xnjr.moom.front.req;
 
-public class XN805041Req {
+public class XN805154Req {
     // 手机号
     private String mobile;
 
