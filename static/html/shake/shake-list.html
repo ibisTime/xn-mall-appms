@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<!--<link rel="import" href="../head.html?__inline">-->
+
+	<link rel="import" href="../head.html?__inline">
+	<link rel="stylesheet" href="../../css/base.css">
+	<link rel="stylesheet" href="../../css/shake.css"/>
+	<title>摇钱树</title>
+	<!--<script src="../../js/lib/iscroll.js"></script>-->
+	<script src="../../js/lib/jquery-2.1.4.js"></script>
+	    <!--<script>
+	    	var w= $(window).width();
+			if(w>750){w=750}
+			$("html,body").css("font-size",w/7.5+"px" );
+	    </script>-->
+	</head>
+	<body class="bg_f5">
+		<div class="shakeAfter wp100 hp100 pat0 ">
+			<div id="content" class="wp100">
+				<ul class="wp100 nearTree"></ul>
+			</div>
+		</div>
+		<link rel="import" href="../footer.html?__inline">
+		<script src="//api.map.baidu.com/api?v=2.0&ak=GtNrG008U04GONzKSDHiW70GxurUUhlU&s=1"></script>
+		<script>
+			require(['app/controller/ShakeList']);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,729 @@
+/**{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}*/
+html,body{font-size: 100px;line-height: normal !important;}
+
+.pat0{
+	position: absolute;
+	top: 0;
+}
+.pab40{
+	position: absolute;
+	bottom: 30px;
+}
+.z_index9999{z-index: 9999;}
+.bg_0_8{
+	background-color: rgba(0,0,0,.8);
+}
+.bg_f5{
+	background-color: #f5f5f5;
+}
+.tc{ text-align: center;}
+.wp100{width: 100%;}
+.hp100{height: 100%;}
+.c_fe4332{color: #fe4332;}
+.c_48{color: #484848;}
+.fs20r{font-size: .12rem;}
+.fs25r{font-size: .15rem;}
+.fs26r{font-size: .16rem;}
+.fs30r{font-size: .2rem;}
+.pr6r{padding-right: .03rem;}
+.p3_2r{padding: .15rem .1rem;}
+.p30r{ padding: .3rem;}
+.ptb5r{padding: .05rem 0;}
+.pt40_b20r{padding: .15rem 0.1rem;}
+.plr5r{padding: 0 .05rem;}
+.lh2{line-height: 2;}
+.m0{ margin: 0 auto;}
+.m10r{ margin-top: .1rem;}
+.w4r{width: 4rem;}
+.h35r{height: .15rem;}
+.over-hide{overflow: hidden;}
+.b_e_b{
+	border-bottom: 1px solid #eee;
+}
+.pz9{
+	position: relative;
+	z-index: 9;
+}
+
+.shakeWrap{
+	left: 0;
+	z-index: 15;
+	background-image: url(../images/shakeBG.gif);
+	background-size: cover;
+	background-position: center;
+}
+.shakeWrapOn{
+	left: 0;
+	z-index: 9;
+	display: none;
+	background-image: url(../images/shakeBG.gif);
+	background-size: cover;
+	background-position: center;
+}
+#shakeAfterSta1{
+	opacity: 0;
+	text-align: center;
+	transition: .5s;
+}
+#shakeAfterSta1 img{
+	width: 1.5rem;
+	margin-top: 1.5rem;
+}
+#shakeAfterSta1.active{
+	opacity: 1;
+}
+.shareBtn{
+	width: 6.7rem;
+	height: .88rem;
+	background-color: #fe4332;
+	line-height: .88rem;
+	color: #fff;
+	font-size: .36rem;
+	border-radius: .1rem;
+	margin-top: 1.88rem;
+}
+.shareWrap #code{
+	width: 200px;
+	margin: 1rem auto .2rem;
+}
+
+.indianaDetail-banner{
+    height:2.1rem ;
+    border-bottom: 0.005rem solid #e6e6e6;
+
+
+}
+.indianaDetail-banner img{
+    height: 2.1rem;
+    width: 100%;
+}
+
+.indianaDetail-content{
+    padding: 0.2rem 0.15rem;
+    background-color: white;
+}
+.indianaDetail_1{
+    font-size: 0.17rem;
+    color: #fe4332;
+}
+.indianaDetail_1 .slogan{
+	font-size: 0.13rem;
+	color: #484848;
+	padding-bottom: 5px;
+}
+
+.indianaDetail_2{
+    font-size: 0.12rem;
+    margin-top: 0.1rem;
+    color: #999;
+}
+.indianaDetail_3{
+    width: 100%;
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+    height: 0.1rem;
+    font-size: 0rem;
+}
+
+.indianaDetail_4{
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.12rem;
+    color: #999;
+}
+.indianaDetail_5{
+    margin-top: 0.2rem;
+    position: relative;
+    font-size: 0.14rem;
+    color: #747474;
+    height: 0.25rem;
+    /*font-size: 0rem;*/
+    line-height: 0.25rem;
+}
+.indianaDetail_5 .sub{
+
+    border: 1px solid  #747474;
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 50%;
+    font-size: 0.3rem;
+    line-height: .15rem;
+    text-align: center;
+    position: absolute;
+    left:0.5rem;
+    top:0rem;
+
+}
+.indianaDetail_5 .add{
+    width: 0.2rem;
+    height: 0.2rem;
+    border: 1px solid  #747474;
+    line-height: 0.16rem;
+    border-radius: 50%;
+    font-size: 0.27rem;
+    text-align: center;
+    position: absolute;
+    left:1.5rem;
+    top:0rem;
+}
+.indianaDetail_5 .i{
+    position: absolute;
+    left:1.06rem;
+    top:0rem;
+    font-size: 0.16rem;
+
+}
+.indianaDetail_5 .max{
+    width: 0.45rem;
+    height: 0.2rem;
+    color: #fe4332;
+    text-align: center;
+    font-size: 0.13rem;
+    line-height: 0.2rem;
+    border-radius: 0.12rem;
+    border: 1px solid  #fe4332;
+    position: absolute;
+    right:0.3rem;
+    top:0rem;
+
+}
+.playIntroduce {
+    margin-top: 0.1rem;
+}
+.playIntroduce li{
+    height: 0.45rem;
+    line-height: 0.45rem;
+    position: relative;
+    background-color: white;
+}
+.playIntroduce li p{
+    font-size: 0.15rem;
+    position: absolute;
+    left:0.15rem;
+}
+.playIntroduce li img{
+    width:0.1rem;
+    height: 0.19rem;
+    position: absolute;
+    right:0.15rem;
+    top:0.13rem;
+}
+.indianaDetail_record {
+    background-color: white;
+    margin-top: 0.1rem;
+}
+.indianaDetail_record .indianaRecord_name{
+    height:0.45rem ;
+    line-height:0.45rem;
+    font-size: 0.16rem;
+    padding: 0 .15rem;
+    overflow: hidden;
+}
+.indianaDetail_record .indianaRecord_name p{
+	float: left;
+	display: inline-block;
+	overflow: hidden;
+}
+.indianaDetail_record .indianaRecord_name span{
+    font-size: 0.12rem;
+    float: right;
+}
+.indianaDetail_record_detail{
+	padding: 0 .15rem;
+}
+.indianaDetail_record_detail .time{
+    position: relative;
+    overflow: hidden;
+    padding: .1rem 0;
+}
+.indianaDetail_record_detail .time p{
+    color: #999;
+    border: 1px solid #999;
+    font-size: 0.12rem;
+    border-radius:0.2rem ;
+    height: 0.2rem;
+    line-height: 0.2rem;
+    width: 0.77rem;
+    text-align: center;
+    background-color: #f8f8f8;
+}
+.indianaDetail_record_detail .li{
+    font-size:0rem;
+    position: relative;
+    overflow: hidden;
+    padding: .1rem 0;
+}
+.indianaDetail_record_detail .li .detail{
+    height: 0.65rem;
+    width: 100%;
+    font-size: 0.12rem;
+}
+.indianaDetail_record_detail .detail .img{
+    width: 0.36rem;
+    height: 0.36rem;
+    border-radius: 50%;
+    overflow: hidden;
+	float: left;
+}
+.d-hr{
+	height: 100%;
+	width: 1px;
+	background-color: #dedede;
+	position: absolute;
+	top: 0;
+	left: .18rem;
+	z-index: 1;
+}
+.indianaDetail_record_detail .detail .img img{
+	width: 100%;
+}
+.indianaDetail_record_detail .detail .personInfo{
+    float: left;
+    margin-left: .13rem;
+}
+.personInfo p{
+    padding-bottom: 0.05rem;
+}
+.personInfo .name{
+    color: #2570fd;
+}
+.personInfo .ip , .personInfo .data{
+    color:#999 ;
+}
+.personInfo .ifGet{
+    color:#484848 ;
+}
+.personInfo .ifGet .result{
+    color: #f44332;
+}
+.ifBuyedDiv{
+	width: 100%;
+    height: 0.5rem;
+}
+.ifBuyed {
+    height: 0.5rem;
+    position: fixed;
+    left:0rem;
+    bottom: 0rem;
+    background-color: white;
+    line-height: 0.5rem;
+    width: 100%;
+    border-top:1px solid #e6e6e6;
+    z-index: 99;
+}
+.ifBuyed div{
+    float: left;
+    font-size: 0.16rem;
+
+
+}
+.ifBuyed .money{
+    width:62%;
+    /*padding-left: 0.15rem;*/
+    padding-left: 4%;
+}
+.ifBuyed .money span{
+    color:#f44332;
+}
+.ifBuyed .toJion{
+    width: 34%;
+    text-align: center;
+    background-color: #f44332;
+    color: white;
+}
+
+
+
+/*改动*/
+.indianaRecord {
+    margin-bottom: 0.88rem;
+
+}
+
+.indianaList {
+    height: 0.84rem;
+    /*width: 3.2rem;*/
+    border-bottom: 0.005rem solid #e6e6e6;
+    background-color: white;
+    padding: 0.1rem;
+    position: relative;
+
+}
+
+.indianaList .img {
+    height: 100%;
+    width: 0.8rem;
+    text-align: center;
+    border-right: 0.005rem solid #e6e6e6;
+    font-size: 0rem;
+}
+
+.indianaList .img img {
+    height: 0.5rem;
+    margin-top: 0.14rem;
+}
+
+.indianaList .record {
+    position: absolute;
+    left: 0.9rem;
+    top: 0.2rem;
+    height: 0.64rem;
+    padding-left: 0.08rem;
+    overflow: hidden;
+}
+
+.indianaList .record p {
+    padding-left: 0.4rem;
+    height: 0.15rem;
+    margin-bottom: 0.06rem;
+    font-size: 0.14rem;
+    position: relative;
+
+}
+
+.indianaList .record .indianaType {
+    position: absolute;
+    left: 0.04rem;
+    border: 0.005rem solid #fe4332;
+    border-radius: 0.04rem;
+    color: #fe4332;
+    width: 0.27rem;
+    height: 0.15rem;
+    line-height: 0.15rem;
+    text-align: center;
+    font-size: 0.12rem;
+
+}
+
+
+.indiana-tabs{
+	position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 20;
+    background: white;
+    padding-top: 2px;
+    padding-bottom: 1px;
+    border-top: 1px solid #E6E6E6
+}
+ .indiana-tabs a{
+ 	float: left;
+ 	text-align: center;
+ 	width: 20%;
+ 	font-size: 0rem;
+ 	 text-decoration:none;
+ 	 color: #666666;
+ 	
+ }
+ .indiana-tabs a div{
+ 	padding-top: 8px;
+ 	font-size: 0;
+ }
+ .indiana-tabs .active{
+ 	color: #ff0000;
+ }
+ .indiana-tabs a img{
+ 	height: 22.5px;
+ }
+ .indiana-tabs a p{
+ 	font-size: 13px;
+ 	height: 23px;
+ 	padding: 2px 0px;
+ 	line-height: 23px;
+ 	width: 100%;
+ 	
+ }
+
+
+.indianaDetail li{
+    margin-top: 10px;
+    height:135px ;
+    position: relative;
+    font-size:0.12rem;
+    color: white;
+}
+.indianaDetail .indiana-num{
+    width: 0.75rem;
+    height: 27px;
+    line-height: 27px;
+    text-align: center;
+    border-bottom-left-radius: 27px;
+    border-top-left-radius: 27px;
+    background-color: #fe4332;
+    position: absolute;
+    right: 0rem;
+    top:0rem;
+}
+.indianaDetail .indiana-has{
+    font-size: 0.16rem;
+    position: absolute;
+    left:0.15rem;
+    height: 20px;
+    width: 3rem;
+    line-height: 20px;
+    top:30px;
+
+}
+.indianaDetail .indiana-has meter{
+    width: 1.55rem;
+    height: 10px;
+    margin-left: 0.1rem;
+    position: absolute;
+    top:5px;
+
+}
+
+.indianaDetail .indiana-person{
+    width: 0.8rem;
+    position: absolute;
+    left: 0.15rem;
+    bottom:0.3rem;
+}
+.indianaDetail .indiana-person p{
+    text-align: center;
+    margin-top: 6px;
+
+}
+.indianaDetail .indiana-last{
+    width: 0.8rem;
+    position: absolute;
+    left: 1.15rem;
+    bottom:0.3rem;
+
+}
+.indianaDetail .indiana-last p{
+    text-align: center;
+    margin-top: 6px
+
+}
+.indianaDetail .indiana-price{
+    width: 0.8rem;
+    position: absolute;
+    left: 2.15rem;
+    bottom:30px
+}
+.indianaDetail .indiana-price p{
+    text-align: center;
+    margin-top: 6px
+
+}
+.indianaDetail .num{
+    color: #974b05;
+}
+
+
+
+
+
+
+.sureBuyed {
+    height: 0.5rem;
+    position: fixed;
+    left:0rem;
+    bottom: 0rem;
+    background-color: white;
+    line-height: 0.5rem;
+    width: 100%;
+    z-index: 5;
+
+}
+.sureBuyed div{
+    float: left;
+    font-size: 0.16rem;
+
+
+}
+.sureBuyed .money{
+    width:62%;
+    /*padding-left: 0.15rem;*/
+    padding-left: 4%;
+}
+.sureBuyed .money span{
+    color:#f44332;
+}
+.sureBuyed .toJion{
+    width: 34%;
+    text-align: center;
+    background-color: #f44332;
+    color: white;
+}
+.costMoney{
+    height: 0.45rem;
+    line-height: 0.45rem;
+    padding-left: 0.15rem;
+    border-bottom: 0.005rem solid #e6e6e6;
+    background-color: white;
+    font-size: 0.16rem;
+}
+.costMoney span {
+    color: #fe4332;
+    margin-left: 0.07rem;
+    margin-right: 0.03rem;
+}
+.choose{
+    height: 0.5rem;
+    width: 100%;
+    font-size: 0.14rem;
+    text-align: center;
+}
+.choose p{
+    /*margin-top: 0.05rem;*/
+    height: 0.25rem;
+    line-height:0.25rem;
+}
+.choose .clickRadio{
+    color:  #fe4332;
+
+}
+.costWays{
+    background-color: white;
+
+
+}
+.costWays li{
+    height: 0.45rem;
+    line-height: 0.45rem;
+    font-size: 0rem;
+    border-bottom: 0.005rem solid #e6e6e6;
+    position: relative;
+}
+.costWays li p{
+    font-size: 0.16rem;
+    margin-left: 0.55rem;
+}
+.costWays li input{
+    position: absolute;
+    top:0.17rem;
+    right:0.15rem;
+}
+.costWays li div{
+    width: 0.3rem;
+    height: 0.3rem;
+    position: absolute;
+    left:0.15rem;
+    top:0.075rem;
+}
+.costWays li div img{
+    width: 0.3rem;
+    height: 0.3rem;
+}
+.bg_1{
+    background:url('../images/橙色.png')no-repeat ;
+    background-size: 100% 100%;
+}
+.bg_2{
+    background:url('../images/黄色.png')no-repeat ;
+    background-size: 100% 100%;
+}
+.bg_3{
+    background:url('../images/绿色.png')no-repeat ;
+    background-size: 100% 100%;
+}
+
+.b-wrap{
+	margin-top: 3.3rem;
+	padding: 0 .7rem;
+}
+.b-telWrap{
+	width: 100%;
+	height: .4rem;
+	position: relative;
+	background-color: rgba(0,0,0,.3);
+	margin-bottom: .08rem;
+	border-radius: .05rem;
+	overflow: hidden;
+}
+.b-txt{
+	width: 1rem;
+	height: .4rem;
+	line-height: .4rem;
+	font-size: .16rem;
+	position: absolute;
+	left: 0;
+	top: 0;
+	text-align: center;
+}
+.b-style{
+	width: 100%;
+	height: .4rem;
+	line-height: .4rem;
+	font-size: .15rem;
+	color: #484848;
+	padding: 0 .05rem 0 1rem;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: .05rem;
+	background-color: transparent;
+}
+.bBtn{
+	width: 1.5rem;
+	height: .4rem;
+	line-height: .4rem;
+	border-radius: .05rem;
+	display: block;
+	margin: 0 auto .13rem;
+	font-size: .16rem;
+	color: #fff;
+	text-align: center;
+}
+.bBtn-receive{
+	background-color: #FE4332;
+	margin-top: .3rem;
+}
+.bBtn-register{
+	background-color: #73cb98;
+}
+.bg-b{
+	width: 100%;
+	height: 100%;
+	background-image: url(../images/shakeBG.gif);
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.bg-b input,
+.bg-b button{
+	border: none;
+	outline: none;
+}
+.popup{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,.4);
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+}
+.popup-html{
+	width: 84%;
+	height: 1.1rem;
+	background-color: #fff;
+	border-radius: 5px;
+	position: absolute;
+	top: 50%;
+	left: 8%;
+	margin-top: -.55rem;
+}
+.popup-html p{
+	text-align: center;
+	font-size: .16rem;
+	line-height: 1.8;
+}
+.popup-html div{
+	font-size: 0;
+	text-align: center;
+}
+.popup-html div .bBtn{
+	width: 1rem;
+	height: .3rem;
+	line-height: .3rem;
+	display: inline-block;
+	margin: 0 .1rem;
+}

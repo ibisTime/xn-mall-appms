@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <!--<link rel="import" href="../head.html?__inline">-->
+    <title>一元夺宝</title>
+    <link rel="import" href="../head.html?__inline">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/shake.css">
+
+    <style>
+        body {
+            background-color: #F5F5F5;
+        }
+        .wrapDiv{
+            width: 1.55rem;
+            height: 10px;
+            margin-left: 0.1rem;
+            position: absolute;
+            left:0.8rem;
+            top: 5px;
+            background-color: #e6e6e6;
+            border-radius: 0.1rem;
+            overflow: hidden;
+        }
+        .wrapDiv div{
+            /*width: 100%;*/
+            height: 10px;
+            background-color:limegreen;
+        }
+
+        .icon-loading {
+            background: url(../../images/loading.gif) 50% 56% no-repeat;
+            width: 100%;
+            display: block;
+            position: fixed;
+            top: -62px;
+            height: 100%;
+            left: 0;
+            background-color: #fff;
+            z-index: 999;
+        }
+		
+		.bg_1 .wrapDiv div{
+            background-color: #fb9f18 !important;}
+		.bg_2 .wrapDiv div{
+            background-color: #e9c905 !important;}
+		.bg_3 .wrapDiv div{
+            background-color: #10c060 !important;}
+    </style>
+</head>
+<body>
+<i id="cont" class="icon-loading"></i>
+<div class="indianaRecord">
+    <div class="indianaList">
+        <div class="img"><img src="../../images/分秒-实况.png" alt=""></div>
+        <div class="record">
+            <div class="record_1">
+            </div>
+            <div class="record_2"></div>
+        </div>
+
+    </div>
+
+    <ul class="indianaDetail">
+
+    </ul>
+</div>
+
+<footer class="indiana-tabs">
+
+    <a href="../consume/consume.html">
+        <div><img src="../../images/hf3.png"/></div>
+        <p>商家消费</p>
+    </a>
+    <a href="../detail/mall_index.html">
+        <div><img src="../../images/hf2.png"/></div>
+        <p class="ptb2">商城兑换</p>
+    </a>
+    <a href="../index.html">
+        <div><img src="../../images/摇一摇－灰色.png"/></div>
+        <p class="ptb2">摇钱树</p>
+    </a>
+    <a class="active" href="../indiana/indiana.html">
+        <div><img src="../../images/小目标.png"/></div>
+        <p class="ptb2">一元夺宝</p>
+    </a>
+
+    <a href="../user/user_info.html">
+        <div><img src="../../images/hf4.png"/></div>
+        <p class="ptb2">我的</p>
+    </a>
+</footer>
+<link rel="import" href="../footer.html?__inline">
+</body>
+</html>
+<script>
+    require(['app/controller/indiana/Indiana']);
+</script>
