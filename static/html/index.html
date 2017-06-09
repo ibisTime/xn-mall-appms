@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <link rel="import" href="head.html?__inline">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/shake.css">
+	<title>摇钱树</title>
+	<!--<script>
+		var w = $(window).width();
+		if (w > 750) {
+			w = 750
+		}
+		$("html,body").css("font-size", w / 7.5 + "px");
+	</script>-->
+	
+	<style>
+		.playWays{
+			width:100%;
+			height:100%;
+			position: fixed;
+			top:0px;
+			left: 0px;
+			background-color: rgba(0,0,0,0.6);
+			z-index: 9999;
+			color: white;
+			display: none;
+		}
+		.playWays button{
+			height:40px ;
+			width:80%;
+			position: fixed;
+			bottom:50px;
+			left:10%;
+			background-color:#f44332 ;
+			text-align: center;
+			font-size: .15rem;
+			color: white;
+			/*font-weight: 600;*/
+			border-radius: 10px;
+			border:none;
+		}
+		.playWays-Content{
+			font-size: .18rem;
+			margin-top: .5rem;
+			padding: .1rem;
+			overflow-y: scroll;
+		}
+		@media only screen and (min-width: 580px) {
+			.playWays-Content{
+				height: 5.3rem;
+			}
+		}
+		@media only screen and (max-width: 500px) {
+			.playWays-Content{
+				height: 4.8rem;
+			}
+		}
+		@media only screen and (max-width: 376px) {
+			.playWays-Content{
+				height: 4.1rem;
+			}
+		}
+		@media only screen and (max-width: 321px) {
+			.playWays-Content{
+				height: 3.3rem;
+			}
+		}
+		
+		.close{
+			width: .3rem;
+			position: absolute;
+			right: 10px;
+			top: 20px;
+			font-size: 0;
+			line-height: 1;
+		}
+		.close img{
+			width: 100%;
+		}
+		.play-way-wrap{
+			width: 100%;
+			font-size: .17rem;
+			position: relative;
+			z-index: 999;
+			padding: .1rem 0;
+			text-align: right;
+		}
+		.play-way-wrap p{
+			display: inline-block;
+			margin-right: .2rem;
+		}
+	</style>
+	
+</head>
+
+<body class="hp100">
+	<div class="play-way-wrap">
+   		<p class="play-way">玩法介绍</p>
+   	</div>
+	<div id="shakeWrap" class="wp100 hp100">
+		<div class="shakeWrap wp100 hp100 pab40"></div>
+		<!--<div class="shakeWrapOn wp100 hp100 pat0"></div>-->
+	</div>
+	<footer class="indiana-tabs">
+		<a href="consume/consume.html">
+			<div><img src="../images/hf3.png" /></div>
+			<p>商家消费</p>
+		</a>
+		<a href="detail/mall_index.html">
+			<div><img src="../images/hf2.png" /></div>
+			<p class="ptb2">商城兑换</p>
+		</a>
+		<a class="active" href="index.html">
+			<div><img src="../images/摇一摇－红色.png" /></div>
+			<p class="ptb2">摇钱树</p>
+		</a>
+		<a href="indiana/indiana.html">
+			<div><img src="../images/小目标未点击.png" /></div>
+			<p class="ptb2">一元夺宝</p>
+		</a>
+
+		<a href="user/user_info.html">
+			<div><img src="../images/hf4.png" /></div>
+			<p class="ptb2">我的</p>
+		</a>
+	</footer>
+	
+	<div class="playWays Mpopup">
+		<div class="close ab"><img src="../images/close.png" /></div>
+		<div class="playWays-Content p20 mt30">
+
+		</div>
+		<button class="s_14">我已阅读</button>
+	</div>
+	
+	<link rel="import" href="footer.html?__inline">
+	<script src="//api.map.baidu.com/api?v=2.0&ak=GtNrG008U04GONzKSDHiW70GxurUUhlU&s=1"></script>
+	<script>
+		require(['app/controller/Shake']);
+	</script>
+</body>
+
+</html>

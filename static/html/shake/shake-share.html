@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>摇钱树分享</title>
+    <link rel="import" href="../head.html?__inline">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/shake.css">
+	<!--<script>
+		(function(doc, win) {
+			var docEl = doc.documentElement,
+				resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize',
+				recalc = function() {
+					var clientWidth = docEl.clientWidth;
+					if (!clientWidth) return;
+					if (clientWidth < 750)
+						docEl.style.fontSize = clientWidth / 7.5 + 'px';
+					else
+						docEl.style.fontSize = '100px';
+				};
+			if (!doc.addEventListener) return;
+			win.addEventListener(resizeEvt, recalc, false);
+			doc.addEventListener('DOMContentLoaded', recalc, false)
+
+		})(document, window);
+		var APIURL = "/api";
+		var SYSTEM_CODE = "CD-CCG000007";
+	</script>-->
+</head>
+
+<body class="bg_fff over-hide" style="width: 100%;">
+	<div id="logo" class="hidden"><img src="../../images/logo2.png"/></div>
+	<div class="wp100 b_bd_b over-hide p3_2r bg_fff" data-code="1">
+		<div class="fl s_12 c_48 fs25r"><span class="c_fe4332 fs25 hasName"></span>的摇钱树</div>
+		<div class="fr c_48 fs25r"><img class="h35r pr6r" src="../../images/距离.png"><span class="distance"></span></div>
+	</div>
+	<div class="wp100 tc shareWrap">
+		<div class="tc" id="code"></div>
+		<div class="t_999 fs26r tc">扫码，和我一起玩摇钱树</div>
+		<!-- <input type="button" id="shareBtn" value="分享领奖" class="shareBtn" /> -->
+		<div class="mt30 t_f64444 fs25r m10r plr5r">点击微信右上角分享按钮，分享当前页面后，领取奖品</div>
+	</div>
+	<div class='wp100 hp100 pat0 bg_0_8 z_index9999' id='shakeAfterSta1'>
+		<div class='wp100'><img src='/static/images/中奖.png' />
+			<!--<p class='c_fe4332 fs30r pt40_b20r'>喜中汇赚宝</p>-->
+			<p class='c_fe4332 fs30r pt40_b20r' id="yyAmount"></p>
+		</div>
+	</div>
+	<link rel="import" href="../footer.html?__inline">
+	<script src="../../js/lib/jquery.qrcode.min.js"></script>
+	<script>
+		require(['app/controller/ShakeShare']);
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <link rel="import" href="../head.html?__inline">
+    <link rel="stylesheet" href="../css/base.css">
+    <title>购买</title>
+</head>
+
+<body class="bg_f5">
+    <i id="cont" class="icon-loading"></i>
+    <header>
+        <div class="swiper-container bg_fff">
+            <div class="swiper-wrapper buy-swiper-top" id="btlImgs" style="display: -webkit-box;display: -moz-box;">
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </header>
+    <div class="bg_fff plr20 ptb10">
+        <div class="pt10 overhide">
+            <p id="btr-name" class="t_323232 s_13"></p>
+            <p id="btr-slogan" class="t_666 s_10"></p>
+                <div class="pt15 pb10">
+                    <span id="discountPrice" class="t_red s_13"></span>
+                    <span id="cnySpan"><span id="cnyPrice" class="t_red s_13"></span></span>
+                </div>
+                <div class="t_666 ptb10">
+                    <span id="subCount" class="t_bold a_s_span tc"><img src="/static/images/sub-icon.png" style="width: 20px;"/></span>
+                    <input id="buyCount" class="tc w70p s_13 lh32" type="text" value="1" />
+                    <span id="addCount" class="t_bold a_s_span tc"><img src="/static/images/add-icon.png" style="width: 20px;"/></span>
+
+                </div>
+        </div>
+    </div>
+
+    <div id="btr-description" class="s_12 plr20 mt20 bg_fff ptb20 overwrap"></div>
+    
+    <div id="productSpecs" class="s_12 mt20 bg_fff productSpecs_wrap hidden over-hide">
+    </div>
+    
+    <a class="buy-cart-icon" href="../user/cart.html"><i></i><div class="infoIcon hidden"></div></a>
+    <div style="height: 90px;"></div>
+    <footer class="fixft bg_fff b_bd_t s_14  tc">
+        <div class="fl wp40 t_red bg_fff" id="totalNum">
+            <p  style="height: 55px">
+            	<span style="height: 30px;line-height: 30px"  class="CGB"></span><br>
+            	<span style="height: 25px"  class="JF"></span>
+            </p>
+        </div>
+        <div class="fl wp30 t_white bg_faa756 lh3_1em" id="addCartBtn">加入购物车</div>
+        <a class="fl wp30 t_white bg_ff0000 lh3_1em" id="buyBtn">立即购买</a>
+    </footer>
+    <link rel="import" href="../footer.html?__inline">
+    <script>
+        require(['app/controller/operator/Buy']);
+    </script>
+</body>
+
+</html>

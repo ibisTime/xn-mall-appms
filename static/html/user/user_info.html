@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <link rel="import" href="../head.html?__inline">
+    <link rel="stylesheet" href="../css/base.css">
+    <title>个人中心</title>
+</head>
+
+<body class="bg_f5">
+    <header class="bg_f64444 plr10 ptb20 p_r s_13">
+    	<a class="over-hide wp100 t_white" href="./user_set.html">
+	        <img src="../../images/person.png" class="va-m wp60p hp60p b_radius50 border2pfff" />
+	        <span class="pl20 inline_block va-m" id="mobile"></span>
+	        <div class="fr mt16"><img src="../../images/更多1@2x.png" class="w10p" /></div>
+	        
+        </a>
+    </header>
+    <div class="b_e_b ptb10  bg_fff p_r s_12">
+        <a href="./cnyFlow.html" class="show">
+            <img src="../../images/zhye.png" class="va-m wp22p ml10" />
+            <span class="pl4 inline_block va-m"><span>账户余额：</span><span class="t_f64444 s_12">￥<span id="cnyAmount"></span></span>
+            </span>
+            <span class="r-tip"></span>
+        </a>
+    </div>
+    <div class="clearfix  tc s_12 bg_fff mb10">
+        <div class="fl wp50 br_f64444 ptb10">
+            <a href="./cgMoney.html" class="show">
+                <span class="pl4 inline_block va-m">
+                    <span>菜狗币：</span>
+                    <span class="t_f64444 s_12" id="cgbAmount"></span>
+                </span>
+            </a>
+        </div>
+        <div class="fl wp50 ptb10">
+            <a href="./integral.html" class="show">
+                <span class="pl4 inline_block va-m">
+                    <span>积分：</span>
+                    <span class="t_f64444 s_12" id="jfAmount"></span>
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="b_e_b ptb10 bg_fff p_r s_12">
+        <p id="ifTree" class="show">
+            <img src="../../images/我的树@2x.png" class="va-m wp22p ml10">
+            <span class="pl4 inline_block va-m">摇钱树</span>
+            <span class="r-tip"></span>
+        </p>
+    </div>
+    <div class="mb10 ptb10  bg_fff p_r s_12">
+        <a href="../new/indianaSecord.html" class="show">
+            <img src="../../images/夺宝记录@2x.png" class="va-m wp22p ml10">
+            <span class="pl4 inline_block va-m">夺宝记录</span>
+            <span class="r-tip"></span>
+        </a>
+    </div>
+    <div class="b_e_b ptb10 bg_fff p_r s_12">
+        <a href="./order_list.html" class="show">
+            <img src="../../images/wddd.png" class="va-m wp22p ml10">
+            <span class="pl4 inline_block va-m">我的订单</span>
+            <span class="r-tip"></span>
+        </a>
+    </div>
+    <div class="clearfix s_10 pt18 pb14 bg_fff mb10">
+        <div class="fl wp33 tc">
+            <a href="./order_list.html?i=1">
+                <div><img class="wp30p" src="../../images/dfk.png"></div>
+                <p>待支付</p>
+            </a>
+        </div>
+        <div class="fl wp33 tc">
+            <a href="./order_list.html?i=2">
+                <div><img class="wp34p" src="../../images/dfh.png"></div>
+                <p>待发货</p>
+            </a>
+        </div>
+        <div class="fl wp33 tc">
+            <a href="./order_list.html?i=3">
+                <div><img class="wp27p" src="../../images/dsh.png"></div>
+                <p>待收货</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="ptb10 bg_fff p_r s_12">
+        <a href='./vorder_list.html' class="show">
+            <img src="../../images/gywm.png" class="va-m wp22p ml10">
+            <span class="pl4 inline_block va-m">我的专区订单</span>
+            <span class="r-tip"></span>
+        </a>
+    </div>
+    
+     <!--<div class="ptb10 bg_fff p_r s_12" id="demo">
+            <img src="../../images/gywm.png" class="va-m wp22p ml10">
+            <span class="pl4 inline_block va-m">我的专区订单</span>
+            <span class="r-tip"></span>
+    </div>-->
+    
+    <div class="s_12 tc t_666 mt30">
+        <img class="ui-phone-icon" src="../../images/telephone.png" />
+        <div class="va-m inline_block" id="telephone"></div>
+    </div>
+    
+    <div style="height: 90px;"></div>
+    
+    <footer class="fixft bg_fff b_bd_t hfoot s_11">
+        <a href="../consume/consume.html" class="wp20 fl tc">
+            <div class="wp100 pt8"><img src="../../images/hf3.png" /></div>
+            <p class="ptb2">商家消费</p>
+        </a>
+
+        <a href="../detail/mall_index.html" class="wp20 fl tc">
+            <div class="wp100 pt8"><img src="../../images/hf2.png" /></div>
+            <p class="ptb2">商城兑换</p>
+        </a>
+
+        <a href="../index.html" class="wp20 fl tc">
+            <div class="wp100 pt8"><img src="../../images/摇一摇－灰色.png" /></div>
+            <p class="ptb2">摇钱树</p>
+        </a>
+        <a href="../indiana/indiana.html" class="wp20 fl tc">
+            <div class="wp100 pt8"><img src="../../images/小目标未点击.png" /></div>
+            <p class="ptb2">一元夺宝</p>
+        </a>
+        <a href="./user_info.html" class="wp20 fl tc active">
+            <div class="wp100 pt8"><img src="../../images/hf4@2x.png" /></div>
+            <p class="ptb2">我的</p>
+        </a>
+    </footer>
+    <link rel="import" href="../footer.html?__inline">
+    <script>
+        require(['app/controller/UserInfo']);
+    </script>
+    <script type="text/javascript">
+        $("#withDraw").on("click", function() {
+            location.href = "withDraw.html"
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="bg-b">
+
+<head>
+    <link rel="import" href="../head.html?__inline">
+    <link rel="stylesheet" href="../../css/shake.css">
+    <title>菜狗商城邀您领取红包</title>
+</head>
+
+<body>
+	
+	<div class="b-wrap">
+		<!--<div class="b-telWrap">
+			<div class="b-txt">登录账号：</div>
+			<input class="b-style b-input" type="txt" id="b-tel" />
+		</div>
+		
+		<div class="b-telWrap">
+			<div class="b-txt">登录密码：</div>
+			<input class="b-style b-input" type="password" id="b-pwd" />
+		</div>
+		-->
+		
+		<div class="bBtn bBtn-receive" id="bBtn-receive">领取，红包！</div>
+		<div class="bBtn bBtn-register" id="bBtn-register">点击进入菜狗商城</div>
+		
+		<!--<input type="button" class="bBtn bBtn-receive" id="bBtn-receive" value="领取，红包！" />
+		<input type="button" class="bBtn bBtn-register" id="bBtn-register" value="点击注册" />-->
+	</div>
+	
+	<div class="popup">
+		<div class="popup-html">
+			<p>领取成功！</p>
+			<!--<div class="popup-btn">
+				<samp class="bBtn bBtn-register" id="bBtn-can">取消</samp>
+				<samp class="bBtn bBtn-receive" id="bBtn-shiy">我要使用</samp>
+			</div>-->
+		</div>
+	</div>
+	
+    <link rel="import" href="../footer.html?__inline">
+
+    <script data-loader>
+        require(['app/controller/ShareReceive']);
+    </script>
+</body>
+
+</html>
