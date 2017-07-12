@@ -5,6 +5,7 @@ define([
 ], function(base, Ajax, loading) {
     var code = base.getUrlParam("c");
     var rate = base.getUrlParam("rate"),
+    	rate4 = base.getUrlParam("rate4"),
         name = base.getUrlParam("n");
     var choseIdx = 0, totalAmount = 0;
     var rmbRemain = 0, fxCGB = 0;
@@ -17,6 +18,14 @@ define([
             loading.createLoading();
             
             $("#name").text(name);
+            if(rate&&rate!="0"){
+            	$("#fxCGB-wrap").removeClass("hidden")
+            }
+            
+            if(rate4&&rate4!="0"){
+            	$("#fxJF-wrap").removeClass("hidden")
+            }
+            
             $.when(
                 getAccount()
             ).then(loading.hideLoading, loading.hideLoading);
@@ -56,9 +65,11 @@ define([
             		base.showMsg("小数点后最多两位")
             	}else{
 	                var needAmount = value *1000 ,
-	                	fxCGB = needAmount *rate;
+	                	fxCGB = needAmount *rate ,
+	                	fxJF = needAmount *rate4;
 	                    
 	                $("#fxCGB").val(base.formatMoney(fxCGB));
+	                $("#fxJF").val(base.formatMoney(fxJF));
 	                $("#needAmount").val(base.formatMoney(needAmount));
 	                
 	                totalAmount = value*1000;
@@ -106,10 +117,7 @@ define([
             	
                 loading.hideLoading();
                 if(payType == 21){
-                    base.showMsg("支付成功");
-                    setTimeout(function(){
-                        location.href = "../consume/detail.html?c="+code;
-                    }, 1000);
+                    base.showMsg("支付成功",1000);
                 }else{
                     wxPay(res.data);
                 }
@@ -120,7 +128,7 @@ define([
                 		
                         location.href = "../pay/cny_recharge.html";
                 	},function(){
-                        location.href = "../consume/detail.html?c="+code;
+                    	base.showMsg("支付成功",1000);
                 	})
                 }else{
                 	base.showMsg(res.msg);
@@ -144,10 +152,7 @@ define([
                 loading.hideLoading();
                 // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                    base.showMsg("支付成功");
-                    setTimeout(function() {
-                        location.href = "../consume/detail.html?c="+code;
-                    }, 1000);
+                    base.showMsg("支付成功",1000);
                 } else {
                     base.showMsg("支付失败");
                 }

@@ -3164,7 +3164,7 @@ table th, table td {
 
 .consume_list_div {
     position: absolute;
-    top: 72px;
+    top: 62px;
     font-size: 1rem;
     z-index: 901;
     bottom: 0;
@@ -3813,9 +3813,17 @@ label.error {
 	border-top: 1px solid #eee;
 }
 .detail-img{
-	max-height: 400px;
+	width: 100%;
+	height: 240px;
 	overflow: hidden;
 	position: relative;
+}
+.detail-img .swiper-slide div{
+	width: 100%;
+	height: 100%;
+	background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .fs12{
 	font-size: 12px;

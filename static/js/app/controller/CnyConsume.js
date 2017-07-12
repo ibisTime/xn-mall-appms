@@ -44,7 +44,7 @@ define([
             }
         });
     }
-    // 获取人民币转积分汇率
+    // 获取人民币转抵金券汇率
     function getCNY2JFRate(){
         return getTransRate("CNY", "CGJF");
     }
@@ -129,17 +129,14 @@ define([
             	
                 loading.hideLoading();
                 if(payType == 21){
-                    base.showMsg("支付成功");
-                    setTimeout(function(){
-                        location.href = "../consume/detail.html?c="+code;
-                    }, 1000);
+                    base.showMsg("支付成功",1000);
                 }else{
                     wxPay(res.data);
                 }
             }else{
                 loading.hideLoading();
-                if(res.msg=="积分不足"){
-                	base.confirm("积分余额不足，是否前往兑换？","否","是").then(function(){
+                if(res.msg=="抵金券不足"){
+                	base.confirm("抵金券余额不足，是否前往兑换？","否","是").then(function(){
                 		
                         location.href = "../user/buyIntegral.html";
                 	},function(){
@@ -150,7 +147,7 @@ define([
                 		
                         location.href = "../pay/cny_recharge.html";
                 	},function(){
-                        location.href = "../consume/detail.html?c="+code;
+                        base.showMsg("支付成功",1000);
                 	})
                 }else{
                 	base.showMsg(res.msg);
@@ -174,10 +171,7 @@ define([
                 loading.hideLoading();
                 // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                    base.showMsg("支付成功");
-                    setTimeout(function() {
-                        location.href = "../consume/detail.html?c="+code;
-                    }, 1000);
+                    base.showMsg("支付成功",1000);
                 } else {
                     base.showMsg("支付失败");
                 }

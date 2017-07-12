@@ -1,5 +1,9 @@
 define([
-    'app/controller/base', 'app/util/ajax', 'app/util/dict', 'lib/swiper-3.3.1.jquery.min', 'app/module/loadImg/loadImg'
+    'app/controller/base',
+    'app/util/ajax',
+    'app/util/dict',
+    'lib/swiper-3.3.1.jquery.min',
+    'app/module/loadImg/loadImg'
 ], function(base, Ajax, dict, Swiper, loadImg) {
 
     var isEnd = false,
@@ -116,7 +120,7 @@ define([
                                 ? base.formatMoney(val.price2) + "菜狗币"
                                 : "",
                             price3 = val.price3
-                                ? base.formatMoney(val.price3) + "积分"
+                                ? base.formatMoney(val.price3) + "抵金券"
                                 : "",
                             code = val.code;
                         

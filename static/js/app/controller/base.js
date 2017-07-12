@@ -1,4 +1,8 @@
-define(['app/util/common', 'app/util/ajax', 'app/util/dialog'], function(common, Ajax, dialog) {
+define(['app/util/common',
+		'app/util/ajax',
+		'app/util/dialog',
+    	'app/module/loading/loading'
+], function(common, Ajax, dialog, loading) {
 
     //FastClick.attach(document.body);
 
@@ -398,6 +402,129 @@ define(['app/util/common', 'app/util/ajax', 'app/util/dialog'], function(common,
             }));
 
         },
+        getPic: function(pic){
+            if(!pic){
+                return "";
+            }
+            pic = pic.split(/\|\|/)[0];
+            if(!/^http|^data:image/i.test(pic)){
+                pic = PIC_PREFIX + pic ;
+            }
+            return pic;
+        },
+        getPicArr: function(pic, suffix){
+            if(!pic){
+                return [];
+            }
+            return pic.split(/\|\|/).map(function(p) {
+                return Base.getPic(p, suffix);
+            });
+        },
+        
+        //获取全国所有城市信息
+    	getRealLocation:function (initFun, province, city, area, longitude, latitude, errFun) {
+	        Base.getAddress()
+	            .then(function(data) {
+	                citylist = data.citylist;
+	                var html = "",
+	                    k = 0;
+	                //遍历省
+	                $.each(citylist, function(i, prov) {
+	                    if(Base.isAddrEqual(prov.p, province)){
+	                        province = prov.p;
+	                        $.each(prov.c, function(j, c) {
+	                            //如果是当前定位的位置，则显示并保存到session中
+	                            if (Base.isAddrEqual(c.n, city)) {
+	                                city = c.n;
+	                                if(c.a && c.a[0].s && area){
+	                                    $.each(c.a, function (k, a) {
+	                                        if(Base.isAddrEqual(a.s, area)){
+	                                            area = a.s;
+	                                        }
+	                                    });
+	                                }
+	                            }
+	                        });
+	                    }
+	                });
+	                loading.hideLoading();
+	                if(!province){
+	                    Base.showMsg("定位失败");
+	                    errFun && errFun();
+	                }else{
+	                    sessionStorage.setItem("dw-province", province);
+	                    sessionStorage.setItem("dw-city", city);
+	                    sessionStorage.setItem("dw-area", area);
+	                    sessionStorage.setItem("dw-longitude", longitude);
+	                    sessionStorage.setItem("dw-latitude", latitude);
+	                    //直辖市
+	                    if(area == ""){
+	                        area = city;
+	//                      city = province;
+	                    }
+//	                    area = "";
+	                    sessionStorage.setItem("province", province);
+	                    sessionStorage.setItem("city", city);
+	                    sessionStorage.setItem("area", area);
+	                    sessionStorage.setItem("longitude", longitude);
+	                    sessionStorage.setItem("latitude", latitude);
+	
+	                    initFun(citylist);
+	                }
+	            });
+	    },
+	    getInitLocation: function (initFun, errFun){
+	    	var province = sessionStorage.getItem("province") || "",
+                city = sessionStorage.getItem("city") || "",
+                area = sessionStorage.getItem("area") || "",
+                longitude = sessionStorage.getItem("longitude", longitude),
+                latitude = sessionStorage.getItem("latitude", latitude);
+                loading.createLoading("定位中...");
+                
+                if(!province){
+                	//加载地图，调用浏览器定位服务
+			        map = new AMap.Map('', {
+			            resizeEnable: true
+			        });
+			        map.plugin('AMap.Geolocation', function() {
+			            geolocation = new AMap.Geolocation({
+			                enableHighAccuracy: true,//是否使用高精度定位，默认:true
+			                timeout: 1000,          //超过5秒后停止定位，默认：无穷大
+			            });
+			            map.addControl(geolocation);
+			            geolocation.getCurrentPosition();
+			            AMap.event.addListener(geolocation, 'complete', function(data) {
+			                var lng = data.position.getLng(),
+			                    lat = data.position.getLat(),
+			                    addressComponent = data.addressComponent,
+			                    province = addressComponent.province,
+			                    city = addressComponent.city,
+			                    area = addressComponent.district;
+			                
+			                if(province && city && area){
+				                sessionStorage.setItem("province",province),
+				                sessionStorage.setItem("city",city),
+				                sessionStorage.setItem("area",area),
+				                sessionStorage.setItem("longitude", lng),
+				                sessionStorage.setItem("latitude", lat);
+				                loading.hideLoading();
+				                initFun();	
+			                }else{
+			                	loading.hideLoading();
+			                	errFun();
+			                }
+			               
+			            });
+			            AMap.event.addListener(geolocation, 'error', function(data) {
+			            	loading.hideLoading();
+			                errFun();
+			            });      //返回定位出错信息
+			        });
+                }else{
+                	loading.hideLoading();
+                    initFun();
+                }
+	    },
     };
 //  var pathname = location.pathname;
 //  if ((pathname.indexOf("/user/") != -1 &&

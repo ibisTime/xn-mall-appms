@@ -65,9 +65,9 @@ define([ 'app/controller/base',
             }else{
                 var  html = "";
                 html +='<div class="b_bd_tb ptb10  bg_fff p_r s_12"><img src="/static/images/余额.png" class="va-m wp22p ml10">'+
-    				'<span class="pl4 inline_block va-m">余额支付(余额：<span id="rmbRemain">'+jfRemain+'积分</span>)</span><input checked class="ab ab_r20 buyWay"  value="yePay" type="radio" name="buy"/></div>';
+    				'<span class="pl4 inline_block va-m">余额支付(余额：<span id="rmbRemain">'+jfRemain+'抵金券</span>)</span><input checked class="ab ab_r20 buyWay"  value="yePay" type="radio" name="buy"/></div>';
     				
-                $(".MoneyType").text("积分");
+                $(".MoneyType").text("抵金券");
                 $(".payWaysWrap").append(html)
             }
             html = $(html)
@@ -112,7 +112,7 @@ define([ 'app/controller/base',
 
                                 } else {
                                     if(fromCurrency=="CGJF" && response.msg=="账户余额不足"){
-					                	base.confirm("积分余额不足，是否前往兑换？","否","是").then(function(){
+					                	base.confirm("抵金券余额不足，是否前往兑换？","否","是").then(function(){
 					                		
 					                        location.href = "../user/buyIntegral.html";
 					                	},function(){

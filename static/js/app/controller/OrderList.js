@@ -91,15 +91,15 @@ define([
                                         html += '<p class="item_totalP">' + base.formatMoneyD(invoice.price2) + '<span class="t_40pe s_09 pl4">菜狗币</span></p>';
                                     }
                                     if (invoice.price3) {
-                                        html += '<p class="item_totalP">' + base.formatMoneyD(invoice.price3) + '<span class="t_40pe s_09 pl4">积分</span></p>';
+                                        html += '<p class="item_totalP">' + base.formatMoneyD(invoice.price3) + '<span class="t_40pe s_09 pl4">抵金券</span></p>';
                                     }
                                     html += '<p class="t_80">×<span>' + invoice.quantity + '</span></p>' +
                                         '<p>&nbsp;</p>' +
                                         '<p class="ol_total_p right0">总计:<span class="pl4">' + (cl.amount2 ? (base.formatMoneyD(cl.amount2) + '菜狗币') : "") ;
                                     if(cl.amount2&&cl.amount3){
-                                    	html +=(cl.amount3 ? ("+" + base.formatMoneyD(cl.amount3) + "积分") : "") + '</span></p></div></div>';
+                                    	html +=(cl.amount3 ? ("+" + base.formatMoneyD(cl.amount3) + "抵金券") : "") + '</span></p></div></div>';
                                     }else{
-                                    	html +=(cl.amount3 ? (base.formatMoneyD(cl.amount3) + "积分") : "") + '</span></p></div></div>'
+                                    	html +=(cl.amount3 ? (base.formatMoneyD(cl.amount3) + "抵金券") : "") + '</span></p></div></div>'
                                     }
                                 } else {
                                     html += '<div class="wp100 clearfix ptb4 p_r">';

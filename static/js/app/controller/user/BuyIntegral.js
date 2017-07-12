@@ -17,7 +17,7 @@ define([
             getCGB2CGJFRate()
         ).then(loading.hideLoading, loading.hideLoading);
     }
-    // 获取菜狗币转积分汇率
+    // 获取菜狗币转抵金券汇率
     function getCGB2CGJFRate(){
         return getTransRate("CGB", "CGJF");
     }
@@ -72,7 +72,7 @@ define([
         }).then(function(res){
             loading.hideLoading();
             if(res.success){
-                base.showMsg("积分购买成功");
+                base.showMsg("抵金券购买成功");
                 setTimeout(function(){
             		base.getBack();
                 }, 1000);

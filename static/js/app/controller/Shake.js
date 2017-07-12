@@ -25,26 +25,20 @@ define([
     function init() {
         loading.createLoading("定位中...");
 		
-        longitude = sessionStorage.getItem("longitude");
-        latitude = sessionStorage.getItem("latitude");
+        longitude = sessionStorage.getItem("longitude") || "";
+        latitude = sessionStorage.getItem("latitude") || "";
         if(!longitude){
-            var geolocation = new BMap.Geolocation();
-            geolocation.getCurrentPosition(function(r) {
-                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                    var geoc = new BMap.Geocoder();
-                    geoc.getLocation(r.point, function(rs) {
-                        longitude = r.point.lng;
-                        latitude = r.point.lat;
-                        sessionStorage.setItem("longitude", longitude)
-                        sessionStorage.setItem("latitude", latitude);
-                        loading.createLoading("加载中...");
-                        doAction();
-                    });
-                } else {
-                    loading.hideLoading();
-                    base.showMsg("定位失败");
-                }
-            }, {enableHighAccuracy: true});
+        	base.getInitLocation(function(res){
+				longitude = sessionStorage.getItem("longitude");
+				latitude = sessionStorage.getItem("latitude");
+				
+		    		loading.createLoading("加载中...");
+                    doAction();
+		    	},function(){
+		    		
+					loading.hideLoading();
+					base.showMsg("定位失败",1000);
+				})
         }else{
             loading.createLoading("加载中...");
             doAction();
@@ -69,6 +63,7 @@ define([
     }
     
     function doAction(){
+    	
         var param1 = {
             "userId": userId,
             "token": token,

@@ -74,9 +74,9 @@ define([
                                     html += '<span class="s_12 t_red">'+ base.formatMoney(d.price2) +'菜狗币</span>';
                                 }
                                 if (d.price2 && d.price3) {
-                                    html += '<span class="s_12 t_red">+' + base.formatMoney(d.price3) +'积分</span>';
+                                    html += '<span class="s_12 t_red">+' + base.formatMoney(d.price3) +'抵金券</span>';
                                 }else if(d.price3  && d.price2=='0'){
-                                	html += '<span class="s_12 t_red">'+ base.formatMoney(d.price3) +'积分</span>';
+                                	html += '<span class="s_12 t_red">'+ base.formatMoney(d.price3) +'抵金券</span>';
                                 }
                                 html += '</p>';
                                 if (d.originalPrice) {

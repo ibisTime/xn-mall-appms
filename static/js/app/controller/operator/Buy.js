@@ -76,7 +76,7 @@ define([
                 var msl = rspData;
 	            var buyCount = $("#buyCount").val();
 	            var CGB =  msl.price2 ? (msl.price2/1000)*buyCount +"菜狗币" : "",
-	                 JF =  msl.price3 ? (msl.price3/1000)*buyCount +"积分" : "";
+	                 JF =  msl.price3 ? (msl.price3/1000)*buyCount +"抵金券" : "";
 	                 
 	            $(".CGB").text(CGB);
 	            $(".JF").text(JF);
@@ -93,7 +93,7 @@ define([
                 var msl = rspData;
 	            var buyCount = $("#buyCount").val();
 	            var CGB =  msl.price2 ? (msl.price2/1000)*buyCount +"菜狗币" : "",
-	                 JF =  msl.price3 ? (msl.price3/1000)*buyCount +"积分" : "";
+	                 JF =  msl.price3 ? (msl.price3/1000)*buyCount +"抵金券" : "";
 	                 
 	            $(".CGB").text(CGB);
 	            $(".JF").text(JF);
@@ -147,7 +147,7 @@ define([
             $("#btr-slogan").text(msl.slogan);
             
             var price2 = msl.price2 ? msl.price2/1000 +"菜狗币" : "",
-                price3 = msl.price3 ? msl.price3/1000+"积分":"";
+                price3 = msl.price3 ? msl.price3/1000+"抵金券":"";
             $("#discountPrice").text(price2);
             if(msl.price2&&msl.price3){
             	$("#cnyPrice").text("+"+price3);
@@ -174,7 +174,7 @@ define([
             
             var buyCount = $("#buyCount").val();
             var CGB =  msl.price2 ? (msl.price2/1000)*buyCount +"菜狗币" : "",
-                 JF =  msl.price3 ? (msl.price3/1000)*buyCount +"积分" : "";
+                 JF =  msl.price3 ? (msl.price3/1000)*buyCount +"抵金券" : "";
             $(".CGB").text(CGB);
             $(".JF").text(JF);
         }

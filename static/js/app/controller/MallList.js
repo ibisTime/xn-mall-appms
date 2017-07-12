@@ -184,7 +184,7 @@ define([
                                     slogan = val.slogan,
                                     originalPrice = val.originalPrice ? val.originalPrice / 1000 : "",
                                     price2 = val.price2 ? val.price2 / 1000 + "菜狗币" : "",
-                                    price3 = val.price3 ? val.price3 / 1000 + "积分" : "",
+                                    price3 = val.price3 ? val.price3 / 1000 + "抵金券" : "",
                                     code = val.code;
 
                                 html2 += '<li class="ptb8 clearfix b_bd_b plr10"><a class="show p_r min-h100p" href="../operator/buy.html?code=' + code 

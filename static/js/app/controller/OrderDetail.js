@@ -85,7 +85,7 @@ define([
                                         html += '<p class="item_totalP">' + base.formatMoneyD(product.price2) + '<span class="t_40pe s_09 pl4">菜狗币</span></p>';
                                     }
                                     if (product.price3) {
-                                        html += '<p class="item_totalP">' + base.formatMoneyD(product.price3) + '<span class="t_40pe s_09 pl4">积分</span></p>';
+                                        html += '<p class="item_totalP">' + base.formatMoneyD(product.price3) + '<span class="t_40pe s_09 pl4">抵金券</span></p>';
                                     }
                                     html += '<p class="t_80">×<span>' + product.quantity + '</span></p></div></div></a></li>';
                                 });
@@ -96,9 +96,9 @@ define([
                                 if (data.amount3) {
                                     $("#cnySpan").removeClass("hidden");
                                     if(data.amount2){
-                                    	$("#totalJFAmount").text("+"+base.formatMoneyD(data.amount3)+"积分");
+                                    	$("#totalJFAmount").text("+"+base.formatMoneyD(data.amount3)+"抵金券");
                                     }else{
-                                   		$("#totalJFAmount").text(base.formatMoneyD(data.amount3)+"积分");
+                                   		$("#totalJFAmount").text(base.formatMoneyD(data.amount3)+"抵金券");
                                     }
 
                                 }

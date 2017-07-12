@@ -1,13 +1,15 @@
 define([
-    'app/controller/base', 'app/util/ajax'
-], function(base, Ajax) {
+    'app/controller/base',
+    'app/util/ajax',
+    'lib/swiper-3.3.1.jquery.min',
+], function(base, Ajax, Swiper) {
     var url = "808218",
         code = base.getUrlParam("c") || "",
         config = {
             code: code,
             userId: base.getUserId()
         },
-        rate2;
+        rate2,rate4;
 
     initView();
 
@@ -36,7 +38,7 @@ define([
                 praise(true);
             }
         });
-        //积分消费
+        //抵金券消费
         $("#sbtn").on("click", function() {
             if (!base.isLogin()) {
                 location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
@@ -57,7 +59,7 @@ define([
         })
         $("#rmbPay").click(function(e){
             e.stopPropagation();
-            location.href = "../pay/rmb_consume.html?c=" + code + "&rate=" + rate1 + "&n=" + $("#name").text();
+            location.href = "../pay/rmb_consume.html?c=" + code + "&rate=" + rate1+ "&rate4=" + rate4  + "&n=" + $("#name").text();
         })
     }
     //点赞
@@ -97,7 +99,13 @@ define([
                 if (data.isDZ) {
                     $("#goodImg").attr("src", "/static/images/good1.png");
                 }
-                $("#pic1").attr("src", base.getImg(data.pic, 1));
+                
+                var pics = base.getPicArr(data.pic),
+                	htmlPic = "";
+                    pics.forEach((d,i) => {
+                        htmlPic += `<div class='swiper-slide'><div href="${d || ""}" style="background-image:url(${d});"></div></div>`;
+                    });
+                $("#top-swiper").html(htmlPic);
                 $("#name").text(data.name);
                 $("#slogan").text(data.slogan);
                 $("#totalDzNum").text(data.totalDzNum);
@@ -105,9 +113,18 @@ define([
                 $("#address").text(data.province + " " + data.city + " " + data.area + " " + data.address);
                 $("#detailCont").append('<a class="fr clearfix" href="tel://' + data.bookMobile + '"><span class="pr6 va-m inline_block">' + data.bookMobile + '</span><img class="wp18p va-m" src="/static/images/phone.png"/></a>');
                 $("#description").html(data.description);
+                
+                if(pics.length&&pics.length>1){
+                	var mySwiper = new Swiper('#swiper-container', {
+	                    'direction': 'horizontal',
+	                    // 如果需要分页器
+	                    'pagination': '.swiper-pagination'
+	                });
+                }
 
                 rate2 = data.rate2;
                 rate1 = data.rate1;
+                rate4 = data.rate4;
             } else {
                 doError();
             }

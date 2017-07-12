@@ -46,7 +46,7 @@ define([
                                     amount = (+cl.product.price2) * (+cl.quantity);
                                     $("#totalAmount").parent().removeClass("hidden");
                                 }
-                                if (cl.product.price3 && +cl.product.price3) {  //积分
+                                if (cl.product.price3 && +cl.product.price3) {  //抵金券
                                     cnyAmount = (+cl.product.price3) * (+cl.quantity);
                                     $("#jfSpan, #mAdd").removeClass("hidden");
                                 }
@@ -73,11 +73,11 @@ define([
                                     
                                 if (cl.product.price2 && cl.product.price3) {
                                     html += '<span>' + base.formatMoneyD(cl.product.price2) + '</span><span class="t_40pe s_10">菜狗币</span>'
-                                    	+ '<span>+' + base.formatMoneyD(cl.product.price3) + '</span><span class="t_40pe s_10">积分</span>';
+                                    	+ '<span>+' + base.formatMoneyD(cl.product.price3) + '</span><span class="t_40pe s_10">抵金券</span>';
                                 }else if(cl.product.price2 && !cl.product.price3){
                                 	html += '<span>' + base.formatMoneyD(cl.product.price2) + '</span><span class="t_40pe s_10">菜狗币</span>';
                                 }else if (!cl.product.price2 && cl.product.price3) {
-                                    html += '<span>' + base.formatMoneyD(cl.product.price3) + '</span><span class="t_40pe s_10">积分</span>';
+                                    html += '<span>' + base.formatMoneyD(cl.product.price3) + '</span><span class="t_40pe s_10">抵金券</span>';
                                 }
                                 html += '</p>' +
                                     '<div class="t_666 ptb10">' +
@@ -90,7 +90,7 @@ define([
                                     '</div>' +
                                     '<div class="al_addr_del">删除</div>' +
                                     '</div></li>';
-                                //保存每种商品当前的总价   菜狗币、积分
+                                //保存每种商品当前的总价   菜狗币、抵金券
                                 infos.push([amount, cnyAmount]);
                             });
                             html += "</ul>";
@@ -181,7 +181,7 @@ define([
                 }
                 var gp = $(this).parents("li[code]"),
                     salePrice = +gp.attr("saleP"),  //菜狗币
-                    cnyPrice = +gp.attr("cnyP");    //积分
+                    cnyPrice = +gp.attr("cnyP");    //抵金券
                 var param2 = {
                     "code": gp.attr("code"),
                     "quantity": this.value
@@ -199,21 +199,21 @@ define([
                                 $prev = $(me).prev(),
                                 count = me.value,
                                 unit = salePrice,   //菜狗币
-                                cnyUnit =cnyPrice,  //积分
+                                cnyUnit =cnyPrice,  //抵金券
                                 //当前商品最新菜狗币总价
                                 new_amount = unit * (+count),
-                                //当前商品最新积分总价
+                                //当前商品最新抵金券总价
                                 new_cnyAmount = cnyUnit * (+count),
                                 info = infos[gp.index()],
-                                //当前商品老的积分总价
+                                //当前商品老的抵金券总价
                                 ori_amount = info[0],
                                 //当前商品老的菜狗币总价
                                 ori_cnyAmount = info[1],
                                 //已经勾选的商品老的菜狗币总价
                                 ori_total = +$("#totalAmount").data('price'),
-                                //已经勾选的商品老的积分总价
+                                //已经勾选的商品老的抵金券总价
                                 ori_cnyTotal = +$("#totalCnyAmount").data('price'),
-                                //已经勾选的商品最新的积分总价
+                                //已经勾选的商品最新的抵金券总价
                                 new_total = new_amount - ori_amount + ori_total;
                             //已经勾选的商品最新的人民币总价
                             new_cnyTotal = new_cnyAmount - ori_cnyAmount + ori_cnyTotal;

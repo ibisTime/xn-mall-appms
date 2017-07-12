@@ -216,7 +216,7 @@ define([
                     if (response.success) {
                         var amount = 0;
                         if (amount = response.data.amount) {
-                            showMsg("恭喜您注册成功<br/>获得积分+" + (+amount / 1000), 3000);
+                            showMsg("恭喜您注册成功<br/>获得抵金券+" + (+amount / 1000), 3000);
                             setTimeout(function() {
                                 doLogin();
                             }, 1000);

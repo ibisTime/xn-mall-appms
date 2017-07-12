@@ -13,7 +13,7 @@ define([
 		        "limit": 15,
 		        "bizType": "",
 		        "accountNumber": ""
-		    }, first = true, isEnd = false, canScrolling = true, unit = "积分",
+		    }, first = true, isEnd = false, canScrolling = true, unit = "抵金券",
 		    fundType = Dict.get("fundType"), m = base.getUrlParam("m") || "", precision = 0;
 
 		initView();

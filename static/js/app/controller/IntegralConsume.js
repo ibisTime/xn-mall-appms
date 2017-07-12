@@ -54,7 +54,7 @@ define([
             });
     }
     function addListeners() {
-        //积分数量输入框
+        //抵金券数量输入框
 //      $("#amount").on("keyup", function (e) {
 //          var keyCode = e.charCode || e.keyCode;
 //          var me = $(this);
@@ -85,7 +85,7 @@ define([
             $("#od-mask, #od-tipbox").addClass("hidden");
         });
     }
-    //消费积分
+    //消费抵金券
     function integralConsume(){
         $("#loaddingIcon").removeClass("hidden");
         Ajax.post('808242', {
@@ -99,13 +99,13 @@ define([
                 $("#loaddingIcon").addClass("hidden");
                 $("#od-mask, #od-tipbox").addClass("hidden");
                 if (response.success) {
-                    location.href = "../consume/detail.html?c="+code;
+	                base.showMsg("支付成功",1000)
                 }else{
                     if(response.msg=="菜狗币账户余额不足"){
 	                	base.confirm("菜狗币余额不足，是否前往购买？","否","是").then(function(){
 	                        location.href = "../pay/buyCgM.html";
 	                	},function(){
-	                        location.href = "../consume/detail.html?c="+code;
+	                        base.showMsg("支付成功",1000)
 	                	})
 	                }else{
 	                	base.showMsg(response.msg);

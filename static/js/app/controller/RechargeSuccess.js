@@ -21,7 +21,7 @@ define([
 			});
 		
 		function showMsg(msg){
-			var content = "<div class='tc'>非常遗憾，积分充值失败！<br/>页面将在3秒后跳到菜狗商城首页。</div>";
+			var content = "<div class='tc'>非常遗憾，抵金券充值失败！<br/>页面将在3秒后跳到菜狗商城首页。</div>";
 			if(msg.indexOf("登录后") != -1){
 				content = msg;
 				var d = dialog({

@@ -127,7 +127,7 @@ define([
                                 cnyEachCount = (+d.product.price3) * (+d.quantity);
                             }
                             totalCount += eachCount;    //菜狗币
-                            cnyTotalCount += cnyEachCount;  //积分
+                            cnyTotalCount += cnyEachCount;  //抵金券
                             html += '<li class="ptb8 clearfix b_bd_b plr10" modelCode="' + d.code + '">' +
                                 '<a href="../operator/buy.html?code=' + d.productCode + '" class="show p_r min-h100p">' +
                                 '<div class="order-img-wrap tc default-bg"><img class="center-img1" src="' +base.getImg(d.product.advPic, 1) + '"/></div>' +
@@ -140,7 +140,7 @@ define([
                                 html += '<p><span class="item_totalP">' + base.formatMoney(d.product.price2) + '</span><span class="t_40pe s_09 pl4">菜狗币</span></p>';
                             }
                             if (d.product.price3) {
-                                html += '<p><span class="item_totalP">' + base.formatMoney(d.product.price3) + '</span><span class="t_40pe s_09 pl4">积分</span></p>';
+                                html += '<p><span class="item_totalP">' + base.formatMoney(d.product.price3) + '</span><span class="t_40pe s_09 pl4">抵金券</span></p>';
                             }
                             html += '<p class="t_80">×<span>' + d.quantity + '</span></p></div></div></a></li>';
                         }
@@ -181,7 +181,7 @@ define([
                         $("#totalCgbAmount").html(base.formatMoney(totalCgbAmount))
                             .parent().parent().removeClass("hidden");
                     }
-                    if(data.price3){    //积分
+                    if(data.price3){    //抵金券
                         $("#mAdd, #JFDiv").removeClass("hidden");
                         var totalJFAmount = +data.price3 * +q;
                         $("#totalJFAmount").html(base.formatMoney(totalJFAmount));
@@ -200,7 +200,7 @@ define([
                         html += '<p><span class="item_totalP">' + base.formatMoney(data.price2) + '</span><span class="t_40pe s_09 pl4">菜狗币</span></p>';
                     }
                     if (data.price3) {
-                        html += '<p><span class="item_totalP">' + base.formatMoney(data.price3) + '</span><span class="t_40pe s_09 pl4">积分</span></p>';
+                        html += '<p><span class="item_totalP">' + base.formatMoney(data.price3) + '</span><span class="t_40pe s_09 pl4">抵金券</span></p>';
                     }
                     html += '<p class="t_80">×<span>' + q + '</span></p></div></div></a></li></ul>';
 

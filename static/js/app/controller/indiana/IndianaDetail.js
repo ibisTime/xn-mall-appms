@@ -58,14 +58,14 @@ define([ 'app/controller/base',
                     }else if(data.toCurrency == "CGB"){
                         var toAmount = base.formatMoneyD(data.toAmount) +"菜狗币";
                     }else{
-                        var toAmount = base.formatMoneyD(data.toAmount) +"积分";
+                        var toAmount = base.formatMoneyD(data.toAmount) +"抵金券";
                     }
                     if(data.fromCurrency == "CNY"){
                         $(".money .MoneyType").text("元")
                     }else if(data.fromCurrency == "CGB"){
                         $(".money .MoneyType").text("菜狗币")
                     }else{
-                        $(".money .MoneyType").text("积分")
+                        $(".money .MoneyType").text("抵金券")
                     }
                     
                     $(".indianaDetail_1").find(".span").text(toAmount);

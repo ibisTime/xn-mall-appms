@@ -114,7 +114,7 @@ define([
                             }, 2000);
                             var amount = +response.data.amount || 0;
                             if (amount > 0) {
-                                base.showMsg("每天首次登录获得积分+" + (+amount / 1000));
+                                base.showMsg("每天首次登录获得抵金券+" + (+amount / 1000));
                                 setTimeout(function() {
                                     goBack();
                                 }, 2000);

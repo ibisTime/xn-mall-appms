@@ -34,18 +34,19 @@ define([
             CITY = sessionStorage.getItem("city") || "";
             //如果session中没有保存地理信息，则重新获取
             if (!PROVINCE) {
-                loading.createLoading("定位中...");
-                //获取金纬度
-                var geolocation = new BMap.Geolocation();
-                geolocation.getCurrentPosition(function(r) {
-                    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                        PROVINCE = r.address.province;
-                        CITY = r.address.city;
-                    } else {
-                        showMsg("定位失败");
-                    }
-                    getLocationJSON();
-                }, { enableHighAccuracy: true });
+                //如果session中没有保存地理信息，则重新获取
+                base.getInitLocation(function(res){
+				PROVINCE = sessionStorage.getItem("province");
+				CITY = sessionStorage.getItem("city");
+				
+		    		loading.hideLoading();
+		    		getLocationJSON();
+		    	},function(){
+		    		
+					loading.hideLoading();
+					getLocationJSON();
+					base.showMsg("定位失败",1000);
+				})
             } else {
                 /*oss端保存 北京->朝阳区时，是province=北京、city=朝阳区、area=0；而保存浙江->杭州->余杭区时，是province=浙江、city=杭州、area=余杭区。
                   当前页面是按照倒数第二级去查找。如果是 北京->朝阳区，则按北京查，如果是 浙江->杭州->余杭区，则按 浙江->杭州去查询。
@@ -69,14 +70,14 @@ define([
                         k = 0;
                     $.each(citylist, function(i, prov) {
                         //省市区
-                        if (prov.c[0].a) {
+                        if (prov.c&&prov.c[0].a) {
                             $.each(prov.c, function(j, city) {
                                 //按顺序保存位置信息，工搜索用
                                 searchData.push(city.n);
                                 //如果是当前定位的位置，则显示并保存到session中
                                 if (city.n == CITY || CITY.indexOf(city.n) != -1 || city.n.indexOf(CITY) != -1) {
                                     html += '<li class="cityn on" prov="' + i + '" city="' + j + '">' + city.n + '</li>';
-                                    $("#nowDiv").html('<input type="button" class="btn" id="nowCity" prov="' + i + '" city="' + j + '" value="' + city.n + '"/>');
+                                    $("#nowDiv").html('<input type="button" class="btn" style="width:auto;padding:0 10px;" id="nowCity" prov="' + i + '" city="' + j + '" value="' + city.n + '"/>');
                                     config.province = prov.p;
                                     config.city = city.n;
                                     $("#city").find("span").text(city.n);
@@ -262,9 +263,11 @@ define([
                 //根据当前选择的城市更新config和session
                 config.province = citylist[prov].p;
                 config.city = city && citylist[prov].c[city].n || "";
+                config.area = "";
                 config.start = 1;
                 sessionStorage.setItem("province", config.province);
                 sessionStorage.setItem("city", config.city);
+                sessionStorage.setItem("area", "");
                 $("#nowCity").val(value);
                 $("#city").find("span").text(value);
                 //重新获取商家信息
@@ -441,6 +444,7 @@ define([
 	                            judgeError();
 	                        }
 	                    }else{
+	                    	//没有商家是显示默认商家
 	                    	businessPage1();
 	                    }
                     } else {

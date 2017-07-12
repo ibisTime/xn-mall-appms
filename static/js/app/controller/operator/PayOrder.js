@@ -50,7 +50,7 @@ define([
                                 html += '<p class="item_totalP">' + base.formatMoney(product.price2) + '<span class="t_40pe s_09 pl4">菜狗币</span></p>';
                             }
                             if (product.price3) {
-                                html += '<p class="item_totalP">' + base.formatMoney(product.price3) + '<span class="t_40pe s_09 pl4">积分</span></p>';
+                                html += '<p class="item_totalP">' + base.formatMoney(product.price3) + '<span class="t_40pe s_09 pl4">抵金券</span></p>';
                             }
                             html += '<p class="t_80">×<span>' + product.quantity + '</span></p></div></div></a></li>'
                         });
@@ -69,10 +69,10 @@ define([
                         }
                         //添加地址信息
 						if(data.amount2){
-							var addrHtml = '<p><span class="pr2em">总计</span>：<span class="pl_5rem">' + (data.amount2 ? (base.formatMoney(data.amount2) + "菜狗币") : "") + (data.amount3 ? " + " + (base.formatMoney(data.amount3) + "积分") : "") + '<span></span></p>' +
+							var addrHtml = '<p><span class="pr2em">总计</span>：<span class="pl_5rem">' + (data.amount2 ? (base.formatMoney(data.amount2) + "菜狗币") : "") + (data.amount3 ? " + " + (base.formatMoney(data.amount3) + "抵金券") : "") + '<span></span></p>' +
                             '<p><span class="pr1em">订单号</span>：<span class="pl_5rem">' + data.code + '</span></p>';
 						}else{
-							var addrHtml = '<p><span class="pr2em">总计</span>：<span class="pl_5rem">' + base.formatMoney(data.amount3) + "积分" + '<span></span></p>' +
+							var addrHtml = '<p><span class="pr2em">总计</span>：<span class="pl_5rem">' + base.formatMoney(data.amount3) + "抵金券" + '<span></span></p>' +
                             '<p><span class="pr1em">订单号</span>：<span class="pl_5rem">' + data.code + '</span></p>';
 						}
                         

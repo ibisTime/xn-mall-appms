@@ -58,7 +58,7 @@ define([
                         } else if (val.toCurrency == "CGB") {
                             var toAmount = val.toAmount / 1000 + "菜狗币"
                         } else {
-                            var toAmount = val.toAmount / 1000 + "积分"
+                            var toAmount = val.toAmount / 1000 + "抵金券"
                         }
                         
                         var maxVal = val.totalNum;
