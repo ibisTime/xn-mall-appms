@@ -395,8 +395,8 @@ define(['app/util/common',
                         reject();
                         return true;
                     },
-                    cancelValue: cancelValue,
-                    okValue: okValue
+                    cancelValue: cancelValue||"取消",
+                    okValue: okValue||"确定"
                 });
                 d.showModal();
             }));

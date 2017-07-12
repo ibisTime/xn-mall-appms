@@ -117,7 +117,9 @@ define([
             	
                 loading.hideLoading();
                 if(payType == 21){
-                    base.showMsg("支付成功",1000);
+                    base.confirm("支付成功,是否返回商家详情").then(function(){
+            			location.href = "../consume/detail.html?c="+code;
+            		},function(){})
                 }else{
                     wxPay(res.data);
                 }
@@ -128,7 +130,9 @@ define([
                 		
                         location.href = "../pay/cny_recharge.html";
                 	},function(){
-                    	base.showMsg("支付成功",1000);
+                		base.confirm("支付成功,是否返回商家详情").then(function(){
+                			location.href = "../consume/detail.html?c="+code;
+                		},function(){})
                 	})
                 }else{
                 	base.showMsg(res.msg);
@@ -152,7 +156,9 @@ define([
                 loading.hideLoading();
                 // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                    base.showMsg("支付成功",1000);
+                    base.confirm("支付成功,是否返回商家详情").then(function(){
+            			location.href = "../consume/detail.html?c="+code;
+            		},function(){})
                 } else {
                     base.showMsg("支付失败");
                 }

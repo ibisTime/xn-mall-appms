@@ -99,13 +99,17 @@ define([
                 $("#loaddingIcon").addClass("hidden");
                 $("#od-mask, #od-tipbox").addClass("hidden");
                 if (response.success) {
-	                base.showMsg("支付成功",1000)
+	                base.confirm("支付成功,是否返回商家详情").then(function(){
+            			location.href = "../consume/detail.html?c="+code;
+            		},function(){})
                 }else{
                     if(response.msg=="菜狗币账户余额不足"){
 	                	base.confirm("菜狗币余额不足，是否前往购买？","否","是").then(function(){
 	                        location.href = "../pay/buyCgM.html";
 	                	},function(){
-	                        base.showMsg("支付成功",1000)
+	                        base.confirm("支付成功,是否返回商家详情").then(function(){
+	                			location.href = "../consume/detail.html?c="+code;
+	                		},function(){})
 	                	})
 	                }else{
 	                	base.showMsg(response.msg);
