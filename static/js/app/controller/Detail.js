@@ -102,9 +102,10 @@ define([
                 
                 var pics = base.getPicArr(data.pic),
                 	htmlPic = "";
-                    pics.forEach((d,i) => {
-                        htmlPic += `<div class='swiper-slide'><div href="${d || ""}" style="background-image:url(${d});"></div></div>`;
+                    pics.forEach(function(d, i){
+                        htmlPic += "<div class='swiper-slide'><div style='background-image:url("+d+");'></div></div>";
                     });
+                    
                 $("#top-swiper").html(htmlPic);
                 $("#name").text(data.name);
                 $("#slogan").text(data.slogan);
