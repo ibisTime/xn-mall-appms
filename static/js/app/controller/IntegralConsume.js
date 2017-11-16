@@ -67,14 +67,15 @@ define([
             var aVal = $("#amount").val();
             if(!aVal){
                 base.showMsg("消费菜狗币不能为空!");
-            }else if(!/^\d+$/gi.test(aVal)){
-                base.showMsg("消费菜狗币必须为整数!");
             }else if(+aVal <= 0){
                 base.showMsg("消费菜狗币必须大于0!");
             }else{
                 $("#integral").text(aVal);
                 $("#od-mask, #od-tipbox").removeClass("hidden");
-            }
+            }            
+            // else if(!/^\d+$/gi.test(aVal)){
+            //     base.showMsg("消费菜狗币必须为整数!");
+            // }
         });
         //提示框确认按钮
         $("#odOk").on("click", function(){

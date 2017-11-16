@@ -182,9 +182,9 @@ define([
                                 var pic2 = val.advPic,
                                     name = val.name,
                                     slogan = val.slogan,
-                                    originalPrice = val.originalPrice ? val.originalPrice / 1000 : "",
-                                    price2 = val.price2 ? val.price2 / 1000 + "菜狗币" : "",
-                                    price3 = val.price3 ? val.price3 / 1000 + "抵金券" : "",
+                                    originalPrice = val.originalPrice ? base.formatMoney(val.originalPrice) : "",
+                                    price2 = val.price2 ? base.formatMoney(val.price2) + "菜狗币" : "",
+                                    price3 = val.price3 ? base.formatMoney(val.price3) + "抵金券" : "",
                                     code = val.code;
 
                                 html2 += '<li class="ptb8 clearfix b_bd_b plr10"><a class="show p_r min-h100p" href="../operator/buy.html?code=' + code 

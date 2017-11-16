@@ -8,6 +8,6 @@ define([
     $("#loginOut").on("click", function() {
         $("#loaddingIcon").removeClass("hidden");
         sessionStorage.setItem("user", "0");
-        location.href = '../index.html';
+        location.href = 'consume/consume.html';
     });
 });

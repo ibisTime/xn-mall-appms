@@ -83,7 +83,8 @@ define([
     //banner图
     function getBanner(){
         Ajax.get("806051", {
-            type: "2"
+            type: "2",
+            location:"index_banner"
         }).then(function(res){
             if(res.success && res.data.length){
                 var html = "";

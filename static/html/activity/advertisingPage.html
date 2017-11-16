@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <link rel="import" href="../head.html?__inline">
+    <link rel="stylesheet" href="../css/base.css">
+    <title>活动详情</title>
+    <style type="text/css">
+    .content {
+      position: absolute;
+      top: 12rem;
+      left: 30%;
+      text-align: center;
+      color: #fff;
+      line-height: 1.5;
+      font-size: 1.6rem;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 2rem;
+      right: 4rem;
+      width: 10rem;
+    }        
+    </style>
+</head>
+
+<body class="bg_fff">
+    <div id="description" class="p10 bg_fff"></div>
+    <i id="cont" class="icon-loading"></i>
+    <i id="loaddingIcon" class="icon-loading bg_transparent hidden top_0"></i>
+    <div class="am-modal-mask hidden" id="shareMask">
+      <img src="../../images/arrow.png" class="arrow">
+      <div class="content">
+        <p>请点击右上角</p>
+        <p>发送给指定朋友</p>
+        <p>或分享到朋友圈</p>
+      </div>
+    </div>
+    <button class=" t_white lh2em fixft activityShareBtn bg_999" id="sbtn" disabled="disabled">阅读完成后分享为有效分享(10s)</button>
+    <div style="height: 106px;"></div>
+    <link rel="import" href="../footer.html?__inline">
+    <script>
+        require(['app/controller/activity/AdvertisingPage']);
+    </script>
+</body>
+
+</html>

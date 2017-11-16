@@ -309,7 +309,9 @@ define([
                 var type = $(this).attr("l_type"),
                     li = $("#consumeUl").find("li.on"),
                     url = "";
-                url = "./list.html?t=" + type + "&p=" + li.attr("prov");
+                location.pathname.indexOf("/consume/") == -1
+                ? url = "consume/list.html?t=" + type + "&p=" + li.attr("prov")
+                : url = "./list.html?t=" + type + "&p=" + li.attr("prov");
                 var city = li.attr("city");
                 if (city) {
                     url += "&c=" + li.attr("city") || "";
@@ -361,7 +363,9 @@ define([
                             curList = response.data.list;
                         if (curList.length) {
                             curList.forEach(function(item) {
-                                html += '<li><a class="show" href="./detail.html?c=' + item.code + '">' + item.name + '</a></li>';
+                                location.pathname.indexOf("/consume/") == -1
+                                ? html += '<li><a class="show" href="consume/detail.html?c=' + item.code + '">' + item.name + '</a></li>'
+                                : html += '<li><a class="show" href="./detail.html?c=' + item.code + '">' + item.name + '</a></li>';
                             });
                             $("#searchUl").removeClass("hidden").html(html);
                         } else {
@@ -418,8 +422,11 @@ define([
 	                            var html = "";
 	                            for (var i = 0; i < curList.length; i++) {
 	                                html += '<li class="ptb8 clearfix b_bd_b plr10" code="' + curList[i].code + '">' +
-	                                    '<a class="show p_r min-h100p" href="./detail.html?c=' + curList[i].code + '">' +
-	                                    '<div class="consume-center-wrap default-bg"><img class="center-img1 center-lazy" src="' + base.getImg(curList[i].advPic, 1) + '"/></div>' +
+	                                    '<a class="show p_r min-h100p" ';
+                                    location.pathname.indexOf("/consume/") == -1
+                                    ? html += 'href="consume/detail.html?c=' + curList[i].code + '">'
+                                    : html += 'href="./detail.html?c=' + curList[i].code + '">';
+	                                html += '<div class="consume-center-wrap default-bg"><img class="center-img1 center-lazy" src="' + base.getImg(curList[i].advPic, 1) + '"/></div>' +
 	                                    '<div class="consume-right-wrap">' +
 	                                    '<p class="tl line-tow t_bold">' + curList[i].name + '</p>' +
 	                                    '<p class="tl pt4 line-tow s_10 t_80">' + curList[i].slogan + '</p>' ;
@@ -481,8 +488,11 @@ define([
                             var html = "";
                             for (var i = 0; i < curList.length; i++) {
                                 html += '<li class="ptb8 clearfix b_bd_b plr10" code="' + curList[i].code + '">' +
-                                    '<a class="show p_r min-h100p" href="./detail.html?c=' + curList[i].code + '">' +
-                                    '<div class="consume-center-wrap default-bg"><img class="center-img1 center-lazy" src="' + base.getImg(curList[i].advPic, 1) + '"/></div>' +
+                                    '<a class="show p_r min-h100p" ';
+                                location.pathname.indexOf("/consume/") == -1
+                                ? html += 'href="consume/detail.html?c=' + curList[i].code + '">'
+                                : html += 'href="./detail.html?c=' + curList[i].code + '">';     
+                                html += '<div class="consume-center-wrap default-bg"><img class="center-img1 center-lazy" src="' + base.getImg(curList[i].advPic, 1) + '"/></div>' +
                                     '<div class="consume-right-wrap">' +
                                     '<p class="tl line-tow t_bold">' + curList[i].name + '</p>' +
                                     '<p class="tl pt4 line-tow s_10 t_80">' + curList[i].slogan + '</p>' ;

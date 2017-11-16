@@ -38,7 +38,7 @@ define([
                 var data = res.data;
                 data.forEach(function(d, i){
                     if(d.currency == "CGB"){
-                        $("#reaminCGB").html(base.formatMoney(d.amount));
+                        $("#reaminCGB").html(base.formatMoney(d.amount) + " , 1菜狗币兑换" + (rate) + "抵金券" );
                     }
                 })
             }

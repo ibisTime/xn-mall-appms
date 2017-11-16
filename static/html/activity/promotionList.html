@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <link rel="import" href="../head.html?__inline">
+    <link rel="stylesheet" href="../css/base.css">
+    <title>推广活动</title>
+</head>
+
+<body class="bg_f5">
+<i id="cont" class="icon-loading"></i>
+
+<!--轮播-->
+    <header>
+        <div id="swiper-container" class="swiper-container">
+            <div id="top-swiper" class="swiper-wrapper" style="display: -webkit-box;display: -moz-box;"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </header>
+<!--详情-->
+	
+    <div id="md-div" class="wp100 md-div bg_fff">
+        <ul id="contUl" class="b_bd_b mh50p">
+            <!-- <li class="scroll-loadding"></li> -->
+        </ul>
+    </div>
+
+     <div class="detail-chose-dialog hidden" id="choseDialog">
+            <div class="am-modal-mask"></div>
+            <div class="am-modal-wrap">
+                <div role="document" class="am-modal am-modal1 am-modal-operation am-modal-transparent">
+                    <div class="am-modal-content">
+                        <div class="am-modal-body" style="padding: 10px;">
+                            <div class="am-modal-currentUser clearfix">
+                                <div class="wp39p pt4 inline_block fl "><img src="../../images/zuo@2x.png" /></div>
+                                <div class="am-modal-currentUser-content fl pt14 pb20 s_11"></div>
+                                <div class="wp39p pt8 fl inline_block"><img src="../../images/you@2x.png" /></div>
+                            </div>
+                            <div class="am-modal-list tl ptb4">
+                                <ul></ul>
+                            </div>
+                        </div>
+                        <div class="am-modal-footer">
+                            <div class="am-modal-button-group-v ">
+                                <a class="am-modal-button1 tc t_white bg_f64444" id="confirm" href="javascript:void(0)">我知道了</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+
+    <!-- <div class="mlr10 bg_fff mt10 hcont" id="allItems"></div> -->
+
+    <!-- <div style="height: 88px;"></div> -->
+
+    <link rel="import" href="../footer.html?__inline">
+    <script>
+        require(['app/controller/activity/PromotionList']);
+    </script>
+</body>
+
+</html>

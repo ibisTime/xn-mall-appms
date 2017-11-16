@@ -39,6 +39,8 @@ define([
                 data.forEach(function(d, i){
                     if(d.currency == "CNY"){
                         $("#reamin").html("¥" + base.formatMoney(d.amount));
+                    }else if(d.currency == "CGB"){
+                        $("#caigoRemain").html(base.formatMoney(d.amount) + " , 1人民币兑换" + (rate) + "菜狗币" );
                     }
                 })
             }

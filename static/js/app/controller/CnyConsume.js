@@ -6,7 +6,7 @@ define([
     var rate = base.getUrlParam("rate");
     var code = base.getUrlParam("c"),
         name = base.getUrlParam("n");
-    var choseIdx = 0, totalAmount = 0;
+    var choseIdx = 0, totalAmount = 0, discountAmount = 0;
     var cny2jf_rate = 1, rmbRemain = 0, jfRemain = 0;
 
     initView();
@@ -72,26 +72,54 @@ define([
             	if(!/^\d+(\.\d{1,2})?$/.test(value)){
             		base.showMsg("小数点后最多两位")
             	}else{
-	                var needAmount = value * 1000* (1 - rate) ,
-	                	needJF = value* 1000-(base.formatMoney(needAmount)*1000)
+	                var needAmount = value * 1000 ,
+	                	needJF = value* 1000-(base.formatMoney(needAmount)*1000);
+                        totalAmount = value*1000;
 	                    
 	                $("#jfAmount").val(base.formatMoneyD(needJF));
 	                $("#needAmount").val(base.formatMoney(needAmount));
-	                if(jfRemain < needJF){
-	                    var a1 = (needJF - jfRemain);
-	                    var a2 = (a1 / cny2jf_rate);
-	                    totalAmount = value*1000;
-	                    $("#totalAmount").html(base.formatMoney(a2 + needAmount));
-	                }else{
-	                    totalAmount = value*1000;
-	                    $("#totalAmount").html(base.formatMoney(needAmount));
-	                }
+                    $("#totalAmount").html(base.formatMoney(needAmount));
 	            }
             }else{
                 totalAmount = 0;
+                discountAmount = 0;
+                $("#TreatAmount").val(0);
                 $("#jfAmount").val(0);
                 $("#needAmount").val(0);
                 $("#totalAmount").html(0);
+            }
+        });
+        $("#TreatAmount").on("keyup", function(){
+            var self = $(this),
+                value = self.val();
+            var spendAmount = $("#rmbAmount").val();
+            if($.isNumeric(value)){
+                if(!/^\d+(\.\d{1,2})?$/.test(value)){
+                    base.showMsg("小数点后最多两位")
+                }else{
+                    var needAmount = value * 1000* (1 - rate) + (spendAmount - value) * 1000 ,
+                        needJF = spendAmount* 1000-(base.formatMoney(needAmount)*1000);
+                        discountAmount = value*1000;
+                        totalAmount = spendAmount*1000;
+                        
+                    $("#jfAmount").val(base.formatMoneyD(needJF));
+                    $("#needAmount").val(base.formatMoney(needAmount));
+                    if(jfRemain < needJF){
+                        var a1 = (needJF - jfRemain);
+                        var a2 = (a1 / cny2jf_rate);
+                        $("#totalAmount").html(base.formatMoney(a2 + needAmount));
+                    }else{
+                        $("#totalAmount").html(base.formatMoney(needAmount));
+                    }
+                }
+            }else{
+                var needAmount = spendAmount * 1000 ,
+                    needJF = spendAmount* 1000-(base.formatMoney(needAmount)*1000);
+                    totalAmount = spendAmount*1000;
+                    discountAmount = 0;
+                $("#jfAmount").val(base.formatMoneyD(needJF));
+                $("#needAmount").val(base.formatMoney(needAmount));
+                $("#totalAmount").html(base.formatMoney(needAmount));                
             }
         });
         $("#sbtn").click(function(){
@@ -120,6 +148,7 @@ define([
                 storeCode: code,
                 userId: base.getUserId(),
                 amount: totalAmount,
+                disPrice: discountAmount,
                 payType: payType,
                 isOnlyRmb: 0
             }

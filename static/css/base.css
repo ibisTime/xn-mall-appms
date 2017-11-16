@@ -710,6 +710,9 @@ textarea {
 .mb1r {
     margin-bottom: 1rem;
 }
+.mr2 {
+    margin-right: 2px;
+}
 
 .mlr4 {
     margin-left: 4px;
@@ -1529,6 +1532,9 @@ textarea {
     width: 60%;
 }
 
+.wp62 {
+    width: 62%;
+}
 .wp60p {
     width: 60px;
 }
@@ -1604,13 +1610,18 @@ textarea {
 .wp48p {
     width: 48px;
 }
-
+.wp39p {
+    width: 39px;
+}
 .wp34p {
     width: 34px;
 }
 
 .wp20p {
     width: 20px;
+}
+.wp10p {
+    width: 12px;
 }
 
 .wp30p {
@@ -1674,6 +1685,9 @@ textarea {
 
 .hp132p {
     height: 132px;
+}
+.hp188p {
+    height: 188px;
 }
 
 .hp62p {
@@ -3137,6 +3151,13 @@ table th, table td {
     font-size: 1.1rem;
 }
 
+.activityShareBtn {
+    width: 100%;
+    padding: 4px 16px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+}
+
 .consume_ul {
     border-top: 1px solid #E6E6E6;
     top: 102px;
@@ -3205,6 +3226,10 @@ table th, table td {
 
 .mh100p {
     max-height: 100px;
+}
+
+.mh50p img{
+    max-height: 50px;
 }
 
 .center-img, .center-img1 {
@@ -3342,6 +3367,11 @@ table th, table td {
     min-height: 100px;
 }
 
+.min-h70p {
+    min-height: 70px;
+}
+
+
 .order-img-wrap {
     position: absolute;
     height: 100px;
@@ -3351,8 +3381,20 @@ table th, table td {
     overflow: hidden;
 }
 
+.order-img-wrap1 {
+    position: absolute;
+    height: 70px;
+    width: 70px;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    border-radius: 10px;
+}
 .order-right-wrap {
     padding-left: 112px;
+}
+.order-right-wrap1 {
+    padding-left: 90px;
 }
 
 .top4 {
@@ -3408,10 +3450,17 @@ table th, table td {
 
 .am-modal {
     position: relative;
-    width: 300px;
+    // width: 300px;
+    min-width: 300px;
     height: auto;
 }
-
+.am-modal1 {
+    position: relative;
+    // width: 300px;
+    min-width: 300px;
+    max-width: 350px;
+    height: auto;
+}
 .am-modal-content {
     position: relative;
     background-color: #fff;
@@ -3429,8 +3478,8 @@ table th, table td {
 }
 
 .am-modal-body {
-    font-size: .28rem;
-    color: #888;
+    font-size: 1rem;
+    color: #000;
     height: 100%;
     overflow: auto;
 }
@@ -3438,7 +3487,6 @@ table th, table td {
 .am-modal.am-modal-operation .am-modal-content .am-modal-body {
     padding: 0;
 }
-
 .am-modal-button-group-v .am-modal-button {
     -webkit-touch-callout: none;
     border-top: 1px solid #ddd;
@@ -3457,6 +3505,15 @@ table th, table td {
     display: block;
 }
 
+.am-modal-button-group-v .am-modal-button1 {
+    margin-top: 16px;
+    margin-bottom: 20px;
+    -webkit-touch-callout: none;
+    border-radius: 5px;    
+    height: 35px;
+    width: 150px;
+    line-height: 35px;
+} 
 
 @media only screen and (max-width: 320px) {
 	.am-modal {
@@ -3464,14 +3521,25 @@ table th, table td {
     }
     .am-modal-button-group-v .am-modal-button {
 	    height: 50px;
+        width: 100%;
 	    line-height: 50px;
 	}
+    .am-modal-button-group-v .am-modal-button1 {
+        height: 35px;
+        line-height: 35px;
+    }    
 }
 
 .am-modal.am-modal-operation .am-modal-content .am-modal-button {
     color: #000;
     text-align: start;
     padding-left: 15px;
+}
+
+.am-modal.am-modal-operation .am-modal-content .am-modal-button1 {
+    color: #fff;
+    text-align: center;
+    padding-left: 0;
 }
 
 .pay-item {
@@ -3561,7 +3629,7 @@ table th, table td {
     color: #000;
     font-size: 15px;
     margin-left: 0;
-    margin-right: 5px;
+    margin-right: 15px;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
