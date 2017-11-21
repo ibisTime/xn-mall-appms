@@ -12,9 +12,10 @@ define([
             code: code,
             userId: userId
         },
-        rate2,rate4;
+        rate2,rate4,advPic,title,slogn,status, endDatetime
+        now = new Date();
 
-    var i = 10;
+        var i = 10;
 		var isUse = false;
 		var intervalID;
 
@@ -22,7 +23,6 @@ define([
 
     function initView() {
         if (code) {
-        	setBtnDisTimeSpan("#sbtn", 10)
             getInitWXSDKConfig();
             business();
             addListeners();
@@ -38,10 +38,22 @@ define([
                 location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
                 return;
             }
-            $("#shareMask").removeClass("hidden");
+            if(status == 2 || endDatetime < now) {
+                $("#shareMask1").removeClass("hidden");
+                base.confirm("该活动已结束，看看其他活动？").then(function(){
+                   location.href = "../activity/promotionList.html?fist=0";
+               },function(){
+                   $("#shareMask1").addClass("hidden");
+               })
+            } else {
+                $("#shareMask").removeClass("hidden");
+            }
         });
         $("#shareMask").click(function() {
             $("#shareMask").addClass("hidden");
+        });
+        $("#shareMask1").click(function() {
+            $("#shareMask1").addClass("hidden");
         });
     }    
 
@@ -81,6 +93,13 @@ define([
                 rate2 = data.rate2;
                 rate1 = data.rate1;
                 rate4 = data.rate4;
+                advPic = data.advPic;
+                title = data.title;
+                slogn = data.slogn;
+                status = data.status;
+                endDatetime = new Date(base.formatDate(data.endDatetime,"yyyy/MM/dd  hh:mm:ss"));
+                i = data.readTimes;
+                setBtnDisTimeSpan("#sbtn", i)
             } else {
                 doError();
             }
@@ -114,10 +133,10 @@ define([
         wx.ready(function() {
             // 分享给朋友
             wx.onMenuShareAppMessage({
-                title: "看广告赢好礼", // 分享标题
-                desc: "看广告赢好礼", // 分享描述
+                title: title, // 分享标题
+                desc: slogn, // 分享描述
                 link: window.location.href+"&refereer="+userId, // 分享链接
-                imgUrl: SHAKEURL+"/static/images/logo2.png", // 分享图标
+                imgUrl: PIC_PREFIX+"/" + advPic, // 分享图标
                 success: function() {
                     // 用户确认分享后执行的回调函数
                     if (i == -1) {
@@ -130,10 +149,10 @@ define([
             });
             // 分享到朋友圈
             wx.onMenuShareTimeline({
-                title: "看广告赢好礼", // 分享标题
-                desc: "看广告赢好礼", // 分享描述
+                title: title, // 分享标题
+                desc: slogn, // 分享描述
                 link: window.location.href+"&refereer="+userId, // 分享链接
-                imgUrl: SHAKEURL+"/static/images/logo2.png", // 分享图标
+                imgUrl: PIC_PREFIX+"/" + advPic, // 分享图标
                 success: function() {
                     // 用户确认分享后执行的回调函数
                     if (i == -1) {
@@ -146,10 +165,10 @@ define([
             });
             // 分享到QQ
             wx.onMenuShareQQ({
-                title: "看广告赢好礼", // 分享标题
-                desc: "看广告赢好礼", // 分享描述
+                title: title, // 分享标题
+                desc: slogn, // 分享描述
                 link: window.location.href+"&refereer="+userId, // 分享链接
-                imgUrl: SHAKEURL+"/static/images/logo2.png", // 分享图标
+                imgUrl: PIC_PREFIX+"/" + advPic, // 分享图标
                 success: function () {
                    if (i == -1) {
                         shareWx();
@@ -161,10 +180,10 @@ define([
             });
             // 分享到QQ空间
             wx.onMenuShareQZone({
-                title: "看广告赢好礼", // 分享标题
-                desc: "看广告赢好礼", // 分享描述
+                title: title, // 分享标题
+                desc: slogn, // 分享描述
                 link: window.location.href+"&refereer="+userId, // 分享链接
-                imgUrl: SHAKEURL+"/static/images/logo2.png", // 分享图标
+                imgUrl: PIC_PREFIX+"/" + advPic, // 分享图标
                 success: function () {
                    if (i == -1) {
                         shareWx();
