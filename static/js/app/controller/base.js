@@ -489,7 +489,7 @@ define(['app/util/common',
 			        map.plugin('AMap.Geolocation', function() {
 			            geolocation = new AMap.Geolocation({
 			                enableHighAccuracy: true,//是否使用高精度定位，默认:true
-			                timeout: 1000,          //超过5秒后停止定位，默认：无穷大
+			                timeout: 5000,          //超过5秒后停止定位，默认：无穷大
 			            });
 			            map.addControl(geolocation);
 			            geolocation.getCurrentPosition();
@@ -498,9 +498,8 @@ define(['app/util/common',
 			                    lat = data.position.getLat(),
 			                    addressComponent = data.addressComponent,
 			                    province = addressComponent.province,
-			                    city = addressComponent.city,
+			                    city = addressComponent.city || province,
 			                    area = addressComponent.district;
-			                
 			                if(province && city && area){
 				                sessionStorage.setItem("province",province),
 				                sessionStorage.setItem("city",city),
@@ -524,20 +523,8 @@ define(['app/util/common',
                 	loading.hideLoading();
                     initFun();
                 }
-	    },
+	    }
     };
-//  var pathname = location.pathname;
-//  if ((pathname.indexOf("/user/") != -1 &&
-//          (pathname.indexOf("/user/login.html") == -1 && pathname.indexOf("/user/redirect.html") == -1 && pathname.indexOf("/user/register.html") == -1 &&
-//              pathname.indexOf("/user/findPwd.html") == -1)) ||
-//      pathname.indexOf("/account") != -1 ||
-//      (pathname.indexOf("/operator/") != -1 && pathname.indexOf("/operator/buy.html") == -1)) {
-//      if (sessionStorage.getItem("user") == "0" || sessionStorage.getItem("user") == undefined) {
-//          location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
-//          sessionStorage.setItem("trade", "0");
-//      }
-//  }
-	
 	// 判断是否登录
     if(!/\/redirect\.html/.test(location.href)&&!/\/demo\.html/.test(location.href)){
     	sessionStorage.setItem("flagHb",Base.getUrlParam("flagHb")||"0");

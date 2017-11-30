@@ -66,6 +66,7 @@ body {
     color: #545454;
     background-color: #f7f7f7;
     line-height: 150%;
+    -webkit-overflow-scrolling: touch;
 }
 
 em, i {

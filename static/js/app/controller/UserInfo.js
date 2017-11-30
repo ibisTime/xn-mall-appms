@@ -17,18 +17,6 @@ define([
             ).then(loading.hideLoading, loading.hideLoading);
             addListener();
         }
-        
-//      $("#demo").click(function(){
-//      	JudgeBindMobile.addCont({
-//              success: function(resMobile, resSms){
-//              	mobile = resMobile;
-//              	smsCaptcha = resSms;
-//              	alert("smsCaptcha1"+smsCaptcha+",mobile1"+mobile);
-//              	getAppID();
-//              }
-//          }).showCont();
-//      })
-        
     }
     // 获取手机号
     function getMobile(){

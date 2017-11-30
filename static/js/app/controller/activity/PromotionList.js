@@ -26,23 +26,22 @@ define([
         addListeners();
         $.when(
             getPageAdvertise(true),
-        	getBanner(),
-            fist == "0"? "" :getEarnValue()
+        	getBanner()
         ).then(function() {
             $("#cont").hide();
         });
+        fist == "0" ? "" : getEarnValue();
     }
     
     //banner图
     function getBanner(){
-        Ajax.get("806051", {
+        return Ajax.get("806051", {
             type: "2",
             location:"4"
         }).then(function(res){
             if(res.success && res.data.length){
                 var html = "";
-                res.data.forEach(function(item){
-                        
+                res.data.forEach(function(item){   
                     html += '<div class="swiper-slide"><img data-url= "'+item.url+'" class="wp100 hp188p" src="' + base.getImg(item.pic, 1) + '"></div>';
                 });
                 $("#top-swiper").html(html);
@@ -91,11 +90,11 @@ define([
     function getEarnValue() {
         $.when(
             Ajax.get("802517",{
-                    companyCode: SYSTEM_CODE
+                companyCode: SYSTEM_CODE
             }),
             Ajax.get("802518",{
-                    companyCode: SYSTEM_CODE,
-                    userId: userId
+                companyCode: SYSTEM_CODE,
+                userId: userId
             })          
         ).then(function(res, res1){
             if(res.success && res1.success){
@@ -107,22 +106,22 @@ define([
                         currency = val.currency.split(',');
                         if(currency.length == 1) {
                             if(currency[0] == "CNY") {
-                                currency = `人民币`;
+                                currency = '人民币';
                             } else if(currency[0] == "CGJF") {
-                                currency = `抵金券`;
+                                currency = '抵金券';
                             } else if(currency[0] == "CGB") {
-                                currency = `菜狗币`;
+                                currency = '菜狗币';
                             } else{
-                                currency[0] = ``;
+                                currency[0] = '';
                             }
                         } else {
                             currency.forEach(function(cur, i){
                                 if(cur == "CNY") {
-                                    return i == 0 ? currency1 = `人民币` : currency1 += `,人民币` ;
+                                    return i == 0 ? currency1 = '人民币' : currency1 += ',人民币' ;
                                 } else if(cur == "CGJF") {
-                                    return i == 0 ? currency1 = `抵金券` : currency1 += `,抵金券`;
+                                    return i == 0 ? currency1 = '抵金券' : currency1 += ',抵金券';
                                 } else if(cur == "CGB") {
-                                    return i == 0 ? currency1 = `菜狗币` : currency1 += `,菜狗币`;
+                                    return i == 0 ? currency1 = '菜狗币' : currency1 += ',菜狗币';
                                 }
                             })
 
@@ -131,48 +130,47 @@ define([
                     })                    
                 }else{
                     amount = 0;
-                    currency = `,去分享吧!`;
+                    currency = ',去分享吧!';
                 }
-                html += `您今日分享活动获取 `+ base.formatMoney(amount)  + currency;
+                html += '您今日分享活动获取 '+ base.formatMoney(amount)  + currency;
                 $.each(res, function(i, val){
                     amount = val.amount;
                     currency = val.currency.split(',');
                     if(currency.length == 1) {
                         if(currency[0] == "CNY") {
-                            currency = `人民币`;
+                            currency = '人民币';
                         } else if(currency[0] == "CGJF") {
-                            currency = `抵金券`;
+                            currency = '抵金券';
                         } else if(currency[0] == "CGB") {
-                            currency = `菜狗币`;
+                            currency = '菜狗币';
                         } else{
-                            currency[0] = ``;
+                            currency[0] = '';
                         }
                     } else {
                         currency.forEach(function(cur, i){
                             if(cur == "CNY") {
-                                return i == 0 ? currency1 = `人民币` : currency1 += `,人民币` ;
+                                return i == 0 ? currency1 = '人民币' : currency1 += ',人民币' ;
                             } else if(cur == "CGJF") {
-                                return i == 0 ? currency1 = `抵金券` : currency1 += `,抵金券`;
+                                return i == 0 ? currency1 = '抵金券' : currency1 += ',抵金券';
                             } else if(cur == "CGB") {
-                                return i == 0 ? currency1 = `菜狗币` : currency1 += `,菜狗币`;
+                                return i == 0 ? currency1 = '菜狗币' : currency1 += ',菜狗币';
                             }
                         })
 
                         currency = currency1;
                     }
-                    html1 += `<li class="ptb4 clearfix mlr15">`;
+                    html1 += '<li class="ptb4 clearfix mlr15">';
                     if(i <= 2) {
-                        html1 +=  `<div class="wp20p pt4 inline_block fl mr15 mt4" style="vertical-align: middle;">`;
+                        html1 +=  '<div class="wp20p pt4 inline_block fl mr15 mt4" style="vertical-align: middle;">';
                     }else{
-                        html1 +=  `<div class="wp10p pt4 inline_block fl ml4 mr20 mt4" style="vertical-align: middle;">`;
+                        html1 +=  '<div class="wp10p pt4 inline_block fl ml4 mr20 mt4" style="vertical-align: middle;">';
                     }
                                
-                    html1 +=`<img src="/static/images/` + (i + 1) + `@2x.png" />
-                        </div>
-                        <div class="wp62 inline_block fl s_11"> `+ val.realName +`</div>
-                        <div class="wp62 inline_block fl t_999 s_10">分享活动获得`+ currency +`</div>
-                        <div class="wp25 inline_block fr s_11  tr">`+ base.formatMoney(amount)  + `</div>
-                     </li>`;
+                    html1 += '<img src="/static/images/' + (i + 1) + '@2x.png"/></div>' +
+                        '<div class="wp62 inline_block fl s_11"> '+ val.realName +'</div>' +
+                        '<div class="wp62 inline_block fl t_999 s_10">分享活动获得'+ currency +'</div>' +
+                        '<div class="wp25 inline_block fr s_11  tr">'+ base.formatMoney(amount)  + '</div>' +
+                    '</li>';
                     currency = "";
                 })
                 $('.am-modal-currentUser-content').html(html);
@@ -188,7 +186,6 @@ define([
         });
 
         $(window).on("scroll", function() {
-            // var me = $(this);
             if (canScrolling && !isEnd && ($(document).height() - $(window).height() - 10 <= $(document).scrollTop())) {
                 canScrolling = false;
                 addLoading();

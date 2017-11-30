@@ -36,13 +36,11 @@ define([
             if (!PROVINCE) {
                 //如果session中没有保存地理信息，则重新获取
                 base.getInitLocation(function(res){
-				PROVINCE = sessionStorage.getItem("province");
-				CITY = sessionStorage.getItem("city");
-				
+    				PROVINCE = sessionStorage.getItem("province");
+    				CITY = sessionStorage.getItem("city");
 		    		loading.hideLoading();
 		    		getLocationJSON();
-		    	},function(){
-		    		
+		    	}, function(){
 					loading.hideLoading();
 					getLocationJSON();
 					base.showMsg("定位失败",1000);
@@ -129,13 +127,10 @@ define([
 				"limit": 1,
 				"fromSystemCode":SYSTEM_CODE
 	    	}).then(function(res){
-	    		if(res.success){
-	    			if(res.data.list.length){
-	    				$(".noticeCon p").text(res.data.list[0].smsTitle)
-	    			}
+	    		if(res.success && res.data.list.length){
+    				$(".noticeCon p").text(res.data.list[0].smsTitle);
 	    		}
-	    		
-	    	})
+	    	});
 	    }
 
 
@@ -211,8 +206,7 @@ define([
                 var me = $(this);
                 if (canScrolling && !isEnd && ($(document).height() - $(window).height() - 10 <= $(document).scrollTop())
                     //列表下拉框未显示时才加载
-                    &&
-                    $("#mask").hasClass("hidden")) {
+                    && $("#mask").hasClass("hidden")) {
                     canScrolling = false;
                     addLoading();
                     businessPage();

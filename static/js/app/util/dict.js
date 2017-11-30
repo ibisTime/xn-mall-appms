@@ -3,6 +3,11 @@ define([
     'app/util/ajax'
 ], function(base, ajax) {
     var dict = {
+        currencyType: {
+            'CNY': '人民币',
+            'CGB': '菜狗币',
+            'CGJF': '抵金券'
+        },
         receiptType: {
             "1": "个人",
             "2": "企业"
